@@ -115,4 +115,18 @@ class User extends Authenticatable
 
         return $senders();
     }
+
+    public function getFriendsShelves() {
+
+        $friends = $this->getFriends();
+        $shelves = array();
+
+        foreach($friends as $f) {
+            foreach ($f->getShelves() as $s) {
+                $shelves[] = $s;
+            }
+        }
+        
+        return $shelves;
+    }
 }

@@ -12,5 +12,15 @@ class Publisher extends Model
     protected $fillable = [
         'name',
     ];
+
+    public function getBooks() {
+
+        $books = Book::
+        where('publisher_id', $this->id)
+        ->where('status', 1)
+        ->get();
+
+        return $books;
+    }
     
 }

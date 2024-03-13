@@ -38,4 +38,14 @@ class BookCategory extends Model
         return $categories;
     }
 
+    public function getBooks() {
+
+        $books = Book::
+        where('category_id', $this->id)
+        ->where('status', 1)
+        ->get();
+
+        return $books;
+    }
+
 }
