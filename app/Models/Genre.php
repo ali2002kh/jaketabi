@@ -19,7 +19,7 @@ class Genre extends Model
         $records = GenreBook::where('genre_id', $this->id)->get();
 
         foreach($records as $r) {
-            $b = Book::find($r->book_id);
+            $b = $r->getBook();
             if ($b->isActive()) {
                 $books->add($b);
             }

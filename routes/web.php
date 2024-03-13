@@ -12,10 +12,13 @@ Route::get('/', function () {
     // $category = BookCategory::find(1)->getChildren();
     // dd($category);
 
-    // $genre = Book::find(1)->getGenres()[1];
+    // $genre = Book::find(1)->getGenres()->first();
     // $book = $genre->getBooks();
     // dd($book);
 
-    $user = User::find(1)->getFriendRequests()->first();
+    // $user = User::find(1)->getFriendRequests()->first();
+    // dd($user);
+
+    $user = User::find(1)->getWantToReadBooks();
     dd($user);
 });

@@ -142,4 +142,36 @@ class User extends Authenticatable
         
         return $shelves;
     }
+
+    public function getRecordedBooks($status) {
+
+        $books = collect();
+        $records = UserBook::
+        where('user_id', $this->id)
+        ->where('status', $status)
+        ->get();
+
+        foreach ($records as $r) {
+
+            $b = $r->getBook();
+            if ($b->isActive()) {
+                $books->add($b);
+            }
+        }
+
+        return $books;
+    }
+
+    public function getWantToReadBooks() {
+        return $this->getRecordedBooks(1);
+    }
+
+    public function getCurrentlyReadingBooks() {
+        return $this->getRecordedBooks(2);
+    }
+
+    public function getAlreadyReadBooks() {
+        return $this->getRecordedBooks(3);
+    }
+
 }
