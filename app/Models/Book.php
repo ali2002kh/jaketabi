@@ -48,4 +48,18 @@ class Book extends Model
         }
         return false;
     }
+
+    public function getGenres() {
+        
+        $genres = collect();
+        $records = GenreBook::where('book_id', $this->id)->get();
+
+        foreach($records as $r) {
+            
+            $genres->add(Genre::find($r->genre_id));
+        }
+
+        return $genres;
+        
+    }
 }

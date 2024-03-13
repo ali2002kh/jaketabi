@@ -58,13 +58,13 @@ class User extends Authenticatable
 
     public function isFriend($user_id) {
 
-        $sended = Friend::all()
-        ->where('sender', $this->id)
+        $sended = Friend::
+        where('sender', $this->id)
         ->where('receiver', $user_id)
         ->where('accepted', true);
 
-        $received = Friend::all()
-        ->where('sender', $user_id)
+        $received = Friend::
+        where('sender', $user_id)
         ->where('receiver', $this->id)
         ->where('accepted', true);
 
@@ -74,56 +74,69 @@ class User extends Authenticatable
 
     public function isRequestedTo($user_id) {
 
-        return Friend::all()
-        ->where('sender', $this->id)
-        ->where('receiver', $user_id)->count();
+        return Friend::
+        where('sender', $this->id)
+        ->where('receiver', $user_id)
+        ->where('accepted', false)
+        ->count();
     }
 
     public function isRequestedBy($user_id) {
 
-        return Friend::all()
-        ->where('receiver', $this->id)
-        ->where('sender', $user_id)->count();
+        return Friend::
+        where('receiver', $this->id)
+        ->where('sender', $user_id)
+        ->where('accepted', false)
+        ->count();
     }
 
 
     public function getFriends() {
 
-        $friends = array();
+        $friends = collect();
         $all_users = User::all();
         foreach ($all_users as $u) {
-            if ($u->is_friend($this->id)) {
-                $friends[] = $u;
+            if ($u->isFriend($this->id)) {
+                $friends->add($u);
             }
         }
         return $friends;
     }
 
+    public function hasFriendRequest() {
+
+        if ($this->getFriendRequests() == []) {
+            return false;
+        }
+        return true;
+    }
+
     public function getFriendRequests() {
 
-        $senders = array();
+        $senders = collect();
 
-        $friend_requests = Friend::all()
-        ->where('receiver', $this->id)
+        $friend_requests = Friend::
+        where('receiver', $this->id)
         ->where('accepted', false)
+        ->get()
         ;
 
         foreach($friend_requests as $fr) {
 
-            $senders[] = User::find($fr->sender());
+            $senders->add(User::find($fr->sender));
         }
 
-        return $senders();
+        return $senders;
     }
 
     public function getFriendsShelves() {
 
         $friends = $this->getFriends();
-        $shelves = array();
+        $shelves = collect();
 
         foreach($friends as $f) {
             foreach ($f->getShelves() as $s) {
-                $shelves[] = $s;
+                $shelves->add($s);
             }
         }
         

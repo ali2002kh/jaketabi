@@ -22,13 +22,13 @@ class Shelf extends Model
 
     public function getBooks() {
         
-        $books = array();
-        $tmps = ShelfBook::all()->where('shelf_id', $this->id);
+        $books = collect();
+        $records = ShelfBook::where('shelf_id', $this->id)->get();
 
-        foreach($tmps as $tmp) {
-            $b = Book::find($tmp->book_id);
+        foreach($records as $r) {
+            $b = Book::find($r->book_id);
             if ($b->isActive()) {
-                $books[] = $b;
+                $books->add($b);
             }
         }
 
