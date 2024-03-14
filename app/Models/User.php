@@ -58,7 +58,7 @@ class User extends Authenticatable
 
     public function isFriend($user_id) {
 
-        $sended = Friend::
+        $sent = Friend::
         where('sender', $this->id)
         ->where('receiver', $user_id)
         ->where('accepted', true);
@@ -68,7 +68,7 @@ class User extends Authenticatable
         ->where('receiver', $this->id)
         ->where('accepted', true);
 
-        $friendship = $sended->union($received)->count();
+        $friendship = $sent->union($received)->count();
         return $friendship;
     }
 
@@ -94,18 +94,31 @@ class User extends Authenticatable
     public function getFriends() {
 
         $friends = collect();
-        $all_users = User::all();
-        foreach ($all_users as $u) {
-            if ($u->isFriend($this->id)) {
-                $friends->add($u);
-            }
+
+        $sent = Friend::
+        where('sender', $this->id)
+        ->where('accepted', true)
+        ->get();
+
+        foreach ($sent as $s) {
+            $friends->add($s->getReceiver());
         }
+
+        $received = Friend::
+        where('receiver', $this->id)
+        ->where('accepted', true)
+        ->get();
+
+        foreach ($received as $r) {
+            $friends->add($r->getSender());
+        }
+        
         return $friends;
     }
 
     public function hasFriendRequest() {
 
-        if ($this->getFriendRequests() == []) {
+        if ($this->getFriendRequests()->isEmpty()) {
             return false;
         }
         return true;
@@ -123,7 +136,7 @@ class User extends Authenticatable
 
         foreach($friend_requests as $fr) {
 
-            $senders->add(User::find($fr->sender));
+            $senders->add($fr->getSender());
         }
 
         return $senders;
@@ -172,6 +185,15 @@ class User extends Authenticatable
 
     public function getAlreadyReadBooks() {
         return $this->getRecordedBooks(3);
+    }
+
+    public function getBookRecord($book_id) {
+
+        return UserBook::
+        where('book_id', $book_id)
+        ->where('user_id', $this->id)
+        ->get()
+        ->first();
     }
 
 }

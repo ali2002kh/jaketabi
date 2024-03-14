@@ -16,9 +16,13 @@ Route::get('/', function () {
     // $book = $genre->getBooks();
     // dd($book);
 
-    // $user = User::find(1)->getFriendRequests()->first();
+    // $user = User::find(1)->hasFriendRequest();
     // dd($user);
 
-    $user = User::find(1)->getWantToReadBooks();
-    dd($user);
+    // $user = User::find(1)->getWantToReadBooks();
+    // dd($user);
+
+    // dd(User::find(1)->getBookRecord(1)->getProgression());
+
+    dd(Book::find(1)->getRelatedBooks());
 });

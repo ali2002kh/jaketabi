@@ -27,5 +27,10 @@ class UserBook extends Model
         return Book::find($this->book_id);
     }
 
+    public function getProgression() {
+
+        return $this->current_page / $this->getBook()->page_count;
+    }
+
     
 }
