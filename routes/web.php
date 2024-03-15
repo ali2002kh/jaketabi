@@ -24,5 +24,9 @@ Route::get('/', function () {
 
     // dd(User::find(1)->getBookRecord(1)->getProgression());
 
-    dd(Book::find(1)->getRelatedBooks());
+    // dd(Book::find(1)->getRelatedBooks());
+
+    // dd(User::find(1)->getFriendsBooks());
+
+    dd(User::find(1)->getFriendsWhoAlreadyReadThisBook(1));
 });

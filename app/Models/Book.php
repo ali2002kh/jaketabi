@@ -71,6 +71,8 @@ class Book extends Model
     
         $genres = $this->getGenres();
         $category = $this->getCategory();
+        $sibling_categories = $category->getSiblings();
+        $publisher = $this->getPublisher();
     
         foreach ($genres as $g) {
     
@@ -78,7 +80,7 @@ class Book extends Model
 
                 if ($b->id != $this->id) {
                     $books->add($b);
-                    $index[$b->id] = isset($index[$b->id]) ? $index[$b->id] + 1 : 1;
+                    $index[$b->id] = isset($index[$b->id]) ? $index[$b->id] + 2 : 2;
                 }
             }
         }
@@ -87,7 +89,26 @@ class Book extends Model
     
             if ($b->id != $this->id) {
                 $books->add($b);
-                $index[$b->id] = isset($index[$b->id]) ? $index[$b->id] + 2 : 2;
+                $index[$b->id] = isset($index[$b->id]) ? $index[$b->id] + 3 : 3;
+            }
+        }
+
+        foreach ($sibling_categories as $category) {
+    
+            foreach ($category->getBooks() as $b) {
+    
+                if ($b->id != $this->id) {
+                    $books->add($b);
+                    $index[$b->id] = isset($index[$b->id]) ? $index[$b->id] + 1 : 1;
+                }
+            }
+        }
+
+        foreach ($publisher->getBooks() as $b) {
+    
+            if ($b->id != $this->id) {
+                $books->add($b);
+                $index[$b->id] = isset($index[$b->id]) ? $index[$b->id] + 1 : 1;
             }
         }
     

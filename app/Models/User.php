@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Collection;
 
 class User extends Authenticatable
 {
@@ -194,6 +195,68 @@ class User extends Authenticatable
         ->where('user_id', $this->id)
         ->get()
         ->first();
+    }
+
+    public function getFriendsBooks() {
+
+        $books = collect();
+        $index = [];
+
+        $friends = $this->getFriends();
+
+        foreach ($friends as $friend) {
+
+            foreach ($friend->getCurrentlyReadingBooks() as $b) {
+                $books->add($b);
+                $index[$b->id] = isset($index[$b->id]) ? $index[$b->id] + 1 : 1;
+            }
+
+            foreach ($friend->getAlreadyReadBooks() as $b) {
+                $books->add($b);
+                $index[$b->id] = isset($index[$b->id]) ? $index[$b->id] + 1 : 1;
+            }
+            
+        }
+    
+        $groupedBooks = $books->groupBy('id');
+        $sortedBooks = $groupedBooks->map(function (Collection $books, $key) use ($index) {
+            return ['count' => $index[$key], 'book' => $books->first()];
+        })->sortByDesc('count');
+    
+    
+        $books = collect();
+        foreach ($sortedBooks as $sb) {
+            $books->add($sb['book']);
+        }
+
+        return $books;
+    }
+
+    public function getFriendsWhoAreReadingOrAlreadyReadThisBook($book_id, $status) {
+
+        $result = collect();
+        $friends = $this->getFriends();
+
+        foreach ($friends as $friend) {
+
+            $record = $friend->getBookRecord($book_id);
+
+            if ($record) {
+                if ($record->status == $status) {
+                    $result->add($friend);
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    public function getFriendsWhoAreReadingThisBook($book_id) {
+        return $this->getFriendsWhoAreReadingOrAlreadyReadThisBook($book_id, 2);
+    }
+
+    public function getFriendsWhoAlreadyReadThisBook($book_id) {
+        return $this->getFriendsWhoAreReadingOrAlreadyReadThisBook($book_id, 3);
     }
 
 }
