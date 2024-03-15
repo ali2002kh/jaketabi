@@ -6,6 +6,10 @@ use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
+
+    $user = User::find(1);
+    $book = Book::find(1);
+
     // $user = User::find(1)->getShelves()->first()->getUser()->getProfile()->getUser();
     // dd($user);
 
@@ -28,5 +32,12 @@ Route::get('/', function () {
 
     // dd(User::find(1)->getFriendsBooks());
 
-    dd(User::find(1)->getFriendsWhoAlreadyReadThisBook(1));
+    // dd(User::find(1)->getFriendsWhoAlreadyReadThisBook(1));
+
+    // Book::find(1)->IncrementWantToRead();
+
+    // $book->IncrementWantToRead();
+    // dd($book->getWantToReadCount());
+
+    dd($user->getTrendingBooks());
 });

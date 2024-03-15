@@ -125,5 +125,66 @@ class Book extends Model
 
         return $books;
     }
+
+    public function getLog() {
+
+        return BookLog::where('book_id', $this->id)->get()->first();
+    }
     
+    public function getWantToReadCount() {
+        
+        return $this->getLog()->want_to_read;
+    }
+
+    public function getReadingCount() {
+        
+        return $this->getLog()->reading;
+    }
+
+    public function getAlreadyReadCount() {
+        
+        return $this->getLog()->already_read;
+    }
+
+    public function IncrementWantToRead() {
+
+        $log = $this->getLog();
+        $log->want_to_read++;
+        $log->save();
+    }
+
+    public function IncrementReading() {
+
+        $log = $this->getLog();
+        $log->reading++;
+        $log->save();
+    }
+
+    public function IncrementAlreadyRead() {
+
+        $log = $this->getLog();
+        $log->already_read++;
+        $log->save();
+    }
+
+    public function DecrementWantToRead() {
+
+        $log = $this->getLog();
+        $log->want_to_read--;
+        $log->save();
+    }
+
+    public function DecrementReading() {
+
+        $log = $this->getLog();
+        $log->reading--;
+        $log->save();
+    }
+
+    public function DecrementAlreadyRead() {
+
+        $log = $this->getLog();
+        $log->already_read--;
+        $log->save();
+    }
 }
