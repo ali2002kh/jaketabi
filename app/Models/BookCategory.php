@@ -48,4 +48,15 @@ class BookCategory extends Model
         return $books;
     }
 
+    public function getPreviewBooks() {
+
+        $books = Book::
+        where('category_id', $this->id)
+        ->where('status', 1)
+        ->take(5)
+        ->get();
+
+        return $books;
+    }
+
 }

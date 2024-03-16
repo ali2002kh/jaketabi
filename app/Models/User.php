@@ -73,7 +73,7 @@ class User extends Authenticatable
         return $friendship;
     }
 
-    public function isRequestedTo($user_id) {
+    public function hasRequestedTo($user_id) {
 
         return Friend::
         where('sender', $this->id)
@@ -141,6 +141,37 @@ class User extends Authenticatable
         }
 
         return $senders;
+    }
+
+    public function acceptFriendRequest($user_id) {
+
+        $request = Friend::
+        where('sender', $user_id)
+        ->where('receiver', $this->id)
+        ->first();
+
+        $request->accepted = true;
+        $request->save();
+    }
+
+    public function rejectOrRemoveFriend($user_id) {
+
+        $request = Friend::
+        where('sender', $user_id)
+        ->where('receiver', $this->id)
+        ->first();
+
+        $request->delete();
+    }
+
+    public function sendRequestTo($user_id) {
+
+        $request = new Friend([
+            'sender' => $this->id,
+            'receiver' => $user_id,
+        ]);
+
+        $request->save();
     }
 
     public function getFriendsShelves() {
@@ -251,12 +282,54 @@ class User extends Authenticatable
         return $result;
     }
 
-    public function getFriendsWhoAreReadingThisBook($book_id) {
-        return $this->getFriendsWhoAreReadingOrAlreadyReadThisBook($book_id, 2);
+    public function updateBookStatus($book_id, $status) {
+
+        $record = $this->getBookRecord($book_id);
+        $book = Book::find($book_id);
+
+        if ($record) {
+            $previous_status = $record->status;
+            $record->status = $status;
+            $book->updateLog($previous_status, 'dec');
+        } else {
+            $record = new UserBook([
+                'user_id' => $this->id,
+                'book_id' => $book_id,
+                'status' => $status,
+            ]);
+        }
+
+        $record->save();
+        $book->updateLog($status, 'inc');
     }
 
-    public function getFriendsWhoAlreadyReadThisBook($book_id) {
-        return $this->getFriendsWhoAreReadingOrAlreadyReadThisBook($book_id, 3);
+    public function updateCurrentPage($book_id, $page) {
+
+        $record = $this->getBookRecord($book_id);
+        $record->current_page = $page;
+        $record->save();
+    }
+
+    public function getFriendsWhoAreReadingThisBook($book_id, $preview=false) {
+
+        $result = $this->getFriendsWhoAreReadingOrAlreadyReadThisBook($book_id, 2);
+
+        if ($preview) {
+            $result = $result->take(3);
+        }
+
+        return $result;
+    }
+
+    public function getFriendsWhoAlreadyReadThisBook($book_id, $preview=false) {
+
+        $result = $this->getFriendsWhoAreReadingOrAlreadyReadThisBook($book_id, 3);
+
+        if ($preview) {
+            $result = $result->take(3);
+        }
+
+        return $result;
     }
 
     public function getPopularBooks() { 
@@ -282,6 +355,5 @@ class User extends Authenticatable
 
         return $books;
     }
-
 
 }

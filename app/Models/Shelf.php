@@ -34,5 +34,20 @@ class Shelf extends Model
 
         return $books;
     }
+
+    public function getPreviewBooks() {
+
+        $books = collect();
+        $records = ShelfBook::where('shelf_id', $this->id)->take(3)->get();
+
+        foreach($records as $r) {
+            $b = $r->getBook();
+            if ($b->isActive()) {
+                $books->add($b);
+            }
+        }
+
+        return $books;
+    }
 }
 

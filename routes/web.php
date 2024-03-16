@@ -9,9 +9,10 @@ Route::get('/', function () {
 
     $user = User::find(1);
     $book = Book::find(1);
+    $other = User::find(2);
 
-    // $user = User::find(1)->getShelves()->first()->getUser()->getProfile()->getUser();
-    // dd($user);
+    // dd($user->getShelves()->first()->getPreviewBooks());
+    
 
     // $category = BookCategory::find(1)->getChildren();
     // dd($category);
@@ -32,12 +33,20 @@ Route::get('/', function () {
 
     // dd(User::find(1)->getFriendsBooks());
 
-    // dd(User::find(1)->getFriendsWhoAlreadyReadThisBook(1));
+    // dd($user->getFriendsWhoAreReadingThisBook(1, $preview=true));
 
-    // Book::find(1)->IncrementWantToRead();
+    // $book->updateLog(2);
 
     // $book->IncrementWantToRead();
     // dd($book->getWantToReadCount());
 
-    dd($user->getTrendingBooks());
+    // dd($user->getTrendingBooks());
+
+    // $other->sendRequestTo($user->id);
+    // $user->acceptFriendRequest($other->id);
+    // $user->rejectOrRemoveFriend(2);
+
+    // $user->updateBookStatus(2, 3);
+
+    $user->updateCurrentPage(2, 20);
 });

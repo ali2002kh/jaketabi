@@ -146,45 +146,33 @@ class Book extends Model
         return $this->getLog()->already_read;
     }
 
-    public function IncrementWantToRead() {
+    public function updateLog($field, $change) {
 
         $log = $this->getLog();
-        $log->want_to_read++;
+
+        if ($change == 'inc') {
+            if ($field == 1) {
+                $log->want_to_read++;
+            } else if ($field == 2) {
+                $log->reading++;
+            } else {
+                $log->already_read++;
+            }
+        } else if ($change == 'dec') {
+            if ($field == 1) {
+                $log->want_to_read--;
+            } else if ($field == 2) {
+                $log->reading--;
+            } else {
+                $log->already_read--;
+            }
+        }
+
         $log->save();
     }
 
-    public function IncrementReading() {
+    public function getComments() {
 
-        $log = $this->getLog();
-        $log->reading++;
-        $log->save();
-    }
-
-    public function IncrementAlreadyRead() {
-
-        $log = $this->getLog();
-        $log->already_read++;
-        $log->save();
-    }
-
-    public function DecrementWantToRead() {
-
-        $log = $this->getLog();
-        $log->want_to_read--;
-        $log->save();
-    }
-
-    public function DecrementReading() {
-
-        $log = $this->getLog();
-        $log->reading--;
-        $log->save();
-    }
-
-    public function DecrementAlreadyRead() {
-
-        $log = $this->getLog();
-        $log->already_read--;
-        $log->save();
+        return BookComment::where('book_id', $this->id)->get();
     }
 }
