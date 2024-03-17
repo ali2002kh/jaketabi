@@ -2,6 +2,7 @@
 
 use App\Models\Book;
 use App\Models\BookCategory;
+use App\Models\Shelf;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -10,6 +11,7 @@ Route::get('/', function () {
     $user = User::find(1);
     $book = Book::find(1);
     $other = User::find(2);
+    $shelf = Shelf::find(5);
 
     // dd($user->getShelves()->first()->getPreviewBooks());
     
@@ -33,7 +35,7 @@ Route::get('/', function () {
 
     // dd(User::find(1)->getFriendsBooks());
 
-    // dd($user->getFriendsWhoAreReadingThisBook(1, $preview=true));
+    // dd($user->getFriendsWhoAreReadingThisBook(1, preview:true));
 
     // $book->updateLog(2);
 
@@ -48,5 +50,17 @@ Route::get('/', function () {
 
     // $user->updateBookStatus(2, 3);
 
-    $user->updateCurrentPage(2, 20);
+    // $user->updateCurrentPage(2, 20);
+
+    // $user->updateProfile(first_name:"ali");
+    // $user->updateUser(username:"hadith", password:"1");
+
+    // $user->createShelf(name:"my shelf", description:"this is my description");
+
+    // $shelf->updateShelf(description:"this is my new new description");
+
+    // $shelf->addBook(1);
+    // $shelf->removeBook(1);
+
+    $user->addComment(1, "This is my new comment");
 });

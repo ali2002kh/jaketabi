@@ -49,5 +49,39 @@ class Shelf extends Model
 
         return $books;
     }
+
+    public function updateShelf($name=null, $description=null) {
+
+        if ($name) {
+            $this->name = $name;
+        }
+        if ($description) {
+            $this->description = $description;
+        }
+        $this->save();
+    }
+
+    public function addBook($book_id) {
+
+        if (ShelfBook::where(['shelf_id' => $this->id, 'book_id' => $book_id])->count()) {
+            return 1;
+        }
+
+        $record = new ShelfBook([
+            'book_id' => $book_id,
+            'shelf_id' => $this->id
+        ]);
+
+        $record->save();
+    }
+
+    public function removeBook($book_id) {
+
+        $record = ShelfBook::where(['shelf_id' => $this->id, 'book_id' => $book_id]);
+        if ($record) {
+            $record->delete();
+        }
+    }
+
 }
 

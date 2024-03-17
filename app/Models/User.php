@@ -43,10 +43,8 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function getShelves() {
 
-        return Shelf::where('user_id', $this->id)->get();
-    }
+    // user information --------------------------------------------------------------------------
 
     public function getProfile() {
 
@@ -56,6 +54,64 @@ class User extends Authenticatable
     public function name() {
         return $this->getProfile()->first_name.' '.$this->getProfile()->last_name;
     }
+
+    public function updateUser(
+        $username=null, 
+        $email=null,
+        $number=null,
+        $password=null,
+    ) {
+        if ($username) {
+            $this->username = $username;
+        }
+
+        if ($email) {
+            $this->email = $email;
+        }
+
+        if ($number) {
+            $this->number = $number;
+        }
+
+        if ($password) {
+            $this->password = $password;
+        }
+
+        $this->save();
+    }
+
+    public function updateProfile(
+        $first_name=null, 
+        $last_name=null,
+        $image=null,
+        $birth_date=null,
+    ) {
+        $profile = $this->getProfile();
+        if (!$profile) {
+            $profile = new Profile();
+            $profile->user_id = $this->id;
+        }
+
+        if ($first_name) {
+            $profile->first_name = $first_name;
+        }
+
+        if ($last_name) {
+            $profile->last_name = $last_name;
+        }
+
+        if ($image) {
+            $profile->image = $image;
+        }
+
+        if ($birth_date) {
+            $profile->birth_date = $birth_date;
+        }
+
+        $profile->save();
+    }
+
+    // friendships --------------------------------------------------------------------------
 
     public function isFriend($user_id) {
 
@@ -174,6 +230,65 @@ class User extends Authenticatable
         $request->save();
     }
 
+    public function getFriendsWhoAreReadingOrAlreadyReadThisBook($book_id, $status) {
+
+        $result = collect();
+        $friends = $this->getFriends();
+
+        foreach ($friends as $friend) {
+
+            $record = $friend->getBookRecord($book_id);
+
+            if ($record) {
+                if ($record->status == $status) {
+                    $result->add($friend);
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    public function getFriendsWhoAreReadingThisBook($book_id, $preview=false) {
+
+        $result = $this->getFriendsWhoAreReadingOrAlreadyReadThisBook($book_id, 2);
+
+        if ($preview) {
+            $result = $result->take(3);
+        }
+
+        return $result;
+    }
+
+    public function getFriendsWhoAlreadyReadThisBook($book_id, $preview=false) {
+
+        $result = $this->getFriendsWhoAreReadingOrAlreadyReadThisBook($book_id, 3);
+
+        if ($preview) {
+            $result = $result->take(3);
+        }
+
+        return $result;
+    }
+
+    // shelves --------------------------------------------------------------------------
+
+    public function getShelves() {
+
+        return Shelf::where('user_id', $this->id)->get();
+    }
+
+    public function createShelf($name, $description=null) {
+
+        $shelf = new Shelf();
+        $shelf->user_id = $this->id;
+        $shelf->name = $name;
+        if ($description) {
+            $shelf->description = $description;
+        }
+        $shelf->save();
+    }
+
     public function getFriendsShelves() {
 
         $friends = $this->getFriends();
@@ -187,6 +302,8 @@ class User extends Authenticatable
         
         return $shelves;
     }
+
+    // books --------------------------------------------------------------------------
 
     public function getRecordedBooks($status) {
 
@@ -263,25 +380,6 @@ class User extends Authenticatable
         return $books;
     }
 
-    public function getFriendsWhoAreReadingOrAlreadyReadThisBook($book_id, $status) {
-
-        $result = collect();
-        $friends = $this->getFriends();
-
-        foreach ($friends as $friend) {
-
-            $record = $friend->getBookRecord($book_id);
-
-            if ($record) {
-                if ($record->status == $status) {
-                    $result->add($friend);
-                }
-            }
-        }
-
-        return $result;
-    }
-
     public function updateBookStatus($book_id, $status) {
 
         $record = $this->getBookRecord($book_id);
@@ -310,28 +408,6 @@ class User extends Authenticatable
         $record->save();
     }
 
-    public function getFriendsWhoAreReadingThisBook($book_id, $preview=false) {
-
-        $result = $this->getFriendsWhoAreReadingOrAlreadyReadThisBook($book_id, 2);
-
-        if ($preview) {
-            $result = $result->take(3);
-        }
-
-        return $result;
-    }
-
-    public function getFriendsWhoAlreadyReadThisBook($book_id, $preview=false) {
-
-        $result = $this->getFriendsWhoAreReadingOrAlreadyReadThisBook($book_id, 3);
-
-        if ($preview) {
-            $result = $result->take(3);
-        }
-
-        return $result;
-    }
-
     public function getPopularBooks() { 
         
         $logs = BookLog::orderBy('already_read', 'DESC')->take(20)->get();
@@ -354,6 +430,18 @@ class User extends Authenticatable
         }
 
         return $books;
+    }
+
+    // comments --------------------------------------------------------------------------
+
+    public function addComment($book_id, $message) {
+
+        $comment = new BookComment([
+            'user_id' => $this->id,
+            'message' => $message,
+            'book_id' => $book_id,
+        ]);
+        $comment->save();
     }
 
 }
