@@ -1,7 +1,14 @@
 <?php
 
+use App\Http\Resources\BookCategoryResource;
+use App\Http\Resources\GenreResource;
+use App\Http\Resources\PublisherResource;
+use App\Http\Resources\UserPrivateResource;
+use App\Http\Resources\UserPublicResource;
 use App\Models\Book;
 use App\Models\BookCategory;
+use App\Models\Genre;
+use App\Models\Publisher;
 use App\Models\Shelf;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -62,5 +69,13 @@ Route::get('/', function () {
     // $shelf->addBook(1);
     // $shelf->removeBook(1);
 
-    $user->addComment(1, "This is my new comment");
+    // $user->addComment(1, "This is my new comment");
+
+    return new UserPrivateResource($user);
+
+    // return new BookCategoryResource(BookCategory::find(2));
+    
+    // return new PublisherResource(Publisher::find(1));
+
+    // return new GenreResource(Genre::find(3));
 });

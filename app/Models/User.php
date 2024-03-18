@@ -52,7 +52,23 @@ class User extends Authenticatable
     }
 
     public function name() {
-        return $this->getProfile()->first_name.' '.$this->getProfile()->last_name;
+        $profile = $this->getProfile();
+        if ($profile) {
+            return $this->getProfile()->first_name.' '.$this->getProfile()->last_name;
+        }   
+    }
+
+    public function getImage() {
+        $profile = $this->getProfile();
+        if ($profile) {
+            $image = $this->getProfile()->image;
+            if ($image) {
+                return $image;
+            }
+        }
+        return 'default-image';
+        
+        
     }
 
     public function updateUser(
