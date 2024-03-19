@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Resources\BookCategoryResource;
+use App\Http\Resources\BookCommentResource;
 use App\Http\Resources\GenreResource;
 use App\Http\Resources\PublisherResource;
+use App\Http\Resources\UserBookResource;
 use App\Http\Resources\UserPrivateResource;
 use App\Http\Resources\UserPublicResource;
 use App\Models\Book;
@@ -71,11 +73,15 @@ Route::get('/', function () {
 
     // $user->addComment(1, "This is my new comment");
 
-    return new UserPrivateResource($user);
+    // return new UserPrivateResource($user);
 
     // return new BookCategoryResource(BookCategory::find(2));
     
     // return new PublisherResource(Publisher::find(1));
 
     // return new GenreResource(Genre::find(3));
+
+    // return BookCommentResource::collection($book->getComments());
+
+    return new UserBookResource($user->getBookRecord(2));
 });
