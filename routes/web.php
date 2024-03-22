@@ -1,87 +1,17 @@
 <?php
 
-use App\Http\Resources\BookCategoryResource;
-use App\Http\Resources\BookCommentResource;
-use App\Http\Resources\GenreResource;
-use App\Http\Resources\PublisherResource;
-use App\Http\Resources\UserBookResource;
-use App\Http\Resources\UserPrivateResource;
-use App\Http\Resources\UserPublicResource;
-use App\Models\Book;
-use App\Models\BookCategory;
-use App\Models\Genre;
-use App\Models\Publisher;
-use App\Models\Shelf;
-use App\Models\User;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
+Route::get('/{any?}', function () {
+    return view('welcome');
+})->where('any', '^(?!api\/)[\/\w\.\,-]*');
 
-    $user = User::find(1);
-    $book = Book::find(1);
-    $other = User::find(2);
-    $shelf = Shelf::find(5);
+// Route::post('/signup', [AuthController::class, 'signup'])->name('signup');
 
-    // dd($user->getShelves()->first()->getPreviewBooks());
-    
+// Route::post('/login', [AuthController::class, 'login'])->name('login');
 
-    // $category = BookCategory::find(1)->getChildren();
-    // dd($category);
+// Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-    // $genre = Book::find(1)->getGenres()->first();
-    // $book = $genre->getBooks();
-    // dd($book);
-
-    // $user = User::find(1)->hasFriendRequest();
-    // dd($user);
-
-    // $user = User::find(1)->getWantToReadBooks();
-    // dd($user);
-
-    // dd(User::find(1)->getBookRecord(1)->getProgression());
-
-    // dd(Book::find(1)->getRelatedBooks());
-
-    // dd(User::find(1)->getFriendsBooks());
-
-    // dd($user->getFriendsWhoAreReadingThisBook(1, preview:true));
-
-    // $book->updateLog(2);
-
-    // $book->IncrementWantToRead();
-    // dd($book->getWantToReadCount());
-
-    // dd($user->getTrendingBooks());
-
-    // $other->sendRequestTo($user->id);
-    // $user->acceptFriendRequest($other->id);
-    // $user->rejectOrRemoveFriend(2);
-
-    // $user->updateBookStatus(2, 3);
-
-    // $user->updateCurrentPage(2, 20);
-
-    // $user->updateProfile(first_name:"ali");
-    // $user->updateUser(username:"hadith", password:"1");
-
-    // $user->createShelf(name:"my shelf", description:"this is my description");
-
-    // $shelf->updateShelf(description:"this is my new new description");
-
-    // $shelf->addBook(1);
-    // $shelf->removeBook(1);
-
-    // $user->addComment(1, "This is my new comment");
-
-    // return new UserPrivateResource($user);
-
-    // return new BookCategoryResource(BookCategory::find(2));
-    
-    // return new PublisherResource(Publisher::find(1));
-
-    // return new GenreResource(Genre::find(3));
-
-    // return BookCommentResource::collection($book->getComments());
-
-    return new UserBookResource($user->getBookRecord(2));
-});
+// Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
