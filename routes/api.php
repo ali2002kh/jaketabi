@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,3 +21,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('user', [HomeController::class, 'user']);
+
+Route::get('popular', [HomeController::class, 'popular']);
+
+Route::get('trending', [HomeController::class, 'trending']);
+
+Route::get('book/{id}', [BookController::class, 'show']);
+
+Route::get('friends-activities', [HomeController::class, 'friendsActivities']);
+

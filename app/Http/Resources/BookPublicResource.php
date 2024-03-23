@@ -17,7 +17,7 @@ class BookPublicResource extends JsonResource
         $result = [
             'id' => $this->id,
             'name' => $this->name,
-            'image' => $this->image,
+            'image' => '/storage/book/'.$this->image,
             'author' => $this->author,
             'category' => $this->getCategory()->name,
             'category_id' => $this->category_id,

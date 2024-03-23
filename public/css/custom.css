@@ -9,7 +9,7 @@ body {
 @font-face {
     font-family: hamishe;
     font-style: normal;
-    src: url("fonts/Digi\ Hamishe\ Bold.ttf");
+    src: url("../storage/fonts/Digi\ Hamishe\ Bold.ttf");
 }
 .title {
     width: 100%; 

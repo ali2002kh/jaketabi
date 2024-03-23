@@ -1,74 +1,131 @@
 <template>
     <page-header></page-header>
-    <div class="container mt-5">
-    <div class="row">
-        <div class="col-sm-6 my-3">
-            <!-- <img src="storage/img/shop.jpg" class="img-fluid" alt="shop image"> -->
-            صفحه ی هوم
-        </div>
-        <div class="col-sm-6 my-3">
-            <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-indicators">
-                  <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                  <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                  <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                  <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3" aria-label="Slide 4"></button>
-                  <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="4" aria-label="Slide 5"></button>
-                </div>
+    <p class="title" style="margin-top: 110px;"><span>کتاب های محبوب</span></p>
+        <div class="multiple-card-slider">
+            <div id="carouselExampleControls" class="carousel">
                 <div class="carousel-inner">
-                    <!-- <router-link v-for="r in recommended" :key="r.id" :to="{name: 'product', params: {id: 'r.id'}}">
-                        <div class="carousel-item active">
-                            <img :src="r.image" class="d-block w-100" alt="...">
-                            <div class="carousel-caption d-none d-md-block">
-                                <h5>{{ r.name }}</h5>
+                    <router-link v-for="p in popular" :key="p.id" :to="{name: 'book', params: {id: p.id}}" class="carousel-item">
+                        <div class="card">
+                            <div class="img-wrapper">
+                                <img :src="p.image" class="d-block w-100" alt="..."> 
+                            </div>
+                            <div class="card-body">
+                                
+                                <p class="card-title">{{ p.name }}</p>
                             </div>
                         </div>
-                    </router-link> -->
-
-                    <router-link :to="{name: 'profile'}">صفحه ی پروفایل</router-link>
+                    </router-link>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Previous</span>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
                 </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Next</span>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
                 </button>
             </div>
         </div>
-    </div>
-    <popular></popular>
-    <newest></newest>
-</div>
-<page-footer></page-footer>
+        <p class="title" style="margin-top: 35px;"><span>کتاب های فراگیر</span></p>
+        <div class="multiple-card-slider">
+            <div id="carouselExampleControls2" class="carousel">
+
+                <div class="carousel-inner">
+                    <router-link v-for="t in trending" :key="t.id" :to="{name: 'book', params: {id: t.id}}" class="carousel-item">
+                        <div class="card">
+                            <div class="img-wrapper">
+                                <img :src="t.image" class="d-block w-100" alt="..."> 
+                            </div>
+                            <div class="card-body">
+                                
+                                <p class="card-title">{{ t.name }}</p>
+                            </div>
+                        </div>
+                    </router-link>
+                </div>
+
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls2" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls2" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+        <p class="title" style="margin-top: 35px;"><span> فعالیت  دوستان</span></p>
+        <div class="card-slider">
+            <div id="carouselExampleControls3" class="carousel">
+                <div class="carousel-inner">
+
+
+                    <div v-for="a in activities" :key="a.id" class="carousel-item-activity active">
+                        <div class="activity-card float-end">
+                            <ul class="user-image">
+                                <a href="#" class="profiles-wrapper">
+                                    <li v-for="f in a.preview_friends" :key="f.id"><img :src="f.image"></li>
+                                </a>
+                            </ul>
+                            <div class="img-wrapper">
+                                <img :src="a.image" class="d-block h-75" alt="...">
+                                <div class="card-body">
+                                    <a href="#" ><p class="card-title">{{ a.name }}</p></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls2" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls2" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+        <p class="title" style="margin-top: 35px;"><span> قفسه های  دوستان</span></p>
+        <!-- <script src="js/index.js"></script> -->
 </template>
 
 <script>
 
-// import Popular from "../layouts/Popular"
-// import Newest from "../layouts/Newest"
-// import PageHeader from "../layouts/PageHeader"
+import PageHeader from "../layouts/PageHeader"
 // import PageFooter from "../layouts/PageFooter"
 
-// export default {
-//     components: {
-//         Popular,
-//         Newest,
-//         PageHeader,
-//         PageFooter,
-//     },
-//     data() {
-//         return {
-//             recommended: null,
-//         } 
-//     },
-//     created() {
-//         axios.get('/api/recommended')
-//         .then(response => {
-//             console.log(response.data.data)
-//             this.recommended = response.data.data;
-//         });
-//     },
-// }
+export default {
+    components: {
+        PageHeader,
+        // PageFooter,
+    },
+    data() {
+        return {
+            popular: null,
+            trending: null,
+            activities: null,
+        } 
+    },
+    created() {
+        axios.get('/api/popular')
+        .then(response => {
+            console.log(response.data.data)
+            this.popular = response.data.data;
+        });
+
+        axios.get('/api/trending')
+        .then(response => {
+            console.log(response.data.data)
+            this.trending = response.data.data;
+        });
+
+        axios.get('/api/friends-activities')
+        .then(response => {
+            console.log(response.data.data)
+            this.activities = response.data.data;
+        });
+    },
+}
 </script>
+

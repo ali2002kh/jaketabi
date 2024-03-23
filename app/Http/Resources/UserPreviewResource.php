@@ -17,7 +17,7 @@ class UserPreviewResource extends JsonResource
         $result = [
             'id' => $this->id,
             'username' => $this->username,
-            'image' => $this->getImage(),
+            'image' => '/storage/user/'.$this->getImage(),
             'name' => $this->name(),
         ];
 

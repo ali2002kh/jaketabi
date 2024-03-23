@@ -66,8 +66,7 @@ class User extends Authenticatable
                 return $image;
             }
         }
-        return 'default-image';
-        
+        return 'default-image.jpg';
         
     }
 
@@ -284,6 +283,15 @@ class User extends Authenticatable
             $result = $result->take(3);
         }
 
+        return $result;
+    }
+
+    public function getFriendsReadingBookPreview($book_id) {
+
+        $reading = $this->getFriendsWhoAreReadingThisBook($book_id, preview: true);
+        $read = $this->getFriendsWhoAlreadyReadThisBook($book_id, preview: true);
+        
+        $result = $reading->union($read)->take(3);
         return $result;
     }
 
