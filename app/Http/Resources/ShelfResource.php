@@ -23,7 +23,7 @@ class ShelfResource extends JsonResource
             'description' => $this->description,
             'user' => new UserPreviewResource($this->getUser()),
             'book_count' => $books->count(),
-            'books' => BookPublicResource::collection($books),
+            'books' => BookPreviewResource::collection($books),
         ];
 
         return $result;

@@ -30,3 +30,7 @@ Route::get('book/{id}', [BookController::class, 'show']);
 
 Route::get('friends-activities', [HomeController::class, 'friendsActivities']);
 
+Route::get('friends-shelves', [HomeController::class, 'friendsShelves']);
+
+
+

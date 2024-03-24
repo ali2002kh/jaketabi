@@ -14,14 +14,16 @@ class UserPublicResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $preview_book_number = 5;
+
         $result = [
             'id' => $this->id,
             'username' => $this->username,
             'image' => '/storage/user/'.$this->getImage(),
             'name' => $this->name(),
-            'want_to_read' => BookPublicResource::collection($this->getWantToReadBooks()),
-            'reading' => BookPublicResource::collection($this->getCurrentlyReadingBooks()),
-            'already_read' => BookPublicResource::collection($this->getAlreadyReadBooks()),
+            'want_to_read' => BookPreviewResource::collection($this->getWantToReadBooks()->take($preview_book_number)),
+            'reading' => BookPreviewResource::collection($this->getCurrentlyReadingBooks()->take($preview_book_number)),
+            'already_read' => BookPreviewResource::collection($this->getAlreadyReadBooks()->take($preview_book_number)),
             'shelves' => ShelfResource::collection($this->getShelves()),
         ];
 

@@ -29,7 +29,7 @@ class UserBookResource extends JsonResource
         $result = [
             'id' => $this->id,
             'user' => new UserPreviewResource($user),
-            'book' => new BookPublicResource($book),
+            'book' => new BookPreviewResource($book),
             // 'current_page' => $this->current_page,
             // 'status' => $this->status,
             // 'last_read_at' => $this->last_read_at,

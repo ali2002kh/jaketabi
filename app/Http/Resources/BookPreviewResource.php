@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class BookCategoryResource extends JsonResource
+class BookPreviewResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,14 +14,10 @@ class BookCategoryResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $books = $this->getBooks();
-
         $result = [
             'id' => $this->id,
             'name' => $this->name,
-            'parent_id' => $this->parent_id,
-            'book_count' => $books->count(),
-            'books' => BookPreviewResource::collection($books),
+            'image' => '/storage/book/'.$this->image,
         ];
 
         return $result;

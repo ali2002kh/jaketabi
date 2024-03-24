@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\BookPublicResource;
 use App\Http\Resources\FriendBookResource;
+use App\Http\Resources\ShelfPreviewResource;
+use App\Http\Resources\ShelfResource;
 use App\Http\Resources\UserPrivateResource;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -32,5 +34,11 @@ class HomeController extends Controller {
 
         $user = User::find(1);
         return FriendBookResource::collection($user->getFriendsBooks());
+    }
+
+    public function friendsShelves() {
+
+        $user = User::find(2);
+        return ShelfPreviewResource::collection($user->getFriendsShelves());
     }
 }

@@ -20,7 +20,7 @@ class GenreResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'book_count' => $books->count(),
-            'books' => BookPublicResource::collection($books),
+            'books' => BookPreviewResource::collection($books),
         ];
 
         return $result;

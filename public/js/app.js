@@ -21815,7 +21815,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       popular: null,
       trending: null,
-      activities: null
+      activities: null,
+      shelves: null
     };
   },
   created: function created() {
@@ -21831,6 +21832,10 @@ __webpack_require__.r(__webpack_exports__);
     axios.get('/api/friends-activities').then(function (response) {
       console.log(response.data.data);
       _this.activities = response.data.data;
+    });
+    axios.get('/api/friends-shelves').then(function (response) {
+      console.log(response.data.data);
+      _this.shelves = response.data.data;
     });
   }
 });

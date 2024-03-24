@@ -105,6 +105,7 @@ export default {
             popular: null,
             trending: null,
             activities: null,
+            shelves: null,
         } 
     },
     created() {
@@ -124,6 +125,12 @@ export default {
         .then(response => {
             console.log(response.data.data)
             this.activities = response.data.data;
+        });
+
+        axios.get('/api/friends-shelves')
+        .then(response => {
+            console.log(response.data.data)
+            this.shelves = response.data.data;
         });
     },
 }

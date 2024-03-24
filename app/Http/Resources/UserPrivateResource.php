@@ -14,7 +14,7 @@ class UserPrivateResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-
+        $preview_book_number = 5;
         $friend_requests = $this->getFriendRequests();
         $friends = $this->getFriends();
 
@@ -26,9 +26,9 @@ class UserPrivateResource extends JsonResource
             'email' => $this->email,
             'number' => $this->number,
             'birth_date' => $this->getProfile()->birth_date,
-            'want_to_read' => BookPublicResource::collection($this->getWantToReadBooks()),
-            'reading' => BookPublicResource::collection($this->getCurrentlyReadingBooks()),
-            'already_read' => BookPublicResource::collection($this->getAlreadyReadBooks()),
+            'want_to_read' => BookPreviewResource::collection($this->getWantToReadBooks()->take($preview_book_number)),
+            'reading' => BookPreviewResource::collection($this->getCurrentlyReadingBooks()->take($preview_book_number)),
+            'already_read' => BookPreviewResource::collection($this->getAlreadyReadBooks()->take($preview_book_number)),
             'shelves' => ShelfResource::collection($this->getShelves()),
             'friends' => UserPreviewResource::collection($friends),
             'friends_count' => $friends->count(),
