@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ShelfController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +32,8 @@ Route::get('book/{id}', [BookController::class, 'show']);
 Route::get('friends-activities', [HomeController::class, 'friendsActivities']);
 
 Route::get('friends-shelves', [HomeController::class, 'friendsShelves']);
+
+Route::get('shelf/{id}', [ShelfController::class, 'show']);
 
 
 
