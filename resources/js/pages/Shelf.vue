@@ -1,6 +1,21 @@
 <template>
-    <div>
-        {{ shelf.name }}
+    <page-header></page-header>
+    <div class="row">
+        <div class="col-sm-6 my-3">
+            صفحه ی قفسه
+        </div>
+        <div class="container my-4">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="container d-flex">
+                        <div class="d-grid">
+                            <p class="text-muted mb-1">{{ shelf.name }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+        </div>
     </div>
 </template>
 

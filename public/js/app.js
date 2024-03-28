@@ -21853,13 +21853,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-// import Popular from "../layouts/Popular"
-// import Newest from "../layouts/Newest"
-// import PageHeader from "../layouts/PageHeader"
+/* harmony import */ var _layouts_PageHeader__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../layouts/PageHeader */ "./resources/js/layouts/PageHeader.vue");
+
 // import PageFooter from "../layouts/PageFooter"
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  components: {},
+  components: {
+    PageHeader: _layouts_PageHeader__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   data: function data() {
     return {
       user: null
@@ -21967,10 +21968,48 @@ var _withScopeId = function _withScopeId(n) {
 var _hoisted_1 = {
   "class": "navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
 };
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"container-fluid\" data-v-16175f60><ul class=\"nav navbar-nav me-auto\" data-v-16175f60><li class=\"nav-item ps-4\" data-v-16175f60><a class=\"nav-link\" href=\"#\" data-v-16175f60><img class=\"w-50\" src=\"storage/icons/bell.png\" alt=\"\" data-v-16175f60></a></li><li class=\"nav-item ps-2\" data-v-16175f60><a class=\"nav-link\" href=\"#\" data-v-16175f60><img class=\"w-50\" src=\"storage/icons/search.png\" alt=\"\" data-v-16175f60></a></li></ul><ul class=\"nav navbar-nav justify-content-center\" data-v-16175f60><li class=\"nav-item\" data-v-16175f60><p class=\"navbar-text text-white fs-5 my-2\" data-v-16175f60>ج‍‍‍‍اکتابی</p></li></ul><ul class=\"nav navbar-nav ms-auto\" data-v-16175f60><li class=\"nav-item ps-4\" data-v-16175f60><a class=\"nav-link\" href=\"#\" data-v-16175f60><img class=\"w-50\" src=\"storage/icons/profile-white.png\" alt=\"\" data-v-16175f60></a></li><li class=\"nav-item ps-2\" data-v-16175f60><a class=\"nav-link\" href=\"#\" data-v-16175f60><img class=\"w-50\" src=\"storage/icons/white-home.png\" alt=\"\" data-v-16175f60></a></li></ul></div>", 1);
-var _hoisted_3 = [_hoisted_2];
+var _hoisted_2 = {
+  "class": "container-fluid"
+};
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<ul class=\"nav navbar-nav me-auto\" data-v-16175f60><li class=\"nav-item ps-4\" data-v-16175f60><a class=\"nav-link\" href=\"#\" data-v-16175f60><img class=\"w-50\" src=\"storage/icons/bell.png\" alt=\"\" data-v-16175f60></a></li><li class=\"nav-item ps-2\" data-v-16175f60><a class=\"nav-link\" href=\"#\" data-v-16175f60><img class=\"w-50\" src=\"storage/icons/search.png\" alt=\"\" data-v-16175f60></a></li></ul><ul class=\"nav navbar-nav justify-content-center\" data-v-16175f60><li class=\"nav-item\" data-v-16175f60><p class=\"navbar-text text-white fs-5 my-2\" data-v-16175f60>ج‍‍‍‍اکتابی</p></li></ul>", 2);
+var _hoisted_5 = {
+  "class": "nav navbar-nav ms-auto"
+};
+var _hoisted_6 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", {
+    "class": "nav-item ps-4"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    "class": "nav-link",
+    href: "#"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+    "class": "w-50",
+    src: "storage/icons/profile-white.png",
+    alt: ""
+  })])], -1 /* HOISTED */);
+});
+var _hoisted_7 = {
+  "class": "nav-item ps-2"
+};
+var _hoisted_8 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+    "class": "w-50",
+    src: "storage/icons/white-home.png",
+    alt: ""
+  }, null, -1 /* HOISTED */);
+});
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("nav", _hoisted_1, [].concat(_hoisted_3));
+  var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("nav", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+    "class": "nav-link",
+    to: {
+      name: 'home'
+    }
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_8];
+    }),
+    _: 1 /* STABLE */
+  })])])])]);
 }
 
 /***/ }),
@@ -21988,8 +22027,34 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
+var _hoisted_1 = {
+  "class": "row"
+};
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "col-sm-6 my-3"
+}, " صفحه ی کتاب ", -1 /* HOISTED */);
+var _hoisted_3 = {
+  "class": "container my-4"
+};
+var _hoisted_4 = {
+  "class": "row"
+};
+var _hoisted_5 = {
+  "class": "col-sm-4"
+};
+var _hoisted_6 = {
+  "class": "container d-flex"
+};
+var _hoisted_7 = {
+  "class": "d-grid"
+};
+var _hoisted_8 = {
+  "class": "text-muted mb-1"
+};
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", null, null, -1 /* HOISTED */);
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.book.name), 1 /* TEXT */);
+  var _component_page_header = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("page-header");
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_page_header), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.book.name), 1 /* TEXT */)])])])]), _hoisted_9])])], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),
@@ -22302,8 +22367,9 @@ var _hoisted_10 = {
 };
 var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", null, null, -1 /* HOISTED */);
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_page_header = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("page-header");
   var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("= "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_page_header), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
     to: {
       name: 'home'
     }
@@ -22330,8 +22396,34 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
+var _hoisted_1 = {
+  "class": "row"
+};
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "col-sm-6 my-3"
+}, " صفحه ی قفسه ", -1 /* HOISTED */);
+var _hoisted_3 = {
+  "class": "container my-4"
+};
+var _hoisted_4 = {
+  "class": "row"
+};
+var _hoisted_5 = {
+  "class": "col-sm-4"
+};
+var _hoisted_6 = {
+  "class": "container d-flex"
+};
+var _hoisted_7 = {
+  "class": "d-grid"
+};
+var _hoisted_8 = {
+  "class": "text-muted mb-1"
+};
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", null, null, -1 /* HOISTED */);
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.shelf.name), 1 /* TEXT */);
+  var _component_page_header = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("page-header");
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_page_header), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.shelf.name), 1 /* TEXT */)])])])]), _hoisted_9])])], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),
