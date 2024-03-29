@@ -35,5 +35,5 @@ Route::get('friends-shelves', [HomeController::class, 'friendsShelves']);
 
 Route::get('shelf/{id}', [ShelfController::class, 'show']);
 
-
+Route::post('/store-shelf', [ShelfController::class, 'storeShelf']);
 

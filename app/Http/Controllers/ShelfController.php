@@ -12,4 +12,23 @@ class ShelfController extends Controller
 
         return new ShelfResource(Shelf::find($id));
     }
+
+    public function  storeShelf(Request $request) {
+
+
+        $request->validate([
+            'name' =>  'required|unique:shelves',
+        ]);
+
+        $shelf = new Shelf([
+            'name' => $request->get('name'),
+            'description' => $request->get('description'),
+            'user_id' => 1,
+        ]);
+
+        $shelf->save();
+
+        return $shelf->id;
+    
+    }
 }
