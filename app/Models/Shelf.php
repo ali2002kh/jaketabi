@@ -50,13 +50,17 @@ class Shelf extends Model
         return $books;
     }
 
-    public function updateShelf($name=null, $description=null) {
+    public function update($name=null, $description=null) {
 
         if ($name) {
             $this->name = $name;
         }
         if ($description) {
             $this->description = $description;
+        }
+
+        if (!($description or $name)) {
+            $this->description = null;
         }
         $this->save();
     }
