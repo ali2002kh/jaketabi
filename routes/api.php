@@ -23,7 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // Home ----------------------------------------------------------------
 
-Route::get('user', [HomeController::class, 'user']);
+Route::get('user/{id}', [HomeController::class, 'user']);
 
 Route::get('popular', [HomeController::class, 'popular']);
 

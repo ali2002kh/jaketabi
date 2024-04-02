@@ -45,6 +45,7 @@ class UserPrivateResource extends JsonResource
             'friends_count' => $friends->count(),
             'friend_requests' => UserPreviewResource::collection($friend_requests),
             'friend_requests_count' => $friend_requests->count(),
+            'is_private' => true,
         ];
 
         if ($want_to_read_more_count > 0) {

@@ -36,6 +36,7 @@ class UserPublicResource extends JsonResource
             'reading' => BookPreviewResource::collection($reading->take($preview_book_number)),
             'already_read' => BookPreviewResource::collection($already_read->take($preview_book_number)),
             'shelves' => ShelfResource::collection($shelves->take($preview_shelf_number)),
+            'is_private' => false,
         ];
 
         if ($want_to_read_more_count > 0) {

@@ -7,15 +7,23 @@ use App\Http\Resources\FriendBookResource;
 use App\Http\Resources\ShelfPreviewResource;
 use App\Http\Resources\ShelfResource;
 use App\Http\Resources\UserPrivateResource;
+use App\Http\Resources\UserPublicResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller {
 
-    public function user() {
+    public function user($id) {
 
         $user = User::find(1);
-        return new UserPrivateResource($user);
+
+        if ($user->id == $id) {
+            return new UserPrivateResource($user);
+        } else {
+            $user = User::find($id);
+            return new UserPublicResource($user);
+        }
+        
     }
 
     public function popular() {
