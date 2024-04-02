@@ -25,9 +25,9 @@
                         </a>
                     </li>
                     <li class="nav-item ps-2">
-                        <a class="nav-link" href="#">
+                        <router-link class="nav-link" :to="{name: 'home'}">
                             <img class="w-50" src="storage/icons/white-home.png" alt="">
-                        </a>
+                        </router-link>
                     </li>
                 </ul>
             </div>

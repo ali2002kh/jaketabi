@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ShelfController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// Home ----------------------------------------------------------------
+
 Route::get('user', [HomeController::class, 'user']);
 
 Route::get('popular', [HomeController::class, 'popular']);
@@ -32,5 +35,18 @@ Route::get('friends-activities', [HomeController::class, 'friendsActivities']);
 
 Route::get('friends-shelves', [HomeController::class, 'friendsShelves']);
 
+// Shelves ----------------------------------------------------------------
 
+Route::get('shelf/{id}', [ShelfController::class, 'show']);
 
+Route::post('/store-shelf', [ShelfController::class, 'storeShelf']);
+
+Route::get('/add-book-to-shelf/{shelf_id}/{book_id}', [ShelfController::class, 'addBook']);
+
+Route::delete('/remove-book-from-shelf/{shelf_id}/{book_id}', [ShelfController::class, 'removeBook']);
+
+Route::post('/update-shelf-name/{shelf_id}', [ShelfController::class, 'updateName']);
+
+Route::post('/update-shelf-description/{shelf_id}', [ShelfController::class, 'updateDescription']);
+
+Route::delete('/remove-shelf/{shelf_id}', [ShelfController::class, 'delete']);

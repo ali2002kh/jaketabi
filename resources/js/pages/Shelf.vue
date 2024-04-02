@@ -2,14 +2,14 @@
     <page-header></page-header>
     <div class="row">
         <div class="col-sm-6 my-3">
-            صفحه ی کتاب
+            صفحه ی قفسه
         </div>
         <div class="container my-4">
             <div class="row">
                 <div class="col-sm-4">
                     <div class="container d-flex">
                         <div class="d-grid">
-                            <p class="text-muted mb-1">{{ book.name }}</p>
+                            <p class="text-muted mb-1">{{ shelf.name }}</p>
                         </div>
                     </div>
                 </div>
@@ -31,14 +31,14 @@ export default {
     },
     data() {
         return {
-            book: null,
+            shelf: null,
         }
     },
     created() {
-        axios.get(`/api/book/${this.$route.params.id}`)
+        axios.get(`/api/shelf/${this.$route.params.id}`)
         .then(response => {
             console.log(response.data.data)
-            this.book = response.data.data
+            this.shelf = response.data.data
         })
     },  
 }

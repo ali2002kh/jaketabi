@@ -1,4 +1,5 @@
-<template>=
+<template>
+    <page-header></page-header>
     <div class="row">
         <div class="col-sm-6 my-3">
             صفحه ی پروفایل
@@ -23,14 +24,12 @@
 
 <script>
 
-// import Popular from "../layouts/Popular"
-// import Newest from "../layouts/Newest"
-// import PageHeader from "../layouts/PageHeader"
+import PageHeader from "../layouts/PageHeader"
 // import PageFooter from "../layouts/PageFooter"
 
 export default {
     components: {
-
+        PageHeader,
     },
     data() {
         return {
