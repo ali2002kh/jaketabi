@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\FriendshipController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ShelfController;
 use Illuminate\Http\Request;
@@ -22,6 +23,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 // Home ----------------------------------------------------------------
+
+Route::get('user', [HomeController::class, 'self']);
 
 Route::get('user/{id}', [HomeController::class, 'user']);
 
@@ -50,3 +53,9 @@ Route::post('/update-shelf-name/{shelf_id}', [ShelfController::class, 'updateNam
 Route::post('/update-shelf-description/{shelf_id}', [ShelfController::class, 'updateDescription']);
 
 Route::delete('/remove-shelf/{shelf_id}', [ShelfController::class, 'delete']);
+
+// Friends ----------------------------------------------------------------
+
+Route::get('/accept-or-add-friend/{id}', [FriendshipController::class, 'acceptOrAdd']);
+
+Route::get('/reject-or-remove-friend/{id}', [FriendshipController::class, 'rejectOrRemove']);

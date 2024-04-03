@@ -13,6 +13,13 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller {
 
+    public function self() {
+
+        $user = User::find(1);
+
+        return new UserPrivateResource($user);
+    }
+
     public function user($id) {
 
         $user = User::find(1);

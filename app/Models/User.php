@@ -221,8 +221,12 @@ class User extends Authenticatable
         ->where('receiver', $this->id)
         ->first();
 
-        $request->accepted = true;
-        $request->save();
+        if ($request) {
+            $request->accepted = true;
+            $request->save();
+        } else {
+            return 'there is no request';
+        }
     }
 
     public function rejectOrRemoveFriend($user_id) {
@@ -232,10 +236,28 @@ class User extends Authenticatable
         ->where('receiver', $this->id)
         ->first();
 
-        $request->delete();
+        if ($request) {
+            $request->delete();
+        } else {
+            return 'there is no request';
+        }
+
     }
 
     public function sendRequestTo($user_id) {
+
+        if ($this->hasRequestedTo($user_id)) {
+            return 'already requested';
+        }
+
+        if ($this->isRequestedBy($user_id)) {
+            $this->acceptFriendRequest($user_id);
+            return 'request accepted';
+        }
+        
+        if ($this->isFriend($user_id)) {
+            return 'already friend';
+        }
 
         $request = new Friend([
             'sender' => $this->id,

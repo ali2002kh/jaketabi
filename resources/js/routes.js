@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import Book from "./pages/Book";
 import Shelf from "./pages/Shelf";
+import Friends from "./pages/Friends";
 
 const routes = [
     {
@@ -24,6 +25,11 @@ const routes = [
         path: "/shelf/:id",
         component: Shelf,
         name:"shelf",
+    },
+    {
+        path: "/friends",
+        component: Friends,
+        name:"friends",
     },
 ];
 

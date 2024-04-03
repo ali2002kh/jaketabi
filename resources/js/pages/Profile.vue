@@ -12,9 +12,9 @@
         </div>
         <div v-if="user.is_private" class="d-flex flex-row-reverse align-items-center mt-5 ms-4">
             <div class="ps-4">
-                <a href="#" class="text-dark link-underline link-underline-opacity-0">
+                <router-link :to="{name: 'friends'}" class="text-dark link-underline link-underline-opacity-0">
                     <h5>دوستان</h5>
-                </a>
+                </router-link>
             </div>
             <div class="pe-4">
                 <a href="#" class="text-dark link-underline link-underline-opacity-0">
