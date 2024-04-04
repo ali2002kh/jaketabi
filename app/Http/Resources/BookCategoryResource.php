@@ -15,13 +15,15 @@ class BookCategoryResource extends JsonResource
     public function toArray(Request $request): array
     {
         $books = $this->getBooks();
+        $preview_books_count = 5;
 
         $result = [
             'id' => $this->id,
             'name' => $this->name,
-            'parent_id' => $this->parent_id,
+            'parent' => new BookCategoryPreviewResource($this->getParent()),
+            'siblings' => BookCategoryPreviewResource::collection($this->getSiblings()),
             'book_count' => $books->count(),
-            'books' => BookPreviewResource::collection($books),
+            'preview_books' => BookPreviewResource::collection($books->take($preview_books_count)),
         ];
 
         return $result;

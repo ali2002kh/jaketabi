@@ -7,16 +7,6 @@ use App\Http\Controllers\ShelfController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -31,8 +21,6 @@ Route::get('user/{id}', [HomeController::class, 'user']);
 Route::get('popular', [HomeController::class, 'popular']);
 
 Route::get('trending', [HomeController::class, 'trending']);
-
-Route::get('book/{id}', [BookController::class, 'show']);
 
 Route::get('friends-activities', [HomeController::class, 'friendsActivities']);
 
@@ -59,3 +47,15 @@ Route::delete('/remove-shelf/{shelf_id}', [ShelfController::class, 'delete']);
 Route::get('/accept-or-add-friend/{id}', [FriendshipController::class, 'acceptOrAdd']);
 
 Route::get('/reject-or-remove-friend/{id}', [FriendshipController::class, 'rejectOrRemove']);
+
+// Books -------------------------------------------------------------------
+
+Route::get('book/{id}', [BookController::class, 'show']);
+
+Route::get('book-record/{user_id}/{book_id}', [BookController::class, 'record']);
+
+Route::get('update-book-status/{book_id}/{status}', [BookController::class, 'updateStatus']);
+
+Route::get('category/{id}', [BookController::class, 'category']);
+
+Route::get('genre/{id}', [BookController::class, 'genre']);
