@@ -3,6 +3,7 @@
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\FriendshipController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ShelfController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,10 @@ Route::get('friends-activities', [HomeController::class, 'friendsActivities']);
 
 Route::get('friends-shelves', [HomeController::class, 'friendsShelves']);
 
+// profile  ---------------------------------------------------------------
+
+Route::post('update-profile', [ProfileController::class, 'update']);
+
 // Shelves ----------------------------------------------------------------
 
 Route::get('shelf/{id}', [ShelfController::class, 'show']);
@@ -48,6 +53,8 @@ Route::get('/accept-or-add-friend/{id}', [FriendshipController::class, 'acceptOr
 
 Route::get('/reject-or-remove-friend/{id}', [FriendshipController::class, 'rejectOrRemove']);
 
+Route::get('/friendship-status/{id}', [FriendshipController::class, 'status']);
+
 // Books -------------------------------------------------------------------
 
 Route::get('book/{id}', [BookController::class, 'show']);
@@ -56,6 +63,10 @@ Route::get('book-record/{user_id}/{book_id}', [BookController::class, 'record'])
 
 Route::get('update-book-status/{book_id}/{status}', [BookController::class, 'updateStatus']);
 
+Route::get('update-book-current-page/{book_id}/{page}', [BookController::class, 'updateCurrentPage']);
+
 Route::get('category/{id}', [BookController::class, 'category']);
 
 Route::get('genre/{id}', [BookController::class, 'genre']);
+
+Route::post('add-book-comment/{book_id}', [BookController::class, 'addComment']);

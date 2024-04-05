@@ -12,8 +12,8 @@ use App\Models\Genre;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class BookController extends Controller
-{
+class BookController extends Controller {
+    
     public function show($id) {
 
         return new BookPublicResource(Book::find($id));
@@ -35,6 +35,14 @@ class BookController extends Controller
         return abort(200);
     }
 
+    public function updateCurrentPage($book_id, $page) {
+
+        $user = User::find(1);
+        $user->updateCurrentPage($book_id, $page);
+
+        return abort(200);
+    }
+
     public function category($id) {
 
         return new BookCategoryResource(BookCategory::find($id));
@@ -43,5 +51,16 @@ class BookController extends Controller
     public function genre($id) {
 
         return new GenreResource(Genre::find($id));
+    }
+
+    public function addComment($book_id, Request $request) {
+
+        $user = User::find(1);
+
+        $this->validate($request, [
+            'message' => 'required',
+        ]); 
+
+        $user->addComment($book_id, $request->get('message'));
     }
 }

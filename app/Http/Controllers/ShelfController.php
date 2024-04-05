@@ -8,8 +8,8 @@ use App\Models\ShelfBook;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class ShelfController extends Controller
-{
+class ShelfController extends Controller {
+    
     public function show($id) {
 
         return new ShelfResource(Shelf::find($id));

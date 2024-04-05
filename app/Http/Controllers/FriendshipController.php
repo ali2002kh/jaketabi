@@ -21,5 +21,23 @@ class FriendshipController extends Controller {
         $user->rejectOrRemoveFriend($id);
     }
 
+    public function status($id) {
 
+        $user = User::find(1);
+
+        // 0 no request
+        // 1 sent request
+        // 2 received request
+        // 3 friend
+
+        if ($user->isFriend($id)) {
+            return 3;
+        } else if ($user->hasRequestedTo($id)) {
+            return 1;
+        } else if ($user->isRequestedBy($id)) {
+            return 2;
+        } else {
+            return 0;
+        }
+    }
 }

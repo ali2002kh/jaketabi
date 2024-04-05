@@ -76,6 +76,7 @@ class User extends Authenticatable
         $number=null,
         $password=null,
     ) {
+
         if ($username) {
             $this->username = $username;
         }
@@ -96,10 +97,10 @@ class User extends Authenticatable
     }
 
     public function updateProfile(
-        $first_name=null, 
-        $last_name=null,
+        $firstName=null, 
+        $lastName=null,
         $image=null,
-        $birth_date=null,
+        $birthDate=null,
     ) {
         $profile = $this->getProfile();
         if (!$profile) {
@@ -107,20 +108,20 @@ class User extends Authenticatable
             $profile->user_id = $this->id;
         }
 
-        if ($first_name) {
-            $profile->first_name = $first_name;
+        if ($firstName) {
+            $profile->first_name = $firstName;
         }
 
-        if ($last_name) {
-            $profile->last_name = $last_name;
+        if ($lastName) {
+            $profile->last_name = $lastName;
         }
 
         if ($image) {
             $profile->image = $image;
         }
 
-        if ($birth_date) {
-            $profile->birth_date = $birth_date;
+        if ($birthDate) {
+            $profile->birth_date = $birthDate;
         }
 
         $profile->save();
@@ -473,6 +474,10 @@ class User extends Authenticatable
 
     public function updateCurrentPage($book_id, $page) {
 
+        $book = Book::find($book_id);
+        if ($book->page_count < $page) {
+            return 'error'; 
+        }
         $record = $this->getBookRecord($book_id);
         $record->current_page = $page;
         $record->save();
