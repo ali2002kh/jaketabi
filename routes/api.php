@@ -69,4 +69,6 @@ Route::get('category/{id}', [BookController::class, 'category']);
 
 Route::get('genre/{id}', [BookController::class, 'genre']);
 
+Route::get('book-comments/{book_id}', [BookController::class, 'comments']);
+
 Route::post('add-book-comment/{book_id}', [BookController::class, 'addComment']);

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\BookCategoryResource;
+use App\Http\Resources\BookCommentResource;
 use App\Http\Resources\BookPublicResource;
 use App\Http\Resources\GenreResource;
 use App\Http\Resources\UserBookResource;
@@ -62,5 +63,12 @@ class BookController extends Controller {
         ]); 
 
         $user->addComment($book_id, $request->get('message'));
+    }
+
+    public function comments($book_id) {
+
+        $book = Book::find($book_id);
+
+        return BookCommentResource::collection($book->getComments());
     }
 }
