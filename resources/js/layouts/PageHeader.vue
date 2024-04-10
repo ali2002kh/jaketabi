@@ -7,11 +7,19 @@
                             <img class="w-50" src="storage/icons/bell.png" alt="">
                         </a>
                     </li>
-                    <li class="nav-item ps-2">
+
+
+                    <!-- <li class="nav-item ps-2">
                         <a class="nav-link" href="#">
                             <img class="w-50" src="storage/icons/search.png" alt="">
                         </a>
-                    </li>
+                    </li> -->
+
+                    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#searchModal">
+                        <i class="fa fa-search"></i>
+                    </button>
+
+
                 </ul>
                 <ul class="nav navbar-nav justify-content-center">
                     <li class="nav-item">
@@ -32,13 +40,59 @@
                 </ul>
             </div>
         </nav>
+
+        <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="searchModalLabel">جستجو</h1>
+                    <button id="close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" class="form-control" name="search" 
+                    @keyup="search" v-model="input">
+                    <br>
+                    <div class="container d-grid mt-2">
+
+
+                        <p v-if="books[0]" class="text-center">کتاب ها</p>
+                        <a href="" v-for="b in books" :key="b.id" class="nav-link" @click.prevent="showBook(b.id)">
+                            <div class="d-flex m-2">
+                                <img class="item-img me-3" :src="b.image" alt="">
+                                <div class="d-flex align-items-center">
+                                    <p class="text-center">{{ b.name }}</p>
+                                </div>
+                            </div>
+                        </a>
+
+                        <hr v-if="shelves[0]">
+                        <p v-if="shelves[0]" class="text-center">قفسه ها</p>
+                        <a href="" v-for="s in shelves" :key="s.id" class="nav-link" @click.prevent="showShelf(s.id)">
+                            <div class="d-flex m-2">
+                                <img class="item-img me-3" :src="s.image" alt="">
+                                <div class="d-flex align-items-center">
+                                    <p class="text-center">{{ s.name }}</p>
+                                </div>
+                            </div>
+                        </a>
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
 export default {
     data() {
         return {
-            
+            input: '',
+            books: [],
+            shelves: [],
         } 
     },
     created() {
@@ -62,7 +116,7 @@ export default {
         //     };
         // });
     },
-    // methods: {
+    methods: {
     //     async logout () {
     //         axios.post('/logout')
     //         .then(response => {
@@ -72,21 +126,29 @@ export default {
     //         })
     //     },
 
-    //     async search() {
-    //         axios.post('/api/search', {
-    //             input: this.input
-    //         }).then(response => {
-    //             console.log(response.data.data)
-    //             this.products = response.data.data
-    //         })
-    //     },
+        async search() {
 
-    //     async showProduct (product_id) {
-    //         document.getElementById('close').click()
-    //         // this.$router.push('/product/' + product_id)
-    //         this.$router.replace({ name: 'product', params: { id: product_id }});
-    //     }
-    // },
+            axios.post('/api/search', {
+                input: this.input
+            }).then(response => {
+                console.log(response.data.data)
+                this.books = response.data.data.books
+                this.shelves = response.data.data.shelves
+            })
+
+        },
+        async showBook (book_id) {
+            document.getElementById('close').click()
+            // this.$router.push('/product/' + product_id)
+            this.$router.replace({ name: 'book', params: { id: book_id }});
+        },
+
+        async showShelf (shelf_id) {
+            document.getElementById('close').click()
+            // this.$router.push('/product/' + product_id)
+            this.$router.replace({ name: 'shelf', params: { id: shelf_id }});
+        }
+    },
 }
 </script>
 

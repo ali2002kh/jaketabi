@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\BookPreviewResource;
 use App\Http\Resources\BookPublicResource;
 use App\Http\Resources\FriendBookResource;
 use App\Http\Resources\ShelfPreviewResource;
 use App\Http\Resources\ShelfResource;
 use App\Http\Resources\UserPrivateResource;
 use App\Http\Resources\UserPublicResource;
+use App\Models\Book;
 use App\Models\User;
 use Illuminate\Http\Request;
 

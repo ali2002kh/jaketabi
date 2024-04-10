@@ -4,6 +4,7 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\FriendshipController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ShelfController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,7 +28,11 @@ Route::get('friends-activities', [HomeController::class, 'friendsActivities']);
 
 Route::get('friends-shelves', [HomeController::class, 'friendsShelves']);
 
-// profile  ---------------------------------------------------------------
+// Search -------------------------------------------------------------------
+
+Route::post('search', [SearchController::class, 'search']);
+
+// Profile  ---------------------------------------------------------------
 
 Route::post('update-profile', [ProfileController::class, 'update']);
 
