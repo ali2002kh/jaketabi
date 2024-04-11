@@ -123,6 +123,7 @@ export default {
             genres: [],
             categories: [],
             publishers: [],
+            timeoutId: null,
         } 
     },
     created() {
@@ -158,18 +159,24 @@ export default {
 
         async search() {
 
-            axios.post('/api/search', {
-                input: this.input
-            }).then(response => {
-                console.log(response.data.data)
-                this.books = response.data.data.books
-                this.shelves = response.data.data.shelves
-                this.genres = response.data.data.genres
-                this.categories = response.data.data.categories
-                this.publishers = response.data.data.publishers
-            })
+            clearTimeout(this.timeoutId);
 
+            this.timeoutId = setTimeout(() => {
+                if (this.input.length > 1) {
+                    axios.post('/api/search', {
+                        input: this.input
+                    }).then(response => {
+                        console.log(response.data.data)
+                        this.books = response.data.data.books
+                        this.shelves = response.data.data.shelves
+                        this.genres = response.data.data.genres
+                        this.categories = response.data.data.categories
+                        this.publishers = response.data.data.publishers
+                    })
+                }
+            }, 3000);
         },
+
         async showBook (id) {
             document.getElementById('close').click()
             this.$router.replace({ name: 'book', params: { id: id }});

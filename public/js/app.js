@@ -21716,7 +21716,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       shelves: [],
       genres: [],
       categories: [],
-      publishers: []
+      publishers: [],
+      timeoutId: null
     };
   },
   created: function created() {
@@ -21755,17 +21756,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
-              axios.post('/api/search', {
-                input: _this.input
-              }).then(function (response) {
-                console.log(response.data.data);
-                _this.books = response.data.data.books;
-                _this.shelves = response.data.data.shelves;
-                _this.genres = response.data.data.genres;
-                _this.categories = response.data.data.categories;
-                _this.publishers = response.data.data.publishers;
-              });
-            case 1:
+              clearTimeout(_this.timeoutId);
+              _this.timeoutId = setTimeout(function () {
+                if (_this.input.length > 1) {
+                  axios.post('/api/search', {
+                    input: _this.input
+                  }).then(function (response) {
+                    console.log(response.data.data);
+                    _this.books = response.data.data.books;
+                    _this.shelves = response.data.data.shelves;
+                    _this.genres = response.data.data.genres;
+                    _this.categories = response.data.data.categories;
+                    _this.publishers = response.data.data.publishers;
+                  });
+                }
+              }, 3000);
+            case 2:
             case "end":
               return _context.stop();
           }
