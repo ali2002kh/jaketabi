@@ -69,14 +69,41 @@
                         <p v-if="shelves[0]" class="text-center">قفسه ها</p>
                         <a href="" v-for="s in shelves" :key="s.id" class="nav-link" @click.prevent="showShelf(s.id)">
                             <div class="d-flex m-2">
-                                <img class="item-img me-3" :src="s.image" alt="">
                                 <div class="d-flex align-items-center">
                                     <p class="text-center">{{ s.name }}</p>
                                 </div>
                             </div>
                         </a>
 
+                        <hr v-if="genres[0]">
+                        <p v-if="genres[0]" class="text-center">ژانر ها</p>
+                        <a href="" v-for="g in genres" :key="g.id" class="nav-link" @click.prevent="showGenre(g.id)">
+                            <div class="d-flex m-2">
+                                <div class="d-flex align-items-center">
+                                    <p class="text-center">{{ g.name }}</p>
+                                </div>
+                            </div>
+                        </a>
 
+                        <hr v-if="categories[0]">
+                        <p v-if="categories[0]" class="text-center">دسته بندی ها</p>
+                        <a href="" v-for="c in categories" :key="c.id" class="nav-link" @click.prevent="showCategory(c.id)">
+                            <div class="d-flex m-2">
+                                <div class="d-flex align-items-center">
+                                    <p class="text-center">{{ c.name }}</p>
+                                </div>
+                            </div>
+                        </a>
+
+                        <hr v-if="publishers[0]">
+                        <p v-if="publishers[0]" class="text-center">ناشر ها</p>
+                        <a href="" v-for="p in publishers" :key="p.id" class="nav-link" @click.prevent="showPublisher(p.id)">
+                            <div class="d-flex m-2">
+                                <div class="d-flex align-items-center">
+                                    <p class="text-center">{{ p.name }}</p>
+                                </div>
+                            </div>
+                        </a>
 
 
                     </div>
@@ -93,6 +120,9 @@ export default {
             input: '',
             books: [],
             shelves: [],
+            genres: [],
+            categories: [],
+            publishers: [],
         } 
     },
     created() {
@@ -134,20 +164,36 @@ export default {
                 console.log(response.data.data)
                 this.books = response.data.data.books
                 this.shelves = response.data.data.shelves
+                this.genres = response.data.data.genres
+                this.categories = response.data.data.categories
+                this.publishers = response.data.data.publishers
             })
 
         },
-        async showBook (book_id) {
+        async showBook (id) {
             document.getElementById('close').click()
-            // this.$router.push('/product/' + product_id)
-            this.$router.replace({ name: 'book', params: { id: book_id }});
+            this.$router.replace({ name: 'book', params: { id: id }});
         },
 
-        async showShelf (shelf_id) {
+        async showShelf (id) {
             document.getElementById('close').click()
-            // this.$router.push('/product/' + product_id)
-            this.$router.replace({ name: 'shelf', params: { id: shelf_id }});
-        }
+            this.$router.replace({ name: 'shelf', params: { id: id }});
+        },
+
+        async showGenre (id) {
+            document.getElementById('close').click()
+            // this.$router.replace({ name: 'genre', params: { id: id }});
+        },
+
+        async showCategory (id) {
+            document.getElementById('close').click()
+            // this.$router.replace({ name: 'category', params: { id: id }});
+        },
+
+        async showPublisher (id) {
+            document.getElementById('close').click()
+            // this.$router.replace({ name: 'publisher', params: { id: id }});
+        },
     },
 }
 </script>
