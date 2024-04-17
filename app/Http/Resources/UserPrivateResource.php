@@ -36,7 +36,6 @@ class UserPrivateResource extends JsonResource
             'name' => $this->name(),
             'email' => $this->email,
             'number' => $this->number,
-            'birth_date' => $this->getProfile()->birth_date,
             'want_to_read' => BookPreviewResource::collection($want_to_read->take($preview_book_number)),
             'reading' => BookPreviewResource::collection($reading->take($preview_book_number)),
             'already_read' => BookPreviewResource::collection($already_read->take($preview_book_number)),
@@ -47,6 +46,10 @@ class UserPrivateResource extends JsonResource
             'friend_requests_count' => $friend_requests->count(),
             'is_private' => true,
         ];
+
+        if ($this->getProfile()) {
+            $result['birth_date'] = $this->getProfile()->birth_date;
+        }
 
         if ($want_to_read_more_count > 0) {
             $result['has_more_want_to_read'] = true;
