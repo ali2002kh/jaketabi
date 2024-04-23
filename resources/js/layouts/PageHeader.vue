@@ -4,7 +4,7 @@
                 <ul class="nav navbar-nav me-auto">
                     <li class="nav-item ps-4">
                         <a class="nav-link" href="#">
-                            <img class="w-50" src="storage/icons/bell.png" alt="">
+                            <i class="fa-solid fa-bell"></i>
                         </a>
                     </li>
 
@@ -16,7 +16,7 @@
                     </li> -->
 
                     <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#searchModal">
-                        <i class="fa fa-search"></i>
+                        <i class="fa-solid fa-search"></i>
                     </button>
 
 
@@ -29,12 +29,12 @@
                 <ul class="nav navbar-nav ms-auto">
                     <li class="nav-item ps-4">
                         <a class="nav-link" href="#">
-                            <img class="w-50" src="storage/icons/profile-white.png" alt="">
+                            <i class="fa-solid fa-user"></i>
                         </a>
                     </li>
                     <li class="nav-item ps-2">
                         <router-link class="nav-link" :to="{name: 'home'}">
-                            <img class="w-50" src="storage/icons/white-home.png" alt="">
+                            <i class="fa-solid fa-house"></i>
                         </router-link>
                     </li>
                 </ul>
