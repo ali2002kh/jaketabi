@@ -4,7 +4,7 @@
                 <ul class="nav navbar-nav me-auto">
                     <li class="nav-item ps-4">
                         <a class="nav-link" href="#">
-                            <i class="fa-solid fa-bell"></i>
+                            <i class="fa-solid fa-bell fa-lg"></i>
                         </a>
                     </li>
 
@@ -16,25 +16,25 @@
                     </li> -->
 
                     <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#searchModal">
-                        <i class="fa-solid fa-search"></i>
+                        <i class="fa-solid fa-magnifying-glass fa-lg"></i>
                     </button>
 
 
                 </ul>
                 <ul class="nav navbar-nav justify-content-center">
                     <li class="nav-item">
-                        <p class="navbar-text text-white fs-5 my-2">ج‍‍‍‍اکتابی</p>
+                        <p class="navbar-text text-white fs-5">ج‍‍‍‍اکتابی</p>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav ms-auto">
                     <li class="nav-item ps-4">
                         <router-link class="nav-link" :to="{name: 'profile', params: {id: 1}}">
-                            <i class="fa-solid fa-user"></i>
+                            <i class="fa-solid fa-user fa-lg"></i>
                         </router-link>
                     </li>
                     <li class="nav-item ps-2">
                         <router-link class="nav-link" :to="{name: 'home'}">
-                            <i class="fa-solid fa-house"></i>
+                            <i class="fa-solid fa-house fa-lg"></i>
                         </router-link>
                     </li>
                 </ul>
