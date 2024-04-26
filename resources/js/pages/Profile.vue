@@ -113,6 +113,7 @@
 
 <script>
 
+import { mapGetters} from 'vuex';
 import PageHeader from "../layouts/PageHeader"
 // import PageFooter from "../layouts/PageFooter"
 
@@ -122,15 +123,19 @@ export default {
     },
     data() {
         return {
-            user: null,
+            // user: null,
         } 
     },
-    created() {
-        axios.get(`/api/user/${this.$route.params.id}`)
-        .then(response => {
-            console.log(response.data.data)
-            this.user = response.data.data;
-        });
+    // computed: {
+    //     user() {
+    //         return this.$store.getters.getUser
+    //     }
+    // }
+    beforeMount(){
+        this.$store.dispatch("initState");
     },
+    computed: {
+        ...mapGetters(["user"])
+    }
 }
 </script>
