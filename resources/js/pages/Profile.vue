@@ -131,8 +131,12 @@ export default {
     //         return this.$store.getters.getUser
     //     }
     // }
-    beforeMount(){
-        this.$store.dispatch("user/initState");
+    created() {
+        if (this.user) {
+            console.log('User is already loaded')
+        } else {    
+            this.$store.dispatch("user/initState");
+        }
     },
     computed: {
         // ...mapGetters(["user"]),
