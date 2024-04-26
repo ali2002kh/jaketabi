@@ -155,9 +155,9 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
     body {
-font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif !important;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif !important;
         /* background-color: black; */
         /* min-height: 100vh;
         display: flex;

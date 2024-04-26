@@ -131,11 +131,11 @@ export default {
     //         return this.$store.getters.getUser
     //     }
     // }
-    created() {
+    beforeMount() {
         if (this.user) {
             console.log('User is already loaded')
         } else {    
-            this.$store.dispatch("user/initState");
+            this.$store.dispatch("user/loadUser");
         }
     },
     computed: {

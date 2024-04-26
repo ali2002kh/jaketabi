@@ -104,8 +104,6 @@
                                 </div>
                             </div>
                         </a>
-
-
                     </div>
                 </div>
             </div>
@@ -128,19 +126,18 @@ export default {
             timeoutId: null,
         } 
     },
-    created() {
+    beforeMount() {
         if (this.user) {
             console.log('User is already loaded')
         } else {    
-            this.$store.dispatch("user/initState");
+            console.log('call loadUser')
+            this.$store.dispatch("user/loadUser");
         }
     },
     computed: {
-        // ...mapGetters(["user"]),
         ...mapState({
             user: state => state.user.data,
-    }),
-        // ...mapActions(['initState'])
+        }),
     },
     created() {
         // axios.get('/api/categories')
@@ -190,7 +187,7 @@ export default {
                         this.publishers = response.data.data.publishers
                     })
                 }
-            }, 3000);
+            }, 1500);
         },
 
         async showBook (id) {
