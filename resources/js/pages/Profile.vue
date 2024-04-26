@@ -113,7 +113,7 @@
 
 <script>
 
-import { mapGetters} from 'vuex';
+import { mapGetters, mapState, mapActions } from 'vuex';
 import PageHeader from "../layouts/PageHeader"
 // import PageFooter from "../layouts/PageFooter"
 
@@ -132,10 +132,14 @@ export default {
     //     }
     // }
     beforeMount(){
-        this.$store.dispatch("initState");
+        this.$store.dispatch("user/initState");
     },
     computed: {
-        ...mapGetters(["user"])
-    }
+        // ...mapGetters(["user"]),
+        ...mapState({
+            user: state => state.user.data,
+    }),
+        // ...mapActions(['initState'])
+    },
 }
 </script>
