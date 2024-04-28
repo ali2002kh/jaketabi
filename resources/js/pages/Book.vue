@@ -20,8 +20,8 @@
     <div v-if="isNotSelected">
         {{ record.status }}
     </div>
-    <div v-else>
-        false
+    <div v-if="isWantToRead">
+        {{ record.status }}
     </div>
 </template>
 
@@ -80,7 +80,29 @@ export default {
                 return true
             }
             return false
-        }
+        },
+
+        isWantToRead() {
+            if (this.record && this.record.status_code == 1) {
+                return true
+            }
+            return false
+        },
+
+        isCurrentReading() {
+            if (this.record && this.record.status_code == 2) {
+                return true
+            }
+            return false
+        },
+
+        isAlreadyRead() {
+            if (this.record && this.record.status_code == 3) {
+                return true
+            }
+            return false
+        },
+
     },
 }
 </script>
