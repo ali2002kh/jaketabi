@@ -1,5 +1,5 @@
 <template>
-    <page-header></page-header>
+    <PageHeader :id="user.id" :image="user.image"></PageHeader>
     <!-- navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
@@ -104,6 +104,7 @@
 
 <script>
 
+import { mapState } from 'vuex';
 import PageHeader from "../layouts/PageHeader"
 // import PageFooter from "../layouts/PageFooter"
 
@@ -124,6 +125,20 @@ export default {
             this.shelf = response.data.data
         })
     },  
+    beforeMount() {
+        if (this.user) {
+            console.log('User is already loaded')
+        } else {    
+            this.$store.dispatch("user/loadUser");
+        }
+    },
+    computed: {
+        // ...mapGetters(["user"]),
+        ...mapState({
+            user: state => state.user.data,
+        }),
+        // ...mapActions(['initState'])
+    },
 }
 </script>
 

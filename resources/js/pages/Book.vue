@@ -1,5 +1,5 @@
 <template>
-    <page-header></page-header>
+    <PageHeader v-if="user" :id="user.id" :image="user.image"></PageHeader>
     <div class="row">
         <div class="col-sm-6 my-3">
             صفحه ی کتاب
@@ -17,10 +17,17 @@
             <hr>
         </div>
     </div>
+    <div v-if="isNotSelected">
+        {{ record.status }}
+    </div>
+    <div v-else>
+        false
+    </div>
 </template>
 
 <script>
 
+import { mapState } from 'vuex';
 import PageHeader from "../layouts/PageHeader"
 // import PageFooter from "../layouts/PageFooter"
 
@@ -32,6 +39,7 @@ export default {
     data() {
         return {
             book: null,
+            record: null,
         }
     },
     created() {
@@ -39,7 +47,40 @@ export default {
         .then(response => {
             console.log(response.data.data)
             this.book = response.data.data
-        })
+        });
     },  
+    mounted() {
+        if (this.user) {
+            console.log('User is already loaded')
+            axios.get(`/api/book-record/${this.user.id}/${this.$route.params.id}`)
+            .then(response => {
+                    console.log(response.data.data)
+                    this.record = response.data.data
+                })
+        } else {    
+            this.$store.dispatch("user/loadUser")
+            .then(() => {
+                axios.get(`/api/book-record/${this.user.id}/${this.$route.params.id}`)
+                .then(response => {
+                    console.log(response.data.data)
+                    this.record = response.data.data
+                })
+                console.log("user: " + this.user)
+            })
+            console.log('called')
+        }
+    },
+    computed: {
+        ...mapState({
+            user: state => state.user.data,
+        }),
+
+        isNotSelected() {
+            if (this.record && this.record.status_code == 0) {
+                return true
+            }
+            return false
+        }
+    },
 }
 </script>

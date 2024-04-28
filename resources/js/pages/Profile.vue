@@ -1,5 +1,5 @@
 <template>
-    <page-header></page-header>
+    <PageHeader :id="user.id" :image="user.image"></PageHeader>
     <div class="d-flex flex-row-reverse justify-content-between mt-5">
         <div class="d-flex flex-row-reverse align-items-center mt-5 me-4">
             <div class="ps-3 ">
@@ -113,7 +113,7 @@
 
 <script>
 
-import { mapGetters, mapState, mapActions } from 'vuex';
+import { mapState } from 'vuex';
 import PageHeader from "../layouts/PageHeader"
 // import PageFooter from "../layouts/PageFooter"
 
@@ -142,7 +142,7 @@ export default {
         // ...mapGetters(["user"]),
         ...mapState({
             user: state => state.user.data,
-    }),
+        }),
         // ...mapActions(['initState'])
     },
 }

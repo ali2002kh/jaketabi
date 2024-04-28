@@ -28,7 +28,7 @@
                 </ul>
                 <ul class="nav navbar-nav ms-auto">
                     <li class="nav-item ps-4">
-                        <router-link class="nav-link" :to="{name: 'profile', params: {id: 1}}">
+                        <router-link class="nav-link" :to="{name: 'profile', params: {id: id}}">
                             <i class="fa-solid fa-user fa-lg"></i>
                         </router-link>
                     </li>
@@ -112,9 +112,12 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+// import { mapState } from 'vuex';
 
 export default {
+
+    props: {id: Number, image: String},
+
     data() {
         return {
             input: '',
@@ -126,19 +129,18 @@ export default {
             timeoutId: null,
         } 
     },
-    beforeMount() {
-        if (this.user) {
-            console.log('User is already loaded')
-        } else {    
-            console.log('call loadUser')
-            this.$store.dispatch("user/loadUser");
-        }
-    },
-    computed: {
-        ...mapState({
-            user: state => state.user.data,
-        }),
-    },
+    // beforeMount() {
+    //     if (this.user) {
+    //         console.log('User is already loaded')
+    //     } else {    
+    //         this.$store.dispatch("user/loadUser");
+    //     }
+    // },
+    // computed: {
+    //     ...mapState({
+    //         user: state => state.user.data,
+    //     }),
+    // },
     created() {
         // axios.get('/api/categories')
         // .then(response => {

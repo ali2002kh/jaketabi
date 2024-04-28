@@ -18,6 +18,7 @@ class UserBookResource extends JsonResource
         // dd(is_null($this->resource));
 
         if (is_null($this->resource)) {
+            $result['status_code'] = 0; 
             $result['status'] = "انتخاب نشده";
             return $result;
         }
@@ -39,9 +40,11 @@ class UserBookResource extends JsonResource
 
         switch ($status) {
             case 1:
-              $result['status'] = "می‌خواهم بخوانم";
+                $result['status_code'] = 1; 
+                $result['status'] = "می‌خواهم بخوانم";
               break;
             case 2:
+                $result['status_code'] = 2; 
                 $result['status'] = "دارم می‌خوانم";
                 $result['current_page'] = $this->current_page;
                 $result['started_at'] = $this->started_at;
@@ -49,12 +52,14 @@ class UserBookResource extends JsonResource
                 $result['progression'] = $this->getProgression();
               break;
             case 3:
+                $result['status_code'] = 3; 
                 $result['status'] = "خوانده‌ام";
                 $result['started_at'] = $this->started_at;
                 $result['finished_at'] = $this->finished_at;
                 $result['progression'] = 1;
               break;
             default:
+                $result['status_code'] = 0; 
                 $result['status'] = "انتخاب نشده";
           }
 

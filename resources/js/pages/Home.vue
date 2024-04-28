@@ -1,5 +1,5 @@
 <template>
-    <page-header></page-header>
+    <PageHeader :id="user.id" :image="user.image"></PageHeader>
     <p class="title" style="margin-top: 110px;"><span>کتاب های محبوب</span></p>
         <div class="multiple-card-slider">
             <div id="carouselExampleControls" class="carousel">
@@ -110,6 +110,7 @@
 
 <script>
 
+import { mapState } from 'vuex';
 import PageHeader from "../layouts/PageHeader"
 // import PageFooter from "../layouts/PageFooter"
 
@@ -150,6 +151,20 @@ export default {
             console.log(response.data.data)
             this.shelves = response.data.data;
         });
+    },
+    beforeMount() {
+        if (this.user) {
+            console.log('User is already loaded')
+        } else {    
+            this.$store.dispatch("user/loadUser");
+        }
+    },
+    computed: {
+        // ...mapGetters(["user"]),
+        ...mapState({
+            user: state => state.user.data,
+        }),
+        // ...mapActions(['initState'])
     },
 }
 </script>
