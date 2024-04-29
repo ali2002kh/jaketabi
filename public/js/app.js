@@ -21926,22 +21926,24 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
   },
   mounted: function mounted() {
     var _this2 = this;
-    if (this.user) {
-      console.log('User is already loaded');
-      axios.get("/api/book-record/".concat(this.user.id, "/").concat(this.$route.params.id)).then(function (response) {
+    var userLoaded = new Promise(function (resolve, reject) {
+      if (_this2.user) {
+        console.log('User is already loaded');
+        resolve();
+      } else {
+        _this2.$store.dispatch("user/loadUser").then(function () {
+          console.log('resolved');
+          resolve();
+        });
+        console.log('called');
+      }
+    });
+    userLoaded.then(function () {
+      axios.get("/api/book-record/".concat(_this2.user.id, "/").concat(_this2.$route.params.id)).then(function (response) {
         console.log(response.data.data);
         _this2.record = response.data.data;
       });
-    } else {
-      this.$store.dispatch("user/loadUser").then(function () {
-        axios.get("/api/book-record/".concat(_this2.user.id, "/").concat(_this2.$route.params.id)).then(function (response) {
-          console.log(response.data.data);
-          _this2.record = response.data.data;
-        });
-        console.log("user: " + _this2.user);
-      });
-      console.log('called');
-    }
+    });
   },
   computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapState)({
     user: function user(state) {

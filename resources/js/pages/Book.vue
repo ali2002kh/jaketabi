@@ -50,25 +50,29 @@ export default {
         });
     },  
     mounted() {
-        if (this.user) {
-            console.log('User is already loaded')
+
+        let userLoaded = new Promise((resolve, reject) => {
+             if (this.user) {
+                console.log('User is already loaded')
+                resolve()
+            } else {
+                this.$store.dispatch("user/loadUser").then(() => {
+                    console.log('resolved')
+                    resolve()
+                })
+                console.log('called')
+               
+            }
+        })
+
+        userLoaded.then(() => {
             axios.get(`/api/book-record/${this.user.id}/${this.$route.params.id}`)
             .then(response => {
-                    console.log(response.data.data)
-                    this.record = response.data.data
-                })
-        } else {    
-            this.$store.dispatch("user/loadUser")
-            .then(() => {
-                axios.get(`/api/book-record/${this.user.id}/${this.$route.params.id}`)
-                .then(response => {
-                    console.log(response.data.data)
-                    this.record = response.data.data
-                })
-                console.log("user: " + this.user)
+                console.log(response.data.data)
+                this.record = response.data.data
             })
-            console.log('called')
-        }
+        })
+
     },
     computed: {
         ...mapState({
