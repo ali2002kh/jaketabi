@@ -12,7 +12,7 @@ const getters = {
 // actions
 const actions = {
     async loadUser(context) {
-        await axios.get('/api/user')
+        await axios.get('/api/self')
         .then((response) => {context.commit('fetchUser', response.data.data)})
         // .catch((err) => console.log(err))
     }

@@ -10,12 +10,11 @@ use App\Http\Controllers\ShelfController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+// authentication ------------------------------------------------------
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-// authentication ------------------------------------------------------
 
 Route::post('/signup', [AuthController::class, 'signup']);
 
@@ -26,7 +25,7 @@ Route::post('/logout', [AuthController::class, 'logout']);
 
 // Home ----------------------------------------------------------------
 
-Route::get('user', [HomeController::class, 'self']);
+Route::get('self', [HomeController::class, 'self']);
 
 Route::get('user/{id}', [HomeController::class, 'user']);
 
