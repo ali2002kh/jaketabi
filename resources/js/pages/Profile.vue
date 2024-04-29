@@ -1,5 +1,5 @@
 <template>
-    <PageHeader :id="user.id" :image="user.image"></PageHeader>
+    <PageHeader></PageHeader>
     <div class="d-flex flex-row-reverse justify-content-between mt-5">
         <div class="d-flex flex-row-reverse align-items-center mt-5 me-4">
             <div class="ps-3 ">

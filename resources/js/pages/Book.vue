@@ -1,5 +1,5 @@
 <template>
-    <PageHeader v-if="user" :id="user.id" :image="user.image"></PageHeader>
+    <PageHeader></PageHeader>
     <div class="row">
         <div class="col-sm-6 my-3">
             صفحه ی کتاب

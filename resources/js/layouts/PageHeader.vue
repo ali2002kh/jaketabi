@@ -27,11 +27,32 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav ms-auto">
-                    <li class="nav-item ps-4">
+
+                    <!-- <li class="nav-item ps-4">
                         <router-link class="nav-link" :to="{name: 'profile', params: {id: id}}">
                             <i class="fa-solid fa-user fa-lg"></i>
                         </router-link>
+                    </li> -->
+
+                    <li class="nav-item dropdown" v-if="loggedIn">
+                        <ul>
+                            <li><router-link
+                                :to="{name: 'profile', params: {id: user.id}}"
+                                >profile</router-link>
+                                profile
+                            </li>
+                            <li>
+                                <a
+                                @click.prevent="logout" href="#"
+                                >logout</a>
+                            </li>
+                        </ul>
                     </li>
+                    <li class="nav-item ps-2" v-else>
+                        <router-link :to="{name: 'login'}">ورود</router-link>
+                    </li>
+
+
                     <li class="nav-item ps-2">
                         <router-link class="nav-link" :to="{name: 'home'}">
                             <i class="fa-solid fa-house fa-lg"></i>
@@ -112,11 +133,9 @@
 </template>
 
 <script>
-// import { mapState } from 'vuex';
+import { mapState } from 'vuex';
 
 export default {
-
-    props: {id: Number, image: String},
 
     data() {
         return {
@@ -136,11 +155,12 @@ export default {
     //         this.$store.dispatch("user/loadUser");
     //     }
     // },
-    // computed: {
-    //     ...mapState({
-    //         user: state => state.user.data,
-    //     }),
-    // },
+    computed: {
+        ...mapState({
+            user: state => state.user.data,
+            loggedIn: state => state.user.loggedIn
+        }),
+    },
     created() {
         // axios.get('/api/categories')
         // .then(response => {
@@ -163,14 +183,10 @@ export default {
         // });
     },
     methods: {
-    //     async logout () {
-    //         axios.post('/logout')
-    //         .then(response => {
-    //             this.isLoggedIn = false;
-    //             this.user = null;
-    //             this.$router.push('/login')
-    //         })
-    //     },
+        async logout () {
+            await this.$store.dispatch("user/logout");
+            this.$router.push('/login')
+        },
 
         async search() {
 

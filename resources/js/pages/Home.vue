@@ -1,5 +1,5 @@
 <template>
-    <PageHeader :id="user.id" :image="user.image"></PageHeader>
+    <PageHeader></PageHeader>
     <p class="title" style="margin-top: 110px;"><span>کتاب های محبوب</span></p>
         <div class="multiple-card-slider">
             <div id="carouselExampleControls" class="carousel">
@@ -160,11 +160,10 @@ export default {
         }
     },
     computed: {
-        // ...mapGetters(["user"]),
         ...mapState({
             user: state => state.user.data,
+            loggedIn: state => state.user.loggedIn
         }),
-        // ...mapActions(['initState'])
     },
 }
 </script>
