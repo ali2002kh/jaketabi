@@ -17,9 +17,11 @@ class HomeController extends Controller {
 
     public function self() {
 
-        $user = User::find(1);
-
-        return new UserPrivateResource($user);
+        if (auth()->check()) {
+            return new UserPrivateResource(auth()->user());
+        } else {
+            return abort(401);
+        }
     }
 
     public function user($id) {

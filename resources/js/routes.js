@@ -4,6 +4,8 @@ import Profile from "./pages/Profile";
 import Book from "./pages/Book";
 import Shelf from "./pages/Shelf";
 import Friends from "./pages/Friends";
+import Login from "./pages/auth/Login";
+import Signup from "./pages/auth/Signup";
 
 const routes = [
     {
@@ -30,6 +32,16 @@ const routes = [
         path: "/friends",
         component: Friends,
         name:"friends",
+    },
+    {
+        path: "/login",
+        component: Login,
+        name:"login",
+    },
+    {
+        path: "/signup",
+        component: Signup,
+        name:"signup",
     },
 ];
 

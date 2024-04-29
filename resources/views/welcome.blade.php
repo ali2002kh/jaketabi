@@ -12,6 +12,11 @@
     </head>
     <body>
         <div id="app">
+            @if (auth()->check())
+                {{ auth()->user()->email }}
+            @else
+                not logged in
+            @endif
             <index></index>
         </div>
     </body>
