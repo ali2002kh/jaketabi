@@ -34,7 +34,7 @@
             <div class="book-user col rounded-2 p-1 me-2 h-100" style="background-color: #f4f4f4;">
                 <div class="d-flex flex-row-reverse align-items-center justify-content-start mt-2">
                     <div class="add-button">
-                        <button class="btn" type="button">
+                        <button @click.prevent="compeleted" class="btn" type="button">
                             <i class="fa-regular fa-circle-check fa-2x"></i>
                             <!-- <i class="fa-solid fa-circle-plus fa-2xl"></i> -->
                         </button>
@@ -49,10 +49,10 @@
                     </div>
                 </div>
                 <div>
-                    <div class="page-number d-flex flex-row-reverse mt-2 me-2">
+                    <div v-if="isCurrentlyReading" class="page-number d-flex flex-row-reverse mt-2 me-2">
                         <span class="p-2 ">  شماره صفحه </span>
-                        <p class="bg-white border rounded-1 p-2 "> 342 </p>
-                        <a class="btn">
+                        <input v-model="current_page_input" class="bg-white border rounded-1 p-2 "/>
+                        <a class="btn" @click.prevent="update_current_page">
                             <i class="fa-solid fa-pen fa-lg mt-3"></i>
                         </a>
                     </div>
@@ -69,9 +69,11 @@
                         <p class="bg-white border rounded-1 p-2 ">یک فروردین 1403</p>
                     </div>
                 </div>
-                <div  style="vertical-align:bottom">
-                    <div class="progress"  role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                        <div class="progress-bar bg-dark " style="width: 25%;"></div>
+                <div v-if="has_progression" style="vertical-align:bottom">
+                    <div class="progress"  role="progressbar" aria-label="Success example" 
+                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar bg-dark" :class="{ already_read: isAlreadyRead}" 
+                        :style="{ width: record.progression * 100 + '%' }"></div>
                     </div>
                 </div>
                 
@@ -153,7 +155,9 @@ export default {
                 1: 'می خواهم بخوانم',
                 2: 'دارم می خوانم',
                 3: 'خوانده ام'
-            }
+            },
+            current_page_input: null,
+            has_progression: false,
         }
     },
     created() {
@@ -187,7 +191,12 @@ export default {
             .then(response => {
                 console.log(response.data.data)
                 this.record = response.data.data
-                this.status_code = this.record.status_code
+                this.selected_status = this.record.status_code
+                this.current_page_input = this.record.current_page
+                if (this.selected_status == 2 || this.selected_status == 3) {
+                    this.has_progression = true
+                }
+                console.log("has progression: "+this.has_progression)
             })
         })
 
@@ -195,13 +204,49 @@ export default {
     methods: {
         async update_status() {
             console.log(this.selected_status)
-            axios.get(`/api/update-book-status/${this.book.id}/${this.selected_status}`)
+            await axios.get(`/api/update-book-status/${this.book.id}/${this.selected_status}`)
+            .then(() => {
+                this.record.status_code = this.selected_status
+                if (this.selected_status == 3) {
+                    this.record.progression = 1
+                    this.has_progression = true
+                    console.log("has progression(in condition): "+this.has_progression)
+                }
+                else if (this.selected_status == 2) {
+                    console.log("current page input: " + this.current_page_input)
+                    this.record.progression = this.current_page_input / this.book.page_count
+                    this.has_progression = true
+                }
+                else {
+                    this.has_progression = false
+                }
+                console.log("has progression: "+this.has_progression)
+                // console.log(this.isAlreadyRead)
+            })
+        },
+
+        async compeleted() {
+            await await axios.get(`/api/update-book-status/${this.book.id}/3`) 
+            .then(() => {
+                this.record.status_code = 3
+                this.selected_status = 3
+                this.record.progression = 1
+                this.has_progression = true
+            })
+        },
+         
+        async update_current_page() {
+            await axios.get(`/api/update-book-current-page/${this.book.id}/${this.current_page_input}`)
+            .then(() => {
+                this.record.progression = this.current_page_input / this.book.page_count
+                console.log(this.record.progression)
+            })
         }
     },
     computed: {
         ...mapState({
             user: state => state.user.data,
-            // loggedIn: state => state.user.loggedIn,
+            loggedIn: state => state.user.loggedIn,
         }),
 
         isNotSelected() {
@@ -218,7 +263,7 @@ export default {
             return false
         },
 
-        isCurrentReading() {
+        isCurrentlyReading() {
             if (this.record && this.record.status_code == 2) {
                 return true
             }
@@ -243,5 +288,8 @@ export default {
     .book-cover {
         width: 100px;
         max-height: 180px;
+    }
+    .already_read {
+        background-color:green !important;
     }
 </style>

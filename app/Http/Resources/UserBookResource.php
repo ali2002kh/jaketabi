@@ -46,7 +46,6 @@ class UserBookResource extends JsonResource
             case 2:
                 $result['status_code'] = 2; 
                 $result['status'] = "دارم می‌خوانم";
-                $result['current_page'] = $this->current_page;
                 $result['started_at'] = $this->started_at;
                 $result['last_read_at'] = $this->last_read_at;
                 $result['progression'] = $this->getProgression();
@@ -62,6 +61,8 @@ class UserBookResource extends JsonResource
                 $result['status_code'] = 0; 
                 $result['status'] = "انتخاب نشده";
           }
+
+          $result['current_page'] = $this->current_page;
 
         return $result;
     }
