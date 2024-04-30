@@ -30,7 +30,7 @@ class BookController extends Controller {
 
     public function updateStatus($book_id, $status) {
 
-        $user = User::find(1);
+        $user = auth()->user();
         $user->updateBookStatus($book_id, $status);
 
         return abort(200);
