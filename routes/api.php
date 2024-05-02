@@ -75,6 +75,8 @@ Route::get('book/{id}', [BookController::class, 'show']);
 
 Route::get('book-record/{user_id}/{book_id}', [BookController::class, 'record']);
 
+Route::get('book-friend/{book_id}', [BookController::class, 'friend']);
+
 Route::get('update-book-status/{book_id}/{status}', [BookController::class, 'updateStatus']);
 
 Route::get('update-book-current-page/{book_id}/{page}', [BookController::class, 'updateCurrentPage']);

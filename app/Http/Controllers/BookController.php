@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\BookCategoryResource;
 use App\Http\Resources\BookCommentResource;
 use App\Http\Resources\BookPublicResource;
+use App\Http\Resources\FriendBookResource;
 use App\Http\Resources\GenreResource;
 use App\Http\Resources\UserBookResource;
 use App\Models\Book;
@@ -26,6 +27,11 @@ class BookController extends Controller {
         $record = $user->getBookRecord($book_id);
 
         return new UserBookResource($record);
+    }
+
+    public function friend($book_id) {
+        
+        return new FriendBookResource(Book::find($book_id));
     }
 
     public function updateStatus($book_id, $status) {

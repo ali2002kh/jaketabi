@@ -10,7 +10,7 @@
                         <div class="me-3 p-2 text-end lh-sm">
                             <p class="fw-bold" style="font-size: 120%;">عنوان: {{ book.name }}</p>
                             <p>نویسنده: {{ book.author }}</p>
-                            <p>ناشر: {{ book.publisher }}</p>
+                            <p>ناشر: {{ book.publisher.name }}</p>
                             <p v-if="book.translator">مترجم: {{ book.translator }}</p>
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                     </div>
                 </div>
             </div>
-            <div class="book-user col rounded-2 p-1 me-2 h-100" style="background-color: #f4f4f4;">
+            <div v-if="user" class="book-user col rounded-2 p-1 me-2 h-100" style="background-color: #f4f4f4;">
                 <div class="d-flex flex-row-reverse align-items-center justify-content-start mt-2">
                     <div class="add-button">
                         <button @click.prevent="compeleted" class="btn" type="button">
@@ -78,17 +78,20 @@
                 </div>
                 
             </div>
+            <div v-else class="book-user col rounded-2 p-1 me-2 h-100">
+                لاگین نکرده
+            </div>
         </div>
         <div class="row flex-row-reverse mx-2">
             <div class="publisher-books col-8 h-100">
                 <p class="text-end m-2 fs-5 fw-bold">از همین نشر </p>
                 <hr class="opacity-100 border-muted border mx-auto">
                 <div class="row row-cols-6 flex-row-reverse align-items-center">
-                    <div class="col ">
-                        <a href="#" class="link-underline-opacity-0 link-dark">
-                            <img class="book-cover d-block mx-auto" :src="book.image" alt="">
-                        <p class="text-center p-1">سال بلوا</p>
-                        </a> 
+                    <div v-for="b in book.publisher.preview_books" :key="b.id" class="col">
+                        <router-link :to="{name: 'book', params: {id: b.id}}" class="link-underline-opacity-0 link-dark">
+                            <img class="book-cover d-block mx-auto" :src="b.image" alt="">
+                        <p class="text-center p-1">{{ b.name }}</p>
+                        </router-link> 
                     </div>
                     <div class="col p-5">
                         <button class="btn">
@@ -97,18 +100,22 @@
                     </div>
                 </div>
             </div>
-            <div  class="user-friends col me-2 rounded-1 h-100 mt-3" style="background-color: #f4f4f4;">
+            <div v-if="friend_book" class="user-friends col me-2 rounded-1 h-100 mt-3" style="background-color: #f4f4f4;">
                 <div class="d-flex flex-row-reverse align-items-center m-1 p-2">
                     <p class="text-end fw-bold m-1"> دارند می خوانند / خوانده اند</p>
-                    <div class="d-flex flex-row-reverse align-items-center">
-                        <img class="rounded-5 me-3" :src="user.image" style="width: 40px; height:40px;" alt="">
-                        <img class="rounded-5 me-3" :src="user.image" style="width: 40px; height:40px;" alt="">
-                        <img class="rounded-5 me-3" :src="user.image" style="width: 40px; height:40px;" alt="">
+                    <div v-for="f in friend_book.preview_friends" :key="f.id"
+                        class="d-flex flex-row-reverse align-items-center">
+                        <router-link :to="{name: 'profile', params: {id: f.id}}">
+                            <img class="rounded-5 me-3" :src="f.image" style="width: 40px; height:40px;" alt="">
+                        </router-link>
                     </div>
                 </div>
                 <div class="m-1 p-3">
                     <button class="btn btn-dark w-100 text-white">نظرات کاربران</button>
                 </div>
+            </div>
+            <div v-else class="user-friends col me-2 rounded-1 h-100 mt-3">
+                لاگین نکرده
             </div>
 
         </div>
@@ -158,6 +165,7 @@ export default {
             },
             current_page_input: null,
             has_progression: false,
+            friend_book: null,
         }
     },
     created() {
@@ -187,6 +195,7 @@ export default {
 
         userLoaded.then(() => {
             console.log(this.user)
+
             axios.get(`/api/book-record/${this.user.id}/${this.$route.params.id}`)
             .then(response => {
                 console.log(response.data.data)
@@ -198,8 +207,13 @@ export default {
                 }
                 console.log("has progression: "+this.has_progression)
             })
-        })
 
+            axios.get(`/api/book-friend/${this.$route.params.id}`)
+            .then(response => {
+                console.log(response.data.data)
+                this.friend_book = response.data.data
+            })
+        })
     },
     methods: {
         async update_status() {
