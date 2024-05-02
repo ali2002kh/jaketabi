@@ -42,10 +42,47 @@
                     <select v-model="selected_status" @change="update_status()" class="form-select" aria-label="Default select example">
                         <option v-for="status in statuses" :key="status" :value="status">{{ statuses_text[status] }}</option>
                     </select>
-                    <div class="text-end p-2 me-1">
-                        <a class="btn btn-dark" href="#">
-                            اضافه کردن به قفسه ها
-                        </a>
+                    <div class="shelves-modal text-end p-2 me-1">
+                        <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#shelves-modal">
+                            اضافه کردن به قفسه (ها)
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="shelves-modal" tabindex="-1" aria-labelledby="shelves-modalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-sm modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title w-100 text-center fs-5" id="shelves-modalLabel">قفسه ها</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div v-for="s in user.shelves" :key="s.id">
+                                            <div class="row flex-row-reverse align-items-center">
+                                                <div class="col fw-bold">
+                                                    {{s.name}}
+                                                </div>
+                                                <div v-for="b in s.books" :key="b.id" class="col lh-lg">
+                                                    <div v-if="b.id == book.id" class="float-start">
+                                                        <button class="btn btn-sm btn-danger" >
+                                                            <i class="fa-solid fa-minus"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div v-else class="float-start">  
+                                                        <button class="btn btn-sm btn-dark">
+                                                            <i class="fa-solid fa-plus"></i>
+                                                        </button>  
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-success">ذخیره</button>
+                                        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">بستن</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div>
