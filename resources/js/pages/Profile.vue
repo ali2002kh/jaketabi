@@ -1,16 +1,16 @@
 <template>
     <PageHeader></PageHeader>
-    <div class="d-flex flex-row-reverse justify-content-between mt-5">
+    <div v-if="host" class="d-flex flex-row-reverse justify-content-between mt-5">
         <div class="d-flex flex-row-reverse align-items-center mt-5 me-4">
             <div class="ps-3 ">
-                <img :src="user.image" style="widows: 60px; height: 60px; border-radius: 100%;" alt="">
+                <img :src="host.image" style="widows: 60px; height: 60px; border-radius: 100%;" alt="">
             </div>
             <div class="d-flex flex-column align-items-center">
-                <p class="fs-6 p-0 m-0 ">{{  user.username }}</p>
-                <p class="fs-6 p-0 m-0">{{ user.name }}</p>
+                <p class="fs-6 p-0 m-0 ">{{  host.username }}</p>
+                <p class="fs-6 p-0 m-0">{{ host.name }}</p>
             </div>
         </div>
-        <div v-if="user.is_private" class="d-flex flex-row-reverse align-items-center mt-5 ms-4">
+        <div v-if="host.is_private" class="d-flex flex-row-reverse align-items-center mt-5 ms-4">
             <div class="ps-4">
                 <router-link :to="{name: 'friends'}" class="text-dark link-underline link-underline-opacity-0">
                     <h5>دوستان</h5>
@@ -25,69 +25,69 @@
     </div>
     <!-- books lists -->
     
-    <div class="card mt-4 m-2">
+    <div class="card mt-4 m-2" v-if="host">
         <div class="card-header bg-light m-0 p-0 ">
             <p class="float-end pt-1 me-4 fs-5 ">دارم می خوانم</p>
         </div>
         <div class="card-body d-flex flex-row-reverse m-0 p-0">
-            <div v-for="b in user.reading" :key="b.id" class="d-flex flex-column m-1 p-2 align-items-center text-center">
+            <div v-for="b in host.reading" :key="b.id" class="d-flex flex-column m-1 p-2 align-items-center text-center">
                 <img :src="b.image" style="height: 150px; max-width:100px" alt="">
                 <p class=""> {{ b.name }}</p>
             </div>
-            <div v-if="user.has_more_reading" class="d-flex flex-column m-1 p-2 align-items-center text-center justify-content-center me-auto">
+            <div v-if="host.has_more_reading" class="d-flex flex-column m-1 p-2 align-items-center text-center justify-content-center me-auto">
                 <a href="#">
                     <img src="storage/icons/icons8-forward-button-48.png"  alt="">
                 </a>
-                <p>+{{ user.reading_more_count }}</p>
+                <p>+{{ host.reading_more_count }}</p>
             </div>
         </div>
     </div>
-    <div class="card mt-4 m-2">
+    <div class="card mt-4 m-2" v-if="host">
         <div class="card-header bg-light m-0 p-0 ">
             <p class="float-end pt-1 me-4 fs-5"> خوانده ام </p>
         </div>
         <div class="card-body d-flex flex-row-reverse m-0 p-0">
-            <div v-for="b in user.already_read" :key="b.id" class="d-flex flex-column m-1 p-2 align-items-center text-center">
+            <div v-for="b in host.already_read" :key="b.id" class="d-flex flex-column m-1 p-2 align-items-center text-center">
                 <img :src="b.image" style="height: 150px; max-width:100px" alt="">
                 <p class=""> {{ b.name }}</p>
             </div>
-            <div v-if="user.has_more_already_read" class="d-flex flex-column m-1 p-2 align-items-center text-center justify-content-center me-auto">
+            <div v-if="host.has_more_already_read" class="d-flex flex-column m-1 p-2 align-items-center text-center justify-content-center me-auto">
                 <a href="#">
                     <img src="storage/icons/icons8-forward-button-48.png"  alt="">
                 </a>
-                <p>+{{ user.already_read_more_count }}</p>
+                <p>+{{ host.already_read_more_count }}</p>
             </div>
         </div>
     </div>
-    <div class="card mt-4 m-2">
+    <div class="card mt-4 m-2" v-if="host">
         <div class="card-header bg-light m-0 p-0 ">
             <p class="float-end pt-1 me-4 fs-5"> میخواهم بخوانم </p>
         </div>
         <div class="card-body d-flex flex-row-reverse m-0 p-0">
-            <div v-for="b in user.want_to_read" :key="b.id" class="d-flex flex-column m-1 p-2 align-items-center text-center">
+            <div v-for="b in host.want_to_read" :key="b.id" class="d-flex flex-column m-1 p-2 align-items-center text-center">
                 <img :src="b.image" style="height: 150px; max-width:100px" alt="">
                 <p class=""> {{ b.name }}</p>
             </div>
-            <div v-if="user.has_more_want_to_read" class="d-flex flex-column m-1 p-2 align-items-center text-center justify-content-center me-auto">
+            <div v-if="host.has_more_want_to_read" class="d-flex flex-column m-1 p-2 align-items-center text-center justify-content-center me-auto">
                 <a href="#">
                     <img src="storage/icons/icons8-forward-button-48.png"  alt="">
                 </a>
-                <p>+{{ user.want_to_read_more_count }}</p>
+                <p>+{{ host.want_to_read_more_count }}</p>
             </div>
         </div>
     </div>
-    <div class="card mt-4 m-2">
+    <div class="card mt-4 m-2" v-if="host">
         <div class="card-header d-flex flex-row-reverse justify-content-between bg-light m-0 ">
             <div class=" me-4 fs-5 ">قفسه های من</div>
             <a href="#" class="text-dark link-underline link-underline-opacity-0">
                 <div class="d-flex align-items-center me-5">
-                    <div v-if="user.is_private" class="me-2 fs-6">ایجاد قفسه جدید</div>
+                    <div v-if="host.is_private" class="me-2 fs-6">ایجاد قفسه جدید</div>
                     <img src="storage/icons8-add-48.png" style="width: 30px;" alt="">
                 </div>
             </a>
         </div>
-        <div class="card-body d-flex flex-row-reverse m-0 p-0">
-            <div v-for="s in user.shelves" :key="s.id" class="card m-3">
+        <div class="card-body d-flex flex-row-reverse m-0 p-0" v-if="host">
+            <div v-for="s in host.shelves" :key="s.id" class="card m-3">
                 <div class="card-header m-0 p-1 text-center">{{ s.name }}</div>
                 <div class="card-body d-flex flex-row-reverse align-items-center p-1 m-0">
                     <div v-for="b in s.books" :key="b.id" class="d-flex flex-column p-2  align-items-center text-center" >
@@ -101,11 +101,11 @@
                     </div>
                 </div>
             </div>
-            <div v-if="user.has_more_shelves" class="d-flex flex-column m-1 p-2 align-items-center text-center justify-content-center me-auto">
+            <div v-if="host.has_more_shelves" class="d-flex flex-column m-1 p-2 align-items-center text-center justify-content-center me-auto">
                 <a href="#">
                     <img src="storage/icons/icons8-forward-button-48.png"  alt="">
                 </a>
-                <p>+{{ user.shelves_more_count }}</p>
+                <p>+{{ host.shelves_more_count }}</p>
             </div>
         </div>
     </div>
@@ -123,7 +123,7 @@ export default {
     },
     data() {
         return {
-            // user: null,
+            host: null,
         } 
     },
     // computed: {
@@ -132,16 +132,41 @@ export default {
     //     }
     // }
     beforeMount() {
-        if (this.user) {
-            console.log('User is already loaded')
-        } else {    
-            this.$store.dispatch("user/loadUser");
-        }
+
+        let loadUser = new Promise((resolve, reject) => {
+             if (this.user) {
+                console.log('User is already loaded')
+                resolve()
+            } else {
+                this.$store.dispatch("user/loadUser")
+                .then(() => {
+                    resolve()
+                }).catch((error) => {
+                    console.log(error.message)
+                    if (error.message === 'Unauthorized') {
+                        resolve()
+                    }
+                })
+            }
+        })
+
+        loadUser.then(() => {
+            if (this.user && this.user.id == this.$route.params.id) {
+                    this.host = this.user
+            } else {
+                axios.get(`/api/user/${this.$route.params.id}`)
+                .then((response) => {
+                    console.log(response.data.data)
+                    this.host = response.data.data
+                })
+            }
+        })
     },
     computed: {
         // ...mapGetters(["user"]),
         ...mapState({
             user: state => state.user.data,
+            loggedIn: state => state.user.loggedIn
         }),
         // ...mapActions(['initState'])
     },

@@ -23,6 +23,7 @@ const actions = {
                 error.response.status == 401) {
                     context.commit('notLoggedIn')
                     context.commit('logout')
+                    throw new Error('Unauthorized');
                 };
         })
     },

@@ -10,6 +10,7 @@ use App\Http\Resources\ShelfResource;
 use App\Http\Resources\UserPrivateResource;
 use App\Http\Resources\UserPublicResource;
 use App\Models\Book;
+use App\Models\BookLog;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -28,7 +29,7 @@ class HomeController extends Controller {
 
         $user = auth()->user();
 
-        if ($user->id == $id) {
+        if ($user and $user->id == $id) {
             return new UserPrivateResource($user);
         } else {
             $user = User::find($id);
@@ -39,14 +40,25 @@ class HomeController extends Controller {
 
     public function popular() {
 
-        $user = auth()->user();
-        return BookPublicResource::collection($user->getPopularBooks());
+        $logs = BookLog::orderBy('already_read', 'DESC')->take(20)->get();
+        $books = collect();
+
+        foreach ($logs as $log) {
+            $books->add($log->getBook());
+        }
+
+        return BookPublicResource::collection($books);
     }
 
     public function trending() {
 
-        $user = auth()->user();
-        return BookPublicResource::collection($user->getTrendingBooks());
+        $logs = BookLog::orderBy('reading', 'DESC')->take(20)->get();
+        $books = collect();
+
+        foreach ($logs as $log) {
+            $books->add($log->getBook());
+        }
+        return BookPublicResource::collection($books);
     }
 
     public function friendsActivities() {

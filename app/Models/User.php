@@ -483,30 +483,6 @@ class User extends Authenticatable
         $record->save();
     }
 
-    public function getPopularBooks() { 
-        
-        $logs = BookLog::orderBy('already_read', 'DESC')->take(20)->get();
-        $books = collect();
-
-        foreach ($logs as $log) {
-            $books->add($log->getBook());
-        }
-
-        return $books;
-    }
-
-    public function getTrendingBooks() { 
-        
-        $logs = BookLog::orderBy('reading', 'DESC')->take(20)->get();
-        $books = collect();
-
-        foreach ($logs as $log) {
-            $books->add($log->getBook());
-        }
-
-        return $books;
-    }
-
     // comments --------------------------------------------------------------------------
 
     public function addComment($book_id, $message) {

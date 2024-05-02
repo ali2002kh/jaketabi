@@ -54,8 +54,8 @@
                 </button>
             </div>
         </div>
-        <p class="title" style="margin-top: 35px;"><span> فعالیت  دوستان</span></p>
-        <div class="card-slider">
+        <p v-if="user" class="title" style="margin-top: 35px;"><span> فعالیت  دوستان</span></p>
+        <div v-if="user" class="card-slider">
             <div id="carouselExampleControls3" class="carousel">
                 <div class="carousel-inner">
 
@@ -86,8 +86,8 @@
                 </button>
             </div>
         </div>
-        <p class="title" style="margin-top: 35px;"><span> قفسه های  دوستان</span></p>
-        <div class="shelves-row">
+        <p v-if="user" class="title" style="margin-top: 35px;"><span> قفسه های  دوستان</span></p>
+        <div v-if="user" class="shelves-row">
             <img src="storage/sources//icons8-forward-52-right.png" style="width: 30px; height:30px; margin-top:100px;" alt="">
             <div v-for="s in shelves" :key="s.id" class="shelves-card">
                 <p class="shelf-title">{{ s.name }}</p>
