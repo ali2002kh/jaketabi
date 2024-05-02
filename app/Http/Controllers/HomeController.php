@@ -26,7 +26,7 @@ class HomeController extends Controller {
 
     public function user($id) {
 
-        $user = User::find(1);
+        $user = auth()->user();
 
         if ($user->id == $id) {
             return new UserPrivateResource($user);
@@ -39,25 +39,25 @@ class HomeController extends Controller {
 
     public function popular() {
 
-        $user = User::find(1);
+        $user = auth()->user();
         return BookPublicResource::collection($user->getPopularBooks());
     }
 
     public function trending() {
 
-        $user = User::find(1);
+        $user = auth()->user();
         return BookPublicResource::collection($user->getTrendingBooks());
     }
 
     public function friendsActivities() {
 
-        $user = User::find(1);
+        $user = auth()->user();
         return FriendBookResource::collection($user->getFriendsBooks());
     }
 
     public function friendsShelves() {
 
-        $user = User::find(2);
+        $user = auth()->user();
         return ShelfPreviewResource::collection($user->getFriendsShelves());
     }
 }

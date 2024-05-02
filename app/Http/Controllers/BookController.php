@@ -44,7 +44,7 @@ class BookController extends Controller {
 
     public function updateCurrentPage($book_id, $page) {
 
-        $user = User::find(1);
+        $user = auth()->user();
         $user->updateCurrentPage($book_id, $page);
 
         return abort(200);
@@ -62,7 +62,7 @@ class BookController extends Controller {
 
     public function addComment($book_id, Request $request) {
 
-        $user = User::find(1);
+        $user = auth()->user();
 
         $this->validate($request, [
             'message' => 'required',

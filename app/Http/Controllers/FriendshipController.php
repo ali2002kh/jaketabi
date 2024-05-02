@@ -9,21 +9,21 @@ class FriendshipController extends Controller {
 
     public function acceptOrAdd($id) {
 
-        $user = User::find(1);
+        $user = auth()->user();
 
         $user->sendRequestTo($id);
     }
 
     public function rejectOrRemove($id) {
 
-        $user = User::find(1);
+        $user = auth()->user();
 
         $user->rejectOrRemoveFriend($id);
     }
 
     public function status($id) {
 
-        $user = User::find(1);
+        $user = auth()->user();
 
         // 0 no request
         // 1 sent request

@@ -10,7 +10,7 @@ class ProfileController extends Controller {
     
     public function update(Request $request) {
 
-        $user = User::find(1);
+        $user = auth()->user();
 
         $request->validate([
             'username' => [Rule::unique('users')->ignore($user->id), 'required'],
