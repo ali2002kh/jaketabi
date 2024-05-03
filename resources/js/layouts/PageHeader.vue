@@ -185,8 +185,8 @@ export default {
     },
     methods: {
         async logout () {
-            await this.$store.dispatch("user/logout");
-            this.$router.push('/login')
+            await this.$store.dispatch("user/logout")
+            .then(() => this.$router.push('/login'))
         },
 
         async search() {

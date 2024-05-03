@@ -337,14 +337,6 @@ class User extends Authenticatable
         return $shelf;
     }
 
-    public function removeShelf($shelf_id) {
-
-        $shelf = Shelf::find($shelf_id);
-        if ($shelf->getUser()->id == $this->id) {
-            $shelf->delete();
-        }
-    }
-
     public function addBookToShelf($shelf_id, $book_id) {
     
         $shelf = Shelf::find($shelf_id);

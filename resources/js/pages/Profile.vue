@@ -32,10 +32,10 @@
             <p class="float-end pt-1 me-4 fs-5 ">دارم می خوانم</p>
         </div>
         <div class="card-body d-flex flex-row-reverse m-0 p-0">
-            <div v-for="b in host.reading" :key="b.id" class="d-flex flex-column m-1 p-2 align-items-center text-center">
+            <router-link :to="{name:'book', params:{id: b.id}}" v-for="b in host.reading" :key="b.id" class="d-flex flex-column m-1 p-2 align-items-center text-center">
                 <img :src="b.image" style="height: 150px; max-width:100px" alt="">
                 <p class=""> {{ b.name }}</p>
-            </div>
+            </router-link>
             <div v-if="host.has_more_reading" class="d-flex flex-column m-1 p-2 align-items-center text-center justify-content-center me-auto">
                 <a href="#">
                     <img src="storage/icons/icons8-forward-button-48.png"  alt="">
@@ -49,10 +49,10 @@
             <p class="float-end pt-1 me-4 fs-5"> خوانده ام </p>
         </div>
         <div class="card-body d-flex flex-row-reverse m-0 p-0">
-            <div v-for="b in host.already_read" :key="b.id" class="d-flex flex-column m-1 p-2 align-items-center text-center">
+            <router-link :to="{name:'book', params:{id: b.id}}" v-for="b in host.already_read" :key="b.id" class="d-flex flex-column m-1 p-2 align-items-center text-center">
                 <img :src="b.image" style="height: 150px; max-width:100px" alt="">
                 <p class=""> {{ b.name }}</p>
-            </div>
+            </router-link>
             <div v-if="host.has_more_already_read" class="d-flex flex-column m-1 p-2 align-items-center text-center justify-content-center me-auto">
                 <a href="#">
                     <img src="storage/icons/icons8-forward-button-48.png"  alt="">
@@ -66,10 +66,10 @@
             <p class="float-end pt-1 me-4 fs-5"> میخواهم بخوانم </p>
         </div>
         <div class="card-body d-flex flex-row-reverse m-0 p-0">
-            <div v-for="b in host.want_to_read" :key="b.id" class="d-flex flex-column m-1 p-2 align-items-center text-center">
+            <router-link :to="{name:'book', params:{id: b.id}}" v-for="b in host.want_to_read" :key="b.id" class="d-flex flex-column m-1 p-2 align-items-center text-center">
                 <img :src="b.image" style="height: 150px; max-width:100px" alt="">
                 <p class=""> {{ b.name }}</p>
-            </div>
+            </router-link>
             <div v-if="host.has_more_want_to_read" class="d-flex flex-column m-1 p-2 align-items-center text-center justify-content-center me-auto">
                 <a href="#">
                     <img src="storage/icons/icons8-forward-button-48.png"  alt="">

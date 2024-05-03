@@ -1,56 +1,17 @@
 <template>
-    <PageHeader></PageHeader>
-    <!-- navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div class="container-fluid">
-            <ul class="nav navbar-nav me-auto">
-                <li class="nav-item ps-4">
-                    <a class="nav-link" href="#">
-                        <i class="fa-solid fa-bell fa-lg"></i>
-                    </a>
-                </li>
-                <li class="nav-item ps-2">
-                    <a class="nav-link" href="#">
-                        <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-                    </a>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav justify-content-center">
-                <li class="nav-item">
-                    <p class="navbar-text text-white fs-5 ">ج‍‍‍‍اکتابی</p>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav ms-auto">
-                <li class="nav-item ps-4">
-                    <a class="nav-link" href="#">
-                        <i class="fa-solid fa-user fa-lg"></i>
-                    </a>
-                </li>
-                <li class="nav-item ps-2">
-                    <a class="nav-link" href="#">
-                        <i class="fa-solid fa-house fa-lg"></i>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    <page-header></page-header>
+
     <!-- sidebar -->
     <div class="mt-5 m-2 d-flex flex-row-reverse">
         <div class="sidebar flex-item d-flex flex-column align-items-end">
-            <div class="sidebar-item w-100 mb-1 mt-3 ">
+            <div class="sidebar-item w-100 mb-1 mt-3">
                 <a href="#" class="sidebar-link link-dark link-underline link-underline-opacity-0 fs-6 fw-bold p-2 d-block text-end">
                     افزودن کتاب
                     <i class="fa-solid fa-plus fa-lg p-2"></i>
                 </a>
             </div>
-            <div class="sidebar-item d-block w-100 ">
-                <a href="#" class="sidebar-link link-dark link-underline link-underline-opacity-0 fs-6 fw-bold p-2 d-block text-end">
-                    حذف کتاب
-                    <i class="fa-solid fa-minus fa-lg p-2"></i>
-                </a>
-            </div>
-            <div class="sidebar-item d-block w-100 ">
-                <a href="#" class="sidebar-link link-dark link-underline link-underline-opacity-0 fs-6 fw-bold p-2 d-block text-end">
+            <div v-if="isOwner" class="sidebar-item d-block w-100" @click.prevent="deleteShelf()">
+                <a class="sidebar-link link-dark link-underline link-underline-opacity-0 fs-6 fw-bold p-2 d-block text-end">
                     حذف قفسه
                     <i class="fa-solid fa-trash fa-lg p-2"></i>
                 </a>
@@ -116,6 +77,7 @@ export default {
     data() {
         return {
             shelf: null,
+            isOwner: false,
         }
     },
     created() {
@@ -125,12 +87,30 @@ export default {
             this.shelf = response.data.data
         })
     },  
-    beforeMount() {
-        if (this.user) {
-            console.log('User is already loaded')
-        } else {    
-            this.$store.dispatch("user/loadUser");
-        }
+    mounted() {
+
+        let loadUser = new Promise((resolve, reject) => {
+             if (this.user) {
+                console.log('User is already loaded')
+                resolve()
+            } else {
+                this.$store.dispatch("user/loadUser")
+                .then(() => {
+                    resolve()
+                }).catch((error) => {
+                    console.log(error.message)
+                    if (error.message === 'Unauthorized') {
+                        resolve()
+                    }
+                })
+            }
+        })
+
+        loadUser.then(() => {
+            if (this.user && this.user.id == this.shelf.user.id) {
+                this.isOwner = true
+            }
+        })
     },
     computed: {
         // ...mapGetters(["user"]),
@@ -139,6 +119,14 @@ export default {
         }),
         // ...mapActions(['initState'])
     },
+    methods: {
+        async deleteShelf() {
+            await axios.get(`/api/remove-shelf/${this.$route.params.id}`)
+            .then(() => {
+                this.$router.push(`/profile/${this.user.id}`)
+            }) 
+        }
+    }
 }
 </script>
 

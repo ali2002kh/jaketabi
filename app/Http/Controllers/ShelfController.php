@@ -6,6 +6,7 @@ use App\Http\Resources\ShelfResource;
 use App\Models\Shelf;
 use App\Models\ShelfBook;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 
 class ShelfController extends Controller {
@@ -81,7 +82,12 @@ class ShelfController extends Controller {
     public function delete($shelf_id) {
 
         $user = auth()->user();
-        $user->removeShelf($shelf_id);
-        return abort(200);
+        $shelf = Shelf::find($shelf_id);
+        if ($shelf->getUser()->id == $user->id) {
+            $shelf->delete();
+            return abort(200);
+        } else {
+            return abort(403);
+        }
     }
 }

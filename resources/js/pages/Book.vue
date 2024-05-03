@@ -157,20 +157,18 @@
         <div class="row me-2 flex-row-reverse">
             <p class="text-end m-2 fs-5 fw-bold"> کتاب های مشابه </p>
             <hr class="opacity-100 border-muted border mx-auto">
-                <div class="col">
-                    <a href="#" class="link-underline-opacity-0 link-dark">
-                        <img class="book-cover d-block mx-auto" :src="book.image" alt="">
-                    <p class="text-center p-1">سال بلوا</p>
-                    </a> 
-                </div>
-                
-                <div class="col p-5 me-0">
-                    <button class="btn">
-                        <i class="fa-solid fa-angle-left fa-3x"></i>
-                    </button>
-                </div>
+            <div v-for="b in book.related_books" :key="b.id" class="col">
+                <router-link :to="{name: 'book', params: {id: b.id}}" class="link-underline-opacity-0 link-dark">
+                    <img class="book-cover d-block mx-auto" :src="b.image" alt="">
+                <p class="text-center p-1">{{ b.name }}</p>
+                </router-link> 
+            </div>           
+            <div class="col p-5 me-0">
+                <button class="btn">
+                    <i class="fa-solid fa-angle-left fa-3x"></i>
+                </button>
+            </div>
         </div>
-
     </div>
 </div>
 </template>

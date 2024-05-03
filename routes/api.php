@@ -59,7 +59,7 @@ Route::post('/update-shelf-name/{shelf_id}', [ShelfController::class, 'updateNam
 
 Route::post('/update-shelf-description/{shelf_id}', [ShelfController::class, 'updateDescription']);
 
-Route::delete('/remove-shelf/{shelf_id}', [ShelfController::class, 'delete']);
+Route::get('/remove-shelf/{shelf_id}', [ShelfController::class, 'delete']);
 
 // Friends ----------------------------------------------------------------
 

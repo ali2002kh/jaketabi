@@ -132,18 +132,26 @@ class Book extends Model
     }
     
     public function getWantToReadCount() {
-        
-        return $this->getLog()->want_to_read;
+        if ($this->getLog()) {
+            return $this->getLog()->want_to_read;
+        } 
+        return 0;
     }
 
     public function getReadingCount() {
         
-        return $this->getLog()->reading;
+        if ($this->getLog()) {
+            return $this->getLog()->reading;
+        } 
+        return 0;
     }
 
     public function getAlreadyReadCount() {
         
-        return $this->getLog()->already_read;
+        if ($this->getLog()) {
+            return $this->getLog()->already_read;
+        } 
+        return 0;
     }
 
     public function updateLog($field, $change) {
