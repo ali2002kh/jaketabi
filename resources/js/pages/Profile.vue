@@ -7,7 +7,9 @@
             </div>
             <div class="d-flex flex-column align-items-center">
                 <p class="fs-6 p-0 m-0 ">{{  host.username }}</p>
-                <p class="fs-6 p-0 m-0">{{ host.name }}</p>
+                <a @click.prevent="logout" href="#" class="link-underline link-underline-opacity-0 text-dark">
+                    خروج
+                </a>
             </div>
         </div>
         <div v-if="host.is_private" class="d-flex flex-row-reverse align-items-center mt-5 ms-4">
@@ -169,6 +171,12 @@ export default {
             loggedIn: state => state.user.loggedIn
         }),
         // ...mapActions(['initState'])
+    },
+    methods: {
+        async logout () {
+            await this.$store.dispatch("user/logout");
+            this.$router.push('/login')
+        },
     },
 }
 </script>

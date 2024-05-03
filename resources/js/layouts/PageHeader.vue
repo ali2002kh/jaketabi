@@ -3,30 +3,23 @@
             <div class="container-fluid">
                 <ul class="nav navbar-nav me-auto">
                     <li class="nav-item ps-4">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link text-white" data-toggle="tooltip" data-placement="bottom" title="اعلان ها" href="#">
                             <i class="fa-solid fa-bell fa-lg"></i>
                         </a>
                     </li>
 
-
-                    <!-- <li class="nav-item ps-2">
-                        <a class="nav-link" href="#">
-                            <img class="w-50" src="storage/icons/search.png" alt="">
-                        </a>
-                    </li> -->
-
-                    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#searchModal">
-                        <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-                    </button>
-
-
+                    <li>
+                        <button type="button" class="btn btn-link text-white" data-toggle="tooltip" data-placement="bottom" title="جستجو" data-bs-toggle="modal" data-bs-target="#searchModal">
+                            <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+                        </button>
+                    </li>
                 </ul>
                 <ul class="nav navbar-nav justify-content-center">
                     <li class="nav-item">
                         <p class="navbar-text text-white fs-5">ج‍‍‍‍اکتابی</p>
                     </li>
                 </ul>
-                <ul class="nav navbar-nav ms-auto">
+                <ul class="nav navbar-nav ms-auto align-items-center">
 
                     <!-- <li class="nav-item ps-4">
                         <router-link class="nav-link" :to="{name: 'profile', params: {id: id}}">
@@ -34,27 +27,35 @@
                         </router-link>
                     </li> -->
 
-                    <li class="nav-item dropdown" v-if="loggedIn">
-                        <ul>
-                            <li><router-link
-                                :to="{name: 'profile', params: {id: user.id}}"
-                                >profile</router-link>
-                                profile
+                    <li class="nav-item pe-2" v-if="loggedIn">
+                            <router-link :to="{name: 'profile', params: {id: user.id}}" 
+                                data-toggle="tooltip" data-replacement="bottom" title="پروفایل"
+                                class="text-white">
+                                    <i class="fa-solid fa-user fa-lg"></i>
+                            </router-link>
+                        <!-- <ul>
+                            <li>
+                                <router-link :to="{name: 'profile', params: {id: user.id}}" 
+                                data-toggle="tooltip" data-replacement="bottom" title="پروفایل"
+                                class="text-white">
+                                    <i class="fa-solid fa-user fa-lg"></i>
+                                </router-link>
                             </li>
                             <li>
-                                <a
-                                @click.prevent="logout" href="#"
-                                >logout</a>
+                                <a data-toggle="tooltip" data-replacement="bottom" title="خروج"
+                                @click.prevent="logout" href="#" class="text-white"
+                                ><i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i></a>
                             </li>
-                        </ul>
+                        </ul> -->
                     </li>
-                    <li class="nav-item ps-2" v-else>
-                        <router-link :to="{name: 'login'}">ورود</router-link>
+                    <li class="nav-item pe-3 " v-else>
+                        <router-link :to="{name: 'login'}" data-toggle="tooltip" data-replacement="bottom" title="ورود" class="text-white">
+                            <i class="fa-solid fa-right-to-bracket fa-lg"></i>
+                        </router-link>
                     </li>
 
-
-                    <li class="nav-item ps-2">
-                        <router-link class="nav-link" :to="{name: 'home'}">
+                    <li class="nav-item pe-4">
+                        <router-link class="nav-link text-white" :to="{name: 'home'}" data-toggle="tooltip" data-replacement="bottom" title="خانه">
                             <i class="fa-solid fa-house fa-lg"></i>
                         </router-link>
                     </li>
@@ -242,4 +243,5 @@ export default {
     height: 80px;
     border-radius: 10px;
 }
+
 </style>
