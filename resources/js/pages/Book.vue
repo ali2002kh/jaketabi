@@ -94,19 +94,19 @@
                 <div>
                     <div v-if="has_start_date" class="start-date d-flex flex-row-reverse me-2">
                         <p class="p-2">شروع از </p>
-                        <p class="bg-white border rounded-1 p-2 "> {{start_date}} </p>
+                        <p class="bg-white border rounded-1 p-2 "> {{record.started_at}} </p>
                     </div>
                 </div>
                 <div>
                     <div v-if="has_last_read_date" class="finish-date d-flex flex-row-reverse me-2">
                         <span class="p-2 "> آخرین مطالعه در  </span>
-                        <p class="bg-white border rounded-1 p-2 "> {{last_read_date}} </p>
+                        <p class="bg-white border rounded-1 p-2 "> {{record.last_read_at}} </p>
                     </div>
                 </div>
                 <div>
                     <div v-if="has_finish_date" class="finish-date d-flex flex-row-reverse me-2">
                         <span class="p-2 "> پایان در </span>
-                        <p class="bg-white border rounded-1 p-2 "> {{finish_date}} </p>
+                        <p class="bg-white border rounded-1 p-2 "> {{record.finished_at}}</p>
                     </div>
                 </div>
                 <div v-if="has_progression" style="vertical-align:bottom">
@@ -182,6 +182,7 @@
 
 import { mapState } from 'vuex';
 import PageHeader from "../layouts/PageHeader"
+import moment from "moment";
 // import PageFooter from "../layouts/PageFooter"
 
 export default {
@@ -191,6 +192,7 @@ export default {
     },
     data() {
         return {
+            moment: moment,
             book: null,
             record: null,
             selected_status: 0,
@@ -283,21 +285,24 @@ export default {
                 if (this.selected_status == 3) {
                     this.record.progression = 1
                     this.has_progression = true
-                    this.finish_date = new Date().toISOString().split('T')[0];
+                    this.finish_date = new Date()
                     this.has_start_date = true
                     this.has_last_read_date = false
                     this.has_finish_date = true
                     console.log("has progression(in condition): "+this.has_progression)
+                    console.log("front dates:" + this.start_date + this.last_read_date + this.finish_date)
+                    console.log("back dates:" + this.record.started_at + this.record.last_read_at + this.record.finished_at)
                 }
                 else if (this.selected_status == 2) {
                     console.log("current page input: " + this.current_page_input)
                     this.record.progression = this.current_page_input / this.book.page_count
                     this.has_progression = true
-                    this.start_date = new Date().toISOString().split('T')[0];
-                    this.last_read_date = new Date().toISOString().split('T')[0];
+                    this.start_date = new Date()
+                    this.last_read_date = new Date()
                     this.has_start_date = true
                     this.has_last_read_date = true
                     this.has_finish_date = false
+                    
                 }
                 else {
                     this.has_progression = false
@@ -306,6 +311,11 @@ export default {
                     this.has_last_read_date = false
                 }
                 console.log("has progression: "+this.has_progression)
+                this.record.started_at = moment(this.start_date).format("YYYY-MM-DD")
+                this.record.last_read_at = moment(this.last_read_date).format("YYYY-MM-DD")
+                this.record.finished_at = moment(this.finish_date).format("YYYY-MM-DD")
+                console.log("front dates:" + this.start_date + this.last_read_date + this.finish_date)
+                    console.log("back dates:" + this.record.started_at + this.record.last_read_at + this.record.finished_at)
                 // console.log(this.isAlreadyRead)
             })
         },
@@ -317,7 +327,8 @@ export default {
                 this.selected_status = 3
                 this.record.progression = 1
                 this.has_progression = true
-                this.finish_date = new Date().toISOString().split('T')[0];
+                this.finish_date = new Date()
+                this.record.finished_at = moment(this.finish_date).format("YYYY-MM-DD")
                 this.has_start_date = true
                 this.has_finish_date = true
                 this.has_last_read_date = false
@@ -328,7 +339,9 @@ export default {
             await axios.get(`/api/update-book-current-page/${this.$route.params.id}/${this.current_page_input}`)
             .then(() => {
                 this.record.progression = this.current_page_input / this.book.page_count
-                this.last_read_date = new Date().toISOString().split('T')[0];
+                this.last_read_date = new Date()
+                this.record.last_read_at = moment(this.last_read_date).format("YYYY-MM-DD")
+                
                 console.log(this.record.progression)
             })
         }, 
