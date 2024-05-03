@@ -20,11 +20,17 @@ class ShelfController extends Controller {
         $user = auth()->user();
 
         $request->validate([
-            'name' =>  'required|unique:shelves',
+            'name' =>  'required',
         ]);
 
-        $user->createShelf(name:$request->get('name'), description:$request->get('description'));
-        return abort(200);
+        $shelf = $user->createShelf(name: $request->get('name'), description: $request->get('description'));
+        
+        return response()->json([
+            'data' => [
+                'shelf' => new ShelfResource($shelf),
+            ],
+            'message' => 'قفسه ایجاد شد'
+        ], 200);
     }
 
     public function addBook($shelf_id, $book_id) {

@@ -334,6 +334,7 @@ class User extends Authenticatable
             $shelf->description = $description;
         }
         $shelf->save();
+        return $shelf;
     }
 
     public function removeShelf($shelf_id) {

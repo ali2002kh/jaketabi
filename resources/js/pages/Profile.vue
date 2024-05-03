@@ -83,11 +83,48 @@
             <div class=" me-4 fs-5 ">قفسه های من</div>
             <a href="#" class="text-dark link-underline link-underline-opacity-0">
                 <div class="d-flex align-items-center me-5">
-                    <div v-if="host.is_private" class="me-2 fs-6">ایجاد قفسه جدید</div>
+                    <div v-if="host.is_private" class="me-2 fs-6" data-bs-toggle="modal" data-bs-target="#createShelf">ایجاد قفسه جدید</div>
                     <img src="storage/icons8-add-48.png" style="width: 30px;" alt="">
                 </div>
             </a>
         </div>
+
+        <div class="modal fade" id="createShelf" tabindex="-1" aria-labelledby="createShelfLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="createShelfLabel">ایجاد قفسه جدید</h1>
+                        <button id="close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-danger" v-if="hasError">
+                            <ul>
+                                <li v-for="e in errors" :key="e">{{ e[0] }}</li>
+                            </ul>
+                        </div>
+                        <div class="alert alert-success" v-if="success">{{ message }}</div>
+                        <form>
+                            <div class="m-1">
+                                <label for="shelfName" class="form-label">نام قفسه</label>
+                                <input type="text" class="form-control" id="shelfName" name="shelfName"
+                                v-model="shelfName"
+                                >
+                            </div>
+                            <div class="m-1">
+                                <label for="shelfDescription" class="form-label">توضیحات</label>
+                                <textarea id="shelfDescription" class="form-control" name="shelfDescription" v-model="shelfDescription"></textarea>
+                            </div>
+                            <div class="m-1 d-grid">
+                                <button type="submit" class="btn btn-dark m-3" 
+                                @click.prevent="storeShelf"
+                                >تایید</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="card-body d-flex flex-row-reverse m-0 p-0" v-if="host">
             <div v-for="s in host.shelves" :key="s.id" class="card m-3">
                 <div class="card-header m-0 p-1 text-center">{{ s.name }}</div>
@@ -107,7 +144,7 @@
                 <a href="#">
                     <img src="storage/icons/icons8-forward-button-48.png"  alt="">
                 </a>
-                <p>+{{ host.shelves_more_count }}</p>
+                <p>+{{ shelves_more_count }}</p>
             </div>
         </div>
     </div>
@@ -126,13 +163,15 @@ export default {
     data() {
         return {
             host: null,
+            shelfName: null,
+            shelfDescription: null,
+            hasError: false,
+            errors: [],
+            success: false,
+            message: null,
+            shelves_more_count: null,
         } 
     },
-    // computed: {
-    //     user() {
-    //         return this.$store.getters.getUser
-    //     }
-    // }
     beforeMount() {
 
         let loadUser = new Promise((resolve, reject) => {
@@ -155,12 +194,18 @@ export default {
         loadUser.then(() => {
             if (this.user && this.user.id == this.$route.params.id) {
                     this.host = this.user
+                    console.log(this.host)
             } else {
                 axios.get(`/api/user/${this.$route.params.id}`)
                 .then((response) => {
                     console.log(response.data.data)
                     this.host = response.data.data
                 })
+            }
+
+            if (this.host.has_more_shelves) {
+                console.log(this.host.shelves_more_count)
+                this.shelves_more_count = this.host.shelves_more_count
             }
         })
     },
@@ -177,6 +222,39 @@ export default {
             await this.$store.dispatch("user/logout");
             this.$router.push('/login')
         },
+
+        async storeShelf() {
+            this.hasError = false
+            this.errors = []
+            this.success = false
+            this.message = null
+            await axios.post('/api/store-shelf', {
+                name: this.shelfName,
+                description: this.shelfDescription
+            }).then((response) => {
+                this.success = true;
+                this.message = response.data.message
+                // console.log(response.data.data.shelf)
+                if(this.host.has_more_shelves){
+                    this.shelves_more_count = this.shelves_more_count + 1
+                } else if (this.host.shelves.length == 3) {
+                    this.host.has_more_shelves = true
+                    this.shelves_more_count = 1
+                    console.log(this.shelves_more_count)
+                } else {
+                    this.host.shelves.push(response.data.data.shelf)
+                }
+                // console.log(this.user.shelves)
+            }).catch ((error) => {
+                if (error.response && 
+                    error.response.status && 
+                    error.response.status == 422) {
+                        this.hasError = true
+                        console.log(error.response.data)
+                        this.errors = error.response.data.errors
+                }
+            })
+        }
     },
 }
 </script>
