@@ -48,7 +48,7 @@ class ShelfController extends Controller {
         return abort(200);
     }
 
-    public function updateName(Request $request, $shelf_id) {
+    public function update(Request $request, $shelf_id) {
         
         $user = auth()->user();
         $shelf = Shelf::find($shelf_id);
@@ -57,23 +57,8 @@ class ShelfController extends Controller {
             $this->validate($request, [
                 'name' => 'required',
             ]); 
-    
-            $shelf->update(name:$request->get('name'));
-            return abort(200);
-        }
-
-        return abort(403);
-    }
-
-    public function updateDescription(Request $request, $shelf_id) {
-        
-        $user = auth()->user();
-        $shelf = Shelf::find($shelf_id);
-
-        if ($shelf->getUser()->id == $user->id) {
-    
-            $shelf->update(description:$request->get('description'));
-            return abort(200);
+            $shelf->update(name:$request->get('name'), description:$request->get('description'));
+            return abort(200, 'موفقیت آمیز بود');
         }
 
         return abort(403);

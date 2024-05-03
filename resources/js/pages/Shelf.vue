@@ -36,15 +36,50 @@
             style=" height: 100%; margin-right:250px;">
             <div class="shelf-title d-flex flex-row-reverse align-items-center">
                 <div class="m-2 p-2">
-                    <a href="#" class="link-dark link-underline-opacity-0" data-toggle="tooltip" data-placement="bottom" title=" ویرایش">
-                            <i class="fa-solid fa-pen fa-lg ps-2"></i>
-                    </a>
+                    <div v-if="isOwner" class="me-2 fs-6" data-bs-toggle="modal" data-bs-target="#editShelf" title=" ویرایش">
+                        <i class="fa-solid fa-pen fa-lg ps-2"></i>
+                    </div>
                 </div>
                 <div class="justify-content-center">
                     <h4 class="text-dark fw-bold" style="white-space: nowrap;"> {{shelf.name}} </h4>
                 </div>
             
             </div>
+            <div class="modal fade" id="editShelf" tabindex="-1" aria-labelledby="editShelfLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="editShelfLabel">ویرایش قفسه</h1>
+                        <button id="close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-danger" v-if="hasError">
+                            <ul>
+                                <li v-for="e in errors" :key="e">{{ e[0] }}</li>
+                            </ul>
+                        </div>
+                        <div class="alert alert-success" v-if="success">{{ message }}</div>
+                        <form>
+                            <div class="m-1">
+                                <label for="shelfName" class="form-label">نام قفسه</label>
+                                <input type="text" class="form-control" id="shelfName" name="shelfName"
+                                v-model="shelfName"
+                                >
+                            </div>
+                            <div class="m-1">
+                                <label for="shelfDescription" class="form-label">توضیحات</label>
+                                <textarea id="shelfDescription" class="form-control" name="shelfDescription" v-model="shelfDescription"></textarea>
+                            </div>
+                            <div class="m-1 d-grid">
+                                <button type="submit" class="btn btn-dark m-3" 
+                                @click.prevent="updateShelf"
+                                >تایید</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
             <div class="">
                 <p class=" fs-6 fw-bold">تعداد کتاب ها : {{shelf.book_count}} </p>
             </div>
@@ -78,6 +113,12 @@ export default {
         return {
             shelf: null,
             isOwner: false,
+            shelfName: null,
+            shelfDescription: null,
+            hasError: false,
+            errors: [],
+            success: false,
+            message: null,
         }
     },
     created() {
@@ -85,6 +126,8 @@ export default {
         .then(response => {
             console.log(response.data.data)
             this.shelf = response.data.data
+            this.shelfName = this.shelf.name
+            this.shelfDescription = this.shelf.description
         })
     },  
     mounted() {
@@ -125,6 +168,30 @@ export default {
             .then(() => {
                 this.$router.push(`/profile/${this.user.id}`)
             }) 
+        },
+
+        async updateShelf() {
+            this.hasError = false
+            this.errors = []
+            this.success = false
+            this.message = null
+            await axios.post(`/api/update-shelf/${this.$route.params.id}`, {
+                name: this.shelfName,
+                description: this.shelfDescription
+            }).then((response) => {
+                this.success = true;
+                this.message = response.data.message
+                this.shelf.name = this.shelfName
+                this.shelf.description = this.shelfDescription
+            }).catch ((error) => {
+                if (error.response && 
+                    error.response.status && 
+                    error.response.status == 422) {
+                        this.hasError = true
+                        console.log(error.response.data)
+                        this.errors = error.response.data.errors
+                }
+            })
         }
     }
 }

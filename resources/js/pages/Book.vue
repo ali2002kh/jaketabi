@@ -75,7 +75,6 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-success">ذخیره</button>
                                         <button type="button" class="btn btn-dark" data-bs-dismiss="modal">بستن</button>
                                     </div>
                                 </div>

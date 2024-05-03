@@ -57,9 +57,7 @@ class Shelf extends Model
         }
         if ($description) {
             $this->description = $description;
-        }
-
-        if (!($description or $name)) {
+        } else {
             $this->description = null;
         }
         $this->save();

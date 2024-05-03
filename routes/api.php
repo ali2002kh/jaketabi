@@ -55,9 +55,7 @@ Route::get('/add-book-to-shelf/{shelf_id}/{book_id}', [ShelfController::class, '
 
 Route::get('/remove-book-from-shelf/{shelf_id}/{book_id}', [ShelfController::class, 'removeBook']);
 
-Route::post('/update-shelf-name/{shelf_id}', [ShelfController::class, 'updateName']);
-
-Route::post('/update-shelf-description/{shelf_id}', [ShelfController::class, 'updateDescription']);
+Route::post('/update-shelf/{shelf_id}', [ShelfController::class, 'update']);
 
 Route::get('/remove-shelf/{shelf_id}', [ShelfController::class, 'delete']);
 
