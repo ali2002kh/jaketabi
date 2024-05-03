@@ -21942,7 +21942,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       current_page_input: null,
       has_progression: false,
       friend_book: null,
-      shelves_with_this_book: []
+      shelves_with_this_book: [],
+      start_date: null,
+      last_read_date: null,
+      finish_date: null,
+      has_start_date: false,
+      has_last_read_date: false,
+      has_finish_date: false
     };
   },
   created: function created() {
@@ -21974,8 +21980,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         _this2.record = response.data.data;
         _this2.selected_status = _this2.record.status_code;
         _this2.current_page_input = _this2.record.current_page;
-        if (_this2.selected_status == 2 || _this2.selected_status == 3) {
+        _this2.start_date = _this2.record.started_at;
+        _this2.last_read_date = _this2.record.last_read_at;
+        _this2.finish_date = _this2.record.finished_at;
+        // if (this.selected_status == 2 || this.selected_status == 3) {
+        //     this.has_progression = true
+        // }
+        if (_this2.isCurrentlyReading) {
           _this2.has_progression = true;
+          _this2.has_start_date = true;
+          _this2.has_last_read_date = true;
+        }
+        if (_this2.isAlreadyRead) {
+          _this2.has_progression = true;
+          _this2.has_start_date = true;
+          _this2.has_finish_date = true;
         }
         console.log("has progression: " + _this2.has_progression);
         _this2.shelves_with_this_book = _this2.record.shelves_with_this_book;
@@ -22000,13 +22019,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 if (_this3.selected_status == 3) {
                   _this3.record.progression = 1;
                   _this3.has_progression = true;
+                  _this3.finish_date = new Date().toISOString().split('T')[0];
+                  _this3.has_start_date = true;
+                  _this3.has_last_read_date = false;
+                  _this3.has_finish_date = true;
                   console.log("has progression(in condition): " + _this3.has_progression);
                 } else if (_this3.selected_status == 2) {
                   console.log("current page input: " + _this3.current_page_input);
                   _this3.record.progression = _this3.current_page_input / _this3.book.page_count;
                   _this3.has_progression = true;
+                  _this3.start_date = new Date().toISOString().split('T')[0];
+                  _this3.last_read_date = new Date().toISOString().split('T')[0];
+                  _this3.has_start_date = true;
+                  _this3.has_last_read_date = true;
+                  _this3.has_finish_date = false;
                 } else {
                   _this3.has_progression = false;
+                  _this3.has_start_date = false;
+                  _this3.has_finish_date = false;
+                  _this3.has_last_read_date = false;
                 }
                 console.log("has progression: " + _this3.has_progression);
                 // console.log(this.isAlreadyRead)
@@ -22030,6 +22061,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this4.selected_status = 3;
                 _this4.record.progression = 1;
                 _this4.has_progression = true;
+                _this4.finish_date = new Date().toISOString().split('T')[0];
+                _this4.has_start_date = true;
+                _this4.has_finish_date = true;
+                _this4.has_last_read_date = false;
               });
             case 2:
               _context2.next = 4;
@@ -22050,6 +22085,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               _context3.next = 2;
               return axios.get("/api/update-book-current-page/".concat(_this5.$route.params.id, "/").concat(_this5.current_page_input)).then(function () {
                 _this5.record.progression = _this5.current_page_input / _this5.book.page_count;
+                _this5.last_read_date = new Date().toISOString().split('T')[0];
                 console.log(_this5.record.progression);
               });
             case 2:
@@ -23186,14 +23222,49 @@ var _hoisted_42 = /*#__PURE__*/_withScopeId(function () {
   }, null, -1 /* HOISTED */);
 });
 var _hoisted_43 = [_hoisted_42];
-var _hoisted_44 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div data-v-3a944972><div class=\"start-date d-flex flex-row-reverse me-2\" data-v-3a944972><p class=\"p-2\" data-v-3a944972>شروع از </p><p class=\"bg-white border rounded-1 p-2\" data-v-3a944972>یک فروردین 1403</p></div></div><div data-v-3a944972><div class=\"finish-date d-flex flex-row-reverse me-2\" data-v-3a944972><span class=\"p-2\" data-v-3a944972> آخرین مطالعه در </span><p class=\"bg-white border rounded-1 p-2\" data-v-3a944972>یک فروردین 1403</p></div></div>", 2);
+var _hoisted_44 = {
+  key: 0,
+  "class": "start-date d-flex flex-row-reverse me-2"
+};
+var _hoisted_45 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+    "class": "p-2"
+  }, "شروع از ", -1 /* HOISTED */);
+});
 var _hoisted_46 = {
+  "class": "bg-white border rounded-1 p-2"
+};
+var _hoisted_47 = {
+  key: 0,
+  "class": "finish-date d-flex flex-row-reverse me-2"
+};
+var _hoisted_48 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "p-2"
+  }, " آخرین مطالعه در ", -1 /* HOISTED */);
+});
+var _hoisted_49 = {
+  "class": "bg-white border rounded-1 p-2"
+};
+var _hoisted_50 = {
+  key: 0,
+  "class": "finish-date d-flex flex-row-reverse me-2"
+};
+var _hoisted_51 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "p-2"
+  }, " پایان در ", -1 /* HOISTED */);
+});
+var _hoisted_52 = {
+  "class": "bg-white border rounded-1 p-2"
+};
+var _hoisted_53 = {
   key: 0,
   style: {
     "vertical-align": "bottom"
   }
 };
-var _hoisted_47 = {
+var _hoisted_54 = {
   "class": "progress",
   role: "progressbar",
   "aria-label": "Success example",
@@ -23201,34 +23272,34 @@ var _hoisted_47 = {
   "aria-valuemin": "0",
   "aria-valuemax": "100"
 };
-var _hoisted_48 = {
+var _hoisted_55 = {
   key: 1,
   "class": "book-user col rounded-2 p-1 me-2 h-100"
 };
-var _hoisted_49 = {
+var _hoisted_56 = {
   "class": "row flex-row-reverse mx-2"
 };
-var _hoisted_50 = {
+var _hoisted_57 = {
   "class": "publisher-books col-8 h-100"
 };
-var _hoisted_51 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_58 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
     "class": "text-end m-2 fs-5 fw-bold"
   }, "از همین نشر ", -1 /* HOISTED */);
 });
-var _hoisted_52 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_59 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", {
     "class": "opacity-100 border-muted border mx-auto"
   }, null, -1 /* HOISTED */);
 });
-var _hoisted_53 = {
+var _hoisted_60 = {
   "class": "row row-cols-6 flex-row-reverse align-items-center"
 };
-var _hoisted_54 = ["src"];
-var _hoisted_55 = {
+var _hoisted_61 = ["src"];
+var _hoisted_62 = {
   "class": "text-center p-1"
 };
-var _hoisted_56 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_63 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "col p-5"
   }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
@@ -23237,51 +23308,51 @@ var _hoisted_56 = /*#__PURE__*/_withScopeId(function () {
     "class": "fa-solid fa-angle-left fa-3x"
   })])], -1 /* HOISTED */);
 });
-var _hoisted_57 = {
+var _hoisted_64 = {
   key: 0,
   "class": "user-friends col me-2 rounded-1 h-100 mt-3",
   style: {
     "background-color": "#f4f4f4"
   }
 };
-var _hoisted_58 = {
+var _hoisted_65 = {
   "class": "d-flex flex-row-reverse align-items-center m-1 p-2"
 };
-var _hoisted_59 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_66 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
     "class": "text-end fw-bold m-1"
   }, " دارند می خوانند / خوانده اند", -1 /* HOISTED */);
 });
-var _hoisted_60 = ["src"];
-var _hoisted_61 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_67 = ["src"];
+var _hoisted_68 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "m-1 p-3"
   }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": "btn btn-dark w-100 text-white"
   }, "نظرات کاربران")], -1 /* HOISTED */);
 });
-var _hoisted_62 = {
+var _hoisted_69 = {
   key: 1,
   "class": "user-friends col me-2 rounded-1 h-100 mt-3"
 };
-var _hoisted_63 = {
+var _hoisted_70 = {
   "class": "row me-2 flex-row-reverse"
 };
-var _hoisted_64 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_71 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
     "class": "text-end m-2 fs-5 fw-bold"
   }, " کتاب های مشابه ", -1 /* HOISTED */);
 });
-var _hoisted_65 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_72 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", {
     "class": "opacity-100 border-muted border mx-auto"
   }, null, -1 /* HOISTED */);
 });
-var _hoisted_66 = ["src"];
-var _hoisted_67 = {
+var _hoisted_73 = ["src"];
+var _hoisted_74 = {
   "class": "text-center p-1"
 };
-var _hoisted_68 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_75 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "col p-5 me-0"
   }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
@@ -23349,14 +23420,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[4] || (_cache[4] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $options.update_current_page && $options.update_current_page.apply($options, arguments);
     }, ["prevent"]))
-  }, [].concat(_hoisted_43))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), _hoisted_44, $data.has_progression ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_46, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_47, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  }, [].concat(_hoisted_43))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [$data.has_start_date ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_44, [_hoisted_45, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_46, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.start_date), 1 /* TEXT */)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [$data.has_last_read_date ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_47, [_hoisted_48, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_49, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.last_read_date), 1 /* TEXT */)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [$data.has_finish_date ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_50, [_hoisted_51, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_52, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.finish_date), 1 /* TEXT */)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), $data.has_progression ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_53, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_54, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["progress-bar bg-dark", {
       already_read: $options.isAlreadyRead
     }]),
     style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)({
       width: $data.record.progression * 100 + '%'
     })
-  }, null, 6 /* CLASS, STYLE */)])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_48, " لاگین نکرده "))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_49, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_50, [_hoisted_51, _hoisted_52, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_53, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.book.publisher.preview_books, function (b) {
+  }, null, 6 /* CLASS, STYLE */)])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_55, " لاگین نکرده "))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_56, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_57, [_hoisted_58, _hoisted_59, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_60, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.book.publisher.preview_books, function (b) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       key: b.id,
       "class": "col"
@@ -23374,11 +23445,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           "class": "book-cover d-block mx-auto",
           src: b.image,
           alt: ""
-        }, null, 8 /* PROPS */, _hoisted_54), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_55, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(b.name), 1 /* TEXT */)];
+        }, null, 8 /* PROPS */, _hoisted_61), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_62, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(b.name), 1 /* TEXT */)];
       }),
       _: 2 /* DYNAMIC */
     }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["to"])]);
-  }), 128 /* KEYED_FRAGMENT */)), _hoisted_56])]), $data.friend_book ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_57, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_58, [_hoisted_59, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.friend_book.preview_friends, function (f) {
+  }), 128 /* KEYED_FRAGMENT */)), _hoisted_63])]), $data.friend_book ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_64, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_65, [_hoisted_66, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.friend_book.preview_friends, function (f) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       key: f.id,
       "class": "d-flex flex-row-reverse align-items-center"
@@ -23399,11 +23470,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             "height": "40px"
           },
           alt: ""
-        }, null, 8 /* PROPS */, _hoisted_60)];
+        }, null, 8 /* PROPS */, _hoisted_67)];
       }),
       _: 2 /* DYNAMIC */
     }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["to"])]);
-  }), 128 /* KEYED_FRAGMENT */))]), _hoisted_61])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_62, " لاگین نکرده "))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_63, [_hoisted_64, _hoisted_65, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.book.related_books, function (b) {
+  }), 128 /* KEYED_FRAGMENT */))]), _hoisted_68])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_69, " لاگین نکرده "))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_70, [_hoisted_71, _hoisted_72, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.book.related_books, function (b) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       key: b.id,
       "class": "col"
@@ -23421,11 +23492,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           "class": "book-cover d-block mx-auto",
           src: b.image,
           alt: ""
-        }, null, 8 /* PROPS */, _hoisted_66), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_67, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(b.name), 1 /* TEXT */)];
+        }, null, 8 /* PROPS */, _hoisted_73), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_74, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(b.name), 1 /* TEXT */)];
       }),
       _: 2 /* DYNAMIC */
     }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["to"])]);
-  }), 128 /* KEYED_FRAGMENT */)), _hoisted_68])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true);
+  }), 128 /* KEYED_FRAGMENT */)), _hoisted_75])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true);
 }
 
 /***/ }),

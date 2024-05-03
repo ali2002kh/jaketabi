@@ -92,15 +92,21 @@
                     </div>
                 </div>
                 <div>
-                    <div class="start-date d-flex flex-row-reverse me-2">
+                    <div v-if="has_start_date" class="start-date d-flex flex-row-reverse me-2">
                         <p class="p-2">شروع از </p>
-                        <p class="bg-white border rounded-1 p-2 ">یک فروردین 1403</p>
+                        <p class="bg-white border rounded-1 p-2 "> {{start_date}} </p>
                     </div>
                 </div>
                 <div>
-                    <div class="finish-date d-flex flex-row-reverse me-2">
+                    <div v-if="has_last_read_date" class="finish-date d-flex flex-row-reverse me-2">
                         <span class="p-2 "> آخرین مطالعه در  </span>
-                        <p class="bg-white border rounded-1 p-2 ">یک فروردین 1403</p>
+                        <p class="bg-white border rounded-1 p-2 "> {{last_read_date}} </p>
+                    </div>
+                </div>
+                <div>
+                    <div v-if="has_finish_date" class="finish-date d-flex flex-row-reverse me-2">
+                        <span class="p-2 "> پایان در </span>
+                        <p class="bg-white border rounded-1 p-2 "> {{finish_date}} </p>
                     </div>
                 </div>
                 <div v-if="has_progression" style="vertical-align:bottom">
@@ -199,6 +205,12 @@ export default {
             has_progression: false,
             friend_book: null,
             shelves_with_this_book: [],
+            start_date: null,
+            last_read_date: null,
+            finish_date: null,
+            has_start_date: false,
+            has_last_read_date: false,
+            has_finish_date: false,
         }
     },
     created() {
@@ -235,8 +247,21 @@ export default {
                 this.record = response.data.data
                 this.selected_status = this.record.status_code
                 this.current_page_input = this.record.current_page
-                if (this.selected_status == 2 || this.selected_status == 3) {
+                this.start_date = this.record.started_at
+                this.last_read_date = this.record.last_read_at
+                this.finish_date = this.record.finished_at
+                // if (this.selected_status == 2 || this.selected_status == 3) {
+                //     this.has_progression = true
+                // }
+                if (this.isCurrentlyReading) {
                     this.has_progression = true
+                    this.has_start_date = true
+                    this.has_last_read_date = true
+                }
+                if (this.isAlreadyRead) {
+                    this.has_progression = true
+                    this.has_start_date = true
+                    this.has_finish_date = true
                 }
                 console.log("has progression: "+this.has_progression)
                 this.shelves_with_this_book = this.record.shelves_with_this_book
@@ -258,15 +283,27 @@ export default {
                 if (this.selected_status == 3) {
                     this.record.progression = 1
                     this.has_progression = true
+                    this.finish_date = new Date().toISOString().split('T')[0];
+                    this.has_start_date = true
+                    this.has_last_read_date = false
+                    this.has_finish_date = true
                     console.log("has progression(in condition): "+this.has_progression)
                 }
                 else if (this.selected_status == 2) {
                     console.log("current page input: " + this.current_page_input)
                     this.record.progression = this.current_page_input / this.book.page_count
                     this.has_progression = true
+                    this.start_date = new Date().toISOString().split('T')[0];
+                    this.last_read_date = new Date().toISOString().split('T')[0];
+                    this.has_start_date = true
+                    this.has_last_read_date = true
+                    this.has_finish_date = false
                 }
                 else {
                     this.has_progression = false
+                    this.has_start_date = false
+                    this.has_finish_date = false
+                    this.has_last_read_date = false
                 }
                 console.log("has progression: "+this.has_progression)
                 // console.log(this.isAlreadyRead)
@@ -280,6 +317,10 @@ export default {
                 this.selected_status = 3
                 this.record.progression = 1
                 this.has_progression = true
+                this.finish_date = new Date().toISOString().split('T')[0];
+                this.has_start_date = true
+                this.has_finish_date = true
+                this.has_last_read_date = false
             })
         },
          
@@ -287,6 +328,7 @@ export default {
             await axios.get(`/api/update-book-current-page/${this.$route.params.id}/${this.current_page_input}`)
             .then(() => {
                 this.record.progression = this.current_page_input / this.book.page_count
+                this.last_read_date = new Date().toISOString().split('T')[0];
                 console.log(this.record.progression)
             })
         }, 
