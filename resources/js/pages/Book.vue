@@ -61,17 +61,15 @@
                                                 <div class="col fw-bold">
                                                     {{s.name}}
                                                 </div>
-                                                <div v-for="b in s.books" :key="b.id" class="col lh-lg">
-                                                    <div v-if="b.id == book.id" class="float-start">
-                                                        <button class="btn btn-sm btn-danger" >
-                                                            <i class="fa-solid fa-minus"></i>
-                                                        </button>
-                                                    </div>
-                                                    <div v-else class="float-start">  
-                                                        <button class="btn btn-sm btn-dark">
-                                                            <i class="fa-solid fa-plus"></i>
-                                                        </button>  
-                                                    </div>
+                                                <div v-if="shelves_with_this_book.includes(s.id)" class="float-start col lh-lg">
+                                                    <button class="btn btn-sm btn-danger" @click.prevent="removeFromShelf(s.id)">
+                                                        <i class="fa-solid fa-minus"></i>
+                                                    </button>
+                                                </div>
+                                                <div v-else class="float-start col lh-lg">  
+                                                    <button class="btn btn-sm btn-dark" @click.prevent="addToShelf(s.id)">
+                                                        <i class="fa-solid fa-plus"></i>
+                                                    </button>  
                                                 </div>
                                             </div>
                                         </div>
@@ -203,6 +201,7 @@ export default {
             current_page_input: null,
             has_progression: false,
             friend_book: null,
+            shelves_with_this_book: [],
         }
     },
     created() {
@@ -243,6 +242,7 @@ export default {
                     this.has_progression = true
                 }
                 console.log("has progression: "+this.has_progression)
+                this.shelves_with_this_book = this.record.shelves_with_this_book
             })
 
             axios.get(`/api/book-friend/${this.$route.params.id}`)
@@ -287,12 +287,26 @@ export default {
         },
          
         async update_current_page() {
-            await axios.get(`/api/update-book-current-page/${this.book.id}/${this.current_page_input}`)
+            await axios.get(`/api/update-book-current-page/${this.$route.params.id}/${this.current_page_input}`)
             .then(() => {
                 this.record.progression = this.current_page_input / this.book.page_count
                 console.log(this.record.progression)
             })
-        }
+        }, 
+
+        async addToShelf(shelf_id) {
+            await axios.get(`/api/add-book-to-shelf/${shelf_id}/${this.$route.params.id}`)
+            .then(() => {
+                this.shelves_with_this_book.push(shelf_id)
+            })
+        }, 
+
+        async removeFromShelf(shelf_id) {
+            await axios.get(`/api/remove-book-from-shelf/${shelf_id}/${this.$route.params.id}`)
+            .then(() => {
+                this.shelves_with_this_book = this.shelves_with_this_book.filter(item => item!== shelf_id);
+            })
+        },
     },
     computed: {
         ...mapState({

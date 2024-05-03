@@ -7,7 +7,7 @@
             </div>
             <div class="d-flex flex-column align-items-center">
                 <p class="fs-6 p-0 m-0 ">{{  host.username }}</p>
-                <a @click.prevent="logout" href="#" class="link-underline link-underline-opacity-0 text-dark">
+                <a v-if="host.is_private" @click.prevent="logout" href="#" class="link-underline link-underline-opacity-0 text-dark">
                     خروج
                 </a>
             </div>

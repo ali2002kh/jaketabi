@@ -53,7 +53,7 @@ Route::post('/store-shelf', [ShelfController::class, 'storeShelf']);
 
 Route::get('/add-book-to-shelf/{shelf_id}/{book_id}', [ShelfController::class, 'addBook']);
 
-Route::delete('/remove-book-from-shelf/{shelf_id}/{book_id}', [ShelfController::class, 'removeBook']);
+Route::get('/remove-book-from-shelf/{shelf_id}/{book_id}', [ShelfController::class, 'removeBook']);
 
 Route::post('/update-shelf-name/{shelf_id}', [ShelfController::class, 'updateName']);
 

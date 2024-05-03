@@ -374,6 +374,17 @@ class User extends Authenticatable
         return $shelves;
     }
 
+    public function getShelvesWithThisBook($book_id) {
+
+        $shelves = collect();
+        foreach ($this->getShelves() as $shelf) {
+            if ($shelf->hasBook($book_id)) {
+                $shelves->add($shelf->id);
+            }
+        }
+        return $shelves;
+    }
+
     // books --------------------------------------------------------------------------
 
     public function getRecordedBooks($status) {

@@ -87,5 +87,15 @@ class Shelf extends Model
         }
     }
 
+    public function hasBook($book_id) {
+
+        foreach ($this->getBooks() as $book) {
+            if ($book->id == $book_id) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
 

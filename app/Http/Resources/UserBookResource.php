@@ -31,6 +31,7 @@ class UserBookResource extends JsonResource
             'id' => $this->id,
             'user' => new UserPreviewResource($user),
             'book' => new BookPreviewResource($book),
+            'shelves_with_this_book' => $user->getShelvesWithThisBook($this->book_id),
             // 'current_page' => $this->current_page,
             // 'status' => $this->status,
             // 'last_read_at' => $this->last_read_at,
