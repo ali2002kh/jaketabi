@@ -1,6 +1,6 @@
 <template>
+<PageHeader v-if="user"></PageHeader>
 <div class="body-class" v-if="book">
-    <PageHeader></PageHeader>
     <div class="container-fluid mt-5 pt-5 w-100">
         <div class="row flex-row-reverse mx-2">
             <div class="book-details col-8 rounded-2 p-2" style="background-color: #f4f4f4;">
