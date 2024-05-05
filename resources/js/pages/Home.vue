@@ -107,25 +107,40 @@ export default {
             console.log(response.data.data)
             this.trending = response.data.data;
         });
-
-        axios.get('/api/friends-activities')
-        .then(response => {
-            console.log(response.data.data)
-            this.activities = response.data.data;
-        });
-
-        axios.get('/api/friends-shelves')
-        .then(response => {
-            console.log(response.data.data)
-            this.shelves = response.data.data;
-        });
     },
     beforeMount() {
-        if (this.user) {
-            console.log('User is already loaded')
-        } else {    
-            this.$store.dispatch("user/loadUser");
-        }
+        let loadUser = new Promise((resolve, reject) => {
+             if (this.user) {
+                console.log('User is already loaded')
+                resolve()
+            } else {
+                this.$store.dispatch("user/loadUser")
+                .then(() => {
+                    resolve()
+                }).catch((error) => {
+                    console.log(error.message)
+                    if (error.message === 'Unauthorized') {
+                        resolve()
+                    }
+                })
+            }
+        })
+
+        loadUser.then(() => {
+            if (this.user) {
+                axios.get('/api/friends-activities')
+                .then(response => {
+                    console.log(response.data.data)
+                    this.activities = response.data.data;
+                });
+
+                axios.get('/api/friends-shelves')
+                .then(response => {
+                    console.log(response.data.data)
+                    this.shelves = response.data.data;
+                });
+            }
+        })
     },
     computed: {
         ...mapState({

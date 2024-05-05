@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Support\Collection;
 
@@ -457,6 +458,7 @@ class User extends Authenticatable
 
     public function updateBookStatus($book_id, $status) {
 
+        $now = Carbon::now()->format('Y-m-d');
         $record = $this->getBookRecord($book_id);
         $book = Book::find($book_id);
 
@@ -464,12 +466,29 @@ class User extends Authenticatable
             $previous_status = $record->status;
             $record->status = $status;
             $book->updateLog($previous_status, 'dec');
+            if ($status == 2) {
+                if (is_null($record->started_at)) {
+                    $record->started_at = $now;
+                } 
+            } else if ($status == 3) {
+                if (is_null($record->started_at)) {
+                    $record->started_at = $now;
+                } 
+                $record->finished_at = $now;
+            }
+
         } else {
             $record = new UserBook([
                 'user_id' => $this->id,
                 'book_id' => $book_id,
                 'status' => $status,
             ]);
+            if ($status == 2) {
+                $record->started_at = $now;
+            } else if ($status == 3) {
+                $record->started_at = $now;
+                $record->finished_at = $now;
+            }
         }
 
         $record->save();
@@ -478,12 +497,14 @@ class User extends Authenticatable
 
     public function updateCurrentPage($book_id, $page) {
 
+        $now = Carbon::now()->format('Y-m-d');
         $book = Book::find($book_id);
         if ($book->page_count < $page) {
             return 'error'; 
         }
         $record = $this->getBookRecord($book_id);
         $record->current_page = $page;
+        $record->last_read_at = $now;
         $record->save();
     }
 

@@ -27,7 +27,7 @@
                         </router-link>
                     </li> -->
 
-                    <li class="nav-item pe-2" v-if="loggedIn">
+                    <li class="nav-item pe-2" v-if="user">
                             <router-link :to="{name: 'profile', params: {id: user.id}}" 
                                 data-toggle="tooltip" data-replacement="bottom" title="پروفایل"
                                 class="text-white">
@@ -149,39 +149,11 @@ export default {
             timeoutId: null,
         } 
     },
-    // beforeMount() {
-    //     if (this.user) {
-    //         console.log('User is already loaded')
-    //     } else {    
-    //         this.$store.dispatch("user/loadUser");
-    //     }
-    // },
     computed: {
         ...mapState({
             user: state => state.user.data,
             loggedIn: state => state.user.loggedIn
         }),
-    },
-    created() {
-        // axios.get('/api/categories')
-        // .then(response => {
-        //     console.log(response.data.data)
-        //     this.categories = response.data.data;
-        // });
-
-        // axios.get('/api/user')
-        // .then(response => {
-        //     console.log(response.data.data)
-        //     this.user = response.data.data;
-        //     this.isLoggedIn = true;
-        // }).catch(error => {
-        //     if (error.response && 
-        //     error.response.status && 
-        //     error.response.status == 401) {
-        //         this.isLoggedIn = false;
-        //         this.user = null;
-        //     };
-        // });
     },
     methods: {
         async logout () {

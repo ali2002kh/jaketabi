@@ -21727,13 +21727,6 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
       timeoutId: null
     };
   },
-  // beforeMount() {
-  //     if (this.user) {
-  //         console.log('User is already loaded')
-  //     } else {    
-  //         this.$store.dispatch("user/loadUser");
-  //     }
-  // },
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapState)({
     user: function user(state) {
       return state.user.data;
@@ -21742,27 +21735,6 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
       return state.user.loggedIn;
     }
   })),
-  created: function created() {
-    // axios.get('/api/categories')
-    // .then(response => {
-    //     console.log(response.data.data)
-    //     this.categories = response.data.data;
-    // });
-
-    // axios.get('/api/user')
-    // .then(response => {
-    //     console.log(response.data.data)
-    //     this.user = response.data.data;
-    //     this.isLoggedIn = true;
-    // }).catch(error => {
-    //     if (error.response && 
-    //     error.response.status && 
-    //     error.response.status == 401) {
-    //         this.isLoggedIn = false;
-    //         this.user = null;
-    //     };
-    // });
-  },
   methods: {
     logout: function logout() {
       var _this = this;
@@ -21987,13 +21959,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         _this2.start_date = _this2.record.started_at;
         _this2.last_read_date = _this2.record.last_read_at;
         _this2.finish_date = _this2.record.finished_at;
-        // if (this.selected_status == 2 || this.selected_status == 3) {
-        //     this.has_progression = true
-        // }
         if (_this2.isCurrentlyReading) {
           _this2.has_progression = true;
           _this2.has_start_date = true;
-          _this2.has_last_read_date = true;
+          if (_this2.current_page_input) {
+            _this2.has_last_read_date = true;
+          }
         }
         if (_this2.isAlreadyRead) {
           _this2.has_progression = true;
@@ -22020,37 +21991,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               _context.next = 3;
               return axios.get("/api/update-book-status/".concat(_this3.book.id, "/").concat(_this3.selected_status)).then(function () {
                 _this3.record.status_code = _this3.selected_status;
-                if (_this3.selected_status == 3) {
+                if (_this3.isAlreadyRead) {
                   _this3.record.progression = 1;
                   _this3.has_progression = true;
-                  _this3.finish_date = new Date();
+                  _this3.finish_date = moment__WEBPACK_IMPORTED_MODULE_1___default()(new Date()).format("YYYY-MM-DD");
                   _this3.has_start_date = true;
                   _this3.has_last_read_date = false;
                   _this3.has_finish_date = true;
-                  console.log("has progression(in condition): " + _this3.has_progression);
-                  console.log("front dates:" + _this3.start_date + _this3.last_read_date + _this3.finish_date);
-                  console.log("back dates:" + _this3.record.started_at + _this3.record.last_read_at + _this3.record.finished_at);
-                } else if (_this3.selected_status == 2) {
+                } else if (_this3.isCurrentlyReading) {
                   console.log("current page input: " + _this3.current_page_input);
                   _this3.record.progression = _this3.current_page_input / _this3.book.page_count;
                   _this3.has_progression = true;
-                  _this3.start_date = new Date();
-                  _this3.last_read_date = new Date();
+                  _this3.start_date = moment__WEBPACK_IMPORTED_MODULE_1___default()(new Date()).format("YYYY-MM-DD");
+                  _this3.last_read_date = moment__WEBPACK_IMPORTED_MODULE_1___default()(new Date()).format("YYYY-MM-DD");
                   _this3.has_start_date = true;
-                  _this3.has_last_read_date = true;
                   _this3.has_finish_date = false;
+                  if (_this3.current_page_input) {
+                    _this3.has_last_read_date = true;
+                  } else {
+                    _this3.has_last_read_date = false;
+                  }
                 } else {
                   _this3.has_progression = false;
                   _this3.has_start_date = false;
                   _this3.has_finish_date = false;
                   _this3.has_last_read_date = false;
                 }
+                console.log("has start dat: " + _this3.has_start_date);
                 console.log("has progression: " + _this3.has_progression);
-                _this3.record.started_at = moment__WEBPACK_IMPORTED_MODULE_1___default()(_this3.start_date).format("YYYY-MM-DD");
-                _this3.record.last_read_at = moment__WEBPACK_IMPORTED_MODULE_1___default()(_this3.last_read_date).format("YYYY-MM-DD");
-                _this3.record.finished_at = moment__WEBPACK_IMPORTED_MODULE_1___default()(_this3.finish_date).format("YYYY-MM-DD");
-                console.log("front dates:" + _this3.start_date + _this3.last_read_date + _this3.finish_date);
-                console.log("back dates:" + _this3.record.started_at + _this3.record.last_read_at + _this3.record.finished_at);
                 // console.log(this.isAlreadyRead)
               });
             case 3:
@@ -22072,8 +22040,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this4.selected_status = 3;
                 _this4.record.progression = 1;
                 _this4.has_progression = true;
-                _this4.finish_date = new Date();
-                _this4.record.finished_at = moment__WEBPACK_IMPORTED_MODULE_1___default()(_this4.finish_date).format("YYYY-MM-DD");
+                _this4.finish_date = moment__WEBPACK_IMPORTED_MODULE_1___default()(new Date()).format("YYYY-MM-DD");
                 _this4.has_start_date = true;
                 _this4.has_finish_date = true;
                 _this4.has_last_read_date = false;
@@ -22097,8 +22064,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               _context3.next = 2;
               return axios.get("/api/update-book-current-page/".concat(_this5.$route.params.id, "/").concat(_this5.current_page_input)).then(function () {
                 _this5.record.progression = _this5.current_page_input / _this5.book.page_count;
-                _this5.last_read_date = new Date();
-                _this5.record.last_read_at = moment__WEBPACK_IMPORTED_MODULE_1___default()(_this5.last_read_date).format("YYYY-MM-DD");
+                _this5.last_read_date = moment__WEBPACK_IMPORTED_MODULE_1___default()(new Date()).format("YYYY-MM-DD");
+                _this5.has_last_read_date = true;
                 console.log(_this5.record.progression);
               });
             case 2:
@@ -22264,21 +22231,36 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
       console.log(response.data.data);
       _this.trending = response.data.data;
     });
-    axios.get('/api/friends-activities').then(function (response) {
-      console.log(response.data.data);
-      _this.activities = response.data.data;
-    });
-    axios.get('/api/friends-shelves').then(function (response) {
-      console.log(response.data.data);
-      _this.shelves = response.data.data;
-    });
   },
   beforeMount: function beforeMount() {
-    if (this.user) {
-      console.log('User is already loaded');
-    } else {
-      this.$store.dispatch("user/loadUser");
-    }
+    var _this2 = this;
+    var loadUser = new Promise(function (resolve, reject) {
+      if (_this2.user) {
+        console.log('User is already loaded');
+        resolve();
+      } else {
+        _this2.$store.dispatch("user/loadUser").then(function () {
+          resolve();
+        })["catch"](function (error) {
+          console.log(error.message);
+          if (error.message === 'Unauthorized') {
+            resolve();
+          }
+        });
+      }
+    });
+    loadUser.then(function () {
+      if (_this2.user) {
+        axios.get('/api/friends-activities').then(function (response) {
+          console.log(response.data.data);
+          _this2.activities = response.data.data;
+        });
+        axios.get('/api/friends-shelves').then(function (response) {
+          console.log(response.data.data);
+          _this2.shelves = response.data.data;
+        });
+      }
+    });
   },
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapState)({
     user: function user(state) {
@@ -22941,7 +22923,7 @@ var _hoisted_48 = {
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("nav", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <li class=\"nav-item ps-4\">\n                        <router-link class=\"nav-link\" :to=\"{name: 'profile', params: {id: id}}\">\n                            <i class=\"fa-solid fa-user fa-lg\"></i>\n                        </router-link>\n                    </li> "), _ctx.loggedIn ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("li", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("nav", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <li class=\"nav-item ps-4\">\n                        <router-link class=\"nav-link\" :to=\"{name: 'profile', params: {id: id}}\">\n                            <i class=\"fa-solid fa-user fa-lg\"></i>\n                        </router-link>\n                    </li> "), _ctx.user ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("li", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
     to: {
       name: 'profile',
       params: {
@@ -23322,13 +23304,13 @@ var _hoisted_63 = /*#__PURE__*/_withScopeId(function () {
   })])], -1 /* HOISTED */);
 });
 var _hoisted_64 = {
-  key: 0,
   "class": "user-friends col me-2 rounded-1 h-100 mt-3",
   style: {
     "background-color": "#f4f4f4"
   }
 };
 var _hoisted_65 = {
+  key: 0,
   "class": "d-flex flex-row-reverse align-items-center m-1 p-2"
 };
 var _hoisted_66 = /*#__PURE__*/_withScopeId(function () {
@@ -23337,17 +23319,17 @@ var _hoisted_66 = /*#__PURE__*/_withScopeId(function () {
   }, " دارند می خوانند / خوانده اند", -1 /* HOISTED */);
 });
 var _hoisted_67 = ["src"];
-var _hoisted_68 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_68 = {
+  key: 1,
+  "class": "user-friends col me-2 rounded-1 h-100 mt-3"
+};
+var _hoisted_69 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "m-1 p-3"
   }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": "btn btn-dark w-100 text-white"
   }, "نظرات کاربران")], -1 /* HOISTED */);
 });
-var _hoisted_69 = {
-  key: 1,
-  "class": "user-friends col me-2 rounded-1 h-100 mt-3"
-};
 var _hoisted_70 = {
   "class": "row me-2 flex-row-reverse"
 };
@@ -23433,7 +23415,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[4] || (_cache[4] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $options.update_current_page && $options.update_current_page.apply($options, arguments);
     }, ["prevent"]))
-  }, [].concat(_hoisted_43))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [$data.has_start_date ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_44, [_hoisted_45, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_46, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.record.started_at), 1 /* TEXT */)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [$data.has_last_read_date ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_47, [_hoisted_48, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_49, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.record.last_read_at), 1 /* TEXT */)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [$data.has_finish_date ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_50, [_hoisted_51, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_52, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.record.finished_at), 1 /* TEXT */)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), $data.has_progression ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_53, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_54, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  }, [].concat(_hoisted_43))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [$data.has_start_date ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_44, [_hoisted_45, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_46, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.start_date), 1 /* TEXT */)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [$data.has_last_read_date ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_47, [_hoisted_48, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_49, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.last_read_date), 1 /* TEXT */)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [$data.has_finish_date ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_50, [_hoisted_51, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_52, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.finish_date), 1 /* TEXT */)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), $data.has_progression ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_53, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_54, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["progress-bar bg-dark", {
       already_read: $options.isAlreadyRead
     }]),
@@ -23462,7 +23444,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }),
       _: 2 /* DYNAMIC */
     }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["to"])]);
-  }), 128 /* KEYED_FRAGMENT */)), _hoisted_63])]), $data.friend_book ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_64, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_65, [_hoisted_66, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.friend_book.preview_friends, function (f) {
+  }), 128 /* KEYED_FRAGMENT */)), _hoisted_63])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_64, [_ctx.user ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_65, [_hoisted_66, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.friend_book.preview_friends, function (f) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       key: f.id,
       "class": "d-flex flex-row-reverse align-items-center"
@@ -23487,7 +23469,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }),
       _: 2 /* DYNAMIC */
     }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["to"])]);
-  }), 128 /* KEYED_FRAGMENT */))]), _hoisted_68])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_69, " لاگین نکرده "))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_70, [_hoisted_71, _hoisted_72, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.book.related_books, function (b) {
+  }), 128 /* KEYED_FRAGMENT */))])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_68, " لاگین نکرده ")), _hoisted_69])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_70, [_hoisted_71, _hoisted_72, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.book.related_books, function (b) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       key: b.id,
       "class": "col"
