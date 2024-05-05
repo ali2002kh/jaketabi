@@ -1,5 +1,5 @@
 <template>
-<PageHeader v-if="user"></PageHeader>
+<PageHeader v-if="fixed"></PageHeader>
 <div class="body-class" v-if="book">
     <div class="container-fluid mt-5 pt-5 w-100">
         <div class="row flex-row-reverse mx-2">
@@ -213,6 +213,7 @@ export default {
             has_start_date: false,
             has_last_read_date: false,
             has_finish_date: false,
+            fixed: false,
         }
     },
     created() {
@@ -234,6 +235,8 @@ export default {
                 this.$store.dispatch("user/loadUser").then(() => {
                     console.log('resolved')
                     resolve()
+                }).catch(() => {
+                    reject()
                 })
                 console.log('called')
                
@@ -242,7 +245,7 @@ export default {
 
         userLoaded.then(() => {
             console.log(this.user)
-
+            
             axios.get(`/api/book-record/${this.user.id}/${this.$route.params.id}`)
             .then(response => {
                 console.log(response.data.data)
@@ -274,6 +277,10 @@ export default {
                 console.log(response.data.data)
                 this.friend_book = response.data.data
             })
+        })
+
+        userLoaded.finally(() => {
+            this.fixed = true
         })
     },
     methods: {
