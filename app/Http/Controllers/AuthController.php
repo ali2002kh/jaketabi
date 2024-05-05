@@ -51,6 +51,7 @@ class AuthController extends Controller {
             'password' => $request->get('password'),
         ]);
         $user->save();
+        // dd($user);
         Auth::login($user);
         return abort(200);
     }

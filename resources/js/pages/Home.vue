@@ -96,16 +96,11 @@ export default {
         } 
     },
     created() {
-        axios.get('/api/popular')
+        axios.get('/api/trending-popular')
         .then(response => {
             console.log(response.data.data)
-            this.popular = response.data.data;
-        });
-
-        axios.get('/api/trending')
-        .then(response => {
-            console.log(response.data.data)
-            this.trending = response.data.data;
+            this.trending = response.data.data.trending;
+            this.popular = response.data.data.popular;
         });
     },
     beforeMount() {

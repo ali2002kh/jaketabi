@@ -38,27 +38,28 @@ class HomeController extends Controller {
         
     }
 
-    public function popular() {
+    public function trendingAndPopular() {
 
-        $logs = BookLog::orderBy('already_read', 'DESC')->take(20)->get();
-        $books = collect();
+        $trending_logs = BookLog::orderBy('reading', 'DESC')->take(20)->get();
+        $trendings = collect();
 
-        foreach ($logs as $log) {
-            $books->add($log->getBook());
+        foreach ($trending_logs as $log) {
+            $trendings->add($log->getBook());
         }
 
-        return BookPublicResource::collection($books);
-    }
+        $popular_logs = BookLog::orderBy('already_read', 'DESC')->take(20)->get();
+        $populars = collect();
 
-    public function trending() {
-
-        $logs = BookLog::orderBy('reading', 'DESC')->take(20)->get();
-        $books = collect();
-
-        foreach ($logs as $log) {
-            $books->add($log->getBook());
+        foreach ($popular_logs as $log) {
+            $populars->add($log->getBook());
         }
-        return BookPublicResource::collection($books);
+
+        return response()->json([
+            'data' => [
+                'popular' => BookPreviewResource::collection($populars),
+                'trending' => BookPreviewResource::collection($trendings),
+            ]
+        ]);
     }
 
     public function friendsActivities() {

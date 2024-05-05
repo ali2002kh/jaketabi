@@ -29,9 +29,7 @@ Route::get('self', [HomeController::class, 'self']);
 
 Route::get('user/{id}', [HomeController::class, 'user']);
 
-Route::get('popular', [HomeController::class, 'popular']);
-
-Route::get('trending', [HomeController::class, 'trending']);
+Route::get('trending-popular', [HomeController::class, 'trendingAndPopular']);
 
 Route::get('friends-activities', [HomeController::class, 'friendsActivities']);
 

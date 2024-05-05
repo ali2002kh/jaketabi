@@ -22229,13 +22229,10 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
   },
   created: function created() {
     var _this = this;
-    axios.get('/api/popular').then(function (response) {
+    axios.get('/api/trending-popular').then(function (response) {
       console.log(response.data.data);
-      _this.popular = response.data.data;
-    });
-    axios.get('/api/trending').then(function (response) {
-      console.log(response.data.data);
-      _this.trending = response.data.data;
+      _this.trending = response.data.data.trending;
+      _this.popular = response.data.data.popular;
     });
   },
   beforeMount: function beforeMount() {
