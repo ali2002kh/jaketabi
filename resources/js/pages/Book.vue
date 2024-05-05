@@ -34,9 +34,11 @@
             <div v-if="user" class="book-user col rounded-2 p-1 me-2 h-100" style="background-color: #f4f4f4;">
                 <div class="d-flex flex-row-reverse align-items-center justify-content-start mt-2">
                     <div class="add-button">
-                        <button @click.prevent="compeleted" class="btn" type="button">
+                        <button v-if="isNotSelected" @click.prevent="addToWantToRead" class="btn" type="button">
+                            <i class="fa-solid fa-circle-plus fa-2xl"></i>
+                        </button>
+                        <button v-if="isWantToRead || isCurrentlyReading" @click.prevent="compeleted" class="btn" type="button">
                             <i class="fa-regular fa-circle-check fa-2x"></i>
-                            <!-- <i class="fa-solid fa-circle-plus fa-2xl"></i> -->
                         </button>
                     </div>
                     <select v-model="selected_status" @change="update_status()" class="form-select" aria-label="Default select example">
@@ -269,7 +271,10 @@ export default {
                     this.has_finish_date = true
                 }
                 console.log("has progression: "+this.has_progression)
-                this.shelves_with_this_book = this.record.shelves_with_this_book
+                if (this.record.shelves_with_this_book) {
+                    this.shelves_with_this_book = this.record.shelves_with_this_book
+                }
+                
             })
 
             axios.get(`/api/book-friend/${this.$route.params.id}`)
@@ -332,10 +337,21 @@ export default {
                 this.selected_status = 3
                 this.record.progression = 1
                 this.has_progression = true
+                if (!this.start_date) {
+                    this.start_date = moment(new Date()).format("YYYY-MM-DD")
+                }
                 this.finish_date = moment(new Date()).format("YYYY-MM-DD")
                 this.has_start_date = true
                 this.has_finish_date = true
                 this.has_last_read_date = false
+            })
+        },
+
+        async addToWantToRead() {
+            await await axios.get(`/api/update-book-status/${this.book.id}/1`) 
+            .then(() => {
+                this.record.status_code = 1
+                this.selected_status = 1
             })
         },
          
