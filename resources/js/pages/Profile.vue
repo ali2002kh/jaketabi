@@ -54,6 +54,18 @@
                                         <button v-if="u.status == 1" class="btn btn-dark m-3" 
                                         @click.prevent="cancelFriendRequest(u.id)"
                                         >لغو درخواست</button>
+
+                                        <button v-if="u.status == 2" class="btn btn-dark m-3" 
+                                        @click.prevent="acceptFriendRequest(u.id)"
+                                        >قبول درخواست دوستی</button>
+
+                                        <button v-if="u.status == 2" class="btn btn-dark m-3" 
+                                        @click.prevent="rejectFriendRequest(u.id)"
+                                        >رد درخواست دوستی</button>
+
+                                        <button v-if="u.status == 3" class="btn btn-dark m-3" 
+                                        @click.prevent="removeFriend(u.id)"
+                                        >حذف دوستی</button>
                                     </div>
                                 </div>
                             </div>
@@ -230,7 +242,7 @@ export default {
             success: false,
             message: null,
             shelves_more_count: null,
-            friends: null,
+            friends: [],
             searchIsActive: false,
             searchInput: null,
             timeoutId: null,
@@ -322,10 +334,12 @@ export default {
             })
         },
 
-        async removeFriend(friend_id) {
-            await axios.get(`/api/reject-or-remove-friend/${friend_id}`)
+        async removeFriend(user_id) {
+            await axios.get(`/api/reject-or-remove-friend/${user_id}`)
             .then(() => {
-                this.friends = this.friends.filter(item => item.id !== friend_id)
+                this.friends = this.friends.filter(item => item.id !== user_id)
+                this.item = this.searchedUsers.find(item => item.id === user_id);
+                this.item.status = 0
             })
         },
 
@@ -338,6 +352,23 @@ export default {
         },
 
         async cancelFriendRequest(user_id) {
+            await axios.get(`/api/reject-or-remove-friend/${user_id}`)
+            .then(() => {
+                this.item = this.searchedUsers.find(item => item.id === user_id);
+                this.item.status = 0
+            })
+        },
+
+        async acceptFriendRequest(user_id) {
+            await axios.get(`/api/accept-or-add-friend/${user_id}`)
+            .then(() => {
+                this.item = this.searchedUsers.find(item => item.id === user_id);
+                this.item.status = 3
+                this.friends.push(this.item)
+            })
+        },
+
+        async rejectFriendRequest(user_id) {
             await axios.get(`/api/reject-or-remove-friend/${user_id}`)
             .then(() => {
                 this.item = this.searchedUsers.find(item => item.id === user_id);
