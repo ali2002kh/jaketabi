@@ -7,11 +7,14 @@ use App\Http\Resources\BookPreviewResource;
 use App\Http\Resources\GenreResource;
 use App\Http\Resources\PublisherResource;
 use App\Http\Resources\ShelfPreviewResource;
+use App\Http\Resources\UserFriendResource;
+use App\Http\Resources\UserPreviewResource;
 use App\Models\Book;
 use App\Models\BookCategory;
 use App\Models\Genre;
 use App\Models\Publisher;
 use App\Models\Shelf;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
@@ -42,6 +45,18 @@ class SearchController extends Controller
                 'publishers' => PublisherResource::collection($publishers),
             ]
         ]);
+    }
+
+    public function searchUser(Request $request) {
+
+        $input = $request->get('input');
+
+        $users = [];
+
+        if($input != '') {
+            $users = User::where('username','LIKE',"%".$input."%")->get();
+        }
+        return UserFriendResource::collection($users);
     }
 
 }

@@ -25,23 +25,55 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h1 class="modal-title fs-5" id="friendsLabel">دوستان</h1>
-                            <button id="close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button id="friend_close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <div class="">
-                                <div class="row" v-for="f in host.friends" :key="f.id">
-                                    <div class="col">
-                                        {{ f.username }}
+
+                            <button @click.prevent="toggleSearch">
+                                <i v-if="searchIsActive" class="fa-solid fa-user fa-lg"></i>
+                                <i v-else class="fa-solid fa-magnifying-glass fa-lg"></i>
+                            </button>
+
+
+                            <div v-if="searchIsActive">
+                                <input type="text" class="form-control" name="search" 
+                                @keyup="search" v-model="searchInput">
+                                <br>
+                                <div class="container d-grid mt-2">
+                                    <div v-for="u in searchedUsers" :key="u.id" class="nav-link">
+                                        <div class="d-flex m-2" @click.prevent="showProfile(u.id)">
+                                            <img class="item-img me-3" style="widows: 60px; height: 60px; border-radius: 100%;" :src="u.image" alt="">
+                                            <div class="d-flex align-items-center">
+                                                <p class="text-center">{{ u.username }}</p>
+                                            </div>
+                                        </div>
+                                        <button v-if="u.status == 0" class="btn btn-dark m-3" 
+                                        @click.prevent="sendFriendRequest(u.id)"
+                                        >درخواست دوستی</button>
+
+                                        <button v-if="u.status == 1" class="btn btn-dark m-3" 
+                                        @click.prevent="cancelFriendRequest(u.id)"
+                                        >لغو درخواست</button>
                                     </div>
-                                    <div class="col">
-                                        <img :src="f.image" style="widows: 60px; height: 60px; border-radius: 100%;" alt="">
+                                </div>
+                            </div>
+
+                            <div v-else class="">
+                                <div class="row" v-for="f in friends" :key="f.id">
+                                    <div @click.prevent="showProfile(f.id)">
+                                        <div class="col">
+                                            {{ f.username }}
+                                        </div>
+                                        <div class="col">
+                                            <img :src="f.image" style="widows: 60px; height: 60px; border-radius: 100%;" alt="">
+                                        </div>
                                     </div>
                                     <button class="btn btn-dark m-3" 
                                     @click.prevent="removeFriend(f.id)"
                                     >حذف دوستی</button>
                                 </div>
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -122,7 +154,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="createShelfLabel">ایجاد قفسه جدید</h1>
-                        <button id="close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button id="create_shelf_close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="alert alert-danger" v-if="hasError">
@@ -198,6 +230,11 @@ export default {
             success: false,
             message: null,
             shelves_more_count: null,
+            friends: null,
+            searchIsActive: false,
+            searchInput: null,
+            timeoutId: null,
+            searchedUsers: [],
         } 
     },
     beforeMount() {
@@ -222,6 +259,7 @@ export default {
         loadUser.then(() => {
             if (this.user && this.user.id == this.$route.params.id) {
                     this.host = this.user
+                    this.friends = this.host.friends
                     console.log(this.host)
             } else {
                 axios.get(`/api/user/${this.$route.params.id}`)
@@ -287,9 +325,54 @@ export default {
         async removeFriend(friend_id) {
             await axios.get(`/api/reject-or-remove-friend/${friend_id}`)
             .then(() => {
-                
+                this.friends = this.friends.filter(item => item.id !== friend_id)
             })
-        }
+        },
+
+        async sendFriendRequest(user_id) {
+            await axios.get(`/api/accept-or-add-friend/${user_id}`)
+            .then(() => {
+                this.item = this.searchedUsers.find(item => item.id === user_id);
+                this.item.status = 1
+            })
+        },
+
+        async cancelFriendRequest(user_id) {
+            await axios.get(`/api/reject-or-remove-friend/${user_id}`)
+            .then(() => {
+                this.item = this.searchedUsers.find(item => item.id === user_id);
+                this.item.status = 0
+            })
+        },
+
+        async showProfile (id) {
+            document.getElementById('friend_close').click()
+            this.$router.replace({ name: 'profile', params: { id: id }});
+        },
+
+        async toggleSearch() {
+            if (this.searchIsActive) {
+                this.searchIsActive = false
+            } else {
+                this.searchIsActive = true
+            }
+        },
+
+        async search() {
+
+            clearTimeout(this.timeoutId);
+
+            this.timeoutId = setTimeout(() => {
+                if (this.searchInput.length > 1) {
+                    axios.post('/api/search/user', {
+                        input: this.searchInput
+                    }).then(response => {
+                        console.log(response.data.data)
+                        this.searchedUsers = response.data.data
+                    })
+                }
+            }, 1500);
+        },
     },
 }
 </script>

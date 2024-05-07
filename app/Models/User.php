@@ -130,20 +130,27 @@ class User extends Authenticatable
 
     // friendships --------------------------------------------------------------------------
 
-    public function isFriend($user_id) {
+    public function getRequest($user_id) {
 
         $sent = Friend::
         where('sender', $this->id)
-        ->where('receiver', $user_id)
-        ->where('accepted', true);
+        ->where('receiver', $user_id);
 
         $received = Friend::
         where('sender', $user_id)
-        ->where('receiver', $this->id)
-        ->where('accepted', true);
+        ->where('receiver', $this->id);
 
-        $friendship = $sent->union($received)->count();
+        $friendship = $sent->union($received)->first();
         return $friendship;
+    }
+
+    public function isFriend($user_id) {
+
+        $request = $this->getRequest($user_id);
+        if ($request && $request->accepted) {
+            return true;
+        }
+        return false;
     }
 
     public function hasRequestedTo($user_id) {
@@ -233,15 +240,12 @@ class User extends Authenticatable
 
     public function rejectOrRemoveFriend($user_id) {
 
-        $request = Friend::
-        where('sender', $user_id)
-        ->where('receiver', $this->id)
-        ->first();
+        $request = $this->getRequest($user_id);
 
         if ($request) {
             $request->delete();
         } else {
-            return 'there is no request';
+            abort(404);
         }
 
     }
@@ -267,6 +271,24 @@ class User extends Authenticatable
         ]);
 
         $request->save();
+    }
+
+    public function friendshipStatus($id) {
+
+        // 0 no request
+        // 1 sent request
+        // 2 received request
+        // 3 friend
+
+        if ($this->isFriend($id)) {
+            return 3;
+        } else if ($this->hasRequestedTo($id)) {
+            return 1;
+        } else if ($this->isRequestedBy($id)) {
+            return 2;
+        } else {
+            return 0;
+        }
     }
 
     public function getFriendsWhoAreReadingOrAlreadyReadThisBook($book_id, $status) {

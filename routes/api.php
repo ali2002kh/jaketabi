@@ -39,6 +39,8 @@ Route::get('friends-shelves', [HomeController::class, 'friendsShelves']);
 
 Route::post('search', [SearchController::class, 'search']);
 
+Route::post('search/user', [SearchController::class, 'searchUser']);
+
 // Profile  ---------------------------------------------------------------
 
 Route::post('update-profile', [ProfileController::class, 'update']);
