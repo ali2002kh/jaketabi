@@ -14,9 +14,37 @@
         </div>
         <div v-if="host.is_private" class="d-flex flex-row-reverse align-items-center mt-5 ms-4">
             <div class="ps-4">
-                <router-link :to="{name: 'friends'}" class="text-dark link-underline link-underline-opacity-0">
+                <!-- <router-link :to="{name: 'friends'}" class="text-dark link-underline link-underline-opacity-0">
                     <h5>دوستان</h5>
-                </router-link>
+                </router-link> -->
+                <div class="text-dark link-underline link-underline-opacity-0" data-bs-toggle="modal" data-bs-target="#friends">دوستان</div>
+
+            </div>
+            <div class="modal fade" id="friends" tabindex="-1" aria-labelledby="friendsLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="friendsLabel">دوستان</h1>
+                            <button id="close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="">
+                                <div class="row" v-for="f in host.friends" :key="f.id">
+                                    <div class="col">
+                                        {{ f.username }}
+                                    </div>
+                                    <div class="col">
+                                        <img :src="f.image" style="widows: 60px; height: 60px; border-radius: 100%;" alt="">
+                                    </div>
+                                    <button class="btn btn-dark m-3" 
+                                    @click.prevent="removeFriend(f.id)"
+                                    >حذف دوستی</button>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="pe-4">
                 <a href="#" class="text-dark link-underline link-underline-opacity-0">
@@ -253,6 +281,13 @@ export default {
                         console.log(error.response.data)
                         this.errors = error.response.data.errors
                 }
+            })
+        },
+
+        async removeFriend(friend_id) {
+            await axios.get(`/api/reject-or-remove-friend/${friend_id}`)
+            .then(() => {
+                
             })
         }
     },
