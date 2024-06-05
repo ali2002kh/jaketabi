@@ -1,222 +1,219 @@
 <template>
     <PageHeader></PageHeader>
-    <div v-if="host" class="d-flex flex-row-reverse justify-content-between mt-5">
-        <div class="d-flex flex-row-reverse align-items-center mt-5 me-4">
-            <div class="ps-3 ">
-                <img :src="host.image" style="widows: 60px; height: 60px; border-radius: 100%;" alt="">
+    <div class="body-class container-fluid mb-4">
+        <div v-if="host" class="profile-header row flex-row-reverse align-items-center mt-5">
+            <div class="col-9 mt-5 ">
+                <div class="pe-3 d-flex flex-row-reverse">
+                    <div>
+                        <img :src="host.image" class="user-profile" alt="">
+                    </div>
+                    <div class="text-center me-3">
+                        <p class="fs-6 p-0 m-0 ">{{ host.username }}</p>
+                        <p class="fs-6 p-0 m-0">{{ host.name }}</p>
+                        <a v-if="host.is_private" @click.prevent="logout" href="#" class="link-dark" style="text-decoration:none">خروج</a>
+                    </div>
+                </div> 
             </div>
-            <div class="d-flex flex-column align-items-center">
-                <p class="fs-6 p-0 m-0 ">{{  host.username }}</p>
-                <a v-if="host.is_private" @click.prevent="logout" href="#" class="link-underline link-underline-opacity-0 text-dark">
-                    خروج
-                </a>
-            </div>
-        </div>
-        <div v-if="host.is_private" class="d-flex flex-row-reverse align-items-center mt-5 ms-4">
-            <div class="ps-4">
-                <!-- <router-link :to="{name: 'friends'}" class="text-dark link-underline link-underline-opacity-0">
-                    <h5>دوستان</h5>
-                </router-link> -->
-                <div class="text-dark link-underline link-underline-opacity-0" data-bs-toggle="modal" data-bs-target="#friends">دوستان</div>
-
-            </div>
-            <div class="modal fade" id="friends" tabindex="-1" aria-labelledby="friendsLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="friendsLabel">دوستان</h1>
-                            <button id="friend_close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-
-                            <button @click.prevent="toggleSearch">
-                                <i v-if="searchIsActive" class="fa-solid fa-user fa-lg"></i>
-                                <i v-else class="fa-solid fa-magnifying-glass fa-lg"></i>
-                            </button>
-
-
-                            <div v-if="searchIsActive">
-                                <input type="text" class="form-control" name="search" 
-                                @keyup="search" v-model="searchInput">
-                                <br>
-                                <div class="container d-grid mt-2">
-                                    <div v-for="u in searchedUsers" :key="u.id" class="nav-link">
-                                        <div class="d-flex m-2" @click.prevent="showProfile(u.id)">
-                                            <img class="item-img me-3" style="widows: 60px; height: 60px; border-radius: 100%;" :src="u.image" alt="">
-                                            <div class="d-flex align-items-center">
-                                                <p class="text-center">{{ u.username }}</p>
+            <div v-if="host.is_private" class="col mt-5">
+                <div class="text-start">
+                    <a href="#" class="text-dark link-underline link-underline-opacity-0">
+                        <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#friends">دوستان</button>
+                    </a>
+                </div>
+                <div class="modal fade" id="friends" tabindex="-1" aria-labelledby="friendsLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="friendsLabel">دوستان</h1>
+                                <button id="friend_close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+    
+                                <button @click.prevent="toggleSearch">
+                                    <i v-if="searchIsActive" class="fa-solid fa-user fa-lg"></i>
+                                    <i v-else class="fa-solid fa-magnifying-glass fa-lg"></i>
+                                </button>
+    
+    
+                                <div v-if="searchIsActive">
+                                    <input type="text" class="form-control" name="search" 
+                                    @keyup="search" v-model="searchInput">
+                                    <br>
+                                    <div class="container d-grid mt-2">
+                                        <div v-for="u in searchedUsers" :key="u.id" class="nav-link">
+                                            <div class="d-flex m-2" @click.prevent="showProfile(u.id)">
+                                                <img class="item-img me-3" style="widows: 60px; height: 60px; border-radius: 100%;" :src="u.image" alt="">
+                                                <div class="d-flex align-items-center">
+                                                    <p class="text-center">{{ u.username }}</p>
+                                                </div>
+                                            </div>
+                                            <button v-if="u.status == 0" class="btn btn-dark m-3" 
+                                            @click.prevent="sendFriendRequest(u.id)"
+                                            >درخواست دوستی</button>
+    
+                                            <button v-if="u.status == 1" class="btn btn-dark m-3" 
+                                            @click.prevent="cancelFriendRequest(u.id)"
+                                            >لغو درخواست</button>
+    
+                                            <button v-if="u.status == 2" class="btn btn-dark m-3" 
+                                            @click.prevent="acceptFriendRequest(u.id)"
+                                            >قبول درخواست دوستی</button>
+    
+                                            <button v-if="u.status == 2" class="btn btn-dark m-3" 
+                                            @click.prevent="rejectFriendRequest(u.id)"
+                                            >رد درخواست دوستی</button>
+    
+                                            <button v-if="u.status == 3" class="btn btn-dark m-3" 
+                                            @click.prevent="removeFriend(u.id)"
+                                            >حذف دوستی</button>
+                                        </div>
+                                    </div>
+                                </div>
+    
+                                <div v-else class="">
+                                    <div class="row" v-for="f in friends" :key="f.id">
+                                        <div @click.prevent="showProfile(f.id)">
+                                            <div class="col">
+                                                {{ f.username }}
+                                            </div>
+                                            <div class="col">
+                                                <img :src="f.image" style="widows: 60px; height: 60px; border-radius: 100%;" alt="">
                                             </div>
                                         </div>
-                                        <button v-if="u.status == 0" class="btn btn-dark m-3" 
-                                        @click.prevent="sendFriendRequest(u.id)"
-                                        >درخواست دوستی</button>
-
-                                        <button v-if="u.status == 1" class="btn btn-dark m-3" 
-                                        @click.prevent="cancelFriendRequest(u.id)"
-                                        >لغو درخواست</button>
-
-                                        <button v-if="u.status == 2" class="btn btn-dark m-3" 
-                                        @click.prevent="acceptFriendRequest(u.id)"
-                                        >قبول درخواست دوستی</button>
-
-                                        <button v-if="u.status == 2" class="btn btn-dark m-3" 
-                                        @click.prevent="rejectFriendRequest(u.id)"
-                                        >رد درخواست دوستی</button>
-
-                                        <button v-if="u.status == 3" class="btn btn-dark m-3" 
-                                        @click.prevent="removeFriend(u.id)"
+                                        <button class="btn btn-dark m-3" 
+                                        @click.prevent="removeFriend(f.id)"
                                         >حذف دوستی</button>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div v-else class="">
-                                <div class="row" v-for="f in friends" :key="f.id">
-                                    <div @click.prevent="showProfile(f.id)">
-                                        <div class="col">
-                                            {{ f.username }}
-                                        </div>
-                                        <div class="col">
-                                            <img :src="f.image" style="widows: 60px; height: 60px; border-radius: 100%;" alt="">
-                                        </div>
-                                    </div>
-                                    <button class="btn btn-dark m-3" 
-                                    @click.prevent="removeFriend(f.id)"
-                                    >حذف دوستی</button>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="pe-4">
-                <a href="#" class="text-dark link-underline link-underline-opacity-0">
-                    <h5>ویرایش</h5>
-                </a>
-            </div>
-        </div>
-    </div>
-    <!-- books lists -->
     
-    <div class="card mt-4 m-2" v-if="host">
-        <div class="card-header bg-light m-0 p-0 ">
-            <p class="float-end pt-1 me-4 fs-5 ">دارم می خوانم</p>
-        </div>
-        <div class="card-body d-flex flex-row-reverse m-0 p-0">
-            <router-link :to="{name:'book', params:{id: b.id}}" v-for="b in host.reading" :key="b.id" class="d-flex flex-column m-1 p-2 align-items-center text-center">
-                <img :src="b.image" style="height: 150px; max-width:100px" alt="">
-                <p class=""> {{ b.name }}</p>
-            </router-link>
-            <div v-if="host.has_more_reading" class="d-flex flex-column m-1 p-2 align-items-center text-center justify-content-center me-auto">
-                <a href="#">
-                    <img src="storage/icons/icons8-forward-button-48.png"  alt="">
-                </a>
-                <p>+{{ host.reading_more_count }}</p>
-            </div>
-        </div>
-    </div>
-    <div class="card mt-4 m-2" v-if="host">
-        <div class="card-header bg-light m-0 p-0 ">
-            <p class="float-end pt-1 me-4 fs-5"> خوانده ام </p>
-        </div>
-        <div class="card-body d-flex flex-row-reverse m-0 p-0">
-            <router-link :to="{name:'book', params:{id: b.id}}" v-for="b in host.already_read" :key="b.id" class="d-flex flex-column m-1 p-2 align-items-center text-center">
-                <img :src="b.image" style="height: 150px; max-width:100px" alt="">
-                <p class=""> {{ b.name }}</p>
-            </router-link>
-            <div v-if="host.has_more_already_read" class="d-flex flex-column m-1 p-2 align-items-center text-center justify-content-center me-auto">
-                <a href="#">
-                    <img src="storage/icons/icons8-forward-button-48.png"  alt="">
-                </a>
-                <p>+{{ host.already_read_more_count }}</p>
-            </div>
-        </div>
-    </div>
-    <div class="card mt-4 m-2" v-if="host">
-        <div class="card-header bg-light m-0 p-0 ">
-            <p class="float-end pt-1 me-4 fs-5"> میخواهم بخوانم </p>
-        </div>
-        <div class="card-body d-flex flex-row-reverse m-0 p-0">
-            <router-link :to="{name:'book', params:{id: b.id}}" v-for="b in host.want_to_read" :key="b.id" class="d-flex flex-column m-1 p-2 align-items-center text-center">
-                <img :src="b.image" style="height: 150px; max-width:100px" alt="">
-                <p class=""> {{ b.name }}</p>
-            </router-link>
-            <div v-if="host.has_more_want_to_read" class="d-flex flex-column m-1 p-2 align-items-center text-center justify-content-center me-auto">
-                <a href="#">
-                    <img src="storage/icons/icons8-forward-button-48.png"  alt="">
-                </a>
-                <p>+{{ host.want_to_read_more_count }}</p>
-            </div>
-        </div>
-    </div>
-    <div class="card mt-4 m-2" v-if="host">
-        <div class="card-header d-flex flex-row-reverse justify-content-between bg-light m-0 ">
-            <div class=" me-4 fs-5 ">قفسه های من</div>
-            <a href="#" class="text-dark link-underline link-underline-opacity-0">
-                <div class="d-flex align-items-center me-5">
-                    <div v-if="host.is_private" class="me-2 fs-6" data-bs-toggle="modal" data-bs-target="#createShelf">ایجاد قفسه جدید</div>
-                    <img src="storage/icons8-add-48.png" style="width: 30px;" alt="">
-                </div>
-            </a>
-        </div>
-
-        <div class="modal fade" id="createShelf" tabindex="-1" aria-labelledby="createShelfLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="createShelfLabel">ایجاد قفسه جدید</h1>
-                        <button id="create_shelf_close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="alert alert-danger" v-if="hasError">
-                            <ul>
-                                <li v-for="e in errors" :key="e">{{ e[0] }}</li>
-                            </ul>
+                            </div>
                         </div>
-                        <div class="alert alert-success" v-if="success">{{ message }}</div>
-                        <form>
-                            <div class="m-1">
-                                <label for="shelfName" class="form-label">نام قفسه</label>
-                                <input type="text" class="form-control" id="shelfName" name="shelfName"
-                                v-model="shelfName"
-                                >
-                            </div>
-                            <div class="m-1">
-                                <label for="shelfDescription" class="form-label">توضیحات</label>
-                                <textarea id="shelfDescription" class="form-control" name="shelfDescription" v-model="shelfDescription"></textarea>
-                            </div>
-                            <div class="m-1 d-grid">
-                                <button type="submit" class="btn btn-dark m-3" 
-                                @click.prevent="storeShelf"
-                                >تایید</button>
-                            </div>
-                        </form>
                     </div>
                 </div>
             </div>
+            
+            <div class="col mt-5">
+                <div class="text-center">
+                    <a  href="#" class="text-dark link-underline link-underline-opacity-0">
+                        <button class="btn btn-dark">ویرایش</button>
+                    </a>
+                </div>
+            </div>
         </div>
-
-        <div class="card-body d-flex flex-row-reverse m-0 p-0" v-if="host">
-            <div v-for="s in host.shelves" :key="s.id" class="card m-3">
-                <div class="card-header m-0 p-1 text-center">{{ s.name }}</div>
-                <div class="card-body d-flex flex-row-reverse align-items-center p-1 m-0">
-                    <div v-for="b in s.books" :key="b.id" class="d-flex flex-column p-2  align-items-center text-center" >
-                        <img :src="b.image" style="height: 120px; max-width:80px;" alt="">
-                        <p style="font-size:13px; overflow: hidden;">{{ b.name }}</p>
+        <div v-if="host" class="book-lists">
+            <p class="title mt-5"><span> دارم می خوانم </span></p>
+            <div class="lists-body currently-reading row flex-row-reverse align-items-center mx-1 p-1 rounded-1">
+                <div class="col-auto p-1 mx-3">
+                    <router-link :to="{name:'book', params:{id: b.id}}" v-for="b in host.reading" :key="b.id" 
+                    class="router-links d-flex flex-column m-1 p-2 align-items-center text-center">
+                        <img :src="b.image" class="book-img" alt="">
+                        <p class=""> {{ b.name }}</p>
+                    </router-link>
+                </div>
+                <div v-if="host.has_more_reading" class="col-auto" style="margin-right: 1000px;">
+                    <a class="text-dark link-underline link-underline-opacity-0" href="#">
+                        <i class="fa-solid fa-circle-chevron-left fa-2x"></i>
+                        <p>+{{ host.reading_more_count }}</p>
+                    </a>
+                </div>
+            </div>
+            <p class="title mt-5"><span>  خوانده ام  </span></p>
+            <div class="lists-body already-read row flex-row-reverse align-items-center mx-1 p-1 rounded-1">
+                <div class="col-auto p-1 mx-3">
+                    <router-link :to="{name:'book', params:{id: b.id}}" v-for="b in host.already_read" :key="b.id" 
+                    class="router-links d-flex flex-column m-1 p-2 align-items-center text-center">
+                        <img :src="b.image" class="book-img" alt="">
+                        <p class=""> {{ b.name }}</p>
+                    </router-link>
+                </div>
+                <div v-if="host.has_more_already_read" class="col-auto" style="margin-right: 1000px;">
+                    <a class="text-dark link-underline link-underline-opacity-0" href="#">
+                        <i class="fa-solid fa-circle-chevron-left fa-2x"></i>
+                        <p>+{{ host.already_read_more_count }}</p>
+                    </a>
+                </div>
+            </div>
+            <p class="title mt-5"><span>  می خواهم بخوانم  </span></p>
+            <div class="lists-body want-to-read row flex-row-reverse align-items-center mx-1 p-1 rounded-1">
+                <div class="col-auto p-1 mx-3">
+                    <router-link :to="{name:'book', params:{id: b.id}}" v-for="b in host.want_to_read" :key="b.id" 
+                    class="router-links d-flex flex-column m-1 p-2 align-items-center text-center">
+                        <img :src="b.image" style="height: 150px; max-width:100px" alt="">
+                        <p class="mt-2"> {{ b.name }}</p>
+                    </router-link>
+                </div>
+                <div v-if="host.has_more_want_to_read" class="col-auto" style="margin-right: 1000px;">
+                    <a class="text-dark link-underline link-underline-opacity-0" href="#">
+                        <i class="fa-solid fa-circle-chevron-left fa-2x"></i>
+                        <p>+{{ host.want_to_read_more_count }}</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div v-if="host" class="friends-shelves">
+            <p v-if="host.is_private" class="mt-5 mb-0 w-25" data-bs-toggle="modal" data-bs-target="#createShelf">
+                <a href="#" class="link-dark text-center" style="text-decoration:none;">ایجاد قفسه جدید</a> 
+            </p>
+            <p :class="{'mt-5' : !host.is_private}" class="title"><span> قفسه های من</span></p>
+            <div class="modal fade" id="createShelf" tabindex="-1" aria-labelledby="createShelfLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="createShelfLabel">ایجاد قفسه جدید</h1>
+                            <button id="create_shelf_close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="alert alert-danger" v-if="hasError">
+                                <ul>
+                                    <li v-for="e in errors" :key="e">{{ e[0] }}</li>
+                                </ul>
+                            </div>
+                            <div class="alert alert-success" v-if="success">{{ message }}</div>
+                            <form>
+                                <div class="m-1">
+                                    <label for="shelfName" class="form-label">نام قفسه</label>
+                                    <input type="text" class="form-control" id="shelfName" name="shelfName"
+                                    v-model="shelfName"
+                                    >
+                                </div>
+                                <div class="m-1">
+                                    <label for="shelfDescription" class="form-label">توضیحات</label>
+                                    <textarea id="shelfDescription" class="form-control" name="shelfDescription" v-model="shelfDescription"></textarea>
+                                </div>
+                                <div class="m-1 d-grid">
+                                    <button type="submit" class="btn btn-dark m-3" 
+                                    @click.prevent="storeShelf"
+                                    >تایید</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                    <div class="me-auto">
-                        <a href="#">
-                            <img src="storage/icons/icons8-continue-48 (1).png" style="width: 30px;" alt="">
+                </div>
+            </div>
+            <div v-if="host" class="lists-body row flex-row-reverse align-items-center mx-1 p-1 rounded-1">
+
+                <div class="col-11 g-0 d-flex flex-row-reverse p-1">
+                        <div v-for="s in host.shelves" :key="s.id" class="col-4 me-1">
+                            <div class="shelf-title row m-1 bg-dark rounded-top text-white bg-gradient">
+                                <p class="text-center  mx-auto fw-bold m-1"> {{ s.name }} </p>
+                            </div>
+                            <div class="shelf-books row flex-row-reverse justify-content-start align-items-center bg-light rounded-1 mx-1 p-1"
+                            style="min-height:130px;" >
+                                <div v-for="b in s.books" :key="b.id" class="col-auto p-2">
+                                    <img :src="b.image" class="shelf-book-img mx-1" alt="">
+                                </div>
+                                <router-link :to="{name:'shelf', params:{id: s.id}}" class="col-auto me-auto p-2">
+                                    <i class="fa-solid fa-angle-left fa-xl text-dark"></i>
+                                </router-link>
+                            </div>
+                        </div>   
+                    </div>
+                    <div v-if="host.has_more_shelves" class="col-auto me-auto">
+                        <a class="text-dark text-center" style="text-decoration:none" href="#">
+                            <i class="fa-solid fa-circle-chevron-left fa-2x"></i>
+                            <p>+{{ shelves_more_count }}</p>
                         </a>
                     </div>
-                </div>
-            </div>
-            <div v-if="host.has_more_shelves" class="d-flex flex-column m-1 p-2 align-items-center text-center justify-content-center me-auto">
-                <a href="#">
-                    <img src="storage/icons/icons8-forward-button-48.png"  alt="">
-                </a>
-                <p>+{{ shelves_more_count }}</p>
             </div>
         </div>
     </div>
@@ -407,3 +404,54 @@ export default {
     },
 }
 </script>
+<style scoped>
+.body-class {
+font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.user-profile {
+width: 60px;
+height: 60px;
+border-radius: 50%;
+}
+.shelf-book-img {
+max-width: 80px;
+max-height: 120px;
+}
+.book-img {
+max-width: 120px;
+max-height: 200px;
+}
+.title {
+
+direction: rtl;
+border-bottom: 1.5px solid rgb(232, 232, 232); 
+line-height: 0.1em;
+font-family: hamishe;
+} 
+.title span { 
+    background:#fff; 
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-right: 30px;
+    font-weight:bold;
+    font-size: large;
+}
+.title-span {
+    background:#0e0e0e;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-right: 30px;
+
+    font-size: medium !important;
+    font-weight: normal !important;
+}
+.lists-body {
+    background: #f4f4f4;
+    height: 250px;
+}
+.router-links {
+    color: black;
+    text-decoration: none;
+}
+
+</style>

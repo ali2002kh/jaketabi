@@ -69,8 +69,8 @@
                         </div>
                     </div>
                 </div>
-            <img src="storage/sources//icons8-forward-52.png" style="width: 30px; height:30px; margin-top:100px; margin-right:15px;" alt="">
-        </div>
+                <img src="storage/sources//icons8-forward-52.png" style="width: 30px; height:30px; margin-top:100px; margin-right:15px;" alt="">
+            </div>
         </div>
         
     </div>
