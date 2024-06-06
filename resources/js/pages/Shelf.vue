@@ -3,56 +3,62 @@
 
     <!-- sidebar -->
     <div class="mt-5 m-2 d-flex flex-row-reverse">
-        <div class="sidebar flex-item d-flex flex-column align-items-end">
-            <div class="sidebar-item w-100 mb-1 mt-3">
-                <a href="#" class="sidebar-link link-dark link-underline link-underline-opacity-0 fs-6 fw-bold p-2 d-block text-end">
-                    افزودن کتاب
-                    <i class="fa-solid fa-plus fa-lg p-2"></i>
+        <div class="sidebar flex-item d-flex flex-column align-items-end h-100">
+            <div v-if="isOwner" class="sidebar-item d-block w-100 mt-2" data-bs-toggle="modal" data-bs-target="#editShelf">
+                <a href="#" class="sidebar-link link-dark link-underline link-underline-opacity-0 fs-6 fw-bold p-2 d-block text-end"
+                style="text-decoration:none">
+                    ویرایش قفسه
+                    <i class="fa-solid fa-pen fa-md p-2"></i>
                 </a>
             </div>
-            <div v-if="isOwner" class="sidebar-item d-block w-100" @click.prevent="deleteShelf()">
-                <a class="sidebar-link link-dark link-underline link-underline-opacity-0 fs-6 fw-bold p-2 d-block text-end">
+            <div v-if="isOwner" class="sidebar-item d-block w-100" data-bs-toggle="modal" data-bs-target="#deleteShelf">
+                <a href="#" class="sidebar-link link-dark link-underline link-underline-opacity-0 fs-6 fw-bold p-2 d-block text-end"
+                style="text-decoration:none">
                     حذف قفسه
-                    <i class="fa-solid fa-trash fa-lg p-2"></i>
+                    <i class="fa-solid fa-trash fa-md p-2"></i>
                 </a>
             </div>
-            <div class="sidebar-item mt-2 w-100">
+            <hr class="border border-secondary w-75 mx-auto p-0">
+            <div class="sidebar-item w-100">
                 <div class="d-block w-100">
-                    <label class="collapse sidebar-link fw-bold text-end d-flex flex-row-reverse align-items-center w-100 p-2" for="_1">
-                        <i class="fa-solid fa-quote-right fa-lg p-2 d-block text-end"></i>
+                    <div class="fw-bold fs-6 text-end d-flex flex-row-reverse align-items-center w-100 p-2">
+                        <i class="fa-solid fa-quote-right fa-md p-2"></i>
                         توضیحات
-                    </label>
-                    <input id="_1" type="checkbox">
-                    <div class="detail ">
+                    </div>
+                    <div class="">
                         <p class="d-block text-end p-2 pe-5 fs-6" style="width:250px; word-wrap: break-word;">
                             {{shelf.description}}
                         </p>
-
                     </div>
                 </div>
             </div>
         </div>
-        <div class="mt-5 shelf-header flex-item w-75 d-flex flex-row-reverse justify-content-between align-items-center" 
-            style=" height: 100%; margin-right:250px;">
-            <div class="shelf-title d-flex flex-row-reverse align-items-center">
-                <div class="m-2 p-2">
-                    <div v-if="isOwner" class="me-2 fs-6" data-bs-toggle="modal" data-bs-target="#editShelf" title=" ویرایش">
-                        <i class="fa-solid fa-pen fa-lg ps-2"></i>
+        <!-- Delete Shelf Modal -->
+        <div class="modal fade" id="deleteShelf" tabindex="-1" aria-labelledby="deleteShelfLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header ">
+                        <h1 class="modal-title fs-6 w-100 text-center" id="deleteShelfLabel">حذف قفسه</h1>
+                    </div>
+                    <div class="modal-body text-end">
+                        از حذف این قفسه مطمئنی؟
+                    </div>
+                    <div class="modal-footer d-flex flex-row justify-content-start">
+                        <button type="button" class="btn btn-danger"  @click.prevent="deleteShelf()">حذف</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">لغو</button>
                     </div>
                 </div>
-                <div class="justify-content-center">
-                    <h4 class="text-dark fw-bold" style="white-space: nowrap;"> {{shelf.name}} </h4>
-                </div>
-            
             </div>
-            <div class="modal fade" id="editShelf" tabindex="-1" aria-labelledby="editShelfLabel" aria-hidden="true">
+        </div>
+        <!-- Edit Shelf Modal-->
+        <div class="modal fade" id="editShelf" tabindex="-1" aria-labelledby="editShelfLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="editShelfLabel">ویرایش قفسه</h1>
+                        <h1 class="modal-title fs-6 w-100 text-center" id="editShelfLabel">ویرایش قفسه</h1>
                         <button id="close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body text-end">
                         <div class="alert alert-danger" v-if="hasError">
                             <ul>
                                 <li v-for="e in errors" :key="e">{{ e[0] }}</li>
@@ -62,16 +68,16 @@
                         <form>
                             <div class="m-1">
                                 <label for="shelfName" class="form-label">نام قفسه</label>
-                                <input type="text" class="form-control" id="shelfName" name="shelfName"
+                                <input type="text" class="form-control text-end" id="shelfName" name="shelfName"
                                 v-model="shelfName"
                                 >
                             </div>
-                            <div class="m-1">
+                            <div class="m-1 mt-3">
                                 <label for="shelfDescription" class="form-label">توضیحات</label>
-                                <textarea id="shelfDescription" class="form-control" name="shelfDescription" v-model="shelfDescription"></textarea>
+                                <textarea id="shelfDescription" class="form-control text-end" name="shelfDescription" v-model="shelfDescription"></textarea>
                             </div>
-                            <div class="m-1 d-grid">
-                                <button type="submit" class="btn btn-dark m-3" 
+                            <div class="m-1 text-start">
+                                <button type="submit" class="btn btn-dark m-1 mt-3" 
                                 @click.prevent="updateShelf"
                                 >تایید</button>
                             </div>
@@ -80,6 +86,14 @@
                 </div>
             </div>
         </div>
+        <div class="mt-5 shelf-header flex-item w-75 d-flex flex-row-reverse justify-content-between align-items-center" 
+            style=" height: 100%; margin-right:250px;">
+            <div class="shelf-title">
+                <div class="justify-content-center">
+                    <h4 class="text-dark fw-bold" style="white-space: nowrap;"> {{shelf.name}} </h4>
+                </div>
+            
+            </div>
             <div class="">
                 <p class=" fs-6 fw-bold">تعداد کتاب ها : {{shelf.book_count}} </p>
             </div>
@@ -88,7 +102,7 @@
     <hr class="opacity-100 border-muted border w-75 mx-auto" style="margin-right:250px !important;">
     <div class="container w-75 rounded-1" style="margin-right: 250px; " >
         <div class="row row-cols-6 flex-row-reverse">
-            <router-link v-for="b in shelf.books" :key="b.id" :to="{name: 'book', params: {id: b.id}}"  class="col p-2">
+            <router-link v-for="b in shelf.books" :key="b.id" :to="{name: 'book', params: {id: b.id}}"  class="router-links col p-2">
                 <div>
                     <img :src="b.image" class="book-cover d-block mx-auto" alt="">
                     <p class="text-center p-1"> {{b.name}} </p>
@@ -203,7 +217,7 @@ export default {
             right:0;
             width: 220px;
             height: 100%;
-            margin-top: 20px;
+            margin-top: 5px;
             background-color:#f4f4f4;
 
         }
@@ -214,21 +228,12 @@ export default {
             color: white !important;
             background-color: rgb(33, 37, 41);
         }
-        .collapse{
-            cursor: pointer;
-            display: block;
-        }
-        .collapse + input{
-            display: none;
-        }
-        .collapse + input + .detail{
-            display:none;
-        }
-        .collapse + input:checked + .detail{
-            display:block;
-        }
         .book-cover {
             width: 100px;
             max-height: 180px;
+        }
+        .router-links {
+            color: black;
+            text-decoration: none;
         }
 </style>
