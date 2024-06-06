@@ -41,9 +41,6 @@ class ProfileController extends Controller {
 
             $request->file->store('user', 'public');
 
-            $old_image = $user->getImage();
-            $old_image->delete();
-
             $user->updateProfile(
                 image: $request->file->hashName(),
             );

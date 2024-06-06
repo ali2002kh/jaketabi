@@ -8,8 +8,9 @@
                         <img :src="host.image" class="user-profile" alt="">
                     </div>
                     <div class="text-center me-3">
-                        <p class="fs-6 p-0 m-0 ">{{ host.username }}</p>
-                        <p class="fs-6 p-0 m-0">{{ host.name }}</p>
+                        <p class="fs-6 p-0 m-0 ">{{ username }}</p>
+                        <p class="fs-6 p-0 m-0">
+                            {{ fname }} {{ lname }}</p>
                         <a v-if="host.is_private" @click.prevent="logout" href="#" class="link-dark" style="text-decoration:none">خروج</a>
                     </div>
                 </div> 
@@ -114,9 +115,19 @@
                                 <div class="alert alert-success" v-if="success2">{{ message2 }}</div>
                                 <form>
                                     <div class="m-1">
+                                        <label for="image" class="form-label">عکس پروفایل</label>
+                                        <input class="form-control" type="file" id="image" @change="onFileChange($event)">
+                                    </div>
+                                    <div class="m-1">
                                         <label for="email" class="form-label">ایمیل</label>
                                         <input type="email" class="form-control" 
                                         id="email" name="email" v-model="email"
+                                        >
+                                    </div>
+                                    <div class="m-1">
+                                        <label for="username" class="form-label">نام کاربری</label>
+                                        <input type="text" class="form-control" id="username" name="username"
+                                        v-model="username"
                                         >
                                     </div>
                                     <div class="m-1">
@@ -306,6 +317,7 @@ export default {
             searchedUsers: [],
 
             // edit profile
+            file: '',
             email: null,
             username: null,
             fname: null,
@@ -408,24 +420,38 @@ export default {
             })
         },
 
+        async onFileChange(event) {
+            this.file = event.target.files[0]
+        },
+
         async updateProfile() {
             this.hasError2 = false
             this.errors2 = []
             this.success2 = false
             this.message2 = null
-            try {
-                await axios.post('/api/update-profile', {
-                email: this.email,
-                username: this.username,
-                fname: this.fname,
-                lname: this.lname,
-                password: this.password,
-                confirmPassword: this.confirmPassword,
-            }).then(response => {
+
+            
+            let fd = new FormData()
+
+            fd.append('fname', this.fname ?? '')
+            fd.append('lname', this.lname ?? '')
+            fd.append('email', this.email ?? '')
+            fd.append('username', this.username ?? '')
+            fd.append('password', this.password ?? '')
+            fd.append('confirmPassword', this.confirmPassword ?? '')
+            fd.append('file', this.file)
+            fd.append('_method', 'POST')
+
+            await axios.post('/api/update-profile', fd,
+                {
+                    headers: {
+                    'Content-Type': `multipart/form-data; boundary=${fd._boundary}`
+                    }
+                } 
+            ).then(response => {
                 this.success2 = true;
                 this.message2 = response.data.message
-            })
-            } catch (error) {
+            }).catch (error => {
                 if (error.response && 
                     error.response.status && 
                     error.response.status == 422) {
@@ -433,7 +459,7 @@ export default {
                         console.log(error.response.data)
                         this.errors2 = error.response.data.errors
                 }
-            }
+            })
             
         },
 
