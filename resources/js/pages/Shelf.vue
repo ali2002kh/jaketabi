@@ -3,7 +3,7 @@
 
     <!-- sidebar -->
     <div class="mt-5 m-2 d-flex flex-row-reverse">
-        <div class="sidebar flex-item d-flex flex-column align-items-end h-100">
+        <div class="sidebar flex-item d-flex flex-column align-items-end">
             <div v-if="isOwner" class="sidebar-item d-block w-100 mt-2" data-bs-toggle="modal" data-bs-target="#editShelf">
                 <a href="#" class="sidebar-link link-dark link-underline link-underline-opacity-0 fs-6 fw-bold p-2 d-block text-end"
                 style="text-decoration:none">
@@ -18,15 +18,15 @@
                     <i class="fa-solid fa-trash fa-md p-2"></i>
                 </a>
             </div>
-            <hr class="border border-secondary w-75 mx-auto p-0">
+            <hr v-if="isOwner" class="border border-secondary w-75 mx-auto p-0 m-1">
             <div class="sidebar-item w-100">
-                <div class="d-block w-100">
+                <div class="d-block w-100 h-100 mb-5">
                     <div class="fw-bold fs-6 text-end d-flex flex-row-reverse align-items-center w-100 p-2">
                         <i class="fa-solid fa-quote-right fa-md p-2"></i>
                         توضیحات
                     </div>
-                    <div class="">
-                        <p class="d-block text-end p-2 pe-5 fs-6" style="width:250px; word-wrap: break-word;">
+                    <div class="d-block w-100 p-2" style="right:0;">
+                        <p class="text-end fs-6" style="word-wrap: break-word;">
                             {{shelf.description}}
                         </p>
                     </div>
@@ -214,10 +214,13 @@ export default {
 <style scoped>
         .sidebar {
             position: fixed;
+            overflow-y: scroll;
+            overflow-x:hidden;
             right:0;
+            top: 0;
+            bottom: 0;
             width: 220px;
-            height: 100%;
-            margin-top: 5px;
+            margin-top: 75px;
             background-color:#f4f4f4;
 
         }
