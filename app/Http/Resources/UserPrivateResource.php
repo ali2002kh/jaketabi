@@ -49,6 +49,8 @@ class UserPrivateResource extends JsonResource
 
         if ($this->getProfile()) {
             $result['birth_date'] = $this->getProfile()->birth_date;
+            $result['fname'] = $this->getProfile()->first_name;
+            $result['lname'] = $this->getProfile()->last_name;
         }
 
         if ($want_to_read_more_count > 0) {

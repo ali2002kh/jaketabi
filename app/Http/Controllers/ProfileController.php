@@ -14,7 +14,7 @@ class ProfileController extends Controller {
 
         $request->validate([
             'username' => [Rule::unique('users')->ignore($user->id), 'required'],
-            'number' => ['regex:/(09)[0-9]{9}/', 'required' , Rule::unique('users')->ignore($user->id)],
+            // 'number' => ['regex:/(09)[0-9]{9}/', 'required' , Rule::unique('users')->ignore($user->id)],
             'email' => [Rule::unique('users')->ignore($user->id), 'required'],
             'password' => 'min:8|nullable',
             'confirmPassword' => 'same:password',
@@ -23,14 +23,14 @@ class ProfileController extends Controller {
         $user->updateUser(
             username: $request->get('username'),
             email: $request->get('email'),
-            number: $request->get('number'),
+            // number: $request->get('number'),
             password: $request->get('password'),
         );
 
         $user->updateProfile(
-            firstName: $request->get('first_name'),
-            lastName: $request->get('last_name'),
-            birthDate: $request->get('birth_date'),
+            firstName: $request->get('fname'),
+            lastName: $request->get('lname'),
+            // birthDate: $request->get('birth_date'),
         );
 
         if ($request->hasFile('file')) {
@@ -49,6 +49,6 @@ class ProfileController extends Controller {
             );
         }
 
-       return abort(200, 'information successfully updated');
+       return abort(200, 'با موفقیت بروزرسانی شد');
     }
 }

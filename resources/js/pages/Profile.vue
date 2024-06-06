@@ -95,8 +95,64 @@
             <div class="col mt-5">
                 <div class="text-center">
                     <a  href="#" class="text-dark link-underline link-underline-opacity-0">
-                        <button class="btn btn-dark">ویرایش</button>
+                        <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#editProfile">ویرایش</button>
                     </a>
+                </div>
+                <div class="modal fade" id="editProfile" tabindex="-1" aria-labelledby="editProfileLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="editProfileLabel">ویرایش اطلاعات شخصی</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="alert alert-danger" v-if="hasError2">
+                                    <ul>
+                                        <li v-for="e in errors2" :key="e">{{ e[0] }}</li>
+                                    </ul>
+                                </div>
+                                <div class="alert alert-success" v-if="success2">{{ message2 }}</div>
+                                <form>
+                                    <div class="m-1">
+                                        <label for="email" class="form-label">ایمیل</label>
+                                        <input type="email" class="form-control" 
+                                        id="email" name="email" v-model="email"
+                                        >
+                                    </div>
+                                    <div class="m-1">
+                                        <label for="fname" class="form-label">نام</label>
+                                        <input type="text" class="form-control" id="fname" name="fname"
+                                        v-model="fname"
+                                        >
+                                    </div>
+                                    <div class="m-1">
+                                        <label for="lname" class="form-label">نام خانوادگی</label>
+                                        <input type="text" class="form-control" id="lname" name="lname"
+                                        v-model="lname"
+                                        >
+                                    </div>
+                                    <div class="m-1">
+                                        <label for="password" class="form-label">رمز عبور</label>
+                                        <input type="password" class="form-control" 
+                                        id="password" name="password" v-model="password"
+                                        >
+                                    </div>
+                                    <div class="m-1">
+                                        <label for="confirmPassword" class="form-label">تایید رمز عبور</label>
+                                        <input type="password" class="form-control" 
+                                        id="confirmPassword" name="confirmPassword"
+                                        v-model="confirmPassword"
+                                        >
+                                    </div>
+                                    <div class="m-1 d-grid">
+                                        <button type="submit" class="btn btn-dark m-3" 
+                                        @click.prevent="updateProfile"
+                                        >بروزرسانی</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -232,6 +288,8 @@ export default {
     data() {
         return {
             host: null,
+
+            // create shelf
             shelfName: null,
             shelfDescription: null,
             hasError: false,
@@ -239,11 +297,25 @@ export default {
             success: false,
             message: null,
             shelves_more_count: null,
+
+            // friendship options
             friends: [],
             searchIsActive: false,
             searchInput: null,
             timeoutId: null,
             searchedUsers: [],
+
+            // edit profile
+            email: null,
+            username: null,
+            fname: null,
+            lname: null,
+            password: null,
+            confirmPassword: null,
+            hasError2: false,
+            errors2: [],
+            success2: false,
+            message2: null,
         } 
     },
     beforeMount() {
@@ -282,6 +354,11 @@ export default {
                 console.log(this.host.shelves_more_count)
                 this.shelves_more_count = this.host.shelves_more_count
             }
+
+            this.email = this.host.email
+            this.username = this.host.username
+            this.fname = this.host.fname
+            this.lname = this.host.lname
         })
     },
     computed: {
@@ -329,6 +406,35 @@ export default {
                         this.errors = error.response.data.errors
                 }
             })
+        },
+
+        async updateProfile() {
+            this.hasError2 = false
+            this.errors2 = []
+            this.success2 = false
+            this.message2 = null
+            try {
+                await axios.post('/api/update-profile', {
+                email: this.email,
+                username: this.username,
+                fname: this.fname,
+                lname: this.lname,
+                password: this.password,
+                confirmPassword: this.confirmPassword,
+            }).then(response => {
+                this.success2 = true;
+                this.message2 = response.data.message
+            })
+            } catch (error) {
+                if (error.response && 
+                    error.response.status && 
+                    error.response.status == 422) {
+                        this.hasError2 = true
+                        console.log(error.response.data)
+                        this.errors2 = error.response.data.errors
+                }
+            }
+            
         },
 
         async removeFriend(user_id) {
