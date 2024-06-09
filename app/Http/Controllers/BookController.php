@@ -4,13 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\BookCategoryResource;
 use App\Http\Resources\BookCommentResource;
+use App\Http\Resources\BookPreviewResource;
 use App\Http\Resources\BookPublicResource;
 use App\Http\Resources\FriendBookResource;
 use App\Http\Resources\GenreResource;
+use App\Http\Resources\PublisherResource;
 use App\Http\Resources\UserBookResource;
 use App\Models\Book;
 use App\Models\BookCategory;
 use App\Models\Genre;
+use App\Models\Publisher;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -57,7 +60,26 @@ class BookController extends Controller {
 
     public function genre($id) {
 
-        return new GenreResource(Genre::find($id));
+        $genre = Genre::find($id);
+
+        return response()->json([
+            'data' => [
+                'books' => BookPreviewResource::collection($genre->getBooks()),
+                'genre' => new GenreResource($genre),
+            ]
+        ]);
+    }
+
+    public function publisher($id) {
+
+        $publisher = Publisher::find($id);
+
+        return response()->json([
+            'data' => [
+                'books' => BookPreviewResource::collection($publisher->getBooks()),
+                'publisher' => new PublisherResource($publisher),
+            ]
+        ]);
     }
 
     public function addComment($book_id, Request $request) {

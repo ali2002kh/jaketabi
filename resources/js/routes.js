@@ -4,8 +4,10 @@ import Profile from "./pages/Profile";
 import Book from "./pages/Book";
 import Shelf from "./pages/Shelf";
 import Friends from "./pages/Friends";
+import ProfileBooks from "./pages/ProfileBooks";
 import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
+import BookList from "./pages/BookList.vue";
 
 const routes = [
     {
@@ -17,6 +19,11 @@ const routes = [
         path: "/profile/:id",
         component: Profile,
         name:"profile",
+    },
+    {
+        path: "/profile/books/:id/:status",
+        component: ProfileBooks,
+        name:"profileBooks",
     },
     {
         path: "/book/:id",
@@ -32,6 +39,11 @@ const routes = [
         path: "/friends",
         component: Friends,
         name:"friends",
+    },
+    {
+        path: "/book-list/:title/:id",
+        component: BookList,
+        name:"bookList",
     },
     {
         path: "/login",
