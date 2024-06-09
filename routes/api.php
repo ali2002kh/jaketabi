@@ -81,7 +81,7 @@ Route::get('update-book-status/{book_id}/{status}', [BookController::class, 'upd
 
 Route::get('update-book-current-page/{book_id}/{page}', [BookController::class, 'updateCurrentPage']);
 
-Route::get('category/{id}', [BookController::class, 'category']);
+Route::get('book/category/{id}', [BookController::class, 'category']);
 
 Route::get('genre/{id}', [BookController::class, 'genre']);
 

@@ -2,8 +2,9 @@
     <PageHeader></PageHeader>
     <div class="container-fluid body-class">
 
-        <p v-if="isPublisher" class="title mx-1" style="margin-top: 110px;"><span>نشر</span></p>
-        <p v-else class="title mx-1" style="margin-top: 110px;"><span>ژانر</span></p>
+        <p v-if="title == 'publisher'" class="title mx-1" style="margin-top: 110px;"><span>نشر</span></p>
+        <p v-if="title == 'genre'" class="title mx-1" style="margin-top: 110px;"><span>ژانر</span></p>
+        <p v-if="title == 'bookCategory'" class="title mx-1" style="margin-top: 110px;"><span>دسته‌بندی</span></p>
 
         <p class="title mx-1" style="margin-top: 110px;"><span>
             {{ name }}
@@ -38,13 +39,11 @@ export default {
             books: null,
             title: this.$route.params.title,
             name: null,
-            isPublisher: false,
         } 
     },
     created() {
 
         if (this.title == 'publisher') {
-            this.isPublisher = true
             axios.get(`/api/publisher/${this.$route.params.id}`)
             .then(response => {
                 console.log(response.data.data)
@@ -57,6 +56,13 @@ export default {
                 console.log(response.data.data)
                 this.books = response.data.data.books
                 this.name = response.data.data.genre.name
+            });
+        } else if (this.title == 'bookCategory') {
+            axios.get(`/api/book/category/${this.$route.params.id}`)
+            .then(response => {
+                console.log(response.data.data)
+                this.books = response.data.data.books
+                this.name = response.data.data.bookCategory.name
             });
         }
 

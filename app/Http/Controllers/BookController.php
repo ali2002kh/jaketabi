@@ -55,7 +55,14 @@ class BookController extends Controller {
 
     public function category($id) {
 
-        return new BookCategoryResource(BookCategory::find($id));
+        $bookCategory = BookCategory::find($id);
+
+        return response()->json([
+            'data' => [
+                'books' => BookPreviewResource::collection($bookCategory->getBooks()),
+                'bookCategory' => new BookCategoryResource($bookCategory),
+            ]
+        ]);
     }
 
     public function genre($id) {

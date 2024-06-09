@@ -21773,7 +21773,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
                     _this2.publishers = response.data.data.publishers;
                   });
                 }
-              }, 1500);
+              }, 800);
             case 2:
             case "end":
               return _context2.stop();
@@ -21822,13 +21822,20 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
       }))();
     },
     showGenre: function showGenre(id) {
+      var _this5 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
         return _regeneratorRuntime().wrap(function _callee5$(_context5) {
           while (1) switch (_context5.prev = _context5.next) {
             case 0:
               document.getElementById('close').click();
-              // this.$router.replace({ name: 'genre', params: { id: id }});
-            case 1:
+              _this5.$router.replace({
+                name: 'bookList',
+                params: {
+                  title: 'genre',
+                  id: id
+                }
+              });
+            case 2:
             case "end":
               return _context5.stop();
           }
@@ -21836,13 +21843,20 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
       }))();
     },
     showCategory: function showCategory(id) {
+      var _this6 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
         return _regeneratorRuntime().wrap(function _callee6$(_context6) {
           while (1) switch (_context6.prev = _context6.next) {
             case 0:
               document.getElementById('close').click();
-              // this.$router.replace({ name: 'category', params: { id: id }});
-            case 1:
+              _this6.$router.replace({
+                name: 'bookList',
+                params: {
+                  title: 'bookCategory',
+                  id: id
+                }
+              });
+            case 2:
             case "end":
               return _context6.stop();
           }
@@ -21850,13 +21864,20 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
       }))();
     },
     showPublisher: function showPublisher(id) {
+      var _this7 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7() {
         return _regeneratorRuntime().wrap(function _callee7$(_context7) {
           while (1) switch (_context7.prev = _context7.next) {
             case 0:
               document.getElementById('close').click();
-              // this.$router.replace({ name: 'publisher', params: { id: id }});
-            case 1:
+              _this7.$router.replace({
+                name: 'bookList',
+                params: {
+                  title: 'publisher',
+                  id: id
+                }
+              });
+            case 2:
             case "end":
               return _context7.stop();
           }
@@ -22213,14 +22234,12 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
     return {
       books: null,
       title: this.$route.params.title,
-      name: null,
-      isPublisher: false
+      name: null
     };
   },
   created: function created() {
     var _this = this;
     if (this.title == 'publisher') {
-      this.isPublisher = true;
       axios.get("/api/publisher/".concat(this.$route.params.id)).then(function (response) {
         console.log(response.data.data);
         _this.books = response.data.data.books;
@@ -22231,6 +22250,12 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         console.log(response.data.data);
         _this.books = response.data.data.books;
         _this.name = response.data.data.genre.name;
+      });
+    } else if (this.title == 'bookCategory') {
+      axios.get("/api/book/category/".concat(this.$route.params.id)).then(function (response) {
+        console.log(response.data.data);
+        _this.books = response.data.data.books;
+        _this.name = response.data.data.bookCategory.name;
       });
     }
   },
@@ -23989,25 +24014,34 @@ var _hoisted_5 = {
 var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "ژانر", -1 /* HOISTED */);
 var _hoisted_7 = [_hoisted_6];
 var _hoisted_8 = {
+  key: 2,
   "class": "title mx-1",
   style: {
     "margin-top": "110px"
   }
 };
-var _hoisted_9 = {
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "دسته‌بندی", -1 /* HOISTED */);
+var _hoisted_10 = [_hoisted_9];
+var _hoisted_11 = {
+  "class": "title mx-1",
+  style: {
+    "margin-top": "110px"
+  }
+};
+var _hoisted_12 = {
   "class": "popular-books row flex-row-reverse mx-1 p-1 rounded-1",
   style: {
     "background-color": "#f4f4f4"
   }
 };
-var _hoisted_10 = ["src"];
-var _hoisted_11 = {
+var _hoisted_13 = ["src"];
+var _hoisted_14 = {
   "class": "text-center p-1"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_PageHeader = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("PageHeader");
   var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_PageHeader), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [$data.isPublisher ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_2, [].concat(_hoisted_4))) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_5, [].concat(_hoisted_7))), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.name), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.books, function (b) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_PageHeader), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [$data.title == 'publisher' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_2, [].concat(_hoisted_4))) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.title == 'genre' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_5, [].concat(_hoisted_7))) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.title == 'bookCategory' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_8, [].concat(_hoisted_10))) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.name), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.books, function (b) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       key: b.id,
       "class": "col-auto p-1 mx-3"
@@ -24025,7 +24059,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           "class": "book-img d-block border mx-auto",
           src: b.image,
           alt: ""
-        }, null, 8 /* PROPS */, _hoisted_10), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(b.name), 1 /* TEXT */)];
+        }, null, 8 /* PROPS */, _hoisted_13), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(b.name), 1 /* TEXT */)];
       }),
       _: 2 /* DYNAMIC */
     }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["to"])]);

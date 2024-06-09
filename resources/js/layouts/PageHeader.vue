@@ -178,7 +178,7 @@ export default {
                         this.publishers = response.data.data.publishers
                     })
                 }
-            }, 1500);
+            }, 800);
         },
 
         async showBook (id) {
@@ -193,17 +193,17 @@ export default {
 
         async showGenre (id) {
             document.getElementById('close').click()
-            // this.$router.replace({ name: 'genre', params: { id: id }});
+            this.$router.replace({ name: 'bookList', params: { title:'genre', id: id }});
         },
 
         async showCategory (id) {
             document.getElementById('close').click()
-            // this.$router.replace({ name: 'category', params: { id: id }});
+            this.$router.replace({ name: 'bookList', params: { title:'bookCategory', id: id }});
         },
 
         async showPublisher (id) {
             document.getElementById('close').click()
-            // this.$router.replace({ name: 'publisher', params: { id: id }});
+            this.$router.replace({ name: 'bookList', params: { title:'publisher', id: id }});
         },
     },
 }
