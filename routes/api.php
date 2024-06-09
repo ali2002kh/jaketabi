@@ -45,6 +45,8 @@ Route::post('search/user', [SearchController::class, 'searchUser']);
 
 Route::post('update-profile', [ProfileController::class, 'update']);
 
+Route::get('profile/books/{id}/{status}', [ProfileController::class, 'books']);
+
 // Shelves ----------------------------------------------------------------
 
 Route::get('shelf/{id}', [ShelfController::class, 'show']);
@@ -82,6 +84,8 @@ Route::get('update-book-current-page/{book_id}/{page}', [BookController::class, 
 Route::get('category/{id}', [BookController::class, 'category']);
 
 Route::get('genre/{id}', [BookController::class, 'genre']);
+
+Route::get('publisher/{id}', [BookController::class, 'publisher']);
 
 Route::get('book-comments/{book_id}', [BookController::class, 'comments']);
 

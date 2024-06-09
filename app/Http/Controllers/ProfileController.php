@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\BookPreviewResource;
+use App\Http\Resources\UserBookResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -47,5 +49,16 @@ class ProfileController extends Controller {
         }
 
        return abort(200, 'با موفقیت بروزرسانی شد');
+    }
+
+    public function books($id, $status) {
+
+        $user = User::find($id);
+        $books = $user->getRecordedBooks($status);
+        $records = collect();
+        foreach($books as $book) {
+            $records->add($user->getBookRecord($book->id));
+        }
+        return UserBookResource::collection($records);
     }
 }
