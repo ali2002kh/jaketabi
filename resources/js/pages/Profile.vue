@@ -39,7 +39,7 @@
                                     @keyup="search" v-model="searchInput">
                                     <br>
                                     <div class="mt-2">
-                                        <div v-for="u in searchedUsers" :key="u.id" class="row flex-row-reverse align-items-center">
+                                        <div v-for="u in searchedUsers" :key="u.id" class="row flex-row-reverse align-items-center my-3">
                                             <div class="col d-flex flex-row-reverse" @click.prevent="showProfile(u.id)">
                                                 <img class="item-img" style="width: 45px; height: 45px; border-radius: 100%;" :src="u.image" alt="">
                                                 <div class="align-self-center me-2">
@@ -59,19 +59,19 @@
                                             </div>
 
                                             <div v-if="u.status == 2" class="col-auto float-start">
-                                                <button class="btn btn-outline-success m-1 p-1 px-3" 
+                                                <button class="btn btn-outline-success p-1 px-3" 
                                                 @click.prevent="acceptFriendRequest(u.id)"
                                                 >قبول  </button>
                                             </div>
 
                                             <div v-if="u.status == 2" class="col-auto float-start">
-                                                <button class="btn btn-outline-danger m-1 p-1 px-4" 
+                                                <button class="btn btn-outline-danger p-1 px-4" 
                                                 @click.prevent="rejectFriendRequest(u.id)"
                                                 >رد  </button>
                                             </div>
                                             
                                             <div v-if="u.status == 3" class="col-auto float-start">
-                                                <button class="btn btn-outline-danger m-1 p-1 px-2" 
+                                                <button class="btn btn-dark m-1 p-1 px-2" 
                                                 @click.prevent="removeFriend(u.id)"
                                                 >حذف دوستی</button>
                                             </div>
@@ -81,18 +81,18 @@
                                 </div>
     
                                 <div v-else class="">
-                                    <div class="row" v-for="f in friends" :key="f.id">
-                                        <div @click.prevent="showProfile(f.id)">
-                                            <div class="col">
-                                                {{ f.username }}
-                                            </div>
-                                            <div class="col">
-                                                <img :src="f.image" style="widows: 60px; height: 60px; border-radius: 100%;" alt="">
-                                            </div>
+                                    <div class="row flex-row-reverse align-items-center my-3" v-for="f in friends" :key="f.id">
+                                        <div class="col d-flex flex-row-reverse" @click.prevent="showProfile(f.id)">
+                                                <img class="item-img" style="width: 45px; height: 45px; border-radius: 100%;" :src="f.image" alt="">
+                                                <div class="align-self-center me-2">
+                                                    {{ f.username }}
+                                                </div>
                                         </div>
-                                        <button class="btn btn-dark m-3" 
-                                        @click.prevent="removeFriend(f.id)"
-                                        >حذف دوستی</button>
+                                        <div class="col-auto float-start">
+                                                <button class="btn btn-dark m-1 p-1 px-2" 
+                                                @click.prevent="removeFriend(f.id)"
+                                                >حذف دوستی</button>
+                                        </div>
                                     </div>
                                 </div>
     
@@ -540,7 +540,7 @@ export default {
                         this.searchedUsers = response.data.data
                     })
                 }
-            }, 1500);
+            }, 800);
         },
     },
 }
