@@ -18,7 +18,7 @@
             <div v-if="host.is_private" class="col mt-5">
                 <div class="text-start">
                     <a href="#" class="text-dark link-underline link-underline-opacity-0">
-                        <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#friends">دوستان</button>
+                        <button class="btn btn-dark px-3" data-bs-toggle="modal" data-bs-target="#friends">دوستان</button>
                     </a>
                 </div>
                 <div class="modal fade" id="friends" tabindex="-1" aria-labelledby="friendsLabel" aria-hidden="true">
@@ -59,7 +59,7 @@
                                             </div>
 
                                             <div v-if="u.status == 2" class="col-auto float-start">
-                                                <button class="btn btn-outline-success p-1 px-3" 
+                                                <button class="btn btn-outline-success  p-1 px-3" 
                                                 @click.prevent="acceptFriendRequest(u.id)"
                                                 >قبول  </button>
                                             </div>
@@ -105,69 +105,87 @@
             <div class="col mt-5">
                 <div class="text-center">
                     <a  href="#" class="text-dark link-underline link-underline-opacity-0">
-                        <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#editProfile">ویرایش</button>
+                        <button class="btn btn-dark px-3" data-bs-toggle="modal" data-bs-target="#editProfile">ویرایش</button>
                     </a>
                 </div>
                 <div class="modal fade" id="editProfile" tabindex="-1" aria-labelledby="editProfileLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="editProfileLabel">ویرایش اطلاعات شخصی</h1>
+                                <h1 class="modal-title fs-5 w-100 text-center" id="editProfileLabel">ویرایش اطلاعات شخصی</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <div class="modal-body">
-                                <div class="alert alert-danger" v-if="hasError2">
-                                    <ul>
-                                        <li v-for="e in errors2" :key="e">{{ e[0] }}</li>
-                                    </ul>
+                            <div class="modal-body text-end" style="font-size:14px">
+                                <div class="alert alert-danger py-1 text-start" v-if="hasError2">
+                                    <div class="py-0" v-for="e in errors2" :key="e">- {{ e[0] }}</div>
                                 </div>
-                                <div class="alert alert-success" v-if="success2">{{ message2 }}</div>
-                                <form>
-                                    <div class="m-1">
-                                        <label for="image" class="form-label">عکس پروفایل</label>
-                                        <input class="form-control" type="file" id="image" @change="onFileChange($event)">
+                                <div class="alert alert-success py-1" v-if="success2" style="font-size:14px">
+                                    {{ message2 }}
+                                </div>
+                                <form style="font-size:14px">
+                                    <div class="row">
+                                        <div class="col">
+                                            <label for="image" class="form-label pe-2">عکس پروفایل</label>
+                                            <input class="form-control text-end" style="font-size:14px"
+                                            type="file" id="image" @change="onFileChange($event)">
+                                        </div>
                                     </div>
-                                    <div class="m-1">
-                                        <label for="email" class="form-label">ایمیل</label>
-                                        <input type="email" class="form-control" 
-                                        id="email" name="email" v-model="email"
-                                        >
+                                    
+                                    <div class="row mt-3">
+                                        <div class="col">
+                                            <label for="email" class="form-label pe-2">ایمیل</label>
+                                            <input type="email" class="form-control text-start" style="font-size:14px"
+                                            id="email" name="email" v-model="email"
+                                            >
+                                        </div>
+                                        <div class="col">
+                                            <label for="username" class="form-label pe-2">نام کاربری</label>
+                                            <input type="text" class="form-control text-start" style="font-size:14px"
+                                            id="username" name="username"
+                                            v-model="username"
+                                            >
+                                        </div>
                                     </div>
-                                    <div class="m-1">
-                                        <label for="username" class="form-label">نام کاربری</label>
-                                        <input type="text" class="form-control" id="username" name="username"
-                                        v-model="username"
-                                        >
+                                    
+                                    <div class="row mt-3">
+                                        <div class="col">
+                                            <label for="lname" class="form-label pe-2">نام خانوادگی</label>
+                                            <input type="text" class="form-control text-end" style="font-size:14px"
+                                             id="lname" name="lname"
+                                            v-model="lname"
+                                            >
+                                        </div>
+                                        <div class="col">
+                                            <label for="fname" class="form-label pe-2">نام</label>
+                                            <input type="text" class="form-control text-end" style="font-size:14px"
+                                             id="fname" name="fname"
+                                            v-model="fname"
+                                            >
+                                        </div>
                                     </div>
-                                    <div class="m-1">
-                                        <label for="fname" class="form-label">نام</label>
-                                        <input type="text" class="form-control" id="fname" name="fname"
-                                        v-model="fname"
-                                        >
+
+                                    <div class="row mt-3">
+                                        <div class="col">
+                                            <label for="confirmPassword" class="form-label pe-2">تایید رمز عبور</label>
+                                            <input type="password" class="form-control text-start"  style="font-size:14px"
+                                            id="confirmPassword" name="confirmPassword"
+                                            v-model="confirmPassword"
+                                            >
+                                        </div>
+                                        <div class="col">
+                                            <label for="password" class="form-label pe-2">رمز عبور</label>
+                                            <input type="password" class="form-control text-start" style="font-size:14px"
+                                            id="password" name="password" v-model="password"
+                                            >
+                                        </div>
                                     </div>
-                                    <div class="m-1">
-                                        <label for="lname" class="form-label">نام خانوادگی</label>
-                                        <input type="text" class="form-control" id="lname" name="lname"
-                                        v-model="lname"
-                                        >
-                                    </div>
-                                    <div class="m-1">
-                                        <label for="password" class="form-label">رمز عبور</label>
-                                        <input type="password" class="form-control" 
-                                        id="password" name="password" v-model="password"
-                                        >
-                                    </div>
-                                    <div class="m-1">
-                                        <label for="confirmPassword" class="form-label">تایید رمز عبور</label>
-                                        <input type="password" class="form-control" 
-                                        id="confirmPassword" name="confirmPassword"
-                                        v-model="confirmPassword"
-                                        >
-                                    </div>
-                                    <div class="m-1 d-grid">
-                                        <button type="submit" class="btn btn-dark m-3" 
+                                    
+                                    <div class="row ms-1" >
+                                        <button type="submit" class="col-auto btn btn-sm btn-dark mt-3 px-3 me-2" 
                                         @click.prevent="updateProfile"
                                         >بروزرسانی</button>
+                                        <button type="button" class="col-auto btn btn-sm btn-secondary px-3 mt-3"
+                                        data-bs-dismiss="modal" aria-label="Close">لغو</button>
                                     </div>
                                 </form>
                             </div>
@@ -235,29 +253,29 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="createShelfLabel">ایجاد قفسه جدید</h1>
+                            <h1 class="modal-title fs-5 w-100 text-center" id="createShelfLabel">ایجاد قفسه جدید</h1>
                             <button id="create_shelf_close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
-                            <div class="alert alert-danger" v-if="hasError">
-                                <ul>
-                                    <li v-for="e in errors" :key="e">{{ e[0] }}</li>
-                                </ul>
+                        <div class="modal-body text-end">
+                            <div class="alert alert-danger text-start py-1" style="font-size:14px"
+                             v-if="hasError">
+                                    <div v-for="e in errors" :key="e">- {{ e[0] }}</div>
                             </div>
-                            <div class="alert alert-success" v-if="success">{{ message }}</div>
+                            <div class="alert alert-success py-1" style="font-size:14px"
+                             v-if="success">{{ message }}</div>
                             <form>
                                 <div class="m-1">
-                                    <label for="shelfName" class="form-label">نام قفسه</label>
-                                    <input type="text" class="form-control" id="shelfName" name="shelfName"
+                                    <label for="shelfName" class="form-label ">نام قفسه</label>
+                                    <input type="text" class="form-control text-end" id="shelfName" name="shelfName"
                                     v-model="shelfName"
                                     >
                                 </div>
                                 <div class="m-1">
-                                    <label for="shelfDescription" class="form-label">توضیحات</label>
-                                    <textarea id="shelfDescription" class="form-control" name="shelfDescription" v-model="shelfDescription"></textarea>
+                                    <label for="shelfDescription" class="form-label ">توضیحات</label>
+                                    <textarea id="shelfDescription" class="form-control text-end" name="shelfDescription" v-model="shelfDescription"></textarea>
                                 </div>
-                                <div class="m-1 d-grid">
-                                    <button type="submit" class="btn btn-dark m-3" 
+                                <div class="m-1 text-start">
+                                    <button type="submit" class="btn btn-dark m-3 ms-0 px-3" 
                                     @click.prevent="storeShelf"
                                     >تایید</button>
                                 </div>
