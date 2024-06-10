@@ -45,7 +45,7 @@
                     </div>
                     <div class="modal-footer d-flex flex-row justify-content-start">
                         <button type="button" class="btn btn-danger"  @click.prevent="deleteShelf()">حذف</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">لغو</button>
+                        <button id="closeAlert" type="button" class="btn btn-secondary" data-bs-dismiss="modal">لغو</button>
                     </div>
                 </div>
             </div>
@@ -115,7 +115,7 @@
 <script>
 
 import { mapState } from 'vuex';
-import PageHeader from "../layouts/PageHeader"
+import PageHeader from "../../layouts/PageHeader"
 // import PageFooter from "../layouts/PageFooter"
 
 export default {
@@ -180,6 +180,7 @@ export default {
         async deleteShelf() {
             await axios.get(`/api/remove-shelf/${this.$route.params.id}`)
             .then(() => {
+                document.getElementById('closeAlert').click()
                 this.$router.push(`/profile/${this.user.id}`)
             }) 
         },

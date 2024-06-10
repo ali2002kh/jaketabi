@@ -1,8 +1,6 @@
 import * as VueRouter from "vue-router";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
-import Shelf from "./pages/Shelf";
-import Friends from "./pages/Friends";
 import ProfileBooks from "./pages/ProfileBooks";
 
 import Login from "./pages/auth/Login";
@@ -11,6 +9,10 @@ import Signup from "./pages/auth/Signup";
 import BookList from "./pages/book/BookList";
 import BookComments from "./pages/book/Comments"
 import Book from "./pages/book/Book";
+
+import Shelf from "./pages/shelf/Shelf";
+import ShelfList from "./pages/shelf/ShelfList";
+
 
 const routes = [
     {
@@ -44,9 +46,9 @@ const routes = [
         name:"shelf",
     },
     {
-        path: "/friends",
-        component: Friends,
-        name:"friends",
+        path: "/shelves/:id",
+        component: ShelfList,
+        name:"shelfList",
     },
     {
         path: "/book-list/:title/:id",
