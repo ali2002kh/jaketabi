@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ShelfPreviewResource;
 use App\Http\Resources\ShelfResource;
 use App\Models\Shelf;
 use App\Models\ShelfBook;
@@ -74,5 +75,11 @@ class ShelfController extends Controller {
         } else {
             return abort(403);
         }
+    }
+
+    public function index($user_id) {
+
+        $user = User::find($user_id);
+        return ShelfPreviewResource::collection($user->getShelves());
     }
 }

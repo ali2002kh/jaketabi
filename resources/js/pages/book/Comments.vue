@@ -4,8 +4,11 @@
     <hr>
     <hr>
     <div v-for="c in comments" :key="c.id">
-        <div>{{ c.user.username }}</div>
-        <img :src="c.user.image" class="user-profile" alt="">
+        <router-link :to="{name: 'profile', params: {id: c.user.id}}">
+            <div>{{ c.user.username }}</div>
+            <img :src="c.user.image" class="user-profile" alt="">
+        </router-link>
+        
         <div>{{ c.message }}</div>
     </div>
 
