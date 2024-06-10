@@ -64,66 +64,55 @@
         </nav>
 
         <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="searchModalLabel">جستجو</h1>
+                    <h1 class="modal-title fs-5 w-100 text-center" id="searchModalLabel">جستجو</h1>
                     <button id="close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <input type="text" class="form-control" name="search" 
+                <div class="modal-body text-end">
+                    <input type="text" class="form-control text-end" name="search" 
                     @keyup="search" v-model="input">
                     <br>
-                    <div class="container d-grid mt-2">
-
-
-                        <p v-if="books[0]" class="text-center">کتاب ها</p>
+                    <div class="">
+                        <p v-if="books[0]" class="text-center w-100 bg-light p-1 border rounded-1 mt-2">کتاب ها</p>
                         <a href="" v-for="b in books" :key="b.id" class="nav-link" @click.prevent="showBook(b.id)">
-                            <div class="d-flex m-2">
-                                <img class="item-img me-3" :src="b.image" alt="">
-                                <div class="d-flex align-items-center">
-                                    <p class="text-center">{{ b.name }}</p>
+                            <div class="d-flex flex-row-reverse align-items-center">
+                                <p><img class="item-img" :src="b.image" alt=""></p> 
+                                <div class="me-2">
+                                    <p class="">{{ b.name }}</p>
                                 </div>
                             </div>
                         </a>
 
-                        <hr v-if="shelves[0]">
-                        <p v-if="shelves[0]" class="text-center">قفسه ها</p>
+                        <p v-if="shelves[0]" class="text-center w-100 bg-light p-1 border rounded-1 mt-2">قفسه ها</p>
                         <a href="" v-for="s in shelves" :key="s.id" class="nav-link" @click.prevent="showShelf(s.id)">
-                            <div class="d-flex m-2">
-                                <div class="d-flex align-items-center">
-                                    <p class="text-center">{{ s.name }}</p>
-                                </div>
+                            <div class="text-end me-2">
+                                <p>{{ s.name }}</p>
                             </div>
                         </a>
 
-                        <hr v-if="genres[0]">
-                        <p v-if="genres[0]" class="text-center">ژانر ها</p>
+                        <!-- <hr v-if="genres[0] && shelves[0]"> -->
+                        <p v-if="genres[0]" class="text-center w-100 bg-light p-1 border rounded-1 mt-2">ژانر ها</p>
                         <a href="" v-for="g in genres" :key="g.id" class="nav-link" @click.prevent="showGenre(g.id)">
-                            <div class="d-flex m-2">
-                                <div class="d-flex align-items-center">
-                                    <p class="text-center">{{ g.name }}</p>
-                                </div>
+                            <div class="text-end me-2">
+                                <p>{{ g.name }}</p>
                             </div>
                         </a>
 
-                        <hr v-if="categories[0]">
-                        <p v-if="categories[0]" class="text-center">دسته بندی ها</p>
+                        <!-- <hr v-if="categories[0] && genres[0]"> -->
+                        <p v-if="categories[0]" class="text-center w-100 bg-light p-1 border rounded-1 mt-2">دسته بندی ها</p>
                         <a href="" v-for="c in categories" :key="c.id" class="nav-link" @click.prevent="showCategory(c.id)">
-                            <div class="d-flex m-2">
-                                <div class="d-flex align-items-center">
-                                    <p class="text-center">{{ c.name }}</p>
-                                </div>
+                           <div class="text-end me-2">
+                                <p>{{ c.name }}</p>
                             </div>
                         </a>
 
-                        <hr v-if="publishers[0]">
-                        <p v-if="publishers[0]" class="text-center">ناشر ها</p>
+                        <!-- <hr v-if="publishers[0] && categories[0]"> -->
+                        <p v-if="publishers[0]" class="text-center w-100 bg-light p-1 border rounded-1 mt-2">ناشر ها</p>
                         <a href="" v-for="p in publishers" :key="p.id" class="nav-link" @click.prevent="showPublisher(p.id)">
-                            <div class="d-flex m-2">
-                                <div class="d-flex align-items-center">
-                                    <p class="text-center">{{ p.name }}</p>
-                                </div>
+                            <div class="text-end me-2">
+                                <p>{{ p.name }}</p>
                             </div>
                         </a>
                     </div>
@@ -211,9 +200,8 @@ export default {
 
 <style scoped>
 .item-img {
-    width : 80px;
-    height: 80px;
-    border-radius: 10px;
+    width : 55px;
+    height: 75px;
 }
 
 </style>
