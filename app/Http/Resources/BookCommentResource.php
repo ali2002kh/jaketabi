@@ -18,8 +18,7 @@ class BookCommentResource extends JsonResource
 
         $result = [
             'id' => $this->id,
-            'username' => $user->username,
-            'image' => $user->getImage(),
+            'user' => new UserPreviewResource($user),
             'message' => $this->message,
             // 'book' => new BookPreviewResource($this->getBook()),
         ];

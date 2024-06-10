@@ -1,13 +1,16 @@
 import * as VueRouter from "vue-router";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
-import Book from "./pages/Book";
 import Shelf from "./pages/Shelf";
 import Friends from "./pages/Friends";
 import ProfileBooks from "./pages/ProfileBooks";
+
 import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
-import BookList from "./pages/BookList.vue";
+
+import BookList from "./pages/book/BookList";
+import BookComments from "./pages/book/Comments"
+import Book from "./pages/book/Book";
 
 const routes = [
     {
@@ -29,6 +32,11 @@ const routes = [
         path: "/book/:id",
         component: Book,
         name:"book",
+    },
+    {
+        path: "/book/comments/:id",
+        component: BookComments,
+        name:"bookComments",
     },
     {
         path: "/shelf/:id",

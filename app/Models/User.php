@@ -540,6 +540,7 @@ class User extends Authenticatable
             'book_id' => $book_id,
         ]);
         $comment->save();
+        return $comment;
     }
 
 }

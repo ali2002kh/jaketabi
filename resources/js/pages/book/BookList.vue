@@ -26,7 +26,7 @@
 <script>
 
 import { mapState } from 'vuex';
-import PageHeader from "../layouts/PageHeader"
+import PageHeader from "../../layouts/PageHeader"
 // import PageFooter from "../layouts/PageFooter"
 
 export default {

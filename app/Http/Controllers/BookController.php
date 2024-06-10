@@ -94,10 +94,17 @@ class BookController extends Controller {
         $user = auth()->user();
 
         $this->validate($request, [
-            'message' => 'required',
+            'commentMessage' => 'required',
         ]); 
 
-        $user->addComment($book_id, $request->get('message'));
+        $comment = $user->addComment($book_id, $request->get('commentMessage'));
+
+        return response()->json([
+            'data' => [
+                'comment' => new BookCommentResource($comment),
+            ],
+            'message' => 'نظر ارسال شد'
+        ], 200);
     }
 
     public function comments($book_id) {

@@ -37,7 +37,7 @@
                         <button v-if="isNotSelected" @click.prevent="addToWantToRead" class="btn" type="button">
                             <i class="fa-solid fa-circle-plus fa-2xl"></i>
                         </button>
-                        <button v-if="isWantToRead || isCurrentlyReading" @click.prevent="compeleted" class="btn" type="button">
+                        <button v-if="isWantToRead || isCurrentlyReading" @click.prevent="completed" class="btn" type="button">
                             <i class="fa-regular fa-circle-check fa-2x"></i>
                         </button>
                     </div>
@@ -156,7 +156,9 @@
                     لاگین نکرده
                 </div>
                 <div class="m-1 p-3">
-                    <button class="btn btn-dark w-100 text-white">نظرات کاربران</button>
+                    <router-link :to="{name: 'bookComments', params: {id: book.id}}">
+                        <button class="btn btn-dark w-100 text-white">نظرات کاربران</button>
+                    </router-link>
                 </div>
             </div>
 
@@ -183,7 +185,7 @@
 <script>
 
 import { mapState } from 'vuex';
-import PageHeader from "../layouts/PageHeader"
+import PageHeader from "../../layouts/PageHeader"
 import moment from "moment";
 // import PageFooter from "../layouts/PageFooter"
 
@@ -330,7 +332,7 @@ export default {
             })
         },
 
-        async compeleted() {
+        async completed() {
             await await axios.get(`/api/update-book-status/${this.book.id}/3`) 
             .then(() => {
                 this.record.status_code = 3
