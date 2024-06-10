@@ -27,26 +27,18 @@
                         </router-link>
                     </li> -->
 
-                    <li class="nav-item pe-2" v-if="user">
+                    <li class="nav-item dropdown pe-2" v-if="user">
                             <router-link :to="{name: 'profile', params: {id: user.id}}" 
-                                data-toggle="tooltip" data-replacement="bottom" title="پروفایل"
-                                class="text-white">
+                                data-bs-toggle="dropdown" aria-expanded="false" title="پروفایل"
+                                class="text-white dropdown-toggle">
                                     <i class="fa-solid fa-user fa-lg"></i>
                             </router-link>
-                        <!-- <ul>
-                            <li>
-                                <router-link :to="{name: 'profile', params: {id: user.id}}" 
-                                data-toggle="tooltip" data-replacement="bottom" title="پروفایل"
-                                class="text-white">
-                                    <i class="fa-solid fa-user fa-lg"></i>
-                                </router-link>
-                            </li>
-                            <li>
-                                <a data-toggle="tooltip" data-replacement="bottom" title="خروج"
-                                @click.prevent="logout" href="#" class="text-white"
-                                ><i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i></a>
-                            </li>
-                        </ul> -->
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item text-end" href="#">پروفایل</a></li>
+                                <li>
+                                    <a class="dropdown-item text-end" href="#">خروج</a>
+                                </li>
+                            </ul>
                     </li>
                     <li class="nav-item pe-3 " v-else>
                         <router-link :to="{name: 'login'}" data-toggle="tooltip" data-replacement="bottom" title="ورود" class="text-white">
