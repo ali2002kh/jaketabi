@@ -7,11 +7,18 @@
                     <div>
                         <img :src="host.image" class="user-profile" alt="">
                     </div>
-                    <div class="d-flex flex-column justify-content-center text-center me-3">
-                        <p  class="fs-6 p-0 m-0 ">{{ host.username }}</p>
+                    <div v-if="host.is_private" class="d-flex flex-column justify-content-center text-center me-3">
+                        <p class="fs-6 p-0 m-0 ">{{ username }}</p>
                         <p class="fs-6 p-0 m-0">
-                            {{ host.fname }} {{ host.lname }}</p>
-                        <a v-if="host.is_private" @click.prevent="logout" href="#" class="link-dark" style="text-decoration:none">خروج</a>
+                            {{ fname }} {{ lname }}
+                        </p>
+                        <a @click.prevent="logout" href="#" class="link-dark" style="text-decoration:none">خروج</a>
+                    </div>
+                    <div v-else class="d-flex flex-column justify-content-center text-center me-3">
+                        <p class="fs-6 p-0 m-0 ">{{ host.username }}</p>
+                        <p class="fs-6 p-0 m-0">
+                            {{ host.name }}
+                        </p>
                     </div>
                 </div> 
             </div>

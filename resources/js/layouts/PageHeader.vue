@@ -37,7 +37,7 @@
                                     <router-link :to="{name: 'profile', params: {id: user.id}}"
                                     class="dropdown-item text-end">پروفایل</router-link></li>
                                 <li>
-                                    <a class="dropdown-item text-end" href="#">خروج</a>
+                                    <a @click.prevent="logout" class="dropdown-item text-end" href="#">خروج</a>
                                 </li>
                             </ul>
                     </li>
