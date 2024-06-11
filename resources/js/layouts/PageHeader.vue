@@ -28,13 +28,14 @@
                     </li> -->
 
                     <li class="nav-item dropdown pe-2" v-if="user">
-                            <router-link :to="{name: 'profile', params: {id: user.id}}" 
-                                data-bs-toggle="dropdown" aria-expanded="false" title="پروفایل"
-                                class="text-white dropdown-toggle">
-                                    <i class="fa-solid fa-user fa-lg"></i>
-                            </router-link>
+                            <a href="" data-bs-toggle="dropdown" aria-expanded="false"
+                            class="text-white dropdown-toggle">
+                                <i class="fa-solid fa-user fa-lg"></i>
+                            </a>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item text-end" href="#">پروفایل</a></li>
+                                <li>
+                                    <router-link :to="{name: 'profile', params: {id: user.id}}"
+                                    class="dropdown-item text-end">پروفایل</router-link></li>
                                 <li>
                                     <a class="dropdown-item text-end" href="#">خروج</a>
                                 </li>

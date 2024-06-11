@@ -197,8 +197,8 @@
         <div v-if="host" class="book-lists">
             <p class="title mt-5"><span> دارم می خوانم </span></p>
             <div class="lists-body currently-reading row flex-row-reverse align-items-center mx-1 p-1 rounded-1">
-                <div class="col-auto p-1 mx-3">
-                    <router-link :to="{name:'book', params:{id: b.id}}" v-for="b in host.reading" :key="b.id" 
+                <div class="col-auto p-1 mx-3" v-for="b in host.reading" :key="b.id">
+                    <router-link :to="{name:'book', params:{id: b.id}}"  
                     class="router-links d-flex flex-column m-1 p-2 align-items-center text-center">
                         <img :src="b.image" class="book-img" alt="">
                         <p class=""> {{ b.name }}</p>
@@ -213,8 +213,8 @@
             </div>
             <p class="title mt-5"><span>  خوانده ام  </span></p>
             <div class="lists-body already-read row flex-row-reverse align-items-center mx-1 p-1 rounded-1">
-                <div class="col-auto p-1 mx-3">
-                    <router-link :to="{name:'book', params:{id: b.id}}" v-for="b in host.already_read" :key="b.id" 
+                <div class="col-auto p-1 mx-3" v-for="b in host.already_read" :key="b.id" >
+                    <router-link :to="{name:'book', params:{id: b.id}}" 
                     class="router-links d-flex flex-column m-1 p-2 align-items-center text-center">
                         <img :src="b.image" class="book-img" alt="">
                         <p class=""> {{ b.name }}</p>
@@ -229,8 +229,8 @@
             </div>
             <p class="title mt-5"><span>  می خواهم بخوانم  </span></p>
             <div class="lists-body want-to-read row flex-row-reverse align-items-center mx-1 p-1 rounded-1">
-                <div class="col-auto p-1 mx-3">
-                    <router-link :to="{name:'book', params:{id: b.id}}" v-for="b in host.want_to_read" :key="b.id" 
+                <div class="col-auto p-1 mx-3" v-for="b in host.want_to_read" :key="b.id" >
+                    <router-link :to="{name:'book', params:{id: b.id}}" 
                     class="router-links d-flex flex-column m-1 p-2 align-items-center text-center">
                         <img :src="b.image" style="height: 150px; max-width:100px" alt="">
                         <p class="mt-2"> {{ b.name }}</p>
