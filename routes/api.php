@@ -83,11 +83,11 @@ Route::get('update-book-status/{book_id}/{status}', [BookController::class, 'upd
 
 Route::get('update-book-current-page/{book_id}/{page}', [BookController::class, 'updateCurrentPage']);
 
-Route::get('book/category/{id}', [BookController::class, 'category']);
+Route::get('book/category/{id}/{page}', [BookController::class, 'category']);
 
-Route::get('genre/{id}', [BookController::class, 'genre']);
+Route::get('genre/{id}/{page}', [BookController::class, 'genre']);
 
-Route::get('publisher/{id}', [BookController::class, 'publisher']);
+Route::get('publisher/{id}/{page}', [BookController::class, 'publisher']);
 
 Route::get('book/comments/{book_id}', [BookController::class, 'comments']);
 

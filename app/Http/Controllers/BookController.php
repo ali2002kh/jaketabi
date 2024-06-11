@@ -53,40 +53,56 @@ class BookController extends Controller {
         return abort(200);
     }
 
-    public function category($id) {
+    public function category($id, $page) {
 
         $bookCategory = BookCategory::find($id);
+        $pageSize = 2;
 
-        return response()->json([
-            'data' => [
-                'books' => BookPreviewResource::collection($bookCategory->getBooks()),
+        if ($page == 0) {
+            return response()->json([
                 'bookCategory' => new BookCategoryResource($bookCategory),
-            ]
-        ]);
+                'pageSize' => $pageSize,
+            ]);
+        }
+
+        $books = $bookCategory->getBooks()->slice(($page - 1) * $pageSize)->take($pageSize);
+
+        return BookPreviewResource::collection($books);
     }
 
-    public function genre($id) {
+    public function genre($id, $page) {
 
         $genre = Genre::find($id);
+        $pageSize = 2;
 
-        return response()->json([
-            'data' => [
-                'books' => BookPreviewResource::collection($genre->getBooks()),
+        if ($page == 0) {
+            return response()->json([
                 'genre' => new GenreResource($genre),
-            ]
-        ]);
+                'pageSize' => $pageSize,
+            ]);
+        }
+
+        $books = $genre->getBooks()->slice(($page - 1) * $pageSize)->take($pageSize);
+
+        return BookPreviewResource::collection($books);
     }
 
-    public function publisher($id) {
+    public function publisher($id, $page) {
 
         $publisher = Publisher::find($id);
+        $pageSize = 2;
 
-        return response()->json([
-            'data' => [
-                'books' => BookPreviewResource::collection($publisher->getBooks()),
+        if ($page == 0) {
+            return response()->json([
                 'publisher' => new PublisherResource($publisher),
-            ]
-        ]);
+                'pageSize' => $pageSize,
+            ]);
+        }
+
+        $books = $publisher->getBooks()->slice(($page - 1) * $pageSize)->take($pageSize);
+
+        return BookPreviewResource::collection($books);
+
     }
 
     public function addComment($book_id, Request $request) {
