@@ -4,7 +4,7 @@
         <p class="title mx-1" style="margin-top: 110px;"><span>کتاب های محبوب</span></p>
         <div class="popular-books row flex-row-reverse mx-1 p-1 rounded-1" style="background-color: #f4f4f4;">
             <div v-for="p in popular" :key="p.id"  class="col-auto p-1 mx-3">
-                <router-link :to="{name: 'book', params: {id: p.id}}" class="link-underline-opacity-0 link-dark">
+                <router-link :to="{name: 'book', params: {id: p.id}}" class="router-links">
                     <img class="book-img d-block border mx-auto" :src="p.image" alt="">
                     <p class="text-center p-1">{{ p.name }}</p>
                 </router-link> 
@@ -14,7 +14,7 @@
         <p class="title mt-5"><span>کتاب های فراگیر</span></p>
         <div class="trending-books row flex-row-reverse mx-1 p-1 rounded-1" style="background-color: #f4f4f4;">
             <div v-for="t in trending" :key="t.id"   class="col-auto p-1 mx-3">
-                <router-link :to="{name: 'book', params: {id: t.id}}"  class="link-underline link-underline-opacity-0 link-dark">
+                <router-link :to="{name: 'book', params: {id: t.id}}"  class="router-links">
                     <img class="book-img d-block mx-auto" :src="t.image" alt="">
                     <p class="text-center p-1">{{ t.name }}</p>
                 </router-link> 
@@ -23,16 +23,16 @@
 
         <p v-if="user" class="title mt-5"><span> فعالیت  دوستان</span></p>
         <div class="friends-activity row flex-row-reverse mx-1 p-1 rounded-1" style="background-color: #f4f4f4;">
-            <div v-for="a in activities" :key="a.id" class="col-auto p-1 mx-3">
-                <div class="row flex-row-reverse">
-                    <div v-for="f in a.preview_friends" :key="f.id" class="col-8 ">
-                        <router-link :to="{name: 'book', params: {id: a.id}}" class="link-underline link-underline-opacity-0 link-dark">
+            <div v-for="a in activities" :key="a.id" class="col-auto p-1 mx-3 ">
+                <div class="row flex-row-reverse ">
+                    <div class="col">
+                        <router-link :to="{name: 'book', params: {id: a.id}}" class="router-links">
                             <img :src="a.image" class="book-img d-block mx-auto" alt="...">
                             <p class="text-center p-1 mx-auto">{{ a.name }}</p>
                         </router-link>
                     </div>
-                    <div v-for="f in a.preview_friends" :key="f.id" class="col-4">
-                        <div class="d-flex float-end">
+                    <div class="col pe-0">
+                        <div class="row mb-1" v-for="f in a.preview_friends" :key="f.id">
                             <a href="#" >
                                 <img :src="f.image" class="user-profile mt-1">
                             </a>
@@ -63,7 +63,7 @@
                             <img :src="s.user.image" :alt="s.user.name" class="user-profile">
                         </div>
                         <div class="col-auto ps-2">
-                            <router-link :to="{name: 'profile', params: {id: s.user.id}}" class="link-dark">
+                            <router-link :to="{name: 'profile', params: {id: s.user.id}}" class="router-links">
                                 {{ s.user.username }}
                             </router-link>
                         </div>
@@ -183,5 +183,9 @@ export default {
         border-radius: 50%;
     }
 
+.router-links {
+    color: black;
+    text-decoration: none;
+}
 
 </style>
