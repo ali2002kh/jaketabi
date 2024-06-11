@@ -1,62 +1,62 @@
 <template>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-            <div class="container-fluid">
-                <ul class="nav navbar-nav me-auto">
-                    <li class="nav-item ps-4">
-                        <a class="nav-link text-white" data-toggle="tooltip" data-placement="bottom" title="اعلان ها" href="#">
-                            <i class="fa-solid fa-bell fa-lg"></i>
-                        </a>
-                    </li>
+        <div class="container-fluid">
+            <ul class="nav navbar-nav me-auto">
+                <li class="nav-item ps-4">
+                    <button type="button" class="btn btn-link text-white" data-toggle="tooltip" data-placement="bottom" title="اعلان ها" data-bs-toggle="modal" data-bs-target="#notificationsModal">
+                        <i class="fa-solid fa-bell fa-lg"></i>
+                    </button>
+                </li>
 
-                    <li>
-                        <button type="button" class="btn btn-link text-white" data-toggle="tooltip" data-placement="bottom" title="جستجو" data-bs-toggle="modal" data-bs-target="#searchModal">
-                            <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-                        </button>
-                    </li>
-                </ul>
-                <ul class="nav navbar-nav justify-content-center">
-                    <li class="nav-item">
-                        <p class="navbar-text text-white fs-5">ج‍‍‍‍اکتابی</p>
-                    </li>
-                </ul>
-                <ul class="nav navbar-nav ms-auto align-items-center">
+                <li>
+                    <button type="button" class="btn btn-link text-white" data-toggle="tooltip" data-placement="bottom" title="جستجو" data-bs-toggle="modal" data-bs-target="#searchModal">
+                        <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+                    </button>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav justify-content-center">
+                <li class="nav-item">
+                    <p class="navbar-text text-white fs-5">ج‍‍‍‍اکتابی</p>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav ms-auto align-items-center">
 
-                    <!-- <li class="nav-item ps-4">
-                        <router-link class="nav-link" :to="{name: 'profile', params: {id: id}}">
+                <!-- <li class="nav-item ps-4">
+                    <router-link class="nav-link" :to="{name: 'profile', params: {id: id}}">
+                        <i class="fa-solid fa-user fa-lg"></i>
+                    </router-link>
+                </li> -->
+
+                <li class="nav-item dropdown pe-2" v-if="user">
+                        <a href="" data-bs-toggle="dropdown" aria-expanded="false"
+                        class="text-white dropdown-toggle">
                             <i class="fa-solid fa-user fa-lg"></i>
-                        </router-link>
-                    </li> -->
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <router-link :to="{name: 'profile', params: {id: user.id}}"
+                                class="dropdown-item text-end">پروفایل</router-link></li>
+                            <li>
+                                <a @click.prevent="logout" class="dropdown-item text-end" href="#">خروج</a>
+                            </li>
+                        </ul>
+                </li>
+                <li class="nav-item pe-3 " v-else>
+                    <router-link :to="{name: 'login'}" data-toggle="tooltip" data-replacement="bottom" title="ورود" class="text-white">
+                        <i class="fa-solid fa-right-to-bracket fa-lg"></i>
+                    </router-link>
+                </li>
 
-                    <li class="nav-item dropdown pe-2" v-if="user">
-                            <a href="" data-bs-toggle="dropdown" aria-expanded="false"
-                            class="text-white dropdown-toggle">
-                                <i class="fa-solid fa-user fa-lg"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li>
-                                    <router-link :to="{name: 'profile', params: {id: user.id}}"
-                                    class="dropdown-item text-end">پروفایل</router-link></li>
-                                <li>
-                                    <a @click.prevent="logout" class="dropdown-item text-end" href="#">خروج</a>
-                                </li>
-                            </ul>
-                    </li>
-                    <li class="nav-item pe-3 " v-else>
-                        <router-link :to="{name: 'login'}" data-toggle="tooltip" data-replacement="bottom" title="ورود" class="text-white">
-                            <i class="fa-solid fa-right-to-bracket fa-lg"></i>
-                        </router-link>
-                    </li>
+                <li class="nav-item pe-4">
+                    <router-link class="nav-link text-white" :to="{name: 'home'}" data-toggle="tooltip" data-replacement="bottom" title="خانه">
+                        <i class="fa-solid fa-house fa-lg"></i>
+                    </router-link>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-                    <li class="nav-item pe-4">
-                        <router-link class="nav-link text-white" :to="{name: 'home'}" data-toggle="tooltip" data-replacement="bottom" title="خانه">
-                            <i class="fa-solid fa-house fa-lg"></i>
-                        </router-link>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-
-        <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
@@ -96,7 +96,7 @@
                         <!-- <hr v-if="categories[0] && genres[0]"> -->
                         <p v-if="categories[0]" class="text-center w-100 bg-light p-1 border rounded-1 mt-2">دسته بندی ها</p>
                         <a href="" v-for="c in categories" :key="c.id" class="nav-link" @click.prevent="showCategory(c.id)">
-                           <div class="text-end me-2">
+                        <div class="text-end me-2">
                                 <p>{{ c.name }}</p>
                             </div>
                         </a>
@@ -108,6 +108,37 @@
                                 <p>{{ p.name }}</p>
                             </div>
                         </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div v-if="user" class="modal fade" id="notificationsModal" tabindex="-1" aria-labelledby="notificationsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5 w-100 text-center" id="notificationsModalLabel">درخواست ها</h1>
+                    <button id="close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row flex-row-reverse align-items-center my-3" v-for="r in friend_requests" :key="r.id">
+                        <div class="col d-flex flex-row-reverse" @click.prevent="showProfile(r.id)">
+                                <img class="item-img" style="width: 45px; height: 45px; border-radius: 100%;" :src="r.image" alt="">
+                                <div class="align-self-center me-2">
+                                    {{ r.username }}
+                                </div>
+                        </div>
+                        <div class="col-auto float-start">
+                            <button class="btn btn-outline-success  p-1 px-3" 
+                            @click.prevent="acceptFriendRequest(r.id)"
+                            >قبول  </button>
+                        </div>
+
+                        <div class="col-auto float-start">
+                            <button class="btn btn-outline-danger p-1 px-4" 
+                            @click.prevent="rejectFriendRequest(r.id)"
+                            >رد  </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -129,7 +160,16 @@ export default {
             categories: [],
             publishers: [],
             timeoutId: null,
+            friend_requests: [],
         } 
+    },
+
+    mounted() {
+
+        setTimeout(() => {
+            this.friend_requests = this.user.friend_requests
+        }, 1000)
+        
     },
     computed: {
         ...mapState({
@@ -138,6 +178,21 @@ export default {
         }),
     },
     methods: {
+
+        async acceptFriendRequest(user_id) {
+            await axios.get(`/api/accept-or-add-friend/${user_id}`)
+            .then(() => {
+                this.friend_requests = this.friend_requests.filter(item => item.id!== user_id);
+            })
+        },
+
+        async rejectFriendRequest(user_id) {
+            await axios.get(`/api/reject-or-remove-friend/${user_id}`)
+            .then(() => {
+                this.friend_requests = this.friend_requests.filter(item => item.id!== user_id);
+            })
+        },
+
         async logout () {
             await this.$store.dispatch("user/logout")
             .then(() => this.$router.push('/login'))

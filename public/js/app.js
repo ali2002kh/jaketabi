@@ -21724,8 +21724,15 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
       genres: [],
       categories: [],
       publishers: [],
-      timeoutId: null
+      timeoutId: null,
+      friend_requests: []
     };
+  },
+  mounted: function mounted() {
+    var _this = this;
+    setTimeout(function () {
+      _this.friend_requests = _this.user.friend_requests;
+    }, 1000);
   },
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapState)({
     user: function user(state) {
@@ -21736,15 +21743,17 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
     }
   })),
   methods: {
-    logout: function logout() {
-      var _this = this;
+    acceptFriendRequest: function acceptFriendRequest(user_id) {
+      var _this2 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
               _context.next = 2;
-              return _this.$store.dispatch("user/logout").then(function () {
-                return _this.$router.push('/login');
+              return axios.get("/api/accept-or-add-friend/".concat(user_id)).then(function () {
+                _this2.friend_requests = _this2.friend_requests.filter(function (item) {
+                  return item.id !== user_id;
+                });
               });
             case 2:
             case "end":
@@ -21753,27 +21762,18 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         }, _callee);
       }))();
     },
-    search: function search() {
-      var _this2 = this;
+    rejectFriendRequest: function rejectFriendRequest(user_id) {
+      var _this3 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) switch (_context2.prev = _context2.next) {
             case 0:
-              clearTimeout(_this2.timeoutId);
-              _this2.timeoutId = setTimeout(function () {
-                if (_this2.input.length > 1) {
-                  axios.post('/api/search', {
-                    input: _this2.input
-                  }).then(function (response) {
-                    console.log(response.data.data);
-                    _this2.books = response.data.data.books;
-                    _this2.shelves = response.data.data.shelves;
-                    _this2.genres = response.data.data.genres;
-                    _this2.categories = response.data.data.categories;
-                    _this2.publishers = response.data.data.publishers;
-                  });
-                }
-              }, 800);
+              _context2.next = 2;
+              return axios.get("/api/reject-or-remove-friend/".concat(user_id)).then(function () {
+                _this3.friend_requests = _this3.friend_requests.filter(function (item) {
+                  return item.id !== user_id;
+                });
+              });
             case 2:
             case "end":
               return _context2.stop();
@@ -21781,18 +21781,15 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         }, _callee2);
       }))();
     },
-    showBook: function showBook(id) {
-      var _this3 = this;
+    logout: function logout() {
+      var _this4 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
         return _regeneratorRuntime().wrap(function _callee3$(_context3) {
           while (1) switch (_context3.prev = _context3.next) {
             case 0:
-              document.getElementById('close').click();
-              _this3.$router.replace({
-                name: 'book',
-                params: {
-                  id: id
-                }
+              _context3.next = 2;
+              return _this4.$store.dispatch("user/logout").then(function () {
+                return _this4.$router.push('/login');
               });
             case 2:
             case "end":
@@ -21801,19 +21798,27 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         }, _callee3);
       }))();
     },
-    showShelf: function showShelf(id) {
-      var _this4 = this;
+    search: function search() {
+      var _this5 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
         return _regeneratorRuntime().wrap(function _callee4$(_context4) {
           while (1) switch (_context4.prev = _context4.next) {
             case 0:
-              document.getElementById('close').click();
-              _this4.$router.replace({
-                name: 'shelf',
-                params: {
-                  id: id
+              clearTimeout(_this5.timeoutId);
+              _this5.timeoutId = setTimeout(function () {
+                if (_this5.input.length > 1) {
+                  axios.post('/api/search', {
+                    input: _this5.input
+                  }).then(function (response) {
+                    console.log(response.data.data);
+                    _this5.books = response.data.data.books;
+                    _this5.shelves = response.data.data.shelves;
+                    _this5.genres = response.data.data.genres;
+                    _this5.categories = response.data.data.categories;
+                    _this5.publishers = response.data.data.publishers;
+                  });
                 }
-              });
+              }, 800);
             case 2:
             case "end":
               return _context4.stop();
@@ -21821,17 +21826,16 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         }, _callee4);
       }))();
     },
-    showGenre: function showGenre(id) {
-      var _this5 = this;
+    showBook: function showBook(id) {
+      var _this6 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
         return _regeneratorRuntime().wrap(function _callee5$(_context5) {
           while (1) switch (_context5.prev = _context5.next) {
             case 0:
               document.getElementById('close').click();
-              _this5.$router.replace({
-                name: 'bookList',
+              _this6.$router.replace({
+                name: 'book',
                 params: {
-                  title: 'genre',
                   id: id
                 }
               });
@@ -21842,17 +21846,16 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         }, _callee5);
       }))();
     },
-    showCategory: function showCategory(id) {
-      var _this6 = this;
+    showShelf: function showShelf(id) {
+      var _this7 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
         return _regeneratorRuntime().wrap(function _callee6$(_context6) {
           while (1) switch (_context6.prev = _context6.next) {
             case 0:
               document.getElementById('close').click();
-              _this6.$router.replace({
-                name: 'bookList',
+              _this7.$router.replace({
+                name: 'shelf',
                 params: {
-                  title: 'bookCategory',
                   id: id
                 }
               });
@@ -21863,17 +21866,17 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         }, _callee6);
       }))();
     },
-    showPublisher: function showPublisher(id) {
-      var _this7 = this;
+    showGenre: function showGenre(id) {
+      var _this8 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7() {
         return _regeneratorRuntime().wrap(function _callee7$(_context7) {
           while (1) switch (_context7.prev = _context7.next) {
             case 0:
               document.getElementById('close').click();
-              _this7.$router.replace({
+              _this8.$router.replace({
                 name: 'bookList',
                 params: {
-                  title: 'publisher',
+                  title: 'genre',
                   id: id
                 }
               });
@@ -21882,6 +21885,48 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
               return _context7.stop();
           }
         }, _callee7);
+      }))();
+    },
+    showCategory: function showCategory(id) {
+      var _this9 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee8() {
+        return _regeneratorRuntime().wrap(function _callee8$(_context8) {
+          while (1) switch (_context8.prev = _context8.next) {
+            case 0:
+              document.getElementById('close').click();
+              _this9.$router.replace({
+                name: 'bookList',
+                params: {
+                  title: 'bookCategory',
+                  id: id
+                }
+              });
+            case 2:
+            case "end":
+              return _context8.stop();
+          }
+        }, _callee8);
+      }))();
+    },
+    showPublisher: function showPublisher(id) {
+      var _this10 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee9() {
+        return _regeneratorRuntime().wrap(function _callee9$(_context9) {
+          while (1) switch (_context9.prev = _context9.next) {
+            case 0:
+              document.getElementById('close').click();
+              _this10.$router.replace({
+                name: 'bookList',
+                params: {
+                  title: 'publisher',
+                  id: id
+                }
+              });
+            case 2:
+            case "end":
+              return _context9.stop();
+          }
+        }, _callee9);
       }))();
     }
   }
@@ -23535,7 +23580,7 @@ var _hoisted_1 = {
 var _hoisted_2 = {
   "class": "container-fluid"
 };
-var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<ul class=\"nav navbar-nav me-auto\" data-v-16175f60><li class=\"nav-item ps-4\" data-v-16175f60><a class=\"nav-link text-white\" data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"اعلان ها\" href=\"#\" data-v-16175f60><i class=\"fa-solid fa-bell fa-lg\" data-v-16175f60></i></a></li><li data-v-16175f60><button type=\"button\" class=\"btn btn-link text-white\" data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"جستجو\" data-bs-toggle=\"modal\" data-bs-target=\"#searchModal\" data-v-16175f60><i class=\"fa-solid fa-magnifying-glass fa-lg\" data-v-16175f60></i></button></li></ul><ul class=\"nav navbar-nav justify-content-center\" data-v-16175f60><li class=\"nav-item\" data-v-16175f60><p class=\"navbar-text text-white fs-5\" data-v-16175f60>ج‍‍‍‍اکتابی</p></li></ul>", 2);
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<ul class=\"nav navbar-nav me-auto\" data-v-16175f60><li class=\"nav-item ps-4\" data-v-16175f60><button type=\"button\" class=\"btn btn-link text-white\" data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"اعلان ها\" data-bs-toggle=\"modal\" data-bs-target=\"#notificationsModal\" data-v-16175f60><i class=\"fa-solid fa-bell fa-lg\" data-v-16175f60></i></button></li><li data-v-16175f60><button type=\"button\" class=\"btn btn-link text-white\" data-toggle=\"tooltip\" data-placement=\"bottom\" title=\"جستجو\" data-bs-toggle=\"modal\" data-bs-target=\"#searchModal\" data-v-16175f60><i class=\"fa-solid fa-magnifying-glass fa-lg\" data-v-16175f60></i></button></li></ul><ul class=\"nav navbar-nav justify-content-center\" data-v-16175f60><li class=\"nav-item\" data-v-16175f60><p class=\"navbar-text text-white fs-5\" data-v-16175f60>ج‍‍‍‍اکتابی</p></li></ul>", 2);
 var _hoisted_5 = {
   "class": "nav navbar-nav ms-auto align-items-center"
 };
@@ -23656,9 +23701,53 @@ var _hoisted_36 = ["onClick"];
 var _hoisted_37 = {
   "class": "text-end me-2"
 };
+var _hoisted_38 = {
+  key: 0,
+  "class": "modal fade",
+  id: "notificationsModal",
+  tabindex: "-1",
+  "aria-labelledby": "notificationsModalLabel",
+  "aria-hidden": "true"
+};
+var _hoisted_39 = {
+  "class": "modal-dialog modal-dialog-scrollable"
+};
+var _hoisted_40 = {
+  "class": "modal-content"
+};
+var _hoisted_41 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "modal-header"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
+    "class": "modal-title fs-5 w-100 text-center",
+    id: "notificationsModalLabel"
+  }, "درخواست ها"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    id: "close",
+    type: "button",
+    "class": "btn-close",
+    "data-bs-dismiss": "modal",
+    "aria-label": "Close"
+  })], -1 /* HOISTED */);
+});
+var _hoisted_42 = {
+  "class": "modal-body"
+};
+var _hoisted_43 = ["onClick"];
+var _hoisted_44 = ["src"];
+var _hoisted_45 = {
+  "class": "align-self-center me-2"
+};
+var _hoisted_46 = {
+  "class": "col-auto float-start"
+};
+var _hoisted_47 = ["onClick"];
+var _hoisted_48 = {
+  "class": "col-auto float-start"
+};
+var _hoisted_49 = ["onClick"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("nav", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <li class=\"nav-item ps-4\">\n                        <router-link class=\"nav-link\" :to=\"{name: 'profile', params: {id: id}}\">\n                            <i class=\"fa-solid fa-user fa-lg\"></i>\n                        </router-link>\n                    </li> "), _ctx.user ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("li", _hoisted_6, [_hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("nav", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <li class=\"nav-item ps-4\">\n                    <router-link class=\"nav-link\" :to=\"{name: 'profile', params: {id: id}}\">\n                        <i class=\"fa-solid fa-user fa-lg\"></i>\n                    </router-link>\n                </li> "), _ctx.user ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("li", _hoisted_6, [_hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
     to: {
       name: 'profile',
       params: {
@@ -23762,7 +23851,36 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         return $options.showPublisher(p.id);
       }, ["prevent"])
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_37, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(p.name), 1 /* TEXT */)])], 8 /* PROPS */, _hoisted_36);
-  }), 128 /* KEYED_FRAGMENT */))])])])])])], 64 /* STABLE_FRAGMENT */);
+  }), 128 /* KEYED_FRAGMENT */))])])])])]), _ctx.user ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_38, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_39, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_40, [_hoisted_41, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_42, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.friend_requests, function (r) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+      "class": "row flex-row-reverse align-items-center my-3",
+      key: r.id
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+      "class": "col d-flex flex-row-reverse",
+      onClick: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
+        return _ctx.showProfile(r.id);
+      }, ["prevent"])
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+      "class": "item-img",
+      style: {
+        "width": "45px",
+        "height": "45px",
+        "border-radius": "100%"
+      },
+      src: r.image,
+      alt: ""
+    }, null, 8 /* PROPS */, _hoisted_44), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_45, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(r.username), 1 /* TEXT */)], 8 /* PROPS */, _hoisted_43), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_46, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      "class": "btn btn-outline-success p-1 px-3",
+      onClick: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
+        return $options.acceptFriendRequest(r.id);
+      }, ["prevent"])
+    }, "قبول ", 8 /* PROPS */, _hoisted_47)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_48, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      "class": "btn btn-outline-danger p-1 px-4",
+      onClick: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
+        return $options.rejectFriendRequest(r.id);
+      }, ["prevent"])
+    }, "رد ", 8 /* PROPS */, _hoisted_49)])]);
+  }), 128 /* KEYED_FRAGMENT */))])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),
