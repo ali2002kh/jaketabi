@@ -7,10 +7,10 @@
                     <div>
                         <img :src="host.image" class="user-profile" alt="">
                     </div>
-                    <div class="text-center me-3">
-                        <p class="fs-6 p-0 m-0 ">{{ username }}</p>
+                    <div class="d-flex flex-column justify-content-center text-center me-3">
+                        <p  class="fs-6 p-0 m-0 ">{{ host.username }}</p>
                         <p class="fs-6 p-0 m-0">
-                            {{ fname }} {{ lname }}</p>
+                            {{ host.fname }} {{ host.lname }}</p>
                         <a v-if="host.is_private" @click.prevent="logout" href="#" class="link-dark" style="text-decoration:none">خروج</a>
                     </div>
                 </div> 
@@ -102,7 +102,7 @@
                 </div>
             </div>
             
-            <div class="col mt-5">
+            <div v-if="host.is_private" class="col mt-5">
                 <div class="text-center">
                     <a  href="#" class="text-dark link-underline link-underline-opacity-0">
                         <button class="btn btn-dark px-3" data-bs-toggle="modal" data-bs-target="#editProfile">ویرایش</button>

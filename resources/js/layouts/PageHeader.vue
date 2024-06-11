@@ -196,5 +196,7 @@ export default {
     width : 55px;
     height: 75px;
 }
-
+.dropdown-item:active {
+    background: rgb(231, 231, 231) !important;
+}
 </style>
