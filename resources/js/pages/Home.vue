@@ -9,6 +9,12 @@
                     <p class="text-center p-1">{{ p.name }}</p>
                 </router-link> 
             </div> 
+            <nav aria-label="Page navigation example">
+                <ul class="pagination ms-3">
+                    <li class="page-item"><button v-if="paginator['popular']['hasPrev']" @click.prevent="prev('popular')" class="page-link">Previous</button></li>
+                    <li class="page-item"><button v-if="paginator['popular']['hasNext']" @click.prevent="next('popular')" class="page-link">Next</button></li>
+                </ul>
+            </nav>
         </div>
 
         <p class="title mt-5"><span>کتاب های فراگیر</span></p>
@@ -19,6 +25,12 @@
                     <p class="text-center p-1">{{ t.name }}</p>
                 </router-link> 
             </div> 
+            <nav aria-label="Page navigation example">
+                <ul class="pagination ms-3">
+                    <li class="page-item"><button v-if="paginator['trending']['hasPrev']" @click.prevent="prev('trending')" class="page-link">Previous</button></li>
+                    <li class="page-item"><button v-if="paginator['trending']['hasNext']" @click.prevent="next('trending')" class="page-link">Next</button></li>
+                </ul>
+            </nav>
         </div>
 
         <p v-if="user" class="title mt-5"><span> فعالیت  دوستان</span></p>
@@ -43,6 +55,12 @@
                     </div>
                 </div>
             </div>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination ms-3">
+                    <li class="page-item"><button v-if="paginator['activities']['hasPrev']" @click.prevent="prev('activities')" class="page-link">Previous</button></li>
+                    <li class="page-item"><button v-if="paginator['activities']['hasNext']" @click.prevent="next('activities')" class="page-link">Next</button></li>
+                </ul>
+            </nav>
             <div v-for="a in activities" :key="a.id">
                 <div class="modal fade" :id="'friendsActivitiesModal' + a.id" tabindex="-1" role="dialog"
                 aria-labelledby="friendsActivitiesModalLabel" aria-hidden="true">
@@ -112,6 +130,12 @@
                         </div>
                     </div>
                 </div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination ms-3">
+                        <li class="page-item"><button v-if="paginator['shelves']['hasPrev']" @click.prevent="prev('shelves')" class="page-link">Previous</button></li>
+                        <li class="page-item"><button v-if="paginator['shelves']['hasNext']" @click.prevent="next('shelves')" class="page-link">Next</button></li>
+                    </ul>
+                </nav>
                 <img src="storage/sources//icons8-forward-52.png" style="width: 30px; height:30px; margin-top:100px; margin-right:15px;" alt="">
             </div>
         </div>
@@ -123,6 +147,7 @@
 
 import { mapState } from 'vuex';
 import PageHeader from "../layouts/PageHeader"
+import { result } from 'lodash';
 // import PageFooter from "../layouts/PageFooter"
 
 export default {
@@ -136,14 +161,52 @@ export default {
             trending: null,
             activities: null,
             shelves: null,
+
+            paginator: {
+                'popular': {
+                    'page': 1,
+                    'pageSize': 2,
+                    'all': null,
+                    'hasNext': true,
+                    'hasPrev': false,
+                    'pageCount': 4,
+                },
+                'trending': {
+                    'page': 1,
+                    'pageSize': 2,
+                    'all': null,
+                    'hasNext': true,
+                    'hasPrev': false,
+                    'pageCount': 4,
+                },
+                'activities': {
+                    'page': 1,
+                    'pageSize': 2,
+                    'all': null,
+                    'hasNext': true,
+                    'hasPrev': false,
+                    'pageCount': 4,
+                },
+                'shelves': {
+                    'page': 1,
+                    'pageSize': 2,
+                    'all': null,
+                    'hasNext': true,
+                    'hasPrev': false,
+                    'pageCount': 4,
+                },
+            }
         } 
     },
     created() {
         axios.get('/api/trending-popular')
         .then(response => {
             console.log(response.data.data)
-            this.trending = response.data.data.trending;
-            this.popular = response.data.data.popular;
+            this.paginator['popular']['all'] = response.data.data.popular;
+            this.paginator['trending']['all'] = response.data.data.trending;
+
+            this.paginate('popular')
+            this.paginate('trending')
         });
     },
     beforeMount() {
@@ -169,13 +232,15 @@ export default {
                 axios.get('/api/friends-activities')
                 .then(response => {
                     console.log(response.data.data)
-                    this.activities = response.data.data;
+                    this.paginator['activities']['all'] = response.data.data;
+                    this.paginate('activities')                 
                 });
 
                 axios.get('/api/friends-shelves')
                 .then(response => {
                     console.log(response.data.data)
-                    this.shelves = response.data.data;
+                    this.paginator['shelves']['all'] = response.data.data;
+                    this.paginate('shelves')   
                 });
             }
         })
@@ -190,6 +255,40 @@ export default {
         async showProfile (user_id , modal_id) {
             document.getElementById('close_modal' + modal_id).click()
             this.$router.replace({ name: 'profile', params: { id: user_id }});
+        },
+
+        async paginate (title) {
+            result = this.paginator[title]['all'].slice(
+                (this.paginator[title]['page'] - 1) * this.paginator[title]['pageSize'], 
+                (this.paginator[title]['page'] - 1) * this.paginator[title]['pageSize'] + this.paginator[title]['pageSize']
+            )  
+            if (title == 'popular') {
+                this.popular = result
+            } else if (title == 'trending') {
+                this.trending = result
+            } else if (title == 'activities') {
+                this.activities = result
+            } else if (title == 'shelves') {
+                this.shelves = result
+            }
+        },
+
+        async next (title) {
+            this.paginator[title]['page']++
+            this.paginate(title)
+            this.paginator[title]['hasPrev'] = true
+            if (this.paginator[title]['pageCount'] <= this.paginator[title]['page']) {
+                this.paginator[title]['hasNext'] = false
+            }
+        },
+
+        async prev (title) {
+            this.paginator[title]['page']--
+            this.paginate(title)
+            this.paginator[title]['hasNext'] = true
+            if (1 >= this.paginator[title]['page']) {
+                this.paginator[title]['hasPrev'] = false
+            }
         },
     },
 }

@@ -337,7 +337,7 @@ class User extends Authenticatable
         $reading = $this->getFriendsWhoAreReadingThisBook($book_id, preview: true);
         $read = $this->getFriendsWhoAlreadyReadThisBook($book_id, preview: true);
         
-        $result = $reading->union($read)->take(3);
+        $result = $read->merge($reading)->take(3);
         return $result;
     }
 
