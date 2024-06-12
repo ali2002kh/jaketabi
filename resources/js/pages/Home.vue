@@ -34,7 +34,7 @@
         </div>
 
         <p v-if="user" class="title mt-5"><span> فعالیت  دوستان</span></p>
-        <div class="friends-activity row flex-row-reverse mx-1 p-1 rounded-1" style="background-color: #f4f4f4;">
+        <div v-if="user" class="friends-activity row flex-row-reverse mx-1 p-1 rounded-1" style="background-color: #f4f4f4;">
             <div v-for="a in activities" :key="a.id" class="col-auto p-1 mx-3 ">
                 <div class="row flex-row-reverse ">
                     <div class="col">
@@ -104,8 +104,8 @@
         </div>
 
         <p v-if="user" class="title mt-5"><span> قفسه های  دوستان</span></p>
-        <div class="friends-shelves row flex-row-reverse mx-1 p-1 rounded-1" style="background-color: #f4f4f4;">
-            <div v-if="user" class="p-1">
+        <div v-if="user" class="friends-shelves row flex-row-reverse mx-1 p-1 rounded-1" style="background-color: #f4f4f4;">
+            <div class="p-1">
                 <div v-for="s in shelves" :key="s.id" class="col-4 float-end m-1">
                     <div class="shelf-title row m-1 bg-dark rounded-top text-white bg-gradient">
                         <p class="text-center  mx-auto fw-bold p-1 m-1">{{ s.name }}</p>

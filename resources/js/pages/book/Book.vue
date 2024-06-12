@@ -16,13 +16,19 @@
                     </div>
                     <div class="book-etc col text-end m-2 p-2 lh-1 " style="direction: rtl; max-height:200px">
                         <div class="d-flex flex-row">
-                            <p>دسته بندی: {{ book.category }}</p>
+                            <p>دسته بندی: 
+                                <router-link :to="{ name: 'bookList', params: { title:'bookCategory', id: book.category_id }}">
+                                    {{ book.category }}
+                                </router-link>
+                            </p>
                             <p class="pe-4" v-if="book.page_count">تعداد صفحه:{{ book.page_count }}</p>
                         </div>
                         
                         <p>ژانرها:</p>
                         <p v-for="g in book.genres" :key="g.id">
-                            {{ g.name }}
+                            <router-link :to="{ name: 'bookList', params: { title:'genre', id: g.id }}">
+                                {{ g.name }}
+                            </router-link>
                         </p>
                         <p>توضیحات:</p>
                         <p class="m-2 me-0  rounded-3  lh-sm" style="font-size: small;">
@@ -136,9 +142,11 @@
                         </router-link> 
                     </div>
                     <div class="col p-5">
-                        <button class="btn">
-                            <i class="fa-solid fa-angle-left fa-3x"></i>
-                        </button>
+                        <router-link :to="{name: 'bookList', params: { title:'publisher', id: book.publisher.id }}">
+                            <button class="btn">
+                                <i class="fa-solid fa-angle-left fa-3x"></i>
+                            </button>
+                        </router-link>
                     </div>
                 </div>
             </div>
@@ -166,12 +174,18 @@
         <div class="row me-2 flex-row-reverse">
             <p class="text-end m-2 fs-5 fw-bold"> کتاب های مشابه </p>
             <hr class="opacity-100 border-muted border mx-auto">
-            <div v-for="b in book.related_books" :key="b.id" class="col">
+            <div v-for="b in related" :key="b.id" class="col">
                 <router-link :to="{name: 'book', params: {id: b.id}}" class="link-underline-opacity-0 link-dark">
                     <img class="book-cover d-block mx-auto" :src="b.image" alt="">
                 <p class="text-center p-1">{{ b.name }}</p>
                 </router-link> 
             </div>           
+            <nav aria-label="Page navigation example">
+                <ul class="pagination ms-3">
+                    <li class="page-item"><button v-if="hasPrev" @click.prevent="prev" class="page-link">Previous</button></li>
+                    <li class="page-item"><button v-if="hasNext" @click.prevent="next" class="page-link">Next</button></li>
+                </ul>
+            </nav>
             <div class="col p-5 me-0">
                 <button class="btn">
                     <i class="fa-solid fa-angle-left fa-3x"></i>
@@ -218,6 +232,15 @@ export default {
             has_last_read_date: false,
             has_finish_date: false,
             fixed: false,
+
+            // pagination for related books
+            related: null,
+            page: 1,
+            pageSize: 5,
+            hasNext: true,
+            hasPrev: false,
+            relatedAll: null,
+            pageCount: 4
         }
     },
     created() {
@@ -225,6 +248,8 @@ export default {
         .then(response => {
             console.log(response.data.data)
             this.book = response.data.data
+            this.relatedAll = this.book.related_books
+            this.paginate()
         });
     },  
     mounted() {
@@ -379,6 +404,31 @@ export default {
             .then(() => {
                 this.shelves_with_this_book = this.shelves_with_this_book.filter(item => item!== shelf_id);
             })
+        },
+
+        async paginate () {
+            this.related = this.relatedAll.slice(
+                (this.page - 1) * this.pageSize, 
+                (this.page - 1) * this.pageSize + this.pageSize
+            )  
+        },
+
+        async next () {
+            this.page++
+            this.paginate()
+            this.hasPrev = true
+            if (this.pageCount <= this.page) {
+                this.hasNext = false
+            }
+        },
+
+        async prev () {
+            this.page--
+            this.paginate()
+            this.hasNext = true
+            if (1 >= this.page) {
+                this.hasPrev = false
+            }
         },
     },
     computed: {

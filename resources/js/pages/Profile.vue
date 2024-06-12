@@ -212,10 +212,12 @@
                     </router-link>
                 </div>
                 <div v-if="host.has_more_reading" class="col-auto" style="margin-right: 1000px;">
-                    <a class="text-dark link-underline link-underline-opacity-0" href="#">
-                        <i class="fa-solid fa-circle-chevron-left fa-2x"></i>
-                        <p>+{{ host.reading_more_count }}</p>
-                    </a>
+                    <router-link :to="{name: 'profileBooks', params: {id: host.id, status: 2 }}">
+                        <button class="text-dark link-underline link-underline-opacity-0">
+                            <i class="fa-solid fa-circle-chevron-left fa-2x"></i>
+                            <p>+{{ host.already_read_more_count }}</p>
+                        </button>
+                    </router-link> 
                 </div>
             </div>
             <p class="title mt-5"><span>  خوانده ام  </span></p>
@@ -228,10 +230,12 @@
                     </router-link>
                 </div>
                 <div v-if="host.has_more_already_read" class="col-auto" style="margin-right: 1000px;">
-                    <a class="text-dark link-underline link-underline-opacity-0" href="#">
-                        <i class="fa-solid fa-circle-chevron-left fa-2x"></i>
-                        <p>+{{ host.already_read_more_count }}</p>
-                    </a>
+                    <router-link :to="{name: 'profileBooks', params: {id: host.id, status: 3 }}">
+                        <button class="text-dark link-underline link-underline-opacity-0">
+                            <i class="fa-solid fa-circle-chevron-left fa-2x"></i>
+                            <p>+{{ host.already_read_more_count }}</p>
+                        </button>
+                    </router-link> 
                 </div>
             </div>
             <p class="title mt-5"><span>  می خواهم بخوانم  </span></p>
@@ -244,10 +248,12 @@
                     </router-link>
                 </div>
                 <div v-if="host.has_more_want_to_read" class="col-auto" style="margin-right: 1000px;">
-                    <a class="text-dark link-underline link-underline-opacity-0" href="#">
-                        <i class="fa-solid fa-circle-chevron-left fa-2x"></i>
-                        <p>+{{ host.want_to_read_more_count }}</p>
-                    </a>
+                    <router-link :to="{name: 'profileBooks', params: {id: host.id, status: 1 }}">
+                        <button class="text-dark link-underline link-underline-opacity-0">
+                            <i class="fa-solid fa-circle-chevron-left fa-2x"></i>
+                            <p>+{{ host.already_read_more_count }}</p>
+                        </button>
+                    </router-link> 
                 </div>
             </div>
         </div>
