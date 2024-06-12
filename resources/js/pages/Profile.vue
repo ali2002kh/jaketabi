@@ -12,7 +12,6 @@
                         <p class="fs-6 p-0 m-0">
                             {{ fname }} {{ lname }}
                         </p>
-                        <a @click.prevent="logout" href="#" class="link-dark" style="text-decoration:none">خروج</a>
                     </div>
                     <div v-else class="d-flex flex-column justify-content-center text-center me-3">
                         <p class="fs-6 p-0 m-0 ">{{ host.username }}</p>
@@ -298,13 +297,13 @@
                 </div>
             </div>
             <div v-if="host" class="lists-body row flex-row-reverse align-items-center mx-1 p-1 rounded-1">
-
                 <div class="col-11 g-0 d-flex flex-row-reverse p-1">
-                        <div v-for="s in host.shelves" :key="s.id" class="col-4 me-1">
+                        <div v-for="s in host.shelves" :key="s.id" class="col-4 me-3">
                             <div class="shelf-title row m-1 bg-dark rounded-top text-white bg-gradient">
                                 <p class="text-center  mx-auto fw-bold m-1"> {{ s.name }} </p>
                             </div>
-                            <div class="shelf-books row flex-row-reverse justify-content-start align-items-center bg-light rounded-1 mx-1 p-1"
+                            <div class="shelf-books row flex-row-reverse justify-content-start align-items-center bg-light mx-1
+                             p-1 border-start border-end border-bottom rounded-bottom"
                             style="min-height:130px;" >
                                 <div v-for="b in s.books" :key="b.id" class="col-auto p-2">
                                     <img :src="b.image" class="shelf-book-img mx-1" alt="">

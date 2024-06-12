@@ -104,20 +104,29 @@
         </div>
 
         <p v-if="user" class="title mt-5"><span> قفسه های  دوستان</span></p>
-        <div v-if="user" class="friends-shelves row flex-row-reverse mx-1 p-1 rounded-1" style="background-color: #f4f4f4;">
-            <div class="p-1">
-                <div v-for="s in shelves" :key="s.id" class="col-4 float-end m-1">
+        <div v-if="user" class="friends-shelves row flex-row-reverse align-items-center mx-1 p-1 rounded-1 mb-2"
+        style="background: #f4f4f4; height: 250px;">
+            <div class="pagination col-auto me-0 px-0" aria-label="Page navigation example">
+                <button v-if="paginator['shelves']['hasPrev']" @click.prevent="prev('shelves')" class="btn btn-link ps-1 m-0">
+                    <i class="fa-solid fa-circle-chevron-right text-dark fa-2x"></i>
+                </button>
+                <button v-else class="btn btn-link ps-1 m-0" disabled><i class="fa-solid fa-circle-chevron-right text-dark fa-2x"></i></button>
+            </div>
+            <div class="col-11 g-0 m-0 d-flex flex-row-reverse p-0">
+                <div v-for="s in shelves" :key="s.id" class="col-4 p-1">
                     <div class="shelf-title row m-1 bg-dark rounded-top text-white bg-gradient">
-                        <p class="text-center  mx-auto fw-bold p-1 m-1">{{ s.name }}</p>
+                        <p class="text-center  mx-auto fw-bold m-1">{{s.name}}</p>    
                     </div>
-                    <div class="shelf-books row justify-content-end align-items-center bg-light rounded-1 mx-auto m-1 p-1" >
-                        <router-link :to="{name:'shelf', params: {id: s.id}}" 
-                        class="col-auto p-2" style="margin-right: 160px">
-                            <i class="fa-solid fa-circle-chevron-left fa-xl text-dark"></i>
-                        </router-link>
-                        <div v-for="b in s.books" :key="b.id" class="col-auto p-2">
+                    <div class="shelf-books row d-flex flex-row-reverse justify-content-start align-items-center
+                     bg-light mx-1 p-1 border-start border-end border-bottom rounded-bottom" 
+                     style="min-height:130px;" >
+                        <div v-for="b in s.books" :key="b.id" class="col-auto mx-0">
                             <img  class="shelf-book-img" :src="b.image" :alt="b.name">
                         </div>
+                        <router-link :to="{name:'shelf', params: {id: s.id}}" 
+                        class="col-auto me-auto p-2">
+                            <i class="fa-solid fa-angle-left fa-xl text-dark"></i>
+                        </router-link>
                     </div>
                     <div class="shelf-footer row align-items-center py-2 g-0 my-2">
                         <div class="col-auto ps-2">
@@ -130,16 +139,20 @@
                         </div>
                     </div>
                 </div>
-                <nav aria-label="Page navigation example">
+                <!-- <nav aria-label="Page navigation example">
                     <ul class="pagination ms-3">
                         <li class="page-item"><button v-if="paginator['shelves']['hasPrev']" @click.prevent="prev('shelves')" class="page-link">Previous</button></li>
                         <li class="page-item"><button v-if="paginator['shelves']['hasNext']" @click.prevent="next('shelves')" class="page-link">Next</button></li>
                     </ul>
-                </nav>
-                <img src="storage/sources//icons8-forward-52.png" style="width: 30px; height:30px; margin-top:100px; margin-right:15px;" alt="">
+                </nav> -->
+            </div>
+            <div class="pagination col-auto p-0 me-auto" aria-label="Page navigation example">
+                <button v-if="paginator['shelves']['hasNext']" @click.prevent="next('shelves')" class="btn btn-link pe-1 m-0" >
+                    <i class="fa-solid fa-circle-chevron-left fa-2x text-dark"></i>
+                </button>
+                <button v-else class="next-btn btn btn-link pe-1 m-0" disabled><i class="fa-solid fa-circle-chevron-left text-dark fa-2x"></i></button>
             </div>
         </div>
-        
     </div>
 </template>
 
@@ -189,7 +202,7 @@ export default {
                 },
                 'shelves': {
                     'page': 1,
-                    'pageSize': 2,
+                    'pageSize': 3,
                     'all': null,
                     'hasNext': true,
                     'hasPrev': false,
@@ -335,5 +348,11 @@ export default {
     color: black;
     text-decoration: none;
 }
-
+.lists-body {
+    background: #f4f4f4; 
+    height: 250px;
+}
+.next-btn {
+    transform: translate(100%, 0);
+}
 </style>
