@@ -1,40 +1,51 @@
 <template>
+<div class="body">
     <PageHeader></PageHeader>
-    <p class="title mt-5"><span>قفسه های 
-        {{ shelves[0].user.username }}
-    </span></p>
-
-    <p v-if="isOwner" class="mt-5 mb-0 w-25" data-bs-toggle="modal" data-bs-target="#createShelf">
-        <a href="#" class="link-dark text-center" style="text-decoration:none;">ایجاد قفسه جدید</a> 
-    </p>
-
+    <div class="container header mx-auto mt-5 row flex-row-reverse align-items-center">
+        <div class="col-8 title text-end fs-4 fw-bold">
+            <p v-if="isOwner" class="title mt-5">قفسه های من</p>
+            <p v-else class="title mt-5"><span>  
+                {{ shelves[0].user.username }} قفسه های
+            </span></p>
+        </div>
+        <div class="col-4 text-start">
+            <p v-if="isOwner" class="mt-5 " data-bs-toggle="modal" data-bs-target="#createShelf">
+                <a href="#" class="link-dark text-center d-flex align-items-center" style="text-decoration:none;">
+                    ایجاد قفسه جدید
+                    <i class="fa-solid fa-plus px-2"></i>
+                </a> 
+            </p>
+        </div>
+        <hr class="opacity-100 border border-muted">
+    </div>
+    <!-- create shelf modal  -->
     <div class="modal fade" id="createShelf" tabindex="-1" aria-labelledby="createShelfLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="createShelfLabel">ایجاد قفسه جدید</h1>
+                    <h1 class="modal-title fs-5 w-100 text-center" id="createShelfLabel">ایجاد قفسه جدید</h1>
                     <button id="create_shelf_close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <div class="alert alert-danger" v-if="hasError">
-                        <ul>
-                            <li v-for="e in errors" :key="e">{{ e[0] }}</li>
-                        </ul>
+                <div class="modal-body text-end">
+                    <div class="alert alert-danger text-start py-1" style="font-size:14px"
+                        v-if="hasError">
+                            <div v-for="e in errors" :key="e">- {{ e[0] }}</div>
                     </div>
-                    <div class="alert alert-success" v-if="success">{{ message }}</div>
+                    <div class="alert alert-success py-1" style="font-size:14px"
+                        v-if="success">{{ message }}</div>
                     <form>
                         <div class="m-1">
-                            <label for="shelfName" class="form-label">نام قفسه</label>
-                            <input type="text" class="form-control" id="shelfName" name="shelfName"
+                            <label for="shelfName" class="form-label ">نام قفسه</label>
+                            <input type="text" class="form-control text-end" id="shelfName" name="shelfName"
                             v-model="shelfName"
                             >
                         </div>
                         <div class="m-1">
-                            <label for="shelfDescription" class="form-label">توضیحات</label>
-                            <textarea id="shelfDescription" class="form-control" name="shelfDescription" v-model="shelfDescription"></textarea>
+                            <label for="shelfDescription" class="form-label ">توضیحات</label>
+                            <textarea id="shelfDescription" class="form-control text-end" name="shelfDescription" v-model="shelfDescription"></textarea>
                         </div>
-                        <div class="m-1 d-grid">
-                            <button type="submit" class="btn btn-dark m-3" 
+                        <div class="m-1 text-start">
+                            <button type="submit" class="btn btn-dark m-3 ms-0 px-3" 
                             @click.prevent="storeShelf"
                             >تایید</button>
                         </div>
@@ -43,24 +54,31 @@
             </div>
         </div>
     </div>
-
-
-    <div class="col-11 g-0 d-flex flex-row-reverse p-1">
-        <div v-for="s in shelves" :key="s.id" class="col-4 me-1">
-            <div class="shelf-title row m-1 bg-dark rounded-top text-white bg-gradient">
-                <p class="text-center  mx-auto fw-bold m-1"> {{ s.name }} </p>
-            </div>
-            <div class="shelf-books row flex-row-reverse justify-content-start align-items-center bg-light rounded-1 mx-1 p-1"
-                style="min-height:130px;" >
-                <div v-for="b in s.books" :key="b.id" class="col-auto p-2">
-                    <img :src="b.image" class="shelf-book-img mx-1" alt="">
+    <!-- shelves list  -->
+    <div class="container rounded-1 mb-2 p-2 py-4 mx-auto" style="background: #f4f4f4; height:100vh">
+        <div class="row flex-row-reverse align-items-center" 
+            v-for="row in rows" :key="'row' + row">
+            <div class="d-flex flex-row-reverse">
+                <div class="col-4 mb-3" v-for="(s,column) in shelvesInRow(row)" :key="'row' + row + column">
+                    <div class="shelf-title row mx-2 bg-dark rounded-top text-white bg-gradient">
+                        <p class="text-center mx-auto fw-bold m-1"> {{ s.name }} </p>
+                    </div>
+                    <div class="shelf-books row flex-row-reverse justify-content-start align-items-center bg-light mx-2
+                        p-1 border-start border-end border-bottom rounded-bottom"
+                        style="min-height:130px;" >
+                        <div v-for="b in s.books" :key="b.id" class="col-auto p-2">
+                            <img :src="b.image" class="shelf-book-img mx-1" alt="">
+                        </div>
+                        <router-link :to="{name:'shelf', params:{id: s.id}}" class="col-auto me-auto p-2">
+                            <i class="fa-solid fa-angle-left fa-xl text-dark"></i>
+                        </router-link>
+                    </div>
                 </div>
-                <router-link :to="{name:'shelf', params:{id: s.id}}" class="col-auto me-auto p-2">
-                    <i class="fa-solid fa-angle-left fa-xl text-dark"></i>
-                </router-link>
             </div>
-        </div>   
+        </div>
     </div>
+    
+</div>
 </template>
 
 <script>
@@ -84,6 +102,7 @@ export default {
             errors: [],
             success: false,
             message: null,
+            columns: 3,
         } 
     },
 
@@ -127,6 +146,11 @@ export default {
             user: state => state.user.data,
             loggedIn: state => state.user.loggedIn
         }),
+        rows() {
+            return this.shelves == null
+            ? 0
+            : Math.ceil(this.shelves.length / this.columns);
+        },
     },
 
     methods: {
@@ -152,18 +176,26 @@ export default {
                 }
             })
         },
-
+        shelvesInRow(row) {
+            return this.shelves.slice((row - 1) * this.columns, row * this.columns)
+        },
     },
 }
 </script>
 
 <style scoped>
+.body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
 .shelf-book-img {
     max-width: 80px;
     max-height: 120px;
-    }
-    .book-img {
+}
+.book-img {
     max-width: 120px;
     max-height: 200px;
-    }
+}
+.title {
+    font-family: hamishe;
+}
 </style>

@@ -315,10 +315,11 @@
                         </div>   
                     </div>
                     <div v-if="host.has_more_shelves" class="col-auto me-auto">
-                        <a class="text-dark text-center" style="text-decoration:none" href="#">
+                        <router-link :to="{name: 'shelfList', params: {id: host.id}}"
+                        class="text-dark text-center" style="text-decoration:none" href="#">
                             <i class="fa-solid fa-circle-chevron-left fa-2x"></i>
                             <p>+{{ shelves_more_count }}</p>
-                        </a>
+                        </router-link>
                     </div>
             </div>
         </div>

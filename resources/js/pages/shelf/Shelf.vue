@@ -44,8 +44,8 @@
                         از حذف این قفسه مطمئنی؟
                     </div>
                     <div class="modal-footer d-flex flex-row justify-content-start">
-                        <button type="button" class="btn btn-danger"  @click.prevent="deleteShelf()">حذف</button>
-                        <button id="closeAlert" type="button" class="btn btn-secondary" data-bs-dismiss="modal">لغو</button>
+                        <button type="button" class="btn btn-outline-danger"  @click.prevent="deleteShelf()">حذف</button>
+                        <button id="closeAlert" type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">لغو</button>
                     </div>
                 </div>
             </div>
