@@ -29,6 +29,28 @@
             </ul>
         </nav>
 
+
+        <div v-if="title == 'bookCategory' && page > 0 && siblings[page - 1]" class="publisher-books col-8 h-100">
+            <p class="text-end m-2 fs-5 fw-bold">{{ siblings[page - 1].name }}</p>
+            <hr class="opacity-100 border-muted border mx-auto">
+            <div class="row row-cols-6 flex-row-reverse align-items-center">
+                <div v-for="b in siblings[page - 1].preview_books" :key="b.id" class="col">
+                    <router-link :to="{name: 'book', params: {id: b.id}}" class="link-underline-opacity-0 link-dark">
+                        <img class="book-cover d-block mx-auto" :src="b.image" alt="">
+                    <p class="text-center p-1">{{ b.name }}</p>
+                    </router-link> 
+                </div>
+                <div class="col p-5">
+                    <router-link :to="{name: 'bookList', params: { title:'bookCategory', id: siblings[page - 1].id }}">
+                        <button class="btn">
+                            <i class="fa-solid fa-angle-left fa-3x"></i>
+                        </button>
+                    </router-link>
+                </div>
+            </div>
+        </div>
+        
+
     </div>
 </template>
 
@@ -48,6 +70,7 @@ export default {
             books: null,
             title: this.$route.params.title,
             name: null,
+            siblings: null,
 
             // pagination
             page: 0,
@@ -84,6 +107,7 @@ export default {
                 this.numberOfBooks = response.data.bookCategory.book_count
                 this.pageSize = response.data.pageSize
                 this.name = response.data.bookCategory.name
+                this.siblings = response.data.bookCategory.siblings
             });
         } else {
             alert('404')
@@ -207,6 +231,11 @@ export default {
     width: 40px;
     height: 40px;
     border-radius: 50%;
+}
+
+.book-cover {
+    width: 100px;
+    max-height: 180px;
 }
 
 </style>
