@@ -2,39 +2,57 @@
     <PageHeader></PageHeader>
     <div class="container-fluid body-class">
         <p class="title mx-1" style="margin-top: 110px;"><span>کتاب های محبوب</span></p>
-        <div class="popular-books row flex-row-reverse mx-1 p-1 rounded-1" style="background-color: #f4f4f4;">
+        <div class="popular-books row flex-row-reverse mx-1 p-1 rounded-1" style="background-color: #f4f4f4; height:230px;">
+            <div class="pagination col-auto me-0 px-0" aria-label="Page navigation example">
+                <button v-if="paginator['popular']['hasPrev']" @click.prevent="prev('popular')" class="btn btn-link ps-1 m-0">
+                    <i class="fa-solid fa-circle-chevron-right text-dark fa-2x"></i>
+                </button>
+                <button v-else class="btn btn-link ps-1 m-0" disabled><i class="fa-solid fa-circle-chevron-right text-dark fa-2x"></i></button>
+            </div>
             <div v-for="p in popular" :key="p.id"  class="col-auto p-1 mx-3">
                 <router-link :to="{name: 'book', params: {id: p.id}}" class="router-links">
                     <img class="book-img d-block border mx-auto" :src="p.image" alt="">
                     <p class="text-center p-1">{{ p.name }}</p>
                 </router-link> 
             </div> 
-            <nav aria-label="Page navigation example">
-                <ul class="pagination ms-3">
-                    <li class="page-item"><button v-if="paginator['popular']['hasPrev']" @click.prevent="prev('popular')" class="page-link">Previous</button></li>
-                    <li class="page-item"><button v-if="paginator['popular']['hasNext']" @click.prevent="next('popular')" class="page-link">Next</button></li>
-                </ul>
-            </nav>
+            <div class="pagination col-auto p-0 me-auto" aria-label="Page navigation example">
+                <button v-if="paginator['popular']['hasNext']" @click.prevent="next('popular')" class="btn btn-link pe-1 m-0" >
+                    <i class="fa-solid fa-circle-chevron-left fa-2x text-dark"></i>
+                </button>
+                <button v-else class="btn btn-link pe-1 m-0" disabled><i class="fa-solid fa-circle-chevron-left text-dark fa-2x"></i></button>
+            </div>
         </div>
 
         <p class="title mt-5"><span>کتاب های فراگیر</span></p>
-        <div class="trending-books row flex-row-reverse mx-1 p-1 rounded-1" style="background-color: #f4f4f4;">
+        <div class="trending-books row flex-row-reverse mx-1 p-1 rounded-1" style="background-color: #f4f4f4; height:230px;">
+            <div class="pagination col-auto me-0 px-0" aria-label="Page navigation example">
+                <button v-if="paginator['trending']['hasPrev']" @click.prevent="prev('trending')" class="btn btn-link ps-1 m-0">
+                    <i class="fa-solid fa-circle-chevron-right text-dark fa-2x"></i>
+                </button>
+                <button v-else class="btn btn-link ps-1 m-0" disabled><i class="fa-solid fa-circle-chevron-right text-dark fa-2x"></i></button>
+            </div>
             <div v-for="t in trending" :key="t.id"   class="col-auto p-1 mx-3">
                 <router-link :to="{name: 'book', params: {id: t.id}}"  class="router-links">
                     <img class="book-img d-block mx-auto" :src="t.image" alt="">
                     <p class="text-center p-1">{{ t.name }}</p>
                 </router-link> 
             </div> 
-            <nav aria-label="Page navigation example">
-                <ul class="pagination ms-3">
-                    <li class="page-item"><button v-if="paginator['trending']['hasPrev']" @click.prevent="prev('trending')" class="page-link">Previous</button></li>
-                    <li class="page-item"><button v-if="paginator['trending']['hasNext']" @click.prevent="next('trending')" class="page-link">Next</button></li>
-                </ul>
-            </nav>
+            <div class="pagination col-auto p-0 me-auto" aria-label="Page navigation example">
+                <button v-if="paginator['trending']['hasNext']" @click.prevent="next('trending')" class="btn btn-link pe-1 m-0" >
+                    <i class="fa-solid fa-circle-chevron-left fa-2x text-dark"></i>
+                </button>
+                <button v-else class="btn btn-link pe-1 m-0" disabled><i class="fa-solid fa-circle-chevron-left text-dark fa-2x"></i></button>
+            </div>
         </div>
 
         <p v-if="user" class="title mt-5"><span> فعالیت  دوستان</span></p>
-        <div v-if="user" class="friends-activity row flex-row-reverse mx-1 p-1 rounded-1" style="background-color: #f4f4f4;">
+        <div v-if="user" class="friends-activity row flex-row-reverse mx-1 p-1 rounded-1" style="background-color: #f4f4f4; height:230px;">
+            <div class="pagination col-auto me-0 px-0" aria-label="Page navigation example">
+                <button v-if="paginator['activities']['hasPrev']" @click.prevent="prev('activities')" class="btn btn-link ps-1 m-0">
+                    <i class="fa-solid fa-circle-chevron-right text-dark fa-2x"></i>
+                </button>
+                <button v-else class="btn btn-link ps-1 m-0" disabled><i class="fa-solid fa-circle-chevron-right text-dark fa-2x"></i></button>
+            </div>
             <div v-for="a in activities" :key="a.id" class="col-auto p-1 mx-3 ">
                 <div class="row flex-row-reverse ">
                     <div class="col">
@@ -48,19 +66,16 @@
                             <div>
                                 <img :src="f.image" class="user-profile mt-1">  
                             </div>
-                            <!-- <router-link :to="{name: 'profile', params: {id: f.id}}" class="router-links">
-                                                          
-                            </router-link> -->
                         </div>
                     </div>
                 </div>
             </div>
-            <nav aria-label="Page navigation example">
-                <ul class="pagination ms-3">
-                    <li class="page-item"><button v-if="paginator['activities']['hasPrev']" @click.prevent="prev('activities')" class="page-link">Previous</button></li>
-                    <li class="page-item"><button v-if="paginator['activities']['hasNext']" @click.prevent="next('activities')" class="page-link">Next</button></li>
-                </ul>
-            </nav>
+            <div class="pagination col-auto p-0 me-auto" aria-label="Page navigation example">
+                <button v-if="paginator['activities']['hasNext']" @click.prevent="next('activities')" class="btn btn-link pe-1 m-0" >
+                    <i class="fa-solid fa-circle-chevron-left fa-2x text-dark"></i>
+                </button>
+                <button v-else class="btn btn-link pe-1 m-0" disabled><i class="fa-solid fa-circle-chevron-left text-dark fa-2x"></i></button>
+            </div>
             <div v-for="a in activities" :key="a.id">
                 <div class="modal fade" :id="'friendsActivitiesModal' + a.id" tabindex="-1" role="dialog"
                 aria-labelledby="friendsActivitiesModalLabel" aria-hidden="true">
@@ -150,7 +165,7 @@
                 <button v-if="paginator['shelves']['hasNext']" @click.prevent="next('shelves')" class="btn btn-link pe-1 m-0" >
                     <i class="fa-solid fa-circle-chevron-left fa-2x text-dark"></i>
                 </button>
-                <button v-else class="next-btn btn btn-link pe-1 m-0" disabled><i class="fa-solid fa-circle-chevron-left text-dark fa-2x"></i></button>
+                <button v-else class="btn btn-link pe-1 m-0" disabled><i class="fa-solid fa-circle-chevron-left text-dark fa-2x"></i></button>
             </div>
         </div>
     </div>
