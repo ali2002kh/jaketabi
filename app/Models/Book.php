@@ -64,66 +64,110 @@ class Book extends Model
         
     }
 
+    // public function getRelatedBooks() {
+
+    //     $books = collect();
+    //     $index = [];
+    
+    //     $genres = $this->getGenres();
+    //     $category = $this->getCategory();
+    //     $sibling_categories = $category->getSiblings();
+    //     $publisher = $this->getPublisher();
+    
+    //     foreach ($genres as $g) {
+    
+    //         foreach ($g->getBooks() as $b) {
+
+    //             if ($b->id != $this->id) {
+    //                 $books->add($b);
+    //                 $index[$b->id] = isset($index[$b->id]) ? $index[$b->id] + 2 : 2;
+    //             }
+    //         }
+    //     }
+    
+    //     foreach ($category->getBooks() as $b) {
+    
+    //         if ($b->id != $this->id) {
+    //             $books->add($b);
+    //             $index[$b->id] = isset($index[$b->id]) ? $index[$b->id] + 3 : 3;
+    //         }
+    //     }
+
+    //     foreach ($sibling_categories as $category) {
+    
+    //         foreach ($category->getBooks() as $b) {
+    
+    //             if ($b->id != $this->id) {
+    //                 $books->add($b);
+    //                 $index[$b->id] = isset($index[$b->id]) ? $index[$b->id] + 1 : 1;
+    //             }
+    //         }
+    //     }
+
+    //     foreach ($publisher->getBooks() as $b) {
+    
+    //         if ($b->id != $this->id) {
+    //             $books->add($b);
+    //             $index[$b->id] = isset($index[$b->id]) ? $index[$b->id] + 1 : 1;
+    //         }
+    //     }
+    
+    //     $groupedBooks = $books->groupBy('id');
+    //     $sortedBooks = $groupedBooks->map(function (Collection $books, $key) use ($index) {
+    //         return ['count' => $index[$key], 'book' => $books->first()];
+    //     })->sortByDesc('count');
+    
+    
+    //     $books = collect();
+    //     foreach ($sortedBooks as $sb) {
+    //         $books->add($sb['book']);
+    //     }
+
+    //     return $books;
+    // }
+
     public function getRelatedBooks() {
 
-        $books = collect();
-        $index = [];
-    
-        $genres = $this->getGenres();
+        $genres = $this->getGenres()->pluck('id')->all();
         $category = $this->getCategory();
-        $sibling_categories = $category->getSiblings();
-        $publisher = $this->getPublisher();
-    
-        foreach ($genres as $g) {
-    
-            foreach ($g->getBooks() as $b) {
+        $sibling_categories = $category->getSiblings()->pluck('id')->all();
+        $publisher = $this->getPublisher()->id;
 
-                if ($b->id != $this->id) {
-                    $books->add($b);
-                    $index[$b->id] = isset($index[$b->id]) ? $index[$b->id] + 2 : 2;
-                }
-            }
-        }
-    
-        foreach ($category->getBooks() as $b) {
-    
-            if ($b->id != $this->id) {
-                $books->add($b);
-                $index[$b->id] = isset($index[$b->id]) ? $index[$b->id] + 3 : 3;
-            }
-        }
+        $genreQuery = Book::select('books.id', 'books.name', 'books.image')
+            ->join('genre_books', 'books.id', '=', 'genre_books.book_id')
+            ->whereNotIn('books.id', [$this->id])
+            ->whereIn('genre_books.genre_id', $genres)
+            ->selectRaw('
+                (COUNT(DISTINCT genre_books.genre_id) * 2) as genre_relevance')
+            ->groupBy('books.id', 'books.name', 'books.image')
+            ->orderBy('genre_relevance', 'desc')
+            ->get()
+            ;
 
-        foreach ($sibling_categories as $category) {
-    
-            foreach ($category->getBooks() as $b) {
-    
-                if ($b->id != $this->id) {
-                    $books->add($b);
-                    $index[$b->id] = isset($index[$b->id]) ? $index[$b->id] + 1 : 1;
-                }
-            }
-        }
+        $categoryPublisherQuery = Book::select('books.id', 'books.name', 'books.image')
+            ->whereNotIn('books.id', [$this->id])
+            ->where(function ($query) use ($category, $sibling_categories, $publisher) {
+                $query->where('books.category_id', $category->id)
+                    ->orWhereIn('books.category_id', $sibling_categories)
+                    ->orWhere('books.publisher_id', $publisher);
+            })
+            ->selectRaw('
+                (CASE 
+                    WHEN books.category_id = '. $category->id. ' THEN 3 
+                    WHEN books.category_id IN ('. implode(',', $sibling_categories). ') THEN 1 
+                    WHEN books.publisher_id = '. $publisher. ' THEN 1 
+                END) as category_publisher_relevance')
+            ->orderBy('category_publisher_relevance', 'desc')
+            ->get()
+            ;
 
-        foreach ($publisher->getBooks() as $b) {
-    
-            if ($b->id != $this->id) {
-                $books->add($b);
-                $index[$b->id] = isset($index[$b->id]) ? $index[$b->id] + 1 : 1;
-            }
-        }
-    
-        $groupedBooks = $books->groupBy('id');
-        $sortedBooks = $groupedBooks->map(function (Collection $books, $key) use ($index) {
-            return ['count' => $index[$key], 'book' => $books->first()];
-        })->sortByDesc('count');
-    
-    
-        $books = collect();
-        foreach ($sortedBooks as $sb) {
-            $books->add($sb['book']);
-        }
+        $results = $genreQuery->merge($categoryPublisherQuery);
+        $results->transform(function($book) {
+            $book->relevance = $book->genre_relevance + $book->category_publisher_relevance;
+            return $book;
+        });
 
-        return $books;
+        return $results->sortByDesc('relevance')->take(20);
     }
 
     public function getLog() {
