@@ -69,7 +69,7 @@ Route::get('/accept-or-add-friend/{id}', [FriendshipController::class, 'acceptOr
 
 Route::get('/reject-or-remove-friend/{id}', [FriendshipController::class, 'rejectOrRemove']);
 
-Route::get('/friendship-status/{id}', [FriendshipController::class, 'status']);
+Route::get('/friendship/{id}', [FriendshipController::class, 'status']);
 
 // Books -------------------------------------------------------------------
 
