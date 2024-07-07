@@ -199,6 +199,43 @@
                     </div>
                 </div>
             </div>
+
+            <div v-else class="col mt-5">
+                <div class="text-start">
+
+                    <div v-if="friendship.status == 0" class="col-auto float-start">
+                        <button  class="btn btn-dark m-1 p-1 px-2" 
+                        @click.prevent="sendFriendRequest(friendship.id)"
+                        >درخواست دوستی</button>
+                    </div>
+                    
+                    <div v-if="friendship.status == 1" class="col-auto float-start">
+                        <button class="btn btn-dark m-1 p-1 px-2" 
+                        @click.prevent="cancelFriendRequest(friendship.id)"
+                        >لغو درخواست</button>
+                    </div>
+
+                    <div v-if="friendship.status == 2" class="col-auto float-start">
+                        <button class="btn btn-outline-success  p-1 px-3" 
+                        @click.prevent="acceptFriendRequest(friendship.id)"
+                        >قبول  </button>
+                    </div>
+
+                    <div v-if="friendship.status == 2" class="col-auto float-start">
+                        <button class="btn btn-outline-danger p-1 px-4" 
+                        @click.prevent="rejectFriendRequest(friendship.id)"
+                        >رد  </button>
+                    </div>
+                    
+                    <div v-if="friendship.status == 3" class="col-auto float-start">
+                        <button class="btn btn-dark m-1 p-1 px-2" 
+                        @click.prevent="removeFriend(friendship.id)"
+                        >حذف دوستی</button>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
         <div v-if="host" class="book-lists">
             <p class="title mt-5"><span> دارم می خوانم </span></p>
@@ -355,6 +392,8 @@ export default {
             searchInput: null,
             timeoutId: null,
             searchedUsers: [],
+                // host page
+            friendship: null,
 
             // edit profile
             file: '',
@@ -399,6 +438,11 @@ export default {
                 .then((response) => {
                     console.log(response.data.data)
                     this.host = response.data.data
+                })
+
+                axios.get(`/api/friendship/${this.$route.params.id}`)
+                .then((response) => {
+                    this.friendship = response.data.data
                 })
             }
 
@@ -506,42 +550,63 @@ export default {
         async removeFriend(user_id) {
             await axios.get(`/api/reject-or-remove-friend/${user_id}`)
             .then(() => {
-                this.friends = this.friends.filter(item => item.id !== user_id)
-                this.item = this.searchedUsers.find(item => item.id === user_id);
-                this.item.status = 0
+                if (this.host.isPrivate) {
+                    this.friends = this.friends.filter(item => item.id !== user_id)
+                    this.item = this.searchedUsers.find(item => item.id === user_id);
+                    this.item.status = 0
+                } else {
+                    this.friendship.status = 0
+                } 
             })
         },
 
         async sendFriendRequest(user_id) {
             await axios.get(`/api/accept-or-add-friend/${user_id}`)
             .then(() => {
-                this.item = this.searchedUsers.find(item => item.id === user_id);
-                this.item.status = 1
+                if (this.host.isPrivate) {
+                    this.item = this.searchedUsers.find(item => item.id === user_id);
+                    this.item.status = 1
+                } else {
+                    this.friendship.status = 1
+                }   
             })
         },
 
         async cancelFriendRequest(user_id) {
             await axios.get(`/api/reject-or-remove-friend/${user_id}`)
             .then(() => {
-                this.item = this.searchedUsers.find(item => item.id === user_id);
-                this.item.status = 0
+                if (this.host.isPrivate) {
+                    this.item = this.searchedUsers.find(item => item.id === user_id);
+                    this.item.status = 0
+                } else {
+                    this.friendship.status = 0
+                }
             })
         },
 
         async acceptFriendRequest(user_id) {
             await axios.get(`/api/accept-or-add-friend/${user_id}`)
             .then(() => {
-                this.item = this.searchedUsers.find(item => item.id === user_id);
-                this.item.status = 3
-                this.friends.push(this.item)
+                if (this.host.isPrivate) {
+                    this.item = this.searchedUsers.find(item => item.id === user_id);
+                    this.item.status = 3
+                    this.friends.push(this.item)
+                } else {
+                    this.friendship.status = 3
+                }
+                
             })
         },
 
         async rejectFriendRequest(user_id) {
             await axios.get(`/api/reject-or-remove-friend/${user_id}`)
             .then(() => {
-                this.item = this.searchedUsers.find(item => item.id === user_id);
-                this.item.status = 0
+                if (this.host.isPrivate) {
+                    this.item = this.searchedUsers.find(item => item.id === user_id);
+                    this.item.status = 0
+                } else {
+                    this.friendship.status = 0
+                }
             })
         },
 

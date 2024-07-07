@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserFriendResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -23,8 +24,8 @@ class FriendshipController extends Controller {
 
     public function status($id) {
 
-        $user = auth()->user();
+        $user = User::find($id);
 
-        return $user->friendshipStatus($id);
+        return new UserFriendResource($user);
     }
 }

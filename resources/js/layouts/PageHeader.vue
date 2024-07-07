@@ -118,7 +118,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5 w-100 text-center" id="notificationsModalLabel">درخواست ها</h1>
-                    <button id="close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button id="closeNotification" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div v-if="!friend_requests[0]" class="row flex-row-reverse align-items-center my-3">
@@ -126,10 +126,10 @@
                     </div>
                     <div class="row flex-row-reverse align-items-center my-3" v-for="r in friend_requests" :key="r.id">
                         <div class="col d-flex flex-row-reverse" @click.prevent="showProfile(r.id)">
-                                <img class="item-img" style="width: 45px; height: 45px; border-radius: 100%;" :src="r.image" alt="">
-                                <div class="align-self-center me-2">
-                                    {{ r.username }}
-                                </div>
+                            <img class="item-img" style="width: 45px; height: 45px; border-radius: 100%;" :src="r.image" alt="">
+                            <div class="align-self-center me-2">
+                                {{ r.username }}
+                            </div>
                         </div>
                         <div class="col-auto float-start">
                             <button class="btn btn-outline-success  p-1 px-3" 
@@ -244,6 +244,11 @@ export default {
         async showPublisher (id) {
             document.getElementById('close').click()
             this.$router.replace({ name: 'bookList', params: { title:'publisher', id: id }});
+        },
+
+        async showProfile (id) {
+            document.getElementById('closeNotification').click()
+            this.$router.replace({ name: 'profile', params: { id: id }});
         },
     },
 }
