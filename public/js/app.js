@@ -21977,7 +21977,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
       paginator: {
         'popular': {
           'page': 1,
-          'pageSize': 2,
+          'pageSize': 7,
           'all': null,
           'hasNext': true,
           'hasPrev': false,
@@ -21985,7 +21985,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         },
         'trending': {
           'page': 1,
-          'pageSize': 2,
+          'pageSize': 7,
           'all': null,
           'hasNext': true,
           'hasPrev': false,
@@ -21993,7 +21993,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         },
         'activities': {
           'page': 1,
-          'pageSize': 2,
+          'pageSize': 4,
           'all': null,
           'hasNext': true,
           'hasPrev': false,
@@ -24145,7 +24145,7 @@ var _hoisted_8 = /*#__PURE__*/_withScopeId(function () {
 var _hoisted_9 = [_hoisted_8];
 var _hoisted_10 = ["src"];
 var _hoisted_11 = {
-  "class": "text-center p-1"
+  "class": "book-title text-center p-1"
 };
 var _hoisted_12 = {
   "class": "pagination col-auto p-0 me-auto",
@@ -24203,7 +24203,7 @@ var _hoisted_24 = /*#__PURE__*/_withScopeId(function () {
 var _hoisted_25 = [_hoisted_24];
 var _hoisted_26 = ["src"];
 var _hoisted_27 = {
-  "class": "text-center p-1"
+  "class": "book-title text-center p-1"
 };
 var _hoisted_28 = {
   "class": "pagination col-auto p-0 me-auto",
@@ -24264,14 +24264,14 @@ var _hoisted_42 = /*#__PURE__*/_withScopeId(function () {
 });
 var _hoisted_43 = [_hoisted_42];
 var _hoisted_44 = {
-  "class": "row flex-row-reverse"
+  "class": "row flex-row-reverse py-auto"
 };
 var _hoisted_45 = {
-  "class": "col"
+  "class": "col-8"
 };
 var _hoisted_46 = ["src"];
 var _hoisted_47 = {
-  "class": "text-center p-1 mx-auto"
+  "class": "book-title text-center p-1 mx-auto"
 };
 var _hoisted_48 = ["data-bs-target"];
 var _hoisted_49 = ["src"];
@@ -24512,7 +24512,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, [].concat(_hoisted_40))) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", _hoisted_41, [].concat(_hoisted_43)))]), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.activities, function (a) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       key: a.id,
-      "class": "col-auto p-1 mx-3"
+      "class": "col-2 p-1 mx-3"
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_44, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_45, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
       to: {
         name: 'book',
@@ -24525,18 +24525,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
         return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
           src: a.image,
-          "class": "book-img d-block mx-auto",
+          "class": "book-img d-block",
           alt: "..."
         }, null, 8 /* PROPS */, _hoisted_46), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_47, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(a.name), 1 /* TEXT */)];
       }),
       _: 2 /* DYNAMIC */
     }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["to"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-      "class": "col pe-0",
+      "class": "col-auto g-0",
       "data-bs-toggle": "modal",
       "data-bs-target": '#friendsActivitiesModal' + a.id
     }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(a.preview_friends, function (f) {
       return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
-        "class": "row mb-1",
+        "class": "row mb-1 ms-0",
         key: f.id
       }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
         src: f.image,
@@ -24977,7 +24977,7 @@ var _hoisted_77 = {
 };
 var _hoisted_78 = ["src"];
 var _hoisted_79 = {
-  "class": ""
+  "class": "book-title"
 };
 var _hoisted_80 = {
   key: 0,
@@ -25004,7 +25004,7 @@ var _hoisted_84 = {
 };
 var _hoisted_85 = ["src"];
 var _hoisted_86 = {
-  "class": ""
+  "class": "book-title"
 };
 var _hoisted_87 = {
   key: 0,
@@ -25031,7 +25031,7 @@ var _hoisted_91 = {
 };
 var _hoisted_92 = ["src"];
 var _hoisted_93 = {
-  "class": "mt-2"
+  "class": "mt-2 book-title"
 };
 var _hoisted_94 = {
   key: 0,
@@ -33926,7 +33926,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.body-class[data-v-b3c5cf30] {\n        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n}\n.book-img[data-v-b3c5cf30] {\n            max-width: 120px;\n            max-height: 200px;\n}\n.shelf-book-img[data-v-b3c5cf30] {\n        max-width: 80px;\n        max-height: 120px;\n}\n.title[data-v-b3c5cf30] {\n        width: 100%; \n        direction: rtl;\n        border-bottom: 1.5px solid rgb(232, 232, 232); \n        line-height: 0.1em;\n        font-family: hamishe;\n}\n.title span[data-v-b3c5cf30] { \n            background:#fff; \n            padding-left: 20px;\n            padding-right: 20px;\n            margin-right: 30px;\n            font-weight:bold;\n            font-size: large;\n}\n.user-profile[data-v-b3c5cf30] {\n        width: 40px;\n        height: 40px;\n        border-radius: 50%;\n}\n.router-links[data-v-b3c5cf30] {\n    color: black;\n    text-decoration: none;\n}\n.lists-body[data-v-b3c5cf30] {\n    background: #f4f4f4; \n    height: 250px;\n}\n.next-btn[data-v-b3c5cf30] {\n    transform: translate(100%, 0);\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.body-class[data-v-b3c5cf30] {\n        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n}\n.book-img[data-v-b3c5cf30] {\n            max-width: 120px;\n            height: 160px;\n}\n.book-title[data-v-b3c5cf30] {\n        direction: rtl;\n        white-space: nowrap;\n        overflow: hidden;\n        text-overflow: ellipsis;\n        max-width: 120px;\n}\n.shelf-book-img[data-v-b3c5cf30] {\n        max-width: 80px;\n        max-height: 120px;\n}\n.title[data-v-b3c5cf30] {\n        width: 100%; \n        direction: rtl;\n        border-bottom: 1.5px solid rgb(232, 232, 232); \n        line-height: 0.1em;\n        font-family: hamishe;\n}\n.title span[data-v-b3c5cf30] { \n            background:#fff; \n            padding-left: 20px;\n            padding-right: 20px;\n            margin-right: 30px;\n            font-weight:bold;\n            font-size: large;\n}\n.user-profile[data-v-b3c5cf30] {\n        width: 40px;\n        height: 40px;\n        border-radius: 50%;\n}\n.router-links[data-v-b3c5cf30] {\n    color: black;\n    text-decoration: none;\n}\n.lists-body[data-v-b3c5cf30] {\n    background: #f4f4f4; \n    height: 250px;\n}\n.next-btn[data-v-b3c5cf30] {\n    transform: translate(100%, 0);\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -33950,7 +33950,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.body-class[data-v-074da5b0] {\nfont-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n}\n.user-profile[data-v-074da5b0] {\nwidth: 60px;\nheight: 60px;\nborder-radius: 50%;\n}\n.shelf-book-img[data-v-074da5b0] {\nmax-width: 80px;\nmax-height: 120px;\n}\n.book-img[data-v-074da5b0] {\nmax-width: 120px;\nmax-height: 200px;\n}\n.title[data-v-074da5b0] {\n\ndirection: rtl;\nborder-bottom: 1.5px solid rgb(232, 232, 232); \nline-height: 0.1em;\nfont-family: hamishe;\n}\n.title span[data-v-074da5b0] { \n    background:#fff; \n    padding-left: 20px;\n    padding-right: 20px;\n    margin-right: 30px;\n    font-weight:bold;\n    font-size: large;\n}\n.title-span[data-v-074da5b0] {\n    background:#0e0e0e;\n    padding-left: 20px;\n    padding-right: 20px;\n    margin-right: 30px;\n\n    font-size: medium !important;\n    font-weight: normal !important;\n}\n.lists-body[data-v-074da5b0] {\n    background: #f4f4f4;\n    height: 250px;\n}\n.router-links[data-v-074da5b0] {\n    color: black;\n    text-decoration: none;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.body-class[data-v-074da5b0] {\nfont-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n}\n.user-profile[data-v-074da5b0] {\nwidth: 60px;\nheight: 60px;\nborder-radius: 50%;\n}\n.shelf-book-img[data-v-074da5b0] {\nmax-width: 80px;\nmax-height: 120px;\n}\n.book-title[data-v-074da5b0] {\n    direction: rtl;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    max-width: 120px;\n}\n.book-img[data-v-074da5b0] {\nmax-width: 120px;\nmax-height: 200px;\n}\n.title[data-v-074da5b0] {\n\ndirection: rtl;\nborder-bottom: 1.5px solid rgb(232, 232, 232); \nline-height: 0.1em;\nfont-family: hamishe;\n}\n.title span[data-v-074da5b0] { \n    background:#fff; \n    padding-left: 20px;\n    padding-right: 20px;\n    margin-right: 30px;\n    font-weight:bold;\n    font-size: large;\n}\n.title-span[data-v-074da5b0] {\n    background:#0e0e0e;\n    padding-left: 20px;\n    padding-right: 20px;\n    margin-right: 30px;\n\n    font-size: medium !important;\n    font-weight: normal !important;\n}\n.lists-body[data-v-074da5b0] {\n    background: #f4f4f4;\n    height: 250px;\n}\n.router-links[data-v-074da5b0] {\n    color: black;\n    text-decoration: none;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

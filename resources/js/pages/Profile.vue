@@ -207,7 +207,7 @@
                     <router-link :to="{name:'book', params:{id: b.id}}"  
                     class="router-links d-flex flex-column m-1 p-2 align-items-center text-center">
                         <img :src="b.image" class="book-img" alt="">
-                        <p class=""> {{ b.name }}</p>
+                        <p class="book-title"> {{ b.name }}</p>
                     </router-link>
                 </div>
                 <div v-if="host.has_more_reading" class="col-auto" style="margin-right: 1000px;">
@@ -225,7 +225,7 @@
                     <router-link :to="{name:'book', params:{id: b.id}}" 
                     class="router-links d-flex flex-column m-1 p-2 align-items-center text-center">
                         <img :src="b.image" class="book-img" alt="">
-                        <p class=""> {{ b.name }}</p>
+                        <p class="book-title"> {{ b.name }}</p>
                     </router-link>
                 </div>
                 <div v-if="host.has_more_already_read" class="col-auto" style="margin-right: 1000px;">
@@ -243,7 +243,7 @@
                     <router-link :to="{name:'book', params:{id: b.id}}" 
                     class="router-links d-flex flex-column m-1 p-2 align-items-center text-center">
                         <img :src="b.image" style="height: 150px; max-width:100px" alt="">
-                        <p class="mt-2"> {{ b.name }}</p>
+                        <p class="mt-2 book-title"> {{ b.name }}</p>
                     </router-link>
                 </div>
                 <div v-if="host.has_more_want_to_read" class="col-auto" style="margin-right: 1000px;">
@@ -588,6 +588,13 @@ border-radius: 50%;
 .shelf-book-img {
 max-width: 80px;
 max-height: 120px;
+}
+.book-title {
+    direction: rtl;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 120px;
 }
 .book-img {
 max-width: 120px;

@@ -12,7 +12,7 @@
             <div v-for="p in popular" :key="p.id"  class="col-auto p-1 mx-3">
                 <router-link :to="{name: 'book', params: {id: p.id}}" class="router-links">
                     <img class="book-img d-block border mx-auto" :src="p.image" alt="">
-                    <p class="text-center p-1">{{ p.name }}</p>
+                    <p class="book-title text-center p-1">{{ p.name }}</p>
                 </router-link> 
             </div> 
             <div class="pagination col-auto p-0 me-auto" aria-label="Page navigation example">
@@ -34,7 +34,7 @@
             <div v-for="t in trending" :key="t.id"   class="col-auto p-1 mx-3">
                 <router-link :to="{name: 'book', params: {id: t.id}}"  class="router-links">
                     <img class="book-img d-block mx-auto" :src="t.image" alt="">
-                    <p class="text-center p-1">{{ t.name }}</p>
+                    <p class="book-title text-center p-1">{{ t.name }}</p>
                 </router-link> 
             </div> 
             <div class="pagination col-auto p-0 me-auto" aria-label="Page navigation example">
@@ -53,16 +53,16 @@
                 </button>
                 <button v-else class="btn btn-link ps-1 m-0" disabled><i class="fa-solid fa-circle-chevron-right text-dark fa-2x"></i></button>
             </div>
-            <div v-for="a in activities" :key="a.id" class="col-auto p-1 mx-3 ">
-                <div class="row flex-row-reverse ">
-                    <div class="col">
+            <div v-for="a in activities" :key="a.id" class="col-2 p-1 mx-3 ">
+                <div class="row flex-row-reverse py-auto">
+                    <div class="col-8">
                         <router-link :to="{name: 'book', params: {id: a.id}}" class="router-links">
-                            <img :src="a.image" class="book-img d-block mx-auto" alt="...">
-                            <p class="text-center p-1 mx-auto">{{ a.name }}</p>
+                            <img :src="a.image" class="book-img d-block" alt="...">
+                            <p class="book-title text-center p-1 mx-auto">{{ a.name }}</p>
                         </router-link>
                     </div>
-                    <div class="col pe-0" data-bs-toggle="modal" :data-bs-target="'#friendsActivitiesModal' + a.id">
-                        <div class="row mb-1" v-for="f in a.preview_friends" :key="f.id">
+                    <div class="col-auto g-0" data-bs-toggle="modal" :data-bs-target="'#friendsActivitiesModal' + a.id">
+                        <div class="row mb-1 ms-0" v-for="f in a.preview_friends" :key="f.id">
                             <div>
                                 <img :src="f.image" class="user-profile mt-1">  
                             </div>
@@ -193,7 +193,7 @@ export default {
             paginator: {
                 'popular': {
                     'page': 1,
-                    'pageSize': 2,
+                    'pageSize': 7,
                     'all': null,
                     'hasNext': true,
                     'hasPrev': false,
@@ -201,7 +201,7 @@ export default {
                 },
                 'trending': {
                     'page': 1,
-                    'pageSize': 2,
+                    'pageSize': 7,
                     'all': null,
                     'hasNext': true,
                     'hasPrev': false,
@@ -209,7 +209,7 @@ export default {
                 },
                 'activities': {
                     'page': 1,
-                    'pageSize': 2,
+                    'pageSize': 4,
                     'all': null,
                     'hasNext': true,
                     'hasPrev': false,
@@ -329,7 +329,15 @@ export default {
     } 
     .book-img {
             max-width: 120px;
-            max-height: 200px;
+            height: 160px;
+    }
+
+    .book-title {
+        direction: rtl;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 120px;
     }
     
     .shelf-book-img {
