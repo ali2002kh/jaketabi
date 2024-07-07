@@ -22001,7 +22001,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
           'all': null,
           'hasNext': true,
           'hasPrev': false,
-          'pageCount': 4
+          'pageCount': 3
         },
         'trending': {
           'page': 1,
@@ -22009,7 +22009,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
           'all': null,
           'hasNext': true,
           'hasPrev': false,
-          'pageCount': 4
+          'pageCount': 3
         },
         'activities': {
           'page': 1,
@@ -25044,36 +25044,6 @@ var _hoisted_83 = /*#__PURE__*/_withScopeId(function () {
     "class": "title mt-5"
   }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, " دارم می خوانم ")], -1 /* HOISTED */);
 });
-<<<<<<< HEAD
-var _hoisted_77 = {
-  "class": "lists-body currently-reading row flex-row-reverse align-items-center mx-1 p-1 rounded-1"
-};
-var _hoisted_78 = ["src"];
-var _hoisted_79 = {
-  "class": "book-title"
-};
-var _hoisted_80 = {
-  key: 0,
-  "class": "col-auto",
-  style: {
-    "margin-right": "1000px"
-  }
-};
-var _hoisted_81 = {
-  "class": "text-dark link-underline link-underline-opacity-0"
-};
-var _hoisted_82 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "fa-solid fa-circle-chevron-left fa-2x"
-  }, null, -1 /* HOISTED */);
-});
-var _hoisted_83 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
-    "class": "title mt-5"
-  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, " خوانده ام ")], -1 /* HOISTED */);
-});
-=======
->>>>>>> 6455155284cc7071a98dae13c9d488a1f9ccadba
 var _hoisted_84 = {
   "class": "lists-body currently-reading row flex-row-reverse align-items-center mx-1 p-1 rounded-1"
 };
@@ -25106,11 +25076,7 @@ var _hoisted_91 = {
 };
 var _hoisted_92 = ["src"];
 var _hoisted_93 = {
-<<<<<<< HEAD
-  "class": "mt-2 book-title"
-=======
-  "class": ""
->>>>>>> 6455155284cc7071a98dae13c9d488a1f9ccadba
+  "class": "book-title"
 };
 var _hoisted_94 = {
   key: 0,
@@ -25137,7 +25103,7 @@ var _hoisted_98 = {
 };
 var _hoisted_99 = ["src"];
 var _hoisted_100 = {
-  "class": "mt-2"
+  "class": "mt-2 book-title"
 };
 var _hoisted_101 = {
   key: 0,
@@ -34057,7 +34023,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.body-class[data-v-b3c5cf30] {\n        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n}\n.book-img[data-v-b3c5cf30] {\n            max-width: 120px;\n            height: 160px;\n}\n.book-title[data-v-b3c5cf30] {\n        direction: rtl;\n        white-space: nowrap;\n        overflow: hidden;\n        text-overflow: ellipsis;\n        max-width: 120px;\n}\n.shelf-book-img[data-v-b3c5cf30] {\n        max-width: 80px;\n        max-height: 120px;\n}\n.title[data-v-b3c5cf30] {\n        width: 100%; \n        direction: rtl;\n        border-bottom: 1.5px solid rgb(232, 232, 232); \n        line-height: 0.1em;\n        font-family: hamishe;\n}\n.title span[data-v-b3c5cf30] { \n            background:#fff; \n            padding-left: 20px;\n            padding-right: 20px;\n            margin-right: 30px;\n            font-weight:bold;\n            font-size: large;\n}\n.user-profile[data-v-b3c5cf30] {\n        width: 40px;\n        height: 40px;\n        border-radius: 50%;\n}\n.router-links[data-v-b3c5cf30] {\n    color: black;\n    text-decoration: none;\n}\n.lists-body[data-v-b3c5cf30] {\n    background: #f4f4f4; \n    height: 250px;\n}\n.next-btn[data-v-b3c5cf30] {\n    transform: translate(100%, 0);\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.body-class[data-v-b3c5cf30] {\n        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n}\n.book-img[data-v-b3c5cf30] {\n            width: 110px;\n            height: 160px;\n}\n.book-title[data-v-b3c5cf30] {\n        direction: rtl;\n        white-space: nowrap;\n        overflow: hidden;\n        text-overflow: ellipsis;\n        max-width: 120px;\n}\n.shelf-book-img[data-v-b3c5cf30] {\n        max-width: 80px;\n        max-height: 120px;\n}\n.title[data-v-b3c5cf30] {\n        width: 100%; \n        direction: rtl;\n        border-bottom: 1.5px solid rgb(232, 232, 232); \n        line-height: 0.1em;\n        font-family: hamishe;\n}\n.title span[data-v-b3c5cf30] { \n            background:#fff; \n            padding-left: 20px;\n            padding-right: 20px;\n            margin-right: 30px;\n            font-weight:bold;\n            font-size: large;\n}\n.user-profile[data-v-b3c5cf30] {\n        width: 40px;\n        height: 40px;\n        border-radius: 50%;\n}\n.router-links[data-v-b3c5cf30] {\n    color: black;\n    text-decoration: none;\n}\n.lists-body[data-v-b3c5cf30] {\n    background: #f4f4f4; \n    height: 250px;\n}\n.next-btn[data-v-b3c5cf30] {\n    transform: translate(100%, 0);\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -34081,7 +34047,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.body-class[data-v-074da5b0] {\nfont-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n}\n.user-profile[data-v-074da5b0] {\nwidth: 60px;\nheight: 60px;\nborder-radius: 50%;\n}\n.shelf-book-img[data-v-074da5b0] {\nmax-width: 80px;\nmax-height: 120px;\n}\n.book-title[data-v-074da5b0] {\n    direction: rtl;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    max-width: 120px;\n}\n.book-img[data-v-074da5b0] {\nmax-width: 120px;\nmax-height: 200px;\n}\n.title[data-v-074da5b0] {\n\ndirection: rtl;\nborder-bottom: 1.5px solid rgb(232, 232, 232); \nline-height: 0.1em;\nfont-family: hamishe;\n}\n.title span[data-v-074da5b0] { \n    background:#fff; \n    padding-left: 20px;\n    padding-right: 20px;\n    margin-right: 30px;\n    font-weight:bold;\n    font-size: large;\n}\n.title-span[data-v-074da5b0] {\n    background:#0e0e0e;\n    padding-left: 20px;\n    padding-right: 20px;\n    margin-right: 30px;\n\n    font-size: medium !important;\n    font-weight: normal !important;\n}\n.lists-body[data-v-074da5b0] {\n    background: #f4f4f4;\n    height: 250px;\n}\n.router-links[data-v-074da5b0] {\n    color: black;\n    text-decoration: none;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.body-class[data-v-074da5b0] {\nfont-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n}\n.user-profile[data-v-074da5b0] {\nwidth: 60px;\nheight: 60px;\nborder-radius: 50%;\n}\n.shelf-book-img[data-v-074da5b0] {\nmax-width: 80px;\nmax-height: 120px;\n}\n.book-title[data-v-074da5b0] {\n    direction: rtl;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    max-width: 120px;\n}\n.book-img[data-v-074da5b0] {\nwidth: 110px;\nheight: 160px;\n}\n.title[data-v-074da5b0] {\n\ndirection: rtl;\nborder-bottom: 1.5px solid rgb(232, 232, 232); \nline-height: 0.1em;\nfont-family: hamishe;\n}\n.title span[data-v-074da5b0] { \n    background:#fff; \n    padding-left: 20px;\n    padding-right: 20px;\n    margin-right: 30px;\n    font-weight:bold;\n    font-size: large;\n}\n.title-span[data-v-074da5b0] {\n    background:#0e0e0e;\n    padding-left: 20px;\n    padding-right: 20px;\n    margin-right: 30px;\n\n    font-size: medium !important;\n    font-weight: normal !important;\n}\n.lists-body[data-v-074da5b0] {\n    background: #f4f4f4;\n    height: 250px;\n}\n.router-links[data-v-074da5b0] {\n    color: black;\n    text-decoration: none;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -34129,7 +34095,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.body-class[data-v-18b362d8] {\r\n    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n}\n.book-img[data-v-18b362d8] {\r\n        max-width: 120px;\r\n        max-height: 200px;\n}\n.shelf-book-img[data-v-18b362d8] {\r\n    max-width: 80px;\r\n    max-height: 120px;\n}\n.title[data-v-18b362d8] {\r\n    width: 100%; \r\n    direction: rtl;\r\n    border-bottom: 1.5px solid rgb(232, 232, 232); \r\n    line-height: 0.1em;\r\n    font-family: hamishe;\n}\n.title span[data-v-18b362d8] { \r\n        background:#fff; \r\n        padding-left: 20px;\r\n        padding-right: 20px;\r\n        margin-right: 30px;\r\n        font-weight:bold;\r\n        font-size: large;\n}\n.user-profile[data-v-18b362d8] {\r\n    width: 40px;\r\n    height: 40px;\r\n    border-radius: 50%;\n}\n.book-cover[data-v-18b362d8] {\r\n    width: 100px;\r\n    max-height: 180px;\n}\r\n\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.body-class[data-v-18b362d8] {\n    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n}\n.book-img[data-v-18b362d8] {\n        max-width: 120px;\n        max-height: 200px;\n}\n.shelf-book-img[data-v-18b362d8] {\n    max-width: 80px;\n    max-height: 120px;\n}\n.title[data-v-18b362d8] {\n    width: 100%; \n    direction: rtl;\n    border-bottom: 1.5px solid rgb(232, 232, 232); \n    line-height: 0.1em;\n    font-family: hamishe;\n}\n.title span[data-v-18b362d8] { \n        background:#fff; \n        padding-left: 20px;\n        padding-right: 20px;\n        margin-right: 30px;\n        font-weight:bold;\n        font-size: large;\n}\n.user-profile[data-v-18b362d8] {\n    width: 40px;\n    height: 40px;\n    border-radius: 50%;\n}\n.book-cover[data-v-18b362d8] {\n    width: 100px;\n    max-height: 180px;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -34153,7 +34119,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.user-profile[data-v-6a713ae1] {\r\n    width: 60px;\r\n    height: 60px;\r\n    border-radius: 50%;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.user-profile[data-v-6a713ae1] {\n    width: 60px;\n    height: 60px;\n    border-radius: 50%;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

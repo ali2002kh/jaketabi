@@ -197,7 +197,7 @@ export default {
                     'all': null,
                     'hasNext': true,
                     'hasPrev': false,
-                    'pageCount': 4,
+                    'pageCount': 3,
                 },
                 'trending': {
                     'page': 1,
@@ -205,7 +205,7 @@ export default {
                     'all': null,
                     'hasNext': true,
                     'hasPrev': false,
-                    'pageCount': 4,
+                    'pageCount': 3,
                 },
                 'activities': {
                     'page': 1,
@@ -328,7 +328,7 @@ export default {
         font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     } 
     .book-img {
-            max-width: 120px;
+            width: 110px;
             height: 160px;
     }
 

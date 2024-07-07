@@ -662,8 +662,8 @@ max-height: 120px;
     max-width: 120px;
 }
 .book-img {
-max-width: 120px;
-max-height: 200px;
+width: 110px;
+height: 160px;
 }
 .title {
 
