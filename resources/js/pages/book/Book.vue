@@ -64,7 +64,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <div v-for="s in user.shelves" :key="s.id">
+                                        <div v-for="s in shelves" :key="s.id">
                                             <div class="row flex-row-reverse align-items-center">
                                                 <div class="col fw-bold">
                                                     {{s.name}}
@@ -224,6 +224,7 @@ export default {
             current_page_input: null,
             has_progression: false,
             friend_book: null,
+            shelves: [],
             shelves_with_this_book: [],
             start_date: null,
             last_read_date: null,
@@ -309,6 +310,12 @@ export default {
                 console.log(response.data.data)
                 this.friend_book = response.data.data
             })
+
+            axios.get(`/api/shelves/${this.user.id}`)
+            .then(response => {
+                console.log(response.data.data)
+                this.shelves = response.data.data;
+            });
         })
 
         userLoaded.finally(() => {

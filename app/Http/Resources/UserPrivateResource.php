@@ -39,7 +39,7 @@ class UserPrivateResource extends JsonResource
             'want_to_read' => BookPreviewResource::collection($want_to_read->take($preview_book_number)),
             'reading' => BookPreviewResource::collection($reading->take($preview_book_number)),
             'already_read' => BookPreviewResource::collection($already_read->take($preview_book_number)),
-            'shelves' => ShelfResource::collection($shelves->take($preview_shelf_number)),
+            'shelves' => ShelfPreviewResource::collection($shelves->take($preview_shelf_number)),
             'friends' => UserPreviewResource::collection($friends),
             'friends_count' => $friends->count(),
             'friend_requests' => UserPreviewResource::collection($friend_requests),
