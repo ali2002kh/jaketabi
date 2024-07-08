@@ -550,7 +550,7 @@ export default {
         async removeFriend(user_id) {
             await axios.get(`/api/reject-or-remove-friend/${user_id}`)
             .then(() => {
-                if (this.host.isPrivate) {
+                if (this.host.is_private) {
                     this.friends = this.friends.filter(item => item.id !== user_id)
                     this.item = this.searchedUsers.find(item => item.id === user_id);
                     this.item.status = 0
@@ -563,7 +563,7 @@ export default {
         async sendFriendRequest(user_id) {
             await axios.get(`/api/accept-or-add-friend/${user_id}`)
             .then(() => {
-                if (this.host.isPrivate) {
+                if (this.host.is_private) {
                     this.item = this.searchedUsers.find(item => item.id === user_id);
                     this.item.status = 1
                 } else {
@@ -575,7 +575,7 @@ export default {
         async cancelFriendRequest(user_id) {
             await axios.get(`/api/reject-or-remove-friend/${user_id}`)
             .then(() => {
-                if (this.host.isPrivate) {
+                if (this.host.is_private) {
                     this.item = this.searchedUsers.find(item => item.id === user_id);
                     this.item.status = 0
                 } else {
@@ -587,7 +587,7 @@ export default {
         async acceptFriendRequest(user_id) {
             await axios.get(`/api/accept-or-add-friend/${user_id}`)
             .then(() => {
-                if (this.host.isPrivate) {
+                if (this.host.is_private) {
                     this.item = this.searchedUsers.find(item => item.id === user_id);
                     this.item.status = 3
                     this.friends.push(this.item)
@@ -601,7 +601,7 @@ export default {
         async rejectFriendRequest(user_id) {
             await axios.get(`/api/reject-or-remove-friend/${user_id}`)
             .then(() => {
-                if (this.host.isPrivate) {
+                if (this.host.is_private) {
                     this.item = this.searchedUsers.find(item => item.id === user_id);
                     this.item.status = 0
                 } else {

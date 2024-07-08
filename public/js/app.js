@@ -22404,7 +22404,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
             case 0:
               _context5.next = 2;
               return axios.get("/api/reject-or-remove-friend/".concat(user_id)).then(function () {
-                if (_this6.host.isPrivate) {
+                if (_this6.host.is_private) {
                   _this6.friends = _this6.friends.filter(function (item) {
                     return item.id !== user_id;
                   });
@@ -22431,7 +22431,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
             case 0:
               _context6.next = 2;
               return axios.get("/api/accept-or-add-friend/".concat(user_id)).then(function () {
-                if (_this7.host.isPrivate) {
+                if (_this7.host.is_private) {
                   _this7.item = _this7.searchedUsers.find(function (item) {
                     return item.id === user_id;
                   });
@@ -22455,7 +22455,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
             case 0:
               _context7.next = 2;
               return axios.get("/api/reject-or-remove-friend/".concat(user_id)).then(function () {
-                if (_this8.host.isPrivate) {
+                if (_this8.host.is_private) {
                   _this8.item = _this8.searchedUsers.find(function (item) {
                     return item.id === user_id;
                   });
@@ -22479,7 +22479,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
             case 0:
               _context8.next = 2;
               return axios.get("/api/accept-or-add-friend/".concat(user_id)).then(function () {
-                if (_this9.host.isPrivate) {
+                if (_this9.host.is_private) {
                   _this9.item = _this9.searchedUsers.find(function (item) {
                     return item.id === user_id;
                   });
@@ -22504,7 +22504,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
             case 0:
               _context9.next = 2;
               return axios.get("/api/reject-or-remove-friend/".concat(user_id)).then(function () {
-                if (_this10.host.isPrivate) {
+                if (_this10.host.is_private) {
                   _this10.item = _this10.searchedUsers.find(function (item) {
                     return item.id === user_id;
                   });
