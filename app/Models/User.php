@@ -45,6 +45,13 @@ class User extends Authenticatable
     ];
 
 
+    // administration
+
+    public function getRole() {
+        return RoleUser::where('user_id', $this->user->id)->first();
+    }
+
+
     // user information --------------------------------------------------------------------------
 
     public function getProfile() {

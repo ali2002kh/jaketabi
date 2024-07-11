@@ -21997,7 +21997,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
       paginator: {
         'popular': {
           'page': 1,
-          'pageSize': 7,
+          'pageSize': 8,
           'all': null,
           'hasNext': true,
           'hasPrev': false,
@@ -22005,7 +22005,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         },
         'trending': {
           'page': 1,
-          'pageSize': 7,
+          'pageSize': 8,
           'all': null,
           'hasNext': true,
           'hasPrev': false,

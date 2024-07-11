@@ -193,7 +193,7 @@ export default {
             paginator: {
                 'popular': {
                     'page': 1,
-                    'pageSize': 7,
+                    'pageSize': 8,
                     'all': null,
                     'hasNext': true,
                     'hasPrev': false,
@@ -201,7 +201,7 @@ export default {
                 },
                 'trending': {
                     'page': 1,
-                    'pageSize': 7,
+                    'pageSize': 8,
                     'all': null,
                     'hasNext': true,
                     'hasPrev': false,
