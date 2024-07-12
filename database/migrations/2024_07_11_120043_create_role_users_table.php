@@ -15,12 +15,15 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('role_id')->unsigned()->index();
             $table->bigInteger('user_id')->unsigned()->index();
+            $table->bigInteger('publisher_id')->unsigned()->index()->nullable();
             $table->timestamps();
 
             $table->foreign('role_id')->references('id')
             ->on('roles')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('user_id')->references('id')
             ->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('publisher_id')->references('id')
+            ->on('publishers')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

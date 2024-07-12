@@ -47,8 +47,19 @@ class User extends Authenticatable
 
     // administration
 
-    public function getRole() {
+    public function getRoleUser() {
         return RoleUser::where('user_id', $this->user->id)->first();
+            
+            // 1: admin
+            // 2: super admin
+            // 3: publisher admin
+            // 4: publisher super admin
+    }
+
+    public function getPermissions() {
+
+        $role = $this->getRoleUser()->getRole();
+        return $role->getPermissions();
     }
 
 
