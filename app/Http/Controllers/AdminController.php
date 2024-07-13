@@ -184,4 +184,107 @@ class AdminController extends Controller
         $gb = GenreBook::where(['book_id' => $book_id, 'genre_id' => $genre_id]);
         $gb->delete();
     }
+
+    public function promoteNormalUserToPublisherAdmin($user_id, $publisher_id) {
+
+        /** @var User $user */ 
+        $user = auth()->user();
+        if (
+            !$user->getPermissions()->contains('id', 4) ||
+            (
+                !$user->getPermissions()->contains('id', 11) && 
+                $user->getPublisher()->id != $publisher_id
+            )
+        ) {
+            return abort(403);
+        }
+
+        $user->promoteNormalUserToPublisherAdmin($user_id, $publisher_id);
+
+    }
+
+    public function promotePublisherAdminToPublisherSuperAdmin($user_id, $publisher_id) {
+
+        /** @var User $user */ 
+        $user = auth()->user();
+        if (
+            !$user->getPermissions()->contains('id', 5) ||
+            (
+                !$user->getPermissions()->contains('id', 11) && 
+                $user->getPublisher()->id != $publisher_id
+            )
+        ) {
+            return abort(403);
+        }
+
+        $user->promotePublisherAdminToPublisherSuperAdmin($user_id, $publisher_id);
+
+    }
+
+    public function demotePublisherAdminToNormalUser($user_id, $publisher_id) {
+
+        /** @var User $user */ 
+        $user = auth()->user();
+        if (
+            !$user->getPermissions()->contains('id', 6) ||
+            (
+                !$user->getPermissions()->contains('id', 11) && 
+                $user->getPublisher()->id != $publisher_id
+            )
+        ) {
+            return abort(403);
+        }
+
+        $user->demotePublisherAdminToNormalUser($user_id, $publisher_id);
+
+    }
+
+    public function demotePublisherSuperAdminToNormalUser($user_id, $publisher_id) {
+
+        /** @var User $user */ 
+        $user = auth()->user();
+        if (!$user->getPermissions()->contains('id', 7)) {
+            return abort(403);
+        }
+
+        $user->demoteAdminOrPublisherSuperAdminToNormalUser($user_id);
+
+    }
+
+    public function promoteNormalUserToAdmin($user_id) {
+
+        /** @var User $user */ 
+        $user = auth()->user();
+        if (!$user->getPermissions()->contains('id', 8)) {
+            return abort(403);
+        }
+
+        $user->promoteNormalUserToAdmin($user_id);
+
+    }
+
+    public function demoteAdminToNormalUser($user_id) {
+
+        /** @var User $user */ 
+        $user = auth()->user();
+        if (!$user->getPermissions()->contains('id', 9)) {
+            return abort(403);
+        }
+
+        $user->demoteAdminOrPublisherSuperAdminToNormalUser($user_id);
+
+    }
+
+    public function promoteNormalUserToSuperAdmin($user_id) {
+
+        /** @var User $user */ 
+        $user = auth()->user();
+        if (!$user->getPermissions()->contains('id', 10)) {
+            return abort(403);
+        }
+
+        $user->promoteAdminToSuperAdmin($user_id);
+
+    }
+    
 }

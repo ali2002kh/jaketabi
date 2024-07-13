@@ -105,6 +105,81 @@ class User extends Authenticatable
         $bookLog->save();
     }
 
+    public function promoteNormalUserToPublisherAdmin($user_id, $publisher_id) {
+
+        $ru = new RoleUser();
+        $ru->user_id = $user_id;
+        $ru->role_id = 3;
+        $ru->publisher_id = $publisher_id;
+        $ru->save();
+    }
+
+    public function promotePublisherAdminToPublisherSuperAdmin($user_id, $publisher_id) {
+
+        $ru = RoleUser::where('user_id', $user_id)->first();
+
+        if (!$ru) {
+            abort(404);
+        }
+
+        if ($ru->publisher_id == $publisher_id) {
+            $ru->role_id = 4;
+            $ru->save();
+            abort(200);
+        } 
+
+        abort(403);
+    }
+
+    public function demotePublisherAdminToNormalUser($user_id, $publisher_id) {
+
+        $ru = RoleUser::where('user_id', $user_id)->first();
+
+        if (!$ru) {
+            abort(404);
+        }
+
+        if ($ru->publisher_id == $publisher_id) {
+            $ru->delete();
+            abort(200);
+        } 
+
+        abort(403);
+    }
+
+    public function demoteAdminOrPublisherSuperAdminToNormalUser($user_id) {
+
+        $ru = RoleUser::where('user_id', $user_id)->first();
+
+        if (!$ru) {
+            abort(404);
+        }
+
+        $ru->delete();
+        abort(200);
+    }
+
+    public function promoteNormalUserToAdmin($user_id) {
+
+        $ru = new RoleUser();
+        $ru->user_id = $user_id;
+        $ru->role_id = 1;
+        $ru->save();
+    }
+
+    public function promoteAdminToSuperAdmin($user_id) {
+
+        $ru = RoleUser::where('user_id', $user_id)->first();
+
+        if (!$ru) {
+            abort(404);
+        }
+
+        $ru->role_id = 2;
+        abort(200);
+    }
+
+
 
     // user information --------------------------------------------------------------------------
 
