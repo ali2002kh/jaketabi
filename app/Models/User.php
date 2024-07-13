@@ -45,7 +45,7 @@ class User extends Authenticatable
     ];
 
 
-    // administration
+    // administration --------------------------------------------------------------------------
 
     public function getRoleUser() {
         return RoleUser::where('user_id', $this->user->id)->first();
@@ -60,6 +60,49 @@ class User extends Authenticatable
 
         $role = $this->getRoleUser()->getRole();
         return $role->getPermissions();
+    }
+
+    public function getPublisher() {
+
+        return $this->getRoleUser()->getPublisher();
+    }
+
+    public function createBook (
+        $isbn, 
+        $name,
+        $image = null,
+        $author,
+        $category_id,
+        $release_date = null,
+        $publisher_id,
+        $description = null,
+        $translator = null,
+        $page_count = null,
+        $lcc = null,
+        $ddc = null,
+        $isbn_period = null,
+    ) {
+
+        $book = new Book([
+            'isbn' => $isbn,
+            'name' => $name,
+            'image' => $image,
+            'author' => $author,
+            'category_id' => $category_id,
+            'release_date' => $release_date,
+            'publisher_id' => $publisher_id,
+            'description' => $description,
+            'translator' => $translator,
+            'page_count' => $page_count,
+            'lcc' => $lcc,
+            'ddc' => $ddc,
+            'isbn_period' => $isbn_period,
+        ]);
+
+        $book->save();
+
+        $bookLog = new BookLog(['book_id' => $book->id]);
+        $bookLog->save();
     }
 
 
@@ -90,10 +133,10 @@ class User extends Authenticatable
     }
 
     public function updateUser(
-        $username=null, 
-        $email=null,
-        $number=null,
-        $password=null,
+        $username = null, 
+        $email = null,
+        $number = null,
+        $password = null,
     ) {
 
         if ($username) {
@@ -116,10 +159,10 @@ class User extends Authenticatable
     }
 
     public function updateProfile(
-        $firstName=null, 
-        $lastName=null,
-        $image=null,
-        $birthDate=null,
+        $firstName = null, 
+        $lastName = null,
+        $image = null,
+        $birthDate = null,
     ) {
         $profile = $this->getProfile();
         if (!$profile) {
@@ -366,7 +409,7 @@ class User extends Authenticatable
         return Shelf::where('user_id', $this->id)->get();
     }
 
-    public function createShelf($name, $description=null) {
+    public function createShelf($name, $description = null) {
 
         $shelf = new Shelf();
         $shelf->user_id = $this->id;

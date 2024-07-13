@@ -19,6 +19,7 @@ class ShelfController extends Controller {
 
     public function storeShelf(Request $request) {
 
+        /** @var User $user */ 
         $user = auth()->user();
 
         $request->validate([
@@ -37,6 +38,7 @@ class ShelfController extends Controller {
 
     public function addBook($shelf_id, $book_id) {
         
+        /** @var User $user */ 
         $user = auth()->user();
         $user->addBookToShelf($shelf_id, $book_id);
         return abort(200);
@@ -44,6 +46,7 @@ class ShelfController extends Controller {
 
     public function removeBook($shelf_id, $book_id) {
 
+        /** @var User $user */ 
         $user = auth()->user();
         $user->removeBookFromShelf($shelf_id, $book_id);
         return abort(200);
@@ -51,6 +54,7 @@ class ShelfController extends Controller {
 
     public function update(Request $request, $shelf_id) {
         
+        /** @var User $user */ 
         $user = auth()->user();
         $shelf = Shelf::find($shelf_id);
 
@@ -67,6 +71,7 @@ class ShelfController extends Controller {
 
     public function delete($shelf_id) {
 
+        /** @var User $user */ 
         $user = auth()->user();
         $shelf = Shelf::find($shelf_id);
         if ($shelf->getUser()->id == $user->id) {

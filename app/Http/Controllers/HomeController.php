@@ -27,6 +27,7 @@ class HomeController extends Controller {
 
     public function user($id) {
 
+        /** @var User $user */ 
         $user = auth()->user();
 
         if ($user and $user->id == $id) {
@@ -64,12 +65,14 @@ class HomeController extends Controller {
 
     public function friendsActivities() {
 
+        /** @var User $user */ 
         $user = auth()->user();
         return FriendBookResource::collection($user->getFriendsBooks());
     }
 
     public function friendsShelves() {
 
+        /** @var User $user */ 
         $user = auth()->user();
         return ShelfPreviewResource::collection($user->getFriendsShelves());
     }

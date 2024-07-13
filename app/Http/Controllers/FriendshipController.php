@@ -10,6 +10,7 @@ class FriendshipController extends Controller {
 
     public function acceptOrAdd($id) {
 
+        /** @var User $user */ 
         $user = auth()->user();
 
         $user->sendRequestTo($id);
@@ -17,6 +18,7 @@ class FriendshipController extends Controller {
 
     public function rejectOrRemove($id) {
 
+        /** @var User $user */ 
         $user = auth()->user();
 
         $user->rejectOrRemoveFriend($id);

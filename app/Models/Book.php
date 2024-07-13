@@ -227,4 +227,83 @@ class Book extends Model
 
         return BookComment::where('book_id', $this->id)->get();
     }
+
+    public function remove() {
+        
+        $this->getLog()->delete();
+        $this->delete();
+        abort(200);
+    }
+
+    public function updateBook (
+        $isbn = null, 
+        $name = null,
+        $image = null,
+        $author = null,
+        $category_id = null,
+        $release_date = null,
+        $publisher_id = null,
+        $description = null,
+        $translator = null,
+        $page_count = null,
+        $lcc = null,
+        $ddc = null,
+        $isbn_period = null,
+    ) {
+
+        if ($isbn) {
+            $this->ISBN = $isbn;
+        }
+
+        if ($name) {
+            $this->name = $name;
+        }
+
+        if ($image) {
+            $this->image = $image;
+        }
+
+        if ($author) {
+            $this->author = $author;
+        }
+
+        if ($category_id) {
+            $this->category_id = $category_id;
+        }
+
+        if ($release_date) {
+            $this->release_date = $release_date;
+        }
+
+        if ($publisher_id) {
+            $this->publisher_id = $publisher_id;
+        }
+
+        if ($description) {
+            $this->description = $description;
+        }
+
+        if ($translator) {
+            $this->translator = $translator;
+        }
+
+        if ($page_count) {
+            $this->page_count = $page_count;
+        }
+
+        if ($lcc) {
+            $this->LCC = $lcc;
+        }
+        if ($ddc) {
+            $this->DDC = $ddc;
+        }
+        if ($isbn_period) {
+            $this->ISBN_period = $isbn_period;
+        }
+
+        $this->save();
+
+    }
 }
+
+

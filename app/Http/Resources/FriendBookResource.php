@@ -15,6 +15,7 @@ class FriendBookResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        /** @var User $user */ 
         $user = auth()->user();
 
         $result = [

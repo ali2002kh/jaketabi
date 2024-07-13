@@ -12,6 +12,7 @@ class ProfileController extends Controller {
     
     public function update(Request $request) {
 
+        /** @var User $user */ 
         $user = auth()->user();
 
         $request->validate([

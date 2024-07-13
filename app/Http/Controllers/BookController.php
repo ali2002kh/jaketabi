@@ -39,6 +39,7 @@ class BookController extends Controller {
 
     public function updateStatus($book_id, $status) {
 
+        /** @var User $user */ 
         $user = auth()->user();
         $user->updateBookStatus($book_id, $status);
 
@@ -47,6 +48,7 @@ class BookController extends Controller {
 
     public function updateCurrentPage($book_id, $page) {
 
+        /** @var User $user */ 
         $user = auth()->user();
         $user->updateCurrentPage($book_id, $page);
 
@@ -107,6 +109,7 @@ class BookController extends Controller {
 
     public function addComment($book_id, Request $request) {
 
+        /** @var User $user */ 
         $user = auth()->user();
 
         $this->validate($request, [

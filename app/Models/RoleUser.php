@@ -12,6 +12,7 @@ class RoleUser extends Model
     protected $fillable = [
         'user_id',
         'role_id',
+        'publisher_id'
     ];
 
     public function getUser() {
@@ -20,5 +21,9 @@ class RoleUser extends Model
 
     public function getRole() {
         return Role::find($this->role_id);
+    }
+
+    public function getPublisher() {
+        return Publisher::find($this->publisher_id);
     }
 }
