@@ -2,51 +2,93 @@
     <PageHeader></PageHeader>
     <div class="container-fluid body-class">
         <p class="title mx-1" style="margin-top: 110px;"><span>کتاب های محبوب</span></p>
-        <div class="popular-books row flex-row-reverse mx-1 p-1 rounded-1" style="background-color: #f4f4f4; height:230px;">
-            <div class="pagination col-auto me-0 px-0" aria-label="Page navigation example">
-                <button v-if="paginator['popular']['hasPrev']" @click.prevent="prev('popular')" class="btn btn-link ps-1 m-0">
-                    <i class="fa-solid fa-circle-chevron-right text-dark fa-2x"></i>
-                </button>
-                <button v-else class="btn btn-link ps-1 m-0" disabled><i class="fa-solid fa-circle-chevron-right text-dark fa-2x"></i></button>
-            </div>
-            <div v-for="p in popular" :key="p.id"  class="col-auto p-1 mx-3">
+        <swiper class="popular-books row flex-row-reverse p-1 rounded-1 mb-5" style="background-color: #f4f4f4; align-items:center;"
+            dir="rtl"
+            :modules="modules"
+            :slides-per-view="5"
+            :space-between="40"
+            navigation
+            :breakpoints="{
+                '320': {
+                    slidesPerView: 1,
+                    spaceBetween: 20,
+                },
+                '480': {
+                    slidesPerView: 3,
+                    spaceBetween: 20,
+                },
+                '640': {
+                    slidesPerView: 4,
+                    spaceBetween: 20,
+                },
+                '768': {
+                    slidesPerView: 5,
+                    spaceBetween: 40,
+                },
+                '1024': {
+                    slidesPerView: 7,
+                    spaceBetween: 50,
+                },
+            }"
+            @swiper="onSwiper"
+            @slideChange="onSlideChange"
+        >
+            <swiper-slide v-for="p in popular" :key="p.id" class="p-1">
                 <router-link :to="{name: 'book', params: {id: p.id}}" class="router-links">
                     <img class="book-img d-block border mx-auto" :src="p.image" alt="">
-                    <p class="book-title text-center p-1">{{ p.name }}</p>
+                    <p class="book-title mx-auto text-center p-1">{{ p.name }}</p>
                 </router-link> 
-            </div> 
-            <div class="pagination col-auto p-0 me-auto" aria-label="Page navigation example">
-                <button v-if="paginator['popular']['hasNext']" @click.prevent="next('popular')" class="btn btn-link pe-1 m-0" >
-                    <i class="fa-solid fa-circle-chevron-left fa-2x text-dark"></i>
-                </button>
-                <button v-else class="btn btn-link pe-1 m-0" disabled><i class="fa-solid fa-circle-chevron-left text-dark fa-2x"></i></button>
-            </div>
-        </div>
-
-        <p class="title mt-5"><span>کتاب های فراگیر</span></p>
-        <div class="trending-books row flex-row-reverse mx-1 p-1 rounded-1" style="background-color: #f4f4f4; height:230px;">
-            <div class="pagination col-auto me-0 px-0" aria-label="Page navigation example">
-                <button v-if="paginator['trending']['hasPrev']" @click.prevent="prev('trending')" class="btn btn-link ps-1 m-0">
+            </swiper-slide>
+        </swiper>
+        <!-- <div class="popular-books row flex-row-reverse mx-1 p-1 rounded-1 mb-5" style="background-color: #f4f4f4; align-items:center;">
+            <div class="pagination col-auto p-0 me-0" aria-label="Page navigation example">
+                <button v-if="paginator['popular']['hasPrev']" @click.prevent="prev('popular')" class="btn btn-link m-0">
                     <i class="fa-solid fa-circle-chevron-right text-dark fa-2x"></i>
                 </button>
-                <button v-else class="btn btn-link ps-1 m-0" disabled><i class="fa-solid fa-circle-chevron-right text-dark fa-2x"></i></button>
+                <button v-else class="btn btn-link m-0 " disabled><i class="fa-solid fa-circle-chevron-right text-dark fa-2x"></i></button>
             </div>
-            <div v-for="t in trending" :key="t.id"   class="col-auto p-1 mx-3">
-                <router-link :to="{name: 'book', params: {id: t.id}}"  class="router-links">
-                    <img class="book-img d-block mx-auto" :src="t.image" alt="">
-                    <p class="book-title text-center p-1">{{ t.name }}</p>
-                </router-link> 
+            <div class="col-10 mx-auto row justify-content-center">
+                <div v-for="p in popular" :key="p.id"  class="col-lg-2 col-md-3 col-sm-4 col-12 p-1 mx-auto">
+                    <router-link :to="{name: 'book', params: {id: p.id}}" class="router-links">
+                        <img class="book-img d-block border mx-auto" :src="p.image" alt="">
+                        <p class="book-title mx-auto text-center p-1">{{ p.name }}</p>
+                    </router-link> 
+                </div>
             </div> 
-            <div class="pagination col-auto p-0 me-auto" aria-label="Page navigation example">
-                <button v-if="paginator['trending']['hasNext']" @click.prevent="next('trending')" class="btn btn-link pe-1 m-0" >
+            <div class="pagination col-auto p-0 me-auto " aria-label="Page navigation example">
+                <button v-if="paginator['popular']['hasNext']" @click.prevent="next('popular')" class="btn btn-link m-0" >
                     <i class="fa-solid fa-circle-chevron-left fa-2x text-dark"></i>
                 </button>
-                <button v-else class="btn btn-link pe-1 m-0" disabled><i class="fa-solid fa-circle-chevron-left text-dark fa-2x"></i></button>
+                <button v-else class="btn btn-link m-0" disabled><i class="fa-solid fa-circle-chevron-left text-dark fa-2x"></i></button>
+            </div>
+        </div> -->
+
+        <p class="title"><span>کتاب های فراگیر</span></p>
+        <div class="trending-books row flex-row-reverse mx-1 p-1 rounded-1 mb-5" style="background-color: #f4f4f4; height:230px;">
+            <div class="pagination col p-0" aria-label="Page navigation example">
+                <button v-if="paginator['trending']['hasPrev']" @click.prevent="prev('trending')" class="btn btn-link m-0">
+                    <i class="fa-solid fa-circle-chevron-right text-dark fa-2x"></i>
+                </button>
+                <button v-else class="btn btn-link m-0" disabled><i class="fa-solid fa-circle-chevron-right text-dark fa-2x"></i></button>
+            </div>
+            <div class="col-11 row justify-content-center">
+                <div v-for="t in trending" :key="t.id"   class="col-lg-2 col-md-3 col-sm-4 col-6 p-1 mx-auto">
+                    <router-link :to="{name: 'book', params: {id: t.id}}"  class="router-links">
+                        <img class="book-img d-block mx-auto" :src="t.image" alt="">
+                        <p class="book-title mx-auto text-center p-1">{{ t.name }}</p>
+                    </router-link> 
+                </div> 
+            </div>
+            <div class="pagination col p-0" aria-label="Page navigation example">
+                <button v-if="paginator['trending']['hasNext']" @click.prevent="next('trending')" class="btn btn-link m-0" >
+                    <i class="fa-solid fa-circle-chevron-left fa-2x text-dark"></i>
+                </button>
+                <button v-else class="btn btn-link m-0" disabled><i class="fa-solid fa-circle-chevron-left text-dark fa-2x"></i></button>
             </div>
         </div>
 
-        <p v-if="user" class="title mt-5"><span> فعالیت  دوستان</span></p>
-        <div v-if="user" class="friends-activity row flex-row-reverse mx-1 p-1 rounded-1" style="background-color: #f4f4f4; height:230px;">
+        <p v-if="user" class="title"><span> فعالیت  دوستان</span></p>
+        <div v-if="user" class="friends-activity row flex-row-reverse mx-1 p-1 rounded-1 mb-5" style="background-color: #f4f4f4; height:230px;">
             <div class="pagination col-auto me-0 px-0" aria-label="Page navigation example">
                 <button v-if="paginator['activities']['hasPrev']" @click.prevent="prev('activities')" class="btn btn-link ps-1 m-0">
                     <i class="fa-solid fa-circle-chevron-right text-dark fa-2x"></i>
@@ -118,7 +160,7 @@
             </div>
         </div>
 
-        <p v-if="user" class="title mt-5"><span> قفسه های  دوستان</span></p>
+        <p v-if="user" class="title"><span> قفسه های  دوستان</span></p>
         <div v-if="user" class="friends-shelves row flex-row-reverse align-items-center mx-1 p-1 rounded-1 mb-2"
         style="background: #f4f4f4; height: 250px;">
             <div class="pagination col-auto me-0 px-0" aria-label="Page navigation example">
@@ -176,12 +218,32 @@
 import { mapState } from 'vuex';
 import PageHeader from "../layouts/PageHeader"
 import { result } from 'lodash';
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import { Navigation, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 // import PageFooter from "../layouts/PageFooter"
 
 export default {
     components: {
         PageHeader,
+        Swiper,
+        SwiperSlide,
         // PageFooter,
+    },
+    setup() {
+      const onSwiper = (swiper) => {
+        console.log(swiper);
+      };
+      const onSlideChange = () => {
+        console.log('slide change');
+      };
+      return {
+        onSwiper,
+        onSlideChange,
+        modules: [Navigation, Pagination],
+      };
     },
     data() {
         return {
@@ -191,17 +253,17 @@ export default {
             shelves: null,
 
             paginator: {
-                'popular': {
-                    'page': 1,
-                    'pageSize': 8,
-                    'all': null,
-                    'hasNext': true,
-                    'hasPrev': false,
-                    'pageCount': 3,
-                },
+                // 'popular': {
+                //     'page': 1,
+                //     'pageSize': 6,
+                //     'all': null,
+                //     'hasNext': true,
+                //     'hasPrev': false,
+                //     'pageCount': 3,
+                // },
                 'trending': {
                     'page': 1,
-                    'pageSize': 8,
+                    'pageSize': 6,
                     'all': null,
                     'hasNext': true,
                     'hasPrev': false,
@@ -230,7 +292,8 @@ export default {
         axios.get('/api/trending-popular')
         .then(response => {
             console.log(response.data.data)
-            this.paginator['popular']['all'] = response.data.data.popular;
+            // this.paginator['popular']['all'] = response.data.data.popular;
+            this.popular = response.data.data.popular;
             this.paginator['trending']['all'] = response.data.data.trending;
 
             this.paginate('popular')
