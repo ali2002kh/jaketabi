@@ -48,7 +48,7 @@
                 </li>
 
                 <li class="nav-item pe-3" v-if="user && user.role">
-                    <router-link :to="{name: 'admin'}" data-toggle="tooltip" data-replacement="bottom" title="ادمین" class="text-white">
+                    <router-link :to="{name: 'dashboard'}" data-toggle="tooltip" data-replacement="bottom" title="ادمین" class="text-white">
                         ادمین
                     </router-link>
                 </li>

@@ -41,6 +41,8 @@ Route::post('search', [SearchController::class, 'search']);
 
 Route::post('search/user', [SearchController::class, 'searchUser']);
 
+Route::post('search/book', [SearchController::class, 'searchBook']);
+
 // Profile  ---------------------------------------------------------------
 
 Route::post('update-profile', [ProfileController::class, 'update']);

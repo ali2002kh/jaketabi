@@ -29,6 +29,8 @@ class UserPrivateResource extends JsonResource
         $shelves = $this->getShelves();
         $shelves_more_count = $shelves->count() - $preview_shelf_number;
 
+        $roleUser = $this->getRoleUser();
+
         $result = [
             'id' => $this->id,
             'username' => $this->username,
@@ -45,8 +47,12 @@ class UserPrivateResource extends JsonResource
             'friend_requests' => UserPreviewResource::collection($friend_requests),
             'friend_requests_count' => $friend_requests->count(),
             'is_private' => true,
-            'role' => $this->getRoleUser(),
+            'role' => $roleUser,
         ];
+
+        if ($roleUser && ($roleUser->role_id == 3 || $roleUser->role_id == 4)) {
+            $result['publisher'] = new PublisherResource($this->getPublisher());
+        }
 
         if ($this->getProfile()) {
             $result['birth_date'] = $this->getProfile()->birth_date;
