@@ -13,8 +13,63 @@ import Book from "./pages/book/Book";
 import Shelf from "./pages/shelf/Shelf";
 import ShelfList from "./pages/shelf/ShelfList";
 
+import Admin from "./pages/admin/Admin";
+import Dashboard from "./pages/admin/Dashboard";
+import Books from "./pages/admin/Books";
+import CreateBook from "./pages/admin/CreateBook";
+import EditBook from "./pages/admin/EditBook";
+import PublisherAdmins from "./pages/admin/PublisherAdmins";
+import Publishers from "./pages/admin/Publishers";
+import Admins from "./pages/admin/Admins";
+
 
 const routes = [
+    {
+        path: "/admin",
+        component: Admin,
+        name: "admin",
+        children: [
+            // publisher admin
+            {
+                path: "",
+                component: Dashboard,
+                name: "dashboard",
+            },
+            {
+                path: "books",
+                component: Books,
+                name: "books",
+            },
+            {
+                path: "create-book",
+                component: CreateBook,
+                name: "create-book",
+            },
+            {
+                path: "edit-book/:id",
+                component: EditBook,
+                name: "edit-book",
+            },
+            // publisher super admin
+            {
+                path: "publisher-admins",
+                component: PublisherAdmins,
+                name: "publisher-admins",
+            },
+            // admin
+            {
+                path: "publishers",
+                component: Publishers,
+                name: "publishers",
+            },
+            // super admin
+            {
+                path: "admins",
+                component: Admins,
+                name: "admins",
+            },
+        ]
+    },
     {
         path: "/",
         component: Home,

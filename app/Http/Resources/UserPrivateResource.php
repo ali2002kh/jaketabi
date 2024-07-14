@@ -45,6 +45,7 @@ class UserPrivateResource extends JsonResource
             'friend_requests' => UserPreviewResource::collection($friend_requests),
             'friend_requests_count' => $friend_requests->count(),
             'is_private' => true,
+            'role' => $this->getRoleUser(),
         ];
 
         if ($this->getProfile()) {

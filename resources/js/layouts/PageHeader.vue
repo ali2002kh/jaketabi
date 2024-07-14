@@ -47,6 +47,12 @@
                     </router-link>
                 </li>
 
+                <li class="nav-item pe-3" v-if="user && user.role">
+                    <router-link :to="{name: 'admin'}" data-toggle="tooltip" data-replacement="bottom" title="ادمین" class="text-white">
+                        ادمین
+                    </router-link>
+                </li>
+
                 <li class="nav-item pe-4">
                     <router-link class="nav-link text-white" :to="{name: 'home'}" data-toggle="tooltip" data-replacement="bottom" title="خانه">
                         <i class="fa-solid fa-house fa-lg"></i>

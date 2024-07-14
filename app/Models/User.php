@@ -48,7 +48,7 @@ class User extends Authenticatable
     // administration --------------------------------------------------------------------------
 
     public function getRoleUser() {
-        return RoleUser::where('user_id', $this->user->id)->first();
+        return RoleUser::where('user_id', $this->id)->first();
             
             // 1: admin
             // 2: super admin
