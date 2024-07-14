@@ -2,11 +2,11 @@
     <PageHeader></PageHeader>
     <div class="container-fluid body-class">
         <p class="title mx-1" style="margin-top: 110px;"><span>کتاب های محبوب</span></p>
-        <swiper class="popular-books row flex-row-reverse p-1 rounded-1 mb-5" style="background-color: #f4f4f4; align-items:center;"
+        <swiper class="swiper1 popular-books row flex-row-reverse p-1 rounded-1 mb-5" style="background-color: #f4f4f4; align-items:center;"
             dir="rtl"
             :modules="modules"
             :slides-per-view="5"
-            :space-between="40"
+            :space-between="20"
             navigation
             :breakpoints="{
                 '320': {
@@ -40,116 +40,131 @@
                 </router-link> 
             </swiper-slide>
         </swiper>
-        <!-- <div class="popular-books row flex-row-reverse mx-1 p-1 rounded-1 mb-5" style="background-color: #f4f4f4; align-items:center;">
-            <div class="pagination col-auto p-0 me-0" aria-label="Page navigation example">
-                <button v-if="paginator['popular']['hasPrev']" @click.prevent="prev('popular')" class="btn btn-link m-0">
-                    <i class="fa-solid fa-circle-chevron-right text-dark fa-2x"></i>
-                </button>
-                <button v-else class="btn btn-link m-0 " disabled><i class="fa-solid fa-circle-chevron-right text-dark fa-2x"></i></button>
-            </div>
-            <div class="col-10 mx-auto row justify-content-center">
-                <div v-for="p in popular" :key="p.id"  class="col-lg-2 col-md-3 col-sm-4 col-12 p-1 mx-auto">
-                    <router-link :to="{name: 'book', params: {id: p.id}}" class="router-links">
-                        <img class="book-img d-block border mx-auto" :src="p.image" alt="">
-                        <p class="book-title mx-auto text-center p-1">{{ p.name }}</p>
-                    </router-link> 
-                </div>
-            </div> 
-            <div class="pagination col-auto p-0 me-auto " aria-label="Page navigation example">
-                <button v-if="paginator['popular']['hasNext']" @click.prevent="next('popular')" class="btn btn-link m-0" >
-                    <i class="fa-solid fa-circle-chevron-left fa-2x text-dark"></i>
-                </button>
-                <button v-else class="btn btn-link m-0" disabled><i class="fa-solid fa-circle-chevron-left text-dark fa-2x"></i></button>
-            </div>
-        </div> -->
+
 
         <p class="title"><span>کتاب های فراگیر</span></p>
-        <div class="trending-books row flex-row-reverse mx-1 p-1 rounded-1 mb-5" style="background-color: #f4f4f4; height:230px;">
-            <div class="pagination col p-0" aria-label="Page navigation example">
-                <button v-if="paginator['trending']['hasPrev']" @click.prevent="prev('trending')" class="btn btn-link m-0">
-                    <i class="fa-solid fa-circle-chevron-right text-dark fa-2x"></i>
-                </button>
-                <button v-else class="btn btn-link m-0" disabled><i class="fa-solid fa-circle-chevron-right text-dark fa-2x"></i></button>
-            </div>
-            <div class="col-11 row justify-content-center">
-                <div v-for="t in trending" :key="t.id"   class="col-lg-2 col-md-3 col-sm-4 col-6 p-1 mx-auto">
-                    <router-link :to="{name: 'book', params: {id: t.id}}"  class="router-links">
-                        <img class="book-img d-block mx-auto" :src="t.image" alt="">
-                        <p class="book-title mx-auto text-center p-1">{{ t.name }}</p>
-                    </router-link> 
-                </div> 
-            </div>
-            <div class="pagination col p-0" aria-label="Page navigation example">
-                <button v-if="paginator['trending']['hasNext']" @click.prevent="next('trending')" class="btn btn-link m-0" >
-                    <i class="fa-solid fa-circle-chevron-left fa-2x text-dark"></i>
-                </button>
-                <button v-else class="btn btn-link m-0" disabled><i class="fa-solid fa-circle-chevron-left text-dark fa-2x"></i></button>
-            </div>
-        </div>
+        <swiper class="swiper2 trending-books row flex-row-reverse mx-1 p-1 rounded-1 mb-5" style="background-color: #f4f4f4; align-items:center;"
+            dir="rtl"
+            :modules="modules"
+            :slides-per-view="5"
+            :space-between="20"
+            navigation
+            :breakpoints="{
+                '320': {
+                    slidesPerView: 1,
+                    spaceBetween: 20,
+                },
+                '480': {
+                    slidesPerView: 3,
+                    spaceBetween: 20,
+                },
+                '640': {
+                    slidesPerView: 4,
+                    spaceBetween: 20,
+                },
+                '768': {
+                    slidesPerView: 5,
+                    spaceBetween: 40,
+                },
+                '1024': {
+                    slidesPerView: 7,
+                    spaceBetween: 50,
+                },
+            }"
+            @swiper="onSwiper"
+            @slideChange="onSlideChange"
+        >
+            <swiper-slide v-for="t in trending" :key="t.id" class="p-1">
+                <router-link :to="{name: 'book', params: {id: t.id}}"  class="router-links">
+                    <img class="book-img d-block mx-auto" :src="t.image" alt="">
+                    <p class="book-title mx-auto text-center p-1">{{ t.name }}</p>
+                </router-link> 
+            </swiper-slide>
+        </swiper>
 
         <p v-if="user" class="title"><span> فعالیت  دوستان</span></p>
-        <div v-if="user" class="friends-activity row flex-row-reverse mx-1 p-1 rounded-1 mb-5" style="background-color: #f4f4f4; height:230px;">
-            <div class="pagination col-auto me-0 px-0" aria-label="Page navigation example">
-                <button v-if="paginator['activities']['hasPrev']" @click.prevent="prev('activities')" class="btn btn-link ps-1 m-0">
-                    <i class="fa-solid fa-circle-chevron-right text-dark fa-2x"></i>
-                </button>
-                <button v-else class="btn btn-link ps-1 m-0" disabled><i class="fa-solid fa-circle-chevron-right text-dark fa-2x"></i></button>
-            </div>
-            <div v-for="a in activities" :key="a.id" class="col-2 p-1 mx-3 ">
+        <swiper v-if="user" class="swiper3 friends-activity row flex-row-reverse mx-1 p-1 rounded-1 mb-5" style="background-color: #f4f4f4; align-items:center;"
+            dir="rtl"
+            :modules="modules"
+            :slides-per-view="5"
+            :space-between="20"
+            navigation
+            :breakpoints="{
+                '320': {
+                    slidesPerView: 1,
+                    spaceBetween: 20,
+                },
+                '480': {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                },
+                '640': {
+                    slidesPerView: 3,
+                    spaceBetween: 20,
+                },
+                '880': {
+                    slidesPerView: 4,
+                    spaceBetween: 40,
+                },
+                '1200': {
+                    slidesPerView: 5,
+                    spaceBetween: 50,
+                },
+            }"
+            @swiper="onSwiper"
+            @slideChange="onSlideChange"
+        >
+            <swiper-slide v-for="a in activities" :key="a.id" class="p-1">
                 <div class="row flex-row-reverse py-auto">
-                    <div class="col-8">
-                        <router-link :to="{name: 'book', params: {id: a.id}}" class="router-links">
-                            <img :src="a.image" class="book-img d-block" alt="...">
-                            <p class="book-title text-center p-1 mx-auto">{{ a.name }}</p>
-                        </router-link>
-                    </div>
-                    <div class="col-auto g-0" data-bs-toggle="modal" :data-bs-target="'#friendsActivitiesModal' + a.id">
+                    <div class="col border g-0" data-bs-toggle="modal" :data-bs-target="'#friendsActivitiesModal' + a.id">
                         <div class="row mb-1 ms-0" v-for="f in a.preview_friends" :key="f.id">
                             <div>
                                 <img :src="f.image" class="user-profile mt-1">  
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="pagination col-auto p-0 me-auto" aria-label="Page navigation example">
-                <button v-if="paginator['activities']['hasNext']" @click.prevent="next('activities')" class="btn btn-link pe-1 m-0" >
-                    <i class="fa-solid fa-circle-chevron-left fa-2x text-dark"></i>
-                </button>
-                <button v-else class="btn btn-link pe-1 m-0" disabled><i class="fa-solid fa-circle-chevron-left text-dark fa-2x"></i></button>
-            </div>
-            <div v-for="a in activities" :key="a.id">
-                <div class="modal fade" :id="'friendsActivitiesModal' + a.id" tabindex="-1" role="dialog"
-                aria-labelledby="friendsActivitiesModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-scrollable">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title w-100 text-center" id="friendsActivitiesModalLabel">فعالیت دوستان</h5>
-                                <button :id="'close_modal' + a.id" type="button" class="btn-close"
-                                    data-bs-dismiss="modal" aria-label="Close"></button>                                
-                            </div>
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col">
-                                        <p v-if="a.friends_who_already_read_this_book" class="text-center w-100 bg-light p-1 border rounded-1 mt-2">
-                                                خوانده اند</p>
-                                        <div class="row px-1" v-for="f in a.friends_who_already_read_this_book" :key="f.id">
-                                            <div class="d-flex flex-row-reverse align-items-center"
-                                            @click.prevent="showProfile(f.id , a.id)">
-                                                <p><img :src="f.image" class="user-profile mt-1">  </p> 
-                                                <p class="me-2">{{f.username}}</p>                     
-                                            </div>
+                    <div class="col-8 border">
+                        <router-link :to="{name: 'book', params: {id: a.id}}" class="router-links">
+                            <img :src="a.image" class="book-img d-block mx-auto" alt="...">
+                            <p class="book-title text-center p-1 mx-auto">{{ a.name }}</p>
+                        </router-link>
+                    </div>
+                </div> 
+            </swiper-slide>
+        </swiper>
+
+        <!-- friends activities modal  -->
+        <div v-for="a in activities" :key="a.id">
+            <div class="modal fade" :id="'friendsActivitiesModal' + a.id" tabindex="-1" role="dialog"
+            aria-labelledby="friendsActivitiesModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title w-100 text-center" id="friendsActivitiesModalLabel">فعالیت دوستان</h5>
+                            <button :id="'close_modal' + a.id" type="button" class="btn-close"
+                                data-bs-dismiss="modal" aria-label="Close"></button>                                
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col">
+                                    <p v-if="a.friends_who_already_read_this_book" class="text-center w-100 bg-light p-1 border rounded-1 mt-2">
+                                            خوانده اند</p>
+                                    <div class="row px-1" v-for="f in a.friends_who_already_read_this_book" :key="f.id">
+                                        <div class="d-flex flex-row-reverse align-items-center"
+                                        @click.prevent="showProfile(f.id , a.id)">
+                                            <p><img :src="f.image" class="user-profile mt-1">  </p> 
+                                            <p class="me-2">{{f.username}}</p>                     
                                         </div>
                                     </div>
-                                    <div class="col">
-                                        <p v-if="a.friends_who_are_reading_this_book" class="text-center w-100 bg-light p-1 border rounded-1 mt-2">
-                                            دارند می خوانند </p>
-                                        <div class="row px-1" v-for="f in a.friends_who_are_reading_this_book" :key="f.id">
-                                            <div class="d-flex flex-row-reverse align-items-center"
-                                            @click.prevent="showProfile(f.id , a.id)">
-                                                <p><img :src="f.image" class="user-profile mt-1">  </p> 
-                                                <p class="me-2">{{f.username}}</p>                     
-                                            </div>
+                                </div>
+                                <div class="col">
+                                    <p v-if="a.friends_who_are_reading_this_book" class="text-center w-100 bg-light p-1 border rounded-1 mt-2">
+                                        دارند می خوانند </p>
+                                    <div class="row px-1" v-for="f in a.friends_who_are_reading_this_book" :key="f.id">
+                                        <div class="d-flex flex-row-reverse align-items-center"
+                                        @click.prevent="showProfile(f.id , a.id)">
+                                            <p><img :src="f.image" class="user-profile mt-1">  </p> 
+                                            <p class="me-2">{{f.username}}</p>                     
                                         </div>
                                     </div>
                                 </div>
@@ -261,22 +276,22 @@ export default {
                 //     'hasPrev': false,
                 //     'pageCount': 3,
                 // },
-                'trending': {
-                    'page': 1,
-                    'pageSize': 6,
-                    'all': null,
-                    'hasNext': true,
-                    'hasPrev': false,
-                    'pageCount': 3,
-                },
-                'activities': {
-                    'page': 1,
-                    'pageSize': 4,
-                    'all': null,
-                    'hasNext': true,
-                    'hasPrev': false,
-                    'pageCount': 4,
-                },
+                // 'trending': {
+                //     'page': 1,
+                //     'pageSize': 6,
+                //     'all': null,
+                //     'hasNext': true,
+                //     'hasPrev': false,
+                //     'pageCount': 3,
+                // },
+                // 'activities': {
+                //     'page': 1,
+                //     'pageSize': 4,
+                //     'all': null,
+                //     'hasNext': true,
+                //     'hasPrev': false,
+                //     'pageCount': 4,
+                // },
                 'shelves': {
                     'page': 1,
                     'pageSize': 3,
@@ -294,10 +309,11 @@ export default {
             console.log(response.data.data)
             // this.paginator['popular']['all'] = response.data.data.popular;
             this.popular = response.data.data.popular;
-            this.paginator['trending']['all'] = response.data.data.trending;
+            // this.paginator['trending']['all'] = response.data.data.trending;
+            this.trending = response.data.data.trending;
 
-            this.paginate('popular')
-            this.paginate('trending')
+            // this.paginate('popular')
+            // this.paginate('trending')
         });
     },
     beforeMount() {
@@ -323,7 +339,8 @@ export default {
                 axios.get('/api/friends-activities')
                 .then(response => {
                     console.log(response.data.data)
-                    this.paginator['activities']['all'] = response.data.data;
+                    // this.paginator['activities']['all'] = response.data.data;
+                    this.activities = response.data.data;
                     this.paginate('activities')                 
                 });
 
@@ -440,5 +457,10 @@ export default {
 }
 .next-btn {
     transform: translate(100%, 0);
+}
+.swiper-slide {
+    margin-left: 20px !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
 }
 </style>
