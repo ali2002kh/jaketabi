@@ -30,7 +30,7 @@ class SearchController extends Controller
         $publishers = [];
 
         if($input != '') {
-            $books = Book::where('name','LIKE',"%".$input."%")->get();
+            $books = Book::where('name','LIKE',"%".$input."%")->where('status', 1)->get();
             $shelves = Shelf::where('name','LIKE',"%".$input."%")->get();
             $genres = Genre::where('name','LIKE',"%".$input."%")->get();
             $categories = BookCategory::where('name','LIKE',"%".$input."%")->get();
@@ -72,7 +72,7 @@ class SearchController extends Controller
         $books = [];
 
         if($input != '') {
-            $books = Book::where('name','LIKE',"%".$input."%")->get();
+            $books = Book::where('name','LIKE',"%".$input."%")->where('status', 1)->get();
         }
 
         $filtered = collect();

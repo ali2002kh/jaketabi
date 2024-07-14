@@ -230,8 +230,9 @@ class Book extends Model
 
     public function remove() {
         
-        $this->getLog()->delete();
-        $this->delete();
+        // $this->getLog()->delete();
+        $this->status = 0;
+        $this->save();
         abort(200);
     }
 

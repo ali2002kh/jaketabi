@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\FriendshipController;
@@ -94,3 +95,7 @@ Route::get('publisher/{id}/{page}', [BookController::class, 'publisher']);
 Route::get('book/comments/{book_id}', [BookController::class, 'comments']);
 
 Route::post('add-book-comment/{book_id}', [BookController::class, 'addComment']);
+
+// administration ----------------------------------------------------------------
+
+Route::get('book/remove/{id}', [AdminController::class, 'removeBook']);
