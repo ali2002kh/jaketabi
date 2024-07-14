@@ -59,5 +59,36 @@ class SearchController extends Controller
         return UserFriendResource::collection($users);
     }
 
+    public function searchBook(Request $request) {
+
+        $input = $request->get('input');
+        $publisher_id = null;
+
+        if ($request->has('publisher_id')) {
+            
+            $publisher_id = $request->get('publisher_id');
+        }
+
+        $books = [];
+
+        if($input != '') {
+            $books = Book::where('name','LIKE',"%".$input."%")->get();
+        }
+
+        $filtered = collect();
+
+        if ($publisher_id) {
+            foreach($books as $book) {
+                if ($book->publisher_id == $publisher_id) {
+                    $filtered->add($book);
+                }
+            }
+        } else {
+            $filtered = $books;
+        }
+
+        return BookPreviewResource::collection($filtered);
+    }
+
 }
 

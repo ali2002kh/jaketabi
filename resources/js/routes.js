@@ -27,7 +27,6 @@ const routes = [
     {
         path: "/admin",
         component: Admin,
-        name: "admin",
         children: [
             // publisher admin
             {
