@@ -1,7 +1,12 @@
 <template>
-    <div class="container-fluid" v-if="user && user.role">
+    <div class="container-fluid">
     
-        <div class="modal-body">
+        <div class="col-auto">
+            <router-link :to="{name: 'create-book'}" class="link-dark text-center" 
+            >کتاب جدید</router-link>
+        </div>
+        <hr>
+        <div class="container">
             <input type="text" class="form-control" name="search" 
             @keyup="search" v-model="searchInput">
             <br>
@@ -14,9 +19,13 @@
                         </div>
                     </div>
                     <div class="col-auto float-start">
+                        <router-link :to="{name: 'edit-book', params: {id: b.id}}"  class="btn btn-dark m-1 p-1 px-2" 
+                        >ویرایش</router-link>
+                    </div>
+                    <div class="col-auto float-start">
                         <button  class="btn btn-dark m-1 p-1 px-2" 
-                        @click.prevent="sendFriendRequest(b.id)"
-                        >درخواست دوستی</button>
+                        @click.prevent="removeBook(b.id)"
+                        >حذف</button>
                     </div>
                 </div>
             </div>
@@ -37,33 +46,11 @@ export default {
         } 
     },
     beforeMount() {
-        let loadUser = new Promise((resolve, reject) => {
-             if (this.user) {
-                console.log('User is already loaded')
-                resolve()
-            } else {
-                this.$store.dispatch("user/loadUser")
-                .then(() => {
-                    resolve()
-                }).catch((error) => {
-                    console.log(error.message)
-                    if (error.message === 'Unauthorized') {
-                        this.$router.push('/login')
-                        reject()
-                    }
-                })
-            }
-        })
-
-        loadUser.then(() => {
-            if (!this.user.role) {
-                this.$router.push('/login')
-            } else {
-                if (this.user.role.role_id == 3 || this.user.role.role_id == 4) {
-                    this.publisher = this.user.publisher
-                }
-            }
-        })
+        
+        if (this.user.role.role_id == 3 || this.user.role.role_id == 4) {
+            this.publisher = this.user.publisher
+        }
+    
     },
 
     
@@ -100,6 +87,13 @@ export default {
                     
                 }
             }, 800);
+        },
+
+        async removeBook(book_id) {
+            await axios.get(`/api/book/remove/${book_id}`)
+            .then(() => {
+                this.books = this.books.filter(item => item.id !== book_id) 
+            })
         },
     }
     

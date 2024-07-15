@@ -48,7 +48,7 @@ class AdminController extends Controller
             $image = null;
         }
 
-        $user->createBook(
+        $book_id = $user->createBook(
             isbn : $request->get('isbn'), 
             name : $request->get('name'),
             image : $image,
@@ -63,6 +63,13 @@ class AdminController extends Controller
             ddc : $request->get('ddc'),
             isbn_period : $request->get('isbn_period'),
         );
+
+        foreach (explode(",", $request->get('genres')) as $genre_id) {
+            $gb = new GenreBook();
+            $gb->genre_id = $genre_id;
+            $gb->book_id = $book_id;
+            $gb->save();
+        }
 
         return abort(200, 'کتاب با موفقیت ایجاد شد');
     }

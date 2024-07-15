@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\BookPreviewResource;
-use App\Http\Resources\BookPublicResource;
 use App\Http\Resources\FriendBookResource;
 use App\Http\Resources\ShelfPreviewResource;
 use App\Http\Resources\ShelfResource;

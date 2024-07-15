@@ -84,7 +84,7 @@ class User extends Authenticatable
     ) {
 
         $book = new Book([
-            'isbn' => $isbn,
+            'ISBN' => $isbn,
             'name' => $name,
             'image' => $image,
             'author' => $author,
@@ -94,15 +94,17 @@ class User extends Authenticatable
             'description' => $description,
             'translator' => $translator,
             'page_count' => $page_count,
-            'lcc' => $lcc,
-            'ddc' => $ddc,
-            'isbn_period' => $isbn_period,
+            'LCC' => $lcc,
+            'DDC' => $ddc,
+            'ISBN_period' => $isbn_period,
         ]);
 
         $book->save();
 
         $bookLog = new BookLog(['book_id' => $book->id]);
         $bookLog->save();
+
+        return $book->id;
     }
 
     public function promoteNormalUserToPublisherAdmin($user_id, $publisher_id) {
