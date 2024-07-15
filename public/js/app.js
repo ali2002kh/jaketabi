@@ -24401,11 +24401,11 @@ var _hoisted_11 = {
 var _hoisted_12 = ["data-bs-target"];
 var _hoisted_13 = ["src"];
 var _hoisted_14 = {
-  "class": "col-8 border"
+  "class": "col-md-8 col-sm-6 col-6 ps-0 g-0 border"
 };
 var _hoisted_15 = ["src"];
 var _hoisted_16 = {
-  "class": "book-title text-center p-1 mx-auto"
+  "class": "book-title mx-auto text-center py-1"
 };
 var _hoisted_17 = ["id"];
 var _hoisted_18 = {
@@ -24699,21 +24699,22 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         slidesPerView: 1,
         spaceBetween: 20
       },
-      '480': {
+      '450': {
         slidesPerView: 2,
         spaceBetween: 20
       },
-      '640': {
+      '660': {
         slidesPerView: 3,
         spaceBetween: 20
       },
-      '880': {
+      '948': {
         slidesPerView: 4,
         spaceBetween: 40
       },
       '1200': {
         slidesPerView: 5,
-        spaceBetween: 50
+        spaceBetween: 50,
+        slidesOffsetAfter: 0
       }
     },
     onSwiper: $setup.onSwiper,
@@ -24727,7 +24728,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }, {
           "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
             return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-              "class": "col border g-0",
+              "class": "col-auto g-0 pe-0 border",
               "data-bs-toggle": "modal",
               "data-bs-target": '#friendsActivitiesModal' + a.id
             }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(a.preview_friends, function (f) {
@@ -34642,7 +34643,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.body-class[data-v-b3c5cf30] {\n        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n}\n.book-img[data-v-b3c5cf30] {\n            width: 110px;\n            height: 160px;\n}\n.book-title[data-v-b3c5cf30] {\n        direction: rtl;\n        white-space: nowrap;\n        overflow: hidden;\n        text-overflow: ellipsis;\n        max-width: 120px;\n}\n.shelf-book-img[data-v-b3c5cf30] {\n        max-width: 80px;\n        max-height: 120px;\n}\n.title[data-v-b3c5cf30] {\n        width: 100%; \n        direction: rtl;\n        border-bottom: 1.5px solid rgb(232, 232, 232); \n        line-height: 0.1em;\n        font-family: hamishe;\n}\n.title span[data-v-b3c5cf30] { \n            background:#fff; \n            padding-left: 20px;\n            padding-right: 20px;\n            margin-right: 30px;\n            font-weight:bold;\n            font-size: large;\n}\n.user-profile[data-v-b3c5cf30] {\n        width: 40px;\n        height: 40px;\n        border-radius: 50%;\n}\n.router-links[data-v-b3c5cf30] {\n    color: black;\n    text-decoration: none;\n}\n.lists-body[data-v-b3c5cf30] {\n    background: #f4f4f4; \n    height: 250px;\n}\n.next-btn[data-v-b3c5cf30] {\n    transform: translate(100%, 0);\n}\n.swiper-slide[data-v-b3c5cf30] {\n    margin-left: 20px !important;\n    padding-left: 10px !important;\n    padding-right: 10px !important;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.body-class[data-v-b3c5cf30] {\n        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n}\n.book-img[data-v-b3c5cf30] {\n            width: 110px;\n            height: 160px;\n}\n.book-title[data-v-b3c5cf30] {\n        direction: rtl;\n        white-space: nowrap;\n        overflow: hidden;\n        text-overflow: ellipsis;\n        max-width: 120px;\n}\n.shelf-book-img[data-v-b3c5cf30] {\n        max-width: 80px;\n        max-height: 120px;\n}\n.title[data-v-b3c5cf30] {\n        width: 100%; \n        direction: rtl;\n        border-bottom: 1.5px solid rgb(232, 232, 232); \n        line-height: 0.1em;\n        font-family: hamishe;\n}\n.title span[data-v-b3c5cf30] { \n            background:#fff; \n            padding-left: 20px;\n            padding-right: 20px;\n            margin-right: 30px;\n            font-weight:bold;\n            font-size: large;\n}\n.user-profile[data-v-b3c5cf30] {\n        width: 40px;\n        height: 40px;\n        border-radius: 50%;\n}\n.router-links[data-v-b3c5cf30] {\n    color: black;\n    text-decoration: none;\n}\n.lists-body[data-v-b3c5cf30] {\n    background: #f4f4f4; \n    height: 250px;\n}\n.next-btn[data-v-b3c5cf30] {\n    transform: translate(100%, 0);\n}\n.swiper-slide[data-v-b3c5cf30] {\n    margin-left: 20px !important;\n    margin-right: 0 !important;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

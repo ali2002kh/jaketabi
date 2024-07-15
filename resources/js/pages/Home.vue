@@ -83,7 +83,7 @@
         </swiper>
 
         <p v-if="user" class="title"><span> فعالیت  دوستان</span></p>
-        <swiper v-if="user" class="swiper3 friends-activity row flex-row-reverse mx-1 p-1 rounded-1 mb-5" style="background-color: #f4f4f4; align-items:center;"
+        <swiper v-if="user" class="swiper3 friends-activity row flex-row-reverse  mx-1 p-1 rounded-1 mb-5" style="background-color: #f4f4f4; align-items:center;"
             dir="rtl"
             :modules="modules"
             :slides-per-view="5"
@@ -94,21 +94,22 @@
                     slidesPerView: 1,
                     spaceBetween: 20,
                 },
-                '480': {
+                '450': {
                     slidesPerView: 2,
                     spaceBetween: 20,
                 },
-                '640': {
+                '660': {
                     slidesPerView: 3,
                     spaceBetween: 20,
                 },
-                '880': {
+                '948': {
                     slidesPerView: 4,
                     spaceBetween: 40,
                 },
                 '1200': {
                     slidesPerView: 5,
                     spaceBetween: 50,
+                    slidesOffsetAfter: 0,
                 },
             }"
             @swiper="onSwiper"
@@ -116,17 +117,17 @@
         >
             <swiper-slide v-for="a in activities" :key="a.id" class="p-1">
                 <div class="row flex-row-reverse py-auto">
-                    <div class="col border g-0" data-bs-toggle="modal" :data-bs-target="'#friendsActivitiesModal' + a.id">
+                    <div class="col-auto g-0 pe-0 border" data-bs-toggle="modal" :data-bs-target="'#friendsActivitiesModal' + a.id">
                         <div class="row mb-1 ms-0" v-for="f in a.preview_friends" :key="f.id">
                             <div>
                                 <img :src="f.image" class="user-profile mt-1">  
                             </div>
                         </div>
                     </div>
-                    <div class="col-8 border">
+                    <div class="col-md-8 col-sm-6 col-6 ps-0 g-0 border">
                         <router-link :to="{name: 'book', params: {id: a.id}}" class="router-links">
                             <img :src="a.image" class="book-img d-block mx-auto" alt="...">
-                            <p class="book-title text-center p-1 mx-auto">{{ a.name }}</p>
+                            <p class="book-title mx-auto text-center py-1 ">{{ a.name }}</p>
                         </router-link>
                     </div>
                 </div> 
@@ -460,7 +461,6 @@ export default {
 }
 .swiper-slide {
     margin-left: 20px !important;
-    padding-left: 10px !important;
-    padding-right: 10px !important;
+    margin-right: 0 !important;
 }
 </style>
