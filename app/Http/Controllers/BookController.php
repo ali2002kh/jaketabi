@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\BookCategoryPreviewResource;
 use App\Http\Resources\BookCategoryResource;
 use App\Http\Resources\BookCommentResource;
 use App\Http\Resources\BookPreviewResource;
@@ -72,6 +73,11 @@ class BookController extends Controller {
         return BookPreviewResource::collection($books);
     }
 
+    public function categories() {
+
+        return BookCategoryPreviewResource::collection(BookCategory::all());
+    }
+
     public function genre($id, $page) {
 
         $genre = Genre::find($id);
@@ -87,6 +93,11 @@ class BookController extends Controller {
         $books = $genre->getBooks()->slice(($page - 1) * $pageSize)->take($pageSize);
 
         return BookPreviewResource::collection($books);
+    }
+
+    public function genres() {
+
+        return GenreResource::collection(Genre::all());
     }
 
     public function publisher($id, $page) {
@@ -105,6 +116,11 @@ class BookController extends Controller {
 
         return BookPreviewResource::collection($books);
 
+    }
+
+    public function publishers() {
+
+        return PublisherResource::collection(Publisher::all());
     }
 
     public function addComment($book_id, Request $request) {

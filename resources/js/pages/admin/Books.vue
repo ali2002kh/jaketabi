@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid" v-if="user && user.role">
+    <div class="container-fluid">
     
         <div class="col-auto">
             <router-link :to="{name: 'create-book'}" class="link-dark text-center" 
@@ -46,33 +46,11 @@ export default {
         } 
     },
     beforeMount() {
-        let loadUser = new Promise((resolve, reject) => {
-             if (this.user) {
-                console.log('User is already loaded')
-                resolve()
-            } else {
-                this.$store.dispatch("user/loadUser")
-                .then(() => {
-                    resolve()
-                }).catch((error) => {
-                    console.log(error.message)
-                    if (error.message === 'Unauthorized') {
-                        this.$router.push('/login')
-                        reject()
-                    }
-                })
-            }
-        })
-
-        loadUser.then(() => {
-            if (!this.user.role) {
-                this.$router.push('/login')
-            } else {
-                if (this.user.role.role_id == 3 || this.user.role.role_id == 4) {
-                    this.publisher = this.user.publisher
-                }
-            }
-        })
+        
+        if (this.user.role.role_id == 3 || this.user.role.role_id == 4) {
+            this.publisher = this.user.publisher
+        }
+    
     },
 
     
