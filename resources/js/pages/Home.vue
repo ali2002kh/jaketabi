@@ -83,7 +83,8 @@
         </swiper>
 
         <p v-if="user" class="title"><span> فعالیت  دوستان</span></p>
-        <swiper v-if="user" class="swiper3 friends-activity row flex-row-reverse  mx-1 p-1 rounded-1 mb-5" style="background-color: #f4f4f4; align-items:center;"
+        <swiper v-if="user" class="swiper3 friends-activity row flex-row-reverse  mx-1 p-1 rounded-1 mb-5" 
+            style="background-color: #f4f4f4; align-items:center;"
             dir="rtl"
             :modules="modules"
             :slides-per-view="5"
@@ -93,20 +94,24 @@
                 '320': {
                     slidesPerView: 1,
                     spaceBetween: 20,
+                    slidesOffsetBefore: -70,
+                    slidesOffsetAfter: 50,
                 },
                 '450': {
                     slidesPerView: 2,
                     spaceBetween: 20,
+                    slidesOffsetBefore: -50,
                 },
-                '660': {
+                '680': {
                     slidesPerView: 3,
                     spaceBetween: 20,
+                    slidesOffsetBefore: -30,
                 },
-                '948': {
+                '840': {
                     slidesPerView: 4,
                     spaceBetween: 40,
                 },
-                '1200': {
+                '1080': {
                     slidesPerView: 5,
                     spaceBetween: 50,
                     slidesOffsetAfter: 0,
@@ -117,14 +122,14 @@
         >
             <swiper-slide v-for="a in activities" :key="a.id" class="p-1">
                 <div class="row flex-row-reverse py-auto">
-                    <div class="col-auto g-0 pe-0 border" data-bs-toggle="modal" :data-bs-target="'#friendsActivitiesModal' + a.id">
+                    <div class="col-auto g-0 pe-2" data-bs-toggle="modal" :data-bs-target="'#friendsActivitiesModal' + a.id">
                         <div class="row mb-1 ms-0" v-for="f in a.preview_friends" :key="f.id">
                             <div>
                                 <img :src="f.image" class="user-profile mt-1">  
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-8 col-sm-6 col-6 ps-0 g-0 border">
+                    <div class="col-auto g-0">
                         <router-link :to="{name: 'book', params: {id: a.id}}" class="router-links">
                             <img :src="a.image" class="book-img d-block mx-auto" alt="...">
                             <p class="book-title mx-auto text-center py-1 ">{{ a.name }}</p>
@@ -177,7 +182,61 @@
         </div>
 
         <p v-if="user" class="title"><span> قفسه های  دوستان</span></p>
-        <div v-if="user" class="friends-shelves row flex-row-reverse align-items-center mx-1 p-1 rounded-1 mb-2"
+        <swiper v-if="user" class="swiper4 friends-shelves row flex-row-reverse align-items-center mx-1 p-1 rounded-1 mb-2" style="background-color: #f4f4f4; align-items:center;"
+            dir="rtl"
+            :modules="modules"
+            :space-between="0"
+            navigation
+            :breakpoints="{
+                '320': {
+                    slidesPerView: 'auto',
+                    centeredSlides: true,
+                },
+
+                '800': {
+                    slidesPerView: 2,
+                    slidesPerGroup: 2,
+                    slidesPerGroupSkip: 2,
+                },
+                '1200': {
+                    slidesPerView: 3.1,
+                    slidesPerGroup: 3,
+                    slidesPerGroupSkip: 3,
+                    spaceBetween: 10,
+                },
+            }"
+            @swiper="onSwiper"
+            @slideChange="onSlideChange"
+        >
+            <swiper-slide v-for="s in shelves" :key="s.id" class="p-1 shelf">
+                <div class="shelf-title row m-1 bg-dark rounded-top text-white bg-gradient">
+                    <p class="text-center  mx-auto fw-bold m-1">{{s.name}}</p>    
+                </div>
+                <div class="shelf-books row d-flex flex-row-reverse justify-content-start align-items-center
+                    bg-light m-1 border-start border-end border-bottom rounded-bottom" 
+                    style="min-height:130px;" >
+                    <router-link :to="{name:'shelf', params: {id: s.id}}" 
+                    class="col-auto me-auto p-2">
+                        <i class="fa-solid fa-angle-left fa-xl text-dark"></i>
+                    </router-link>
+                    <div v-for="b in s.books" :key="b.id" class="col-auto mx-0">
+                        <img  class="shelf-book-img" :src="b.image" :alt="b.name">
+                    </div>
+                </div>
+                <div class="shelf-footer row float-start align-items-center py-2 g-0 my-2">
+                    <div class="col-auto ps-2">
+                        <router-link :to="{name: 'profile', params: {id: s.user.id}}" class="router-links">
+                            {{ s.user.username }}
+                        </router-link>
+                    </div>
+                    <div class="col-auto ps-2">
+                        <img :src="s.user.image" :alt="s.user.name" class="user-profile">
+                    </div>
+                </div> 
+            </swiper-slide>
+        </swiper>
+        
+        <!-- <div v-if="user" class="friends-shelves row flex-row-reverse align-items-center mx-1 p-1 rounded-1 mb-2"
         style="background: #f4f4f4; height: 250px;">
             <div class="pagination col-auto me-0 px-0" aria-label="Page navigation example">
                 <button v-if="paginator['shelves']['hasPrev']" @click.prevent="prev('shelves')" class="btn btn-link ps-1 m-0">
@@ -212,12 +271,12 @@
                         </div>
                     </div>
                 </div>
-                <!-- <nav aria-label="Page navigation example">
+                <nav aria-label="Page navigation example">
                     <ul class="pagination ms-3">
                         <li class="page-item"><button v-if="paginator['shelves']['hasPrev']" @click.prevent="prev('shelves')" class="page-link">Previous</button></li>
                         <li class="page-item"><button v-if="paginator['shelves']['hasNext']" @click.prevent="next('shelves')" class="page-link">Next</button></li>
                     </ul>
-                </nav> -->
+                </nav>
             </div>
             <div class="pagination col-auto p-0 me-auto" aria-label="Page navigation example">
                 <button v-if="paginator['shelves']['hasNext']" @click.prevent="next('shelves')" class="btn btn-link pe-1 m-0" >
@@ -225,7 +284,7 @@
                 </button>
                 <button v-else class="btn btn-link pe-1 m-0" disabled><i class="fa-solid fa-circle-chevron-left text-dark fa-2x"></i></button>
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -268,40 +327,40 @@ export default {
             activities: null,
             shelves: null,
 
-            paginator: {
-                // 'popular': {
-                //     'page': 1,
-                //     'pageSize': 6,
-                //     'all': null,
-                //     'hasNext': true,
-                //     'hasPrev': false,
-                //     'pageCount': 3,
-                // },
-                // 'trending': {
-                //     'page': 1,
-                //     'pageSize': 6,
-                //     'all': null,
-                //     'hasNext': true,
-                //     'hasPrev': false,
-                //     'pageCount': 3,
-                // },
-                // 'activities': {
-                //     'page': 1,
-                //     'pageSize': 4,
-                //     'all': null,
-                //     'hasNext': true,
-                //     'hasPrev': false,
-                //     'pageCount': 4,
-                // },
-                'shelves': {
-                    'page': 1,
-                    'pageSize': 3,
-                    'all': null,
-                    'hasNext': true,
-                    'hasPrev': false,
-                    'pageCount': 4,
-                },
-            }
+            // paginator: {
+            //     'popular': {
+            //         'page': 1,
+            //         'pageSize': 6,
+            //         'all': null,
+            //         'hasNext': true,
+            //         'hasPrev': false,
+            //         'pageCount': 3,
+            //     },
+            //     'trending': {
+            //         'page': 1,
+            //         'pageSize': 6,
+            //         'all': null,
+            //         'hasNext': true,
+            //         'hasPrev': false,
+            //         'pageCount': 3,
+            //     },
+            //     'activities': {
+            //         'page': 1,
+            //         'pageSize': 4,
+            //         'all': null,
+            //         'hasNext': true,
+            //         'hasPrev': false,
+            //         'pageCount': 4,
+            //     },
+            //     'shelves': {
+            //         'page': 1,
+            //         'pageSize': 3,
+            //         'all': null,
+            //         'hasNext': true,
+            //         'hasPrev': false,
+            //         'pageCount': 4,
+            //     },
+            // }
         } 
     },
     created() {
@@ -348,7 +407,8 @@ export default {
                 axios.get('/api/friends-shelves')
                 .then(response => {
                     console.log(response.data.data)
-                    this.paginator['shelves']['all'] = response.data.data;
+                    // this.paginator['shelves']['all'] = response.data.data;
+                    this.shelves = response.data.data;
                     this.paginate('shelves')   
                 });
             }
@@ -462,5 +522,8 @@ export default {
 .swiper-slide {
     margin-left: 20px !important;
     margin-right: 0 !important;
+}
+.shelf {
+    width:362px !important;
 }
 </style>

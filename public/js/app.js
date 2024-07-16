@@ -22018,41 +22018,42 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
       popular: null,
       trending: null,
       activities: null,
-      shelves: null,
-      paginator: {
-        // 'popular': {
-        //     'page': 1,
-        //     'pageSize': 6,
-        //     'all': null,
-        //     'hasNext': true,
-        //     'hasPrev': false,
-        //     'pageCount': 3,
-        // },
-        // 'trending': {
-        //     'page': 1,
-        //     'pageSize': 6,
-        //     'all': null,
-        //     'hasNext': true,
-        //     'hasPrev': false,
-        //     'pageCount': 3,
-        // },
-        // 'activities': {
-        //     'page': 1,
-        //     'pageSize': 4,
-        //     'all': null,
-        //     'hasNext': true,
-        //     'hasPrev': false,
-        //     'pageCount': 4,
-        // },
-        'shelves': {
-          'page': 1,
-          'pageSize': 3,
-          'all': null,
-          'hasNext': true,
-          'hasPrev': false,
-          'pageCount': 4
-        }
-      }
+      shelves: null
+
+      // paginator: {
+      //     'popular': {
+      //         'page': 1,
+      //         'pageSize': 6,
+      //         'all': null,
+      //         'hasNext': true,
+      //         'hasPrev': false,
+      //         'pageCount': 3,
+      //     },
+      //     'trending': {
+      //         'page': 1,
+      //         'pageSize': 6,
+      //         'all': null,
+      //         'hasNext': true,
+      //         'hasPrev': false,
+      //         'pageCount': 3,
+      //     },
+      //     'activities': {
+      //         'page': 1,
+      //         'pageSize': 4,
+      //         'all': null,
+      //         'hasNext': true,
+      //         'hasPrev': false,
+      //         'pageCount': 4,
+      //     },
+      //     'shelves': {
+      //         'page': 1,
+      //         'pageSize': 3,
+      //         'all': null,
+      //         'hasNext': true,
+      //         'hasPrev': false,
+      //         'pageCount': 4,
+      //     },
+      // }
     };
   },
   created: function created() {
@@ -22095,7 +22096,8 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         });
         axios.get('/api/friends-shelves').then(function (response) {
           console.log(response.data.data);
-          _this2.paginator['shelves']['all'] = response.data.data;
+          // this.paginator['shelves']['all'] = response.data.data;
+          _this2.shelves = response.data.data;
           _this2.paginate('shelves');
         });
       }
@@ -24559,7 +24561,7 @@ var _hoisted_11 = {
 var _hoisted_12 = ["data-bs-target"];
 var _hoisted_13 = ["src"];
 var _hoisted_14 = {
-  "class": "col-md-8 col-sm-6 col-6 ps-0 g-0 border"
+  "class": "col-auto g-0"
 };
 var _hoisted_15 = ["src"];
 var _hoisted_16 = {
@@ -24621,86 +24623,33 @@ var _hoisted_36 = /*#__PURE__*/_withScopeId(function () {
 });
 var _hoisted_37 = [_hoisted_36];
 var _hoisted_38 = {
-  key: 3,
-  "class": "friends-shelves row flex-row-reverse align-items-center mx-1 p-1 rounded-1 mb-2",
-  style: {
-    "background": "#f4f4f4",
-    "height": "250px"
-  }
-};
-var _hoisted_39 = {
-  "class": "pagination col-auto me-0 px-0",
-  "aria-label": "Page navigation example"
-};
-var _hoisted_40 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "fa-solid fa-circle-chevron-right text-dark fa-2x"
-  }, null, -1 /* HOISTED */);
-});
-var _hoisted_41 = [_hoisted_40];
-var _hoisted_42 = {
-  key: 1,
-  "class": "btn btn-link ps-1 m-0",
-  disabled: ""
-};
-var _hoisted_43 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "fa-solid fa-circle-chevron-right text-dark fa-2x"
-  }, null, -1 /* HOISTED */);
-});
-var _hoisted_44 = [_hoisted_43];
-var _hoisted_45 = {
-  "class": "col-11 g-0 m-0 d-flex flex-row-reverse p-0"
-};
-var _hoisted_46 = {
   "class": "shelf-title row m-1 bg-dark rounded-top text-white bg-gradient"
 };
-var _hoisted_47 = {
+var _hoisted_39 = {
   "class": "text-center mx-auto fw-bold m-1"
 };
-var _hoisted_48 = {
-  "class": "shelf-books row d-flex flex-row-reverse justify-content-start align-items-center bg-light mx-1 p-1 border-start border-end border-bottom rounded-bottom",
+var _hoisted_40 = {
+  "class": "shelf-books row d-flex flex-row-reverse justify-content-start align-items-center bg-light m-1 border-start border-end border-bottom rounded-bottom",
   style: {
     "min-height": "130px"
   }
 };
-var _hoisted_49 = ["src", "alt"];
-var _hoisted_50 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_41 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
     "class": "fa-solid fa-angle-left fa-xl text-dark"
   }, null, -1 /* HOISTED */);
 });
-var _hoisted_51 = {
-  "class": "shelf-footer row align-items-center py-2 g-0 my-2"
+var _hoisted_42 = ["src", "alt"];
+var _hoisted_43 = {
+  "class": "shelf-footer row float-start align-items-center py-2 g-0 my-2"
 };
-var _hoisted_52 = {
+var _hoisted_44 = {
   "class": "col-auto ps-2"
 };
-var _hoisted_53 = ["src", "alt"];
-var _hoisted_54 = {
+var _hoisted_45 = {
   "class": "col-auto ps-2"
 };
-var _hoisted_55 = {
-  "class": "pagination col-auto p-0 me-auto",
-  "aria-label": "Page navigation example"
-};
-var _hoisted_56 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "fa-solid fa-circle-chevron-left fa-2x text-dark"
-  }, null, -1 /* HOISTED */);
-});
-var _hoisted_57 = [_hoisted_56];
-var _hoisted_58 = {
-  key: 1,
-  "class": "btn btn-link pe-1 m-0",
-  disabled: ""
-};
-var _hoisted_59 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
-    "class": "fa-solid fa-circle-chevron-left text-dark fa-2x"
-  }, null, -1 /* HOISTED */);
-});
-var _hoisted_60 = [_hoisted_59];
+var _hoisted_46 = ["src", "alt"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_PageHeader = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("PageHeader");
   var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
@@ -24855,21 +24804,25 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     breakpoints: {
       '320': {
         slidesPerView: 1,
-        spaceBetween: 20
+        spaceBetween: 20,
+        slidesOffsetBefore: -70,
+        slidesOffsetAfter: 50
       },
       '450': {
         slidesPerView: 2,
-        spaceBetween: 20
+        spaceBetween: 20,
+        slidesOffsetBefore: -50
       },
-      '660': {
+      '680': {
         slidesPerView: 3,
-        spaceBetween: 20
+        spaceBetween: 20,
+        slidesOffsetBefore: -30
       },
-      '948': {
+      '840': {
         slidesPerView: 4,
         spaceBetween: 40
       },
-      '1200': {
+      '1080': {
         slidesPerView: 5,
         spaceBetween: 50,
         slidesOffsetAfter: 0
@@ -24886,7 +24839,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }, {
           "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
             return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-              "class": "col-auto g-0 pe-0 border",
+              "class": "col-auto g-0 pe-2",
               "data-bs-toggle": "modal",
               "data-bs-target": '#friendsActivitiesModal' + a.id
             }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(a.preview_friends, function (f) {
@@ -24964,63 +24917,91 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "class": "user-profile mt-1"
       }, null, 8 /* PROPS */, _hoisted_33)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_34, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(f.username), 1 /* TEXT */)], 8 /* PROPS */, _hoisted_32)]);
     }), 128 /* KEYED_FRAGMENT */))])])])])])], 8 /* PROPS */, _hoisted_17)]);
-  }), 128 /* KEYED_FRAGMENT */)), _ctx.user ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_35, [].concat(_hoisted_37))) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _ctx.user ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_38, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_39, [$data.paginator['shelves']['hasPrev'] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
-    key: 0,
-    onClick: _cache[0] || (_cache[0] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
-      return $options.prev('shelves');
-    }, ["prevent"])),
-    "class": "btn btn-link ps-1 m-0"
-  }, [].concat(_hoisted_41))) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", _hoisted_42, [].concat(_hoisted_44)))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_45, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.shelves, function (s) {
-    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
-      key: s.id,
-      "class": "col-4 p-1"
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_46, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_47, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(s.name), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_48, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(s.books, function (b) {
-      return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
-        key: b.id,
-        "class": "col-auto mx-0"
-      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-        "class": "shelf-book-img",
-        src: b.image,
-        alt: b.name
-      }, null, 8 /* PROPS */, _hoisted_49)]);
-    }), 128 /* KEYED_FRAGMENT */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
-      to: {
-        name: 'shelf',
-        params: {
-          id: s.id
-        }
+  }), 128 /* KEYED_FRAGMENT */)), _ctx.user ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_35, [].concat(_hoisted_37))) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _ctx.user ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_swiper, {
+    key: 3,
+    "class": "swiper4 friends-shelves row flex-row-reverse align-items-center mx-1 p-1 rounded-1 mb-2",
+    style: {
+      "background-color": "#f4f4f4",
+      "align-items": "center"
+    },
+    dir: "rtl",
+    modules: $setup.modules,
+    "space-between": 0,
+    navigation: "",
+    breakpoints: {
+      '320': {
+        slidesPerView: 'auto',
+        centeredSlides: true
       },
-      "class": "col-auto me-auto p-2"
-    }, {
-      "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-        return [_hoisted_50];
-      }),
-      _: 2 /* DYNAMIC */
-    }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["to"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_51, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_52, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-      src: s.user.image,
-      alt: s.user.name,
-      "class": "user-profile"
-    }, null, 8 /* PROPS */, _hoisted_53)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_54, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
-      to: {
-        name: 'profile',
-        params: {
-          id: s.user.id
-        }
+      '800': {
+        slidesPerView: 2,
+        slidesPerGroup: 2,
+        slidesPerGroupSkip: 2
       },
-      "class": "router-links"
-    }, {
-      "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-        return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(s.user.username), 1 /* TEXT */)];
-      }),
-      _: 2 /* DYNAMIC */
-    }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["to"])])])]);
-  }), 128 /* KEYED_FRAGMENT */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <nav aria-label=\"Page navigation example\">\n                    <ul class=\"pagination ms-3\">\n                        <li class=\"page-item\"><button v-if=\"paginator['shelves']['hasPrev']\" @click.prevent=\"prev('shelves')\" class=\"page-link\">Previous</button></li>\n                        <li class=\"page-item\"><button v-if=\"paginator['shelves']['hasNext']\" @click.prevent=\"next('shelves')\" class=\"page-link\">Next</button></li>\n                    </ul>\n                </nav> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_55, [$data.paginator['shelves']['hasNext'] ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
-    key: 0,
-    onClick: _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
-      return $options.next('shelves');
-    }, ["prevent"])),
-    "class": "btn btn-link pe-1 m-0"
-  }, [].concat(_hoisted_57))) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", _hoisted_58, [].concat(_hoisted_60)))])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])], 64 /* STABLE_FRAGMENT */);
+      '1200': {
+        slidesPerView: 3.1,
+        slidesPerGroup: 3,
+        slidesPerGroupSkip: 3,
+        spaceBetween: 10
+      }
+    },
+    onSwiper: $setup.onSwiper,
+    onSlideChange: $setup.onSlideChange
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.shelves, function (s) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_swiper_slide, {
+          key: s.id,
+          "class": "p-1 shelf"
+        }, {
+          "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+            return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_38, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_39, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(s.name), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_40, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+              to: {
+                name: 'shelf',
+                params: {
+                  id: s.id
+                }
+              },
+              "class": "col-auto me-auto p-2"
+            }, {
+              "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+                return [_hoisted_41];
+              }),
+              _: 2 /* DYNAMIC */
+            }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["to"]), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(s.books, function (b) {
+              return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+                key: b.id,
+                "class": "col-auto mx-0"
+              }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+                "class": "shelf-book-img",
+                src: b.image,
+                alt: b.name
+              }, null, 8 /* PROPS */, _hoisted_42)]);
+            }), 128 /* KEYED_FRAGMENT */))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_43, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_44, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+              to: {
+                name: 'profile',
+                params: {
+                  id: s.user.id
+                }
+              },
+              "class": "router-links"
+            }, {
+              "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+                return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(s.user.username), 1 /* TEXT */)];
+              }),
+              _: 2 /* DYNAMIC */
+            }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["to"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_45, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+              src: s.user.image,
+              alt: s.user.name,
+              "class": "user-profile"
+            }, null, 8 /* PROPS */, _hoisted_46)])])];
+          }),
+          _: 2 /* DYNAMIC */
+        }, 1024 /* DYNAMIC_SLOTS */);
+      }), 128 /* KEYED_FRAGMENT */))];
+    }),
+    _: 1 /* STABLE */
+  }, 8 /* PROPS */, ["modules", "onSwiper", "onSlideChange"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div v-if=\"user\" class=\"friends-shelves row flex-row-reverse align-items-center mx-1 p-1 rounded-1 mb-2\"\n        style=\"background: #f4f4f4; height: 250px;\">\n            <div class=\"pagination col-auto me-0 px-0\" aria-label=\"Page navigation example\">\n                <button v-if=\"paginator['shelves']['hasPrev']\" @click.prevent=\"prev('shelves')\" class=\"btn btn-link ps-1 m-0\">\n                    <i class=\"fa-solid fa-circle-chevron-right text-dark fa-2x\"></i>\n                </button>\n                <button v-else class=\"btn btn-link ps-1 m-0\" disabled><i class=\"fa-solid fa-circle-chevron-right text-dark fa-2x\"></i></button>\n            </div>\n            <div class=\"col-11 g-0 m-0 d-flex flex-row-reverse p-0\">\n                <div v-for=\"s in shelves\" :key=\"s.id\" class=\"col-4 p-1\">\n                    <div class=\"shelf-title row m-1 bg-dark rounded-top text-white bg-gradient\">\n                        <p class=\"text-center  mx-auto fw-bold m-1\">{{s.name}}</p>    \n                    </div>\n                    <div class=\"shelf-books row d-flex flex-row-reverse justify-content-start align-items-center\n                     bg-light mx-1 p-1 border-start border-end border-bottom rounded-bottom\" \n                     style=\"min-height:130px;\" >\n                        <div v-for=\"b in s.books\" :key=\"b.id\" class=\"col-auto mx-0\">\n                            <img  class=\"shelf-book-img\" :src=\"b.image\" :alt=\"b.name\">\n                        </div>\n                        <router-link :to=\"{name:'shelf', params: {id: s.id}}\" \n                        class=\"col-auto me-auto p-2\">\n                            <i class=\"fa-solid fa-angle-left fa-xl text-dark\"></i>\n                        </router-link>\n                    </div>\n                    <div class=\"shelf-footer row align-items-center py-2 g-0 my-2\">\n                        <div class=\"col-auto ps-2\">\n                            <img :src=\"s.user.image\" :alt=\"s.user.name\" class=\"user-profile\">\n                        </div>\n                        <div class=\"col-auto ps-2\">\n                            <router-link :to=\"{name: 'profile', params: {id: s.user.id}}\" class=\"router-links\">\n                                {{ s.user.username }}\n                            </router-link>\n                        </div>\n                    </div>\n                </div>\n                <nav aria-label=\"Page navigation example\">\n                    <ul class=\"pagination ms-3\">\n                        <li class=\"page-item\"><button v-if=\"paginator['shelves']['hasPrev']\" @click.prevent=\"prev('shelves')\" class=\"page-link\">Previous</button></li>\n                        <li class=\"page-item\"><button v-if=\"paginator['shelves']['hasNext']\" @click.prevent=\"next('shelves')\" class=\"page-link\">Next</button></li>\n                    </ul>\n                </nav>\n            </div>\n            <div class=\"pagination col-auto p-0 me-auto\" aria-label=\"Page navigation example\">\n                <button v-if=\"paginator['shelves']['hasNext']\" @click.prevent=\"next('shelves')\" class=\"btn btn-link pe-1 m-0\" >\n                    <i class=\"fa-solid fa-circle-chevron-left fa-2x text-dark\"></i>\n                </button>\n                <button v-else class=\"btn btn-link pe-1 m-0\" disabled><i class=\"fa-solid fa-circle-chevron-left text-dark fa-2x\"></i></button>\n            </div>\n        </div> ")])], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),
@@ -26458,7 +26439,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
       return $data.translator = $event;
     })
-  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.translator]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"m-1\">\r\n                    <label for=\"description\" class=\"form-label\">توضیحات</label>\r\n                    <textarea id=\"description\" class=\"form-control\" name=\"description\" v-model=\"description\"></textarea>\r\n                </div>\r\n                <div class=\"row my-1\">\r\n                    <div class=\"col-sm-3 m-1\">\r\n                        <label for=\"count\" class=\"form-label\">تعداد صفحه</label>\r\n                        <input type=\"number\" class=\"form-control\" id=\"count\" name=\"count\"\r\n                        v-model=\"count\"\r\n                        >\r\n                    </div>\r\n                </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.translator]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"m-1\">\n                    <label for=\"description\" class=\"form-label\">توضیحات</label>\n                    <textarea id=\"description\" class=\"form-control\" name=\"description\" v-model=\"description\"></textarea>\n                </div>\n                <div class=\"row my-1\">\n                    <div class=\"col-sm-3 m-1\">\n                        <label for=\"count\" class=\"form-label\">تعداد صفحه</label>\n                        <input type=\"number\" class=\"form-control\" id=\"count\" name=\"count\"\n                        v-model=\"count\"\n                        >\n                    </div>\n                </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
     "class": "form-control",
     id: "isbn",
@@ -35075,7 +35056,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.body-class[data-v-b3c5cf30] {\n        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n}\n.book-img[data-v-b3c5cf30] {\n            width: 110px;\n            height: 160px;\n}\n.book-title[data-v-b3c5cf30] {\n        direction: rtl;\n        white-space: nowrap;\n        overflow: hidden;\n        text-overflow: ellipsis;\n        max-width: 120px;\n}\n.shelf-book-img[data-v-b3c5cf30] {\n        max-width: 80px;\n        max-height: 120px;\n}\n.title[data-v-b3c5cf30] {\n        width: 100%; \n        direction: rtl;\n        border-bottom: 1.5px solid rgb(232, 232, 232); \n        line-height: 0.1em;\n        font-family: hamishe;\n}\n.title span[data-v-b3c5cf30] { \n            background:#fff; \n            padding-left: 20px;\n            padding-right: 20px;\n            margin-right: 30px;\n            font-weight:bold;\n            font-size: large;\n}\n.user-profile[data-v-b3c5cf30] {\n        width: 40px;\n        height: 40px;\n        border-radius: 50%;\n}\n.router-links[data-v-b3c5cf30] {\n    color: black;\n    text-decoration: none;\n}\n.lists-body[data-v-b3c5cf30] {\n    background: #f4f4f4; \n    height: 250px;\n}\n.next-btn[data-v-b3c5cf30] {\n    transform: translate(100%, 0);\n}\n.swiper-slide[data-v-b3c5cf30] {\n    margin-left: 20px !important;\n    margin-right: 0 !important;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.body-class[data-v-b3c5cf30] {\n        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n}\n.book-img[data-v-b3c5cf30] {\n            width: 110px;\n            height: 160px;\n}\n.book-title[data-v-b3c5cf30] {\n        direction: rtl;\n        white-space: nowrap;\n        overflow: hidden;\n        text-overflow: ellipsis;\n        max-width: 120px;\n}\n.shelf-book-img[data-v-b3c5cf30] {\n        max-width: 80px;\n        max-height: 120px;\n}\n.title[data-v-b3c5cf30] {\n        width: 100%; \n        direction: rtl;\n        border-bottom: 1.5px solid rgb(232, 232, 232); \n        line-height: 0.1em;\n        font-family: hamishe;\n}\n.title span[data-v-b3c5cf30] { \n            background:#fff; \n            padding-left: 20px;\n            padding-right: 20px;\n            margin-right: 30px;\n            font-weight:bold;\n            font-size: large;\n}\n.user-profile[data-v-b3c5cf30] {\n        width: 40px;\n        height: 40px;\n        border-radius: 50%;\n}\n.router-links[data-v-b3c5cf30] {\n    color: black;\n    text-decoration: none;\n}\n.lists-body[data-v-b3c5cf30] {\n    background: #f4f4f4; \n    height: 250px;\n}\n.next-btn[data-v-b3c5cf30] {\n    transform: translate(100%, 0);\n}\n.swiper-slide[data-v-b3c5cf30] {\n    margin-left: 20px !important;\n    margin-right: 0 !important;\n}\n.shelf[data-v-b3c5cf30] {\n    width:362px !important;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -35147,7 +35128,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.body-class[data-v-18b362d8] {\r\n    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n}\n.book-img[data-v-18b362d8] {\r\n        max-width: 120px;\r\n        max-height: 200px;\n}\n.shelf-book-img[data-v-18b362d8] {\r\n    max-width: 80px;\r\n    max-height: 120px;\n}\n.title[data-v-18b362d8] {\r\n    width: 100%; \r\n    direction: rtl;\r\n    border-bottom: 1.5px solid rgb(232, 232, 232); \r\n    line-height: 0.1em;\r\n    font-family: hamishe;\n}\n.title span[data-v-18b362d8] { \r\n        background:#fff; \r\n        padding-left: 20px;\r\n        padding-right: 20px;\r\n        margin-right: 30px;\r\n        font-weight:bold;\r\n        font-size: large;\n}\n.user-profile[data-v-18b362d8] {\r\n    width: 40px;\r\n    height: 40px;\r\n    border-radius: 50%;\n}\n.book-cover[data-v-18b362d8] {\r\n    width: 100px;\r\n    max-height: 180px;\n}\r\n\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.body-class[data-v-18b362d8] {\n    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n}\n.book-img[data-v-18b362d8] {\n        max-width: 120px;\n        max-height: 200px;\n}\n.shelf-book-img[data-v-18b362d8] {\n    max-width: 80px;\n    max-height: 120px;\n}\n.title[data-v-18b362d8] {\n    width: 100%; \n    direction: rtl;\n    border-bottom: 1.5px solid rgb(232, 232, 232); \n    line-height: 0.1em;\n    font-family: hamishe;\n}\n.title span[data-v-18b362d8] { \n        background:#fff; \n        padding-left: 20px;\n        padding-right: 20px;\n        margin-right: 30px;\n        font-weight:bold;\n        font-size: large;\n}\n.user-profile[data-v-18b362d8] {\n    width: 40px;\n    height: 40px;\n    border-radius: 50%;\n}\n.book-cover[data-v-18b362d8] {\n    width: 100px;\n    max-height: 180px;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -35171,7 +35152,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.user-profile[data-v-6a713ae1] {\r\n    width: 60px;\r\n    height: 60px;\r\n    border-radius: 50%;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.user-profile[data-v-6a713ae1] {\n    width: 60px;\n    height: 60px;\n    border-radius: 50%;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
