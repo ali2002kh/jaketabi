@@ -40,7 +40,9 @@ Route::get('friends-shelves', [HomeController::class, 'friendsShelves']);
 
 Route::post('search', [SearchController::class, 'search']);
 
-Route::post('search/user', [SearchController::class, 'searchUser']);
+Route::post('search/user-friend', [SearchController::class, 'searchUserFriend']);
+
+Route::post('search/user-role', [SearchController::class, 'searchUserRole']);
 
 Route::post('search/book', [SearchController::class, 'searchBook']);
 
@@ -110,3 +112,10 @@ Route::post('update-book/{id}', [AdminController::class, 'updateBook']);
 
 Route::get('admin/book/{id}', [AdminController::class, 'showBook']);
 
+Route::get('promote-normal-user-to-publisher-admin/{user_id}/{publisher_id}', [AdminController::class, 'promoteNormalUserToPublisherAdmin']);
+
+Route::get('demote-publisher-admin-to-normal-user/{user_id}/{publisher_id}', [AdminController::class, 'demotePublisherAdminToNormalUser']);
+
+Route::get('promote-publisher-admin-to-publisher-super-admin/{user_id}/{publisher_id}', [AdminController::class, 'promotePublisherAdminToPublisherSuperAdmin']);
+
+Route::get('publisher-admins/{publisher_id}', [AdminController::class, 'publisherAdmins']);

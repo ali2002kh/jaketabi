@@ -9,6 +9,7 @@ use App\Http\Resources\PublisherResource;
 use App\Http\Resources\ShelfPreviewResource;
 use App\Http\Resources\UserFriendResource;
 use App\Http\Resources\UserPreviewResource;
+use App\Http\Resources\UserRoleResource;
 use App\Models\Book;
 use App\Models\BookCategory;
 use App\Models\Genre;
@@ -47,7 +48,7 @@ class SearchController extends Controller
         ]);
     }
 
-    public function searchUser(Request $request) {
+    public function searchUserFriend(Request $request) {
 
         $input = $request->get('input');
 
@@ -57,6 +58,21 @@ class SearchController extends Controller
             $users = User::where('username','LIKE',"%".$input."%")->get();
         }
         return UserFriendResource::collection($users);
+    }
+
+    public function searchUserRole(Request $request) {
+
+        $input = $request->get('input');
+
+        $users = [];
+
+        if($input != '') {
+            $users = User::where('username','LIKE',"%".$input."%")
+            ->orWhere('email','LIKE',"%".$input."%")
+            ->orWhere('number','LIKE',"%".$input."%")
+            ->get();
+        }
+        return UserRoleResource::collection($users);
     }
 
     public function searchBook(Request $request) {

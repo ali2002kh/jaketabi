@@ -22,5 +22,18 @@ class Publisher extends Model
 
         return $books;
     }
+
+    public function getAdmins() {
+
+        $records = RoleUser::where('publisher_id', $this->id)->get();
+
+        $admins = collect();
+
+        foreach ($records as $r) {
+            $admins->add($r->getUser());
+        }
+
+        return $admins;
+    }
     
 }

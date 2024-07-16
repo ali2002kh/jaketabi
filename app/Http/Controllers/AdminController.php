@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\BookPrivateResource;
+use App\Http\Resources\UserRoleResource;
 use App\Models\Book;
 use App\Models\GenreBook;
+use App\Models\Publisher;
 use Illuminate\Http\Request;
 // use Illuminate\Validation\Rule;
 
@@ -179,48 +181,6 @@ class AdminController extends Controller
         abort(200, 'کتاب با موفقیت حذف شد');
     }
 
-    public function addGenreToBook ($book_id, $genre_id) {
-
-        /** @var User $user */ 
-        $user = auth()->user();
-        $book = Book::find($book_id);
-
-        if (
-            !$user->getPermissions()->contains('id', 2) ||
-            (
-                !$user->getPermissions()->contains('id', 11) && 
-                $user->getPublisher()->id != $book->getPublisher()->id
-            )
-        ) {
-            return abort(403);
-        }
-
-        $gb = new GenreBook();
-        $gb->book_id = $book_id;
-        $gb->genre_id = $genre_id;
-        $gb->save();
-    }
-
-    public function removeGenreFromBook ($book_id, $genre_id) {
-
-        /** @var User $user */ 
-        $user = auth()->user();
-        $book = Book::find($book_id);
-
-        if (
-            !$user->getPermissions()->contains('id', 2) ||
-            (
-                !$user->getPermissions()->contains('id', 11) && 
-                $user->getPublisher()->id != $book->getPublisher()->id
-            )
-        ) {
-            return abort(403);
-        }
-
-        $gb = GenreBook::where(['book_id' => $book_id, 'genre_id' => $genre_id]);
-        $gb->delete();
-    }
-
     public function promoteNormalUserToPublisherAdmin($user_id, $publisher_id) {
 
         /** @var User $user */ 
@@ -320,6 +280,19 @@ class AdminController extends Controller
         }
 
         $user->promoteAdminToSuperAdmin($user_id);
+
+    }
+
+    public function publisherAdmins($publisher_id) {
+
+        /** @var User $user */
+        $user = auth()->user();
+        if (!$user->getPermissions()->contains('id', 4)) {
+            return abort(403);
+        }
+
+        $publisher = Publisher::find($publisher_id);
+        return UserRoleResource::collection($publisher->getAdmins());
 
     }
     

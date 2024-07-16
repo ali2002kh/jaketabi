@@ -629,7 +629,7 @@ export default {
 
             this.timeoutId = setTimeout(() => {
                 if (this.searchInput.length > 1) {
-                    axios.post('/api/search/user', {
+                    axios.post('/api/search/user-friend', {
                         input: this.searchInput
                     }).then(response => {
                         console.log(response.data.data)

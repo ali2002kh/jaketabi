@@ -16,7 +16,7 @@
             </ul>
             <ul class="nav navbar-nav justify-content-center">
                 <li class="nav-item">
-                    <p class="navbar-text text-white fs-5">ج‍‍‍‍اکتابی</p>
+                    <p class="navbar-text text-white fs-5">جاکتابی</p>
                 </li>
             </ul>
             <ul class="nav navbar-nav ms-auto align-items-center">
