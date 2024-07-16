@@ -160,14 +160,10 @@ export default {
     },
     created() {
         console.log(this.user)
-        axios.get('/api/book-categories')
+        axios.get('/api/book-categories-genres')
         .then(response => {
-            this.categories = response.data.data
-        })
-
-        axios.get('/api/genres')
-        .then(response => {
-            this.genres = response.data.data
+            this.categories = response.data.data.categories
+            this.genres = response.data.data.genres
         })
     },
 
@@ -189,11 +185,10 @@ export default {
         },
 
         async create() {
-            console.log(this.details)
 
             let fd = new FormData()
 
-            console.log(this)
+            console.log(this.selectedGenres)
             
             fd.append('isbn', this.isbn ?? '')
             fd.append('name', this.name ?? '')

@@ -73,9 +73,15 @@ class BookController extends Controller {
         return BookPreviewResource::collection($books);
     }
 
-    public function categories() {
+    public function categoriesAndGenres() {
 
-        return BookCategoryPreviewResource::collection(BookCategory::all());
+        return response()->json([
+            'data' => [
+                'categories' => BookCategoryPreviewResource::collection(BookCategory::all()),
+                'genres' => GenreResource::collection(Genre::all()),
+            ]
+        ]);
+        
     }
 
     public function genre($id, $page) {
@@ -93,11 +99,6 @@ class BookController extends Controller {
         $books = $genre->getBooks()->slice(($page - 1) * $pageSize)->take($pageSize);
 
         return BookPreviewResource::collection($books);
-    }
-
-    public function genres() {
-
-        return GenreResource::collection(Genre::all());
     }
 
     public function publisher($id, $page) {

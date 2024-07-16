@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\BookPrivateResource;
 use App\Models\Book;
 use App\Models\GenreBook;
 use Illuminate\Http\Request;
@@ -9,6 +10,12 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
+
+    public function showBook($id) {
+        $book = Book::find($id);
+        return new BookPrivateResource($book);
+    }
+
     public function storeBook(Request $request) {
 
         /** @var User $user */ 
@@ -97,6 +104,14 @@ class AdminController extends Controller
             'category_id' => 'required',
         ]);
 
+        if ($user->getPermissions()->contains('id', 11)) {
+            $request->validate([
+                'publisher_id' => 'required',
+            ]);
+            $publisher_id = $request->get('publisher_id');
+        } else {
+            $publisher_id = $user->getPublisher()->id;
+        }
 
         if ($request->hasFile('file')) {
 
@@ -119,6 +134,7 @@ class AdminController extends Controller
             author : $request->get('author'),
             category_id : $request->get('category_id'),
             release_date : $request->get('release_date'),
+            publisher_id : $publisher_id,
             description : $request->get('description'),
             translator : $request->get('translator'),
             page_count : $request->get('page_count'),
@@ -126,6 +142,19 @@ class AdminController extends Controller
             ddc : $request->get('ddc'),
             isbn_period : $request->get('isbn_period'),
         );
+
+        $prevGenres = $book->getGenreBooks();
+
+        foreach ($prevGenres as $g) {
+            $g->delete();
+        }
+
+        foreach (explode(",", $request->get('genres')) as $genre_id) {
+            $gb = new GenreBook();
+            $gb->genre_id = $genre_id;
+            $gb->book_id = $book_id;
+            $gb->save();
+        }
 
        return abort(200, 'با موفقیت بروزرسانی شد');
     }

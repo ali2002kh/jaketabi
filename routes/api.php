@@ -88,11 +88,9 @@ Route::get('update-book-current-page/{book_id}/{page}', [BookController::class, 
 
 Route::get('book/category/{id}/{page}', [BookController::class, 'category']);
 
-Route::get('book-categories', [BookController::class, 'categories']);
+Route::get('book-categories-genres', [BookController::class, 'categoriesAndGenres']);
 
 Route::get('genre/{id}/{page}', [BookController::class, 'genre']);
-
-Route::get('genres', [BookController::class, 'genres']);
 
 Route::get('publisher/{id}/{page}', [BookController::class, 'publisher']);
 
@@ -107,4 +105,8 @@ Route::post('add-book-comment/{book_id}', [BookController::class, 'addComment'])
 Route::get('book/remove/{id}', [AdminController::class, 'removeBook']);
 
 Route::post('store-book', [AdminController::class, 'storeBook']);
+
+Route::post('update-book/{id}', [AdminController::class, 'updateBook']);
+
+Route::get('admin/book/{id}', [AdminController::class, 'showBook']);
 

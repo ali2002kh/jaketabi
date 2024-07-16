@@ -64,6 +64,11 @@ class Book extends Model
         
     }
 
+    public function getGenreBooks() {
+
+        return GenreBook::where('book_id', $this->id)->get();
+    }
+
     // public function getRelatedBooks() {
 
     //     $books = collect();
