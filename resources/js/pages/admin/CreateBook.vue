@@ -10,8 +10,8 @@
             </div>
             <div class="col-sm-5">
                 <div class="m-1">
-                    <label for="author" class="form-label">نویسنده</label>
-                    <input type="text" class="form-control" 
+                    <label for="author" class="form-label">نویسنده *</label>
+                    <input type="text" class="form-control" required
                     id="author" name="author" v-model="author"
                     >
                 </div>
@@ -21,29 +21,35 @@
                     id="translator" name="translator" v-model="translator"
                     >
                 </div>
-                <!-- <div class="m-1">
-                    <label for="description" class="form-label">توضیحات</label>
-                    <textarea id="description" class="form-control" name="description" v-model="description"></textarea>
+                <div class="m-1">
+                    <label for="lcc" class="form-label">رده‌بندی کنگره</label>
+                    <input type="text" class="form-control" 
+                    id="lcc" name="lcc" v-model="lcc"
+                    >
                 </div>
-                <div class="row my-1">
-                    <div class="col-sm-3 m-1">
-                        <label for="count" class="form-label">تعداد صفحه</label>
-                        <input type="number" class="form-control" id="count" name="count"
-                        v-model="count"
-                        >
-                    </div>
-                </div> -->
+                <div class="m-1">
+                    <label for="ddc" class="form-label">رده‌بندی دیویی</label>
+                    <input type="text" class="form-control" 
+                    id="ddc" name="ddc" v-model="ddc"
+                    >
+                </div>
+                <div class="m-1">
+                    <label for="isbn_period" class="form-label">ISBN دوره</label>
+                    <input type="text" class="form-control" 
+                    id="isbn_period" name="isbn_period" v-model="isbn_period"
+                    >
+                </div>
             </div>
             <div class="col-sm-5">
                 <div class="m-1">
-                    <label for="isbn" class="form-label">ISBN</label>
-                    <input type="text" class="form-control" 
+                    <label for="isbn" class="form-label">* ISBN</label>
+                    <input type="text" class="form-control" required
                     id="isbn" name="isbn" v-model="isbn"
                     >
                 </div>
                 <div class="m-1">
-                    <label for="name" class="form-label">نام کتاب</label>
-                    <input type="text" class="form-control" 
+                    <label for="name" class="form-label">نام کتاب *</label>
+                    <input type="text" class="form-control" required
                     id="name" name="name" v-model="name"
                     >
                 </div>
@@ -61,16 +67,18 @@
                     
                 </div>
                 <div class="m-1">
-                    <label for="category_id" class="form-label">دسته‌بندی</label>
-                    <select class="form-control w-50" id="category_id" name="category_id" v-model="category_id">
+                    <label for="category_id" class="form-label">دسته‌بندی *</label>
+                    <select class="form-control w-50" id="category_id" required
+                    name="category_id" v-model="category_id">
                         <option disabled value="">انتخاب کنید</option>
                         <option v-for="c in categories" :key="c.id" :value="c.id">{{ c.name }}</option>
                     </select>
                 </div>
 
                 <div class="m-1" v-if="choosePublisher">
-                    <label for="publisher_id" class="form-label">نشر</label>
-                    <select class="form-control w-50" id="publisher_id" name="publisher_id" v-model="publisher_id">
+                    <label for="publisher_id" class="form-label">نشر *</label>
+                    <select class="form-control w-50" id="publisher_id" required
+                    name="publisher_id" v-model="publisher_id">
                         <option disabled value="">انتخاب کنید</option>
                         <option v-for="p in publishers" :key="p.id" :value="p.id">{{ p.name }}</option>
                     </select>
@@ -125,24 +133,29 @@ import { mapState } from 'vuex';
 export default {
     data() {
         return {
-            author: null,
-            translator: null,
+            // fields
             isbn: null,
             name: null,
-            description: null,
-            page_count: null,
+            file: '',
+            author: null,
             category_id: null,
+            // release_date: null,
+            publisher_id: null,
+            description: null,
+            translator: null,
+            page_count: null,
+            lcc: null,
+            ddc: null,
+            isbn_period: null,
+            selectedGenres: [],
+            
+            // helpers
             categories: null,
             genres: [],
-            hasError: false,
-            errors: [],
-            file: '',
-            product_id: null,
-            showModal: false,
-            selectedGenres: [],
-            publisher_id: null,
             choosePublisher: false,
             publishers: null,
+            hasError: false,
+            errors: [],
         }
     },
     created() {
@@ -182,16 +195,21 @@ export default {
 
             console.log(this)
             
-            fd.append('author', this.author ?? '')
-            fd.append('translator', this.translator ?? '')
             fd.append('isbn', this.isbn ?? '')
             fd.append('name', this.name ?? '')
-            fd.append('description', this.description ?? '')
-            fd.append('page_count', this.page_count ?? '')
-            fd.append('category_id', this.category_id ?? '')
-            fd.append('publisher_id', this.publisher_id ?? '')
-            fd.append('genres', this.selectedGenres ?? '')
             fd.append('file', this.file)
+            fd.append('author', this.author ?? '')
+            fd.append('category_id', this.category_id ?? '')
+            // fd.append('release_date', this.release_date ?? '')
+            fd.append('publisher_id', this.publisher_id ?? '')
+            fd.append('description', this.description ?? '')
+            fd.append('translator', this.translator ?? '')
+            fd.append('page_count', this.page_count ?? '')
+            fd.append('lcc', this.lcc ?? '')
+            fd.append('ddc', this.ddc ?? '')
+            fd.append('isbn_period', this.isbn_period ?? '')
+            fd.append('genres', this.selectedGenres ?? '')
+            
             fd.append('_method', 'POST')
 
             await axios.post('/api/store-book', fd,
@@ -200,13 +218,8 @@ export default {
                     'Content-Type': `multipart/form-data; boundary=${fd._boundary}`
                     }
                 } 
-            ).then(async response => {
-                // this.product_id = response.data
-                // await axios.post(`/api/store-book-genres/${this.product_id}`, {
-                //     genres: this.genres
-                // }).then(response => {
+            ).then(() => {
                 this.$router.push('/admin/books')
-                // })
             }).catch(error => {
                 if (error.response && error.response.status) {
                     this.hasError = true
