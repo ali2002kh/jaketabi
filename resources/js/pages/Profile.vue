@@ -240,57 +240,59 @@
         <div v-if="host" class="book-lists">
             <p class="title mt-5"><span> دارم می خوانم </span></p>
             <div class="lists-body currently-reading row flex-row-reverse align-items-center mx-1 p-1 rounded-1">
-                <div class="col-auto p-1 mx-3" v-for="b in host.reading" :key="b.id">
+                <div v-for="b in responsiveList(this.currentlyReading)" :key="b.id"
+                class="col-auto p-1 mx-2 " :class="{'mx-auto' : this.windowWidth < 400}">
                     <router-link :to="{name:'book', params:{id: b.id}}"  
                     class="router-links d-flex flex-column m-1 p-2 align-items-center text-center">
                         <img :src="b.image" class="book-img" alt="">
                         <p class="book-title"> {{ b.name }}</p>
                     </router-link>
                 </div>
-                <div v-if="host.has_more_reading" class="col-auto" style="margin-right: 1000px;">
-                    <router-link :to="{name: 'profileBooks', params: {id: host.id, status: 2 }}">
-                        <button class="text-dark link-underline link-underline-opacity-0">
+                
+                <!-- <div v-if="host.has_more_reading" class="col-auto" style="margin-right: 1000px;">
+                    <router-link :to="{name: 'profileBooks', params: {id: host.id, status: 2 }}"
+                    class="router-links text-center">
                             <i class="fa-solid fa-circle-chevron-left fa-2x"></i>
                             <p>+{{ host.already_read_more_count }}</p>
-                        </button>
                     </router-link> 
-                </div>
+                </div> -->
             </div>
             <p class="title mt-5"><span>  خوانده ام  </span></p>
             <div class="lists-body already-read row flex-row-reverse align-items-center mx-1 p-1 rounded-1">
-                <div class="col-auto p-1 mx-3" v-for="b in host.already_read" :key="b.id" >
+                <div v-for="b in responsiveList(this.alreadyRead)" :key="b.id" 
+                class="col-auto p-1 mx-2 " :class="{'mx-auto' : this.windowWidth < 400}" >
                     <router-link :to="{name:'book', params:{id: b.id}}" 
                     class="router-links d-flex flex-column m-1 p-2 align-items-center text-center">
                         <img :src="b.image" class="book-img" alt="">
                         <p class="book-title"> {{ b.name }}</p>
                     </router-link>
                 </div>
-                <div v-if="host.has_more_already_read" class="col-auto" style="margin-right: 1000px;">
-                    <router-link :to="{name: 'profileBooks', params: {id: host.id, status: 3 }}">
-                        <button class="text-dark link-underline link-underline-opacity-0">
-                            <i class="fa-solid fa-circle-chevron-left fa-2x"></i>
-                            <p>+{{ host.already_read_more_count }}</p>
-                        </button>
+                <!-- <div v-if="host.has_more_already_read" class="col-auto me-auto" >
+                    <router-link :to="{name: 'profileBooks', params: {id: host.id, status: 3 }}"
+                    class="router-links text-center"
+                    >
+                        <i class="fa-solid fa-circle-chevron-left fa-2x"></i>
+                        <p>+{{ host.already_read_more_count }}</p>
                     </router-link> 
-                </div>
+                </div> -->
             </div>
             <p class="title mt-5"><span>  می خواهم بخوانم  </span></p>
             <div class="lists-body want-to-read row flex-row-reverse align-items-center mx-1 p-1 rounded-1">
-                <div class="col-auto p-1 mx-3" v-for="b in host.want_to_read" :key="b.id" >
+                <div v-for="b in responsiveList(this.wantToRead)" :key="b.id"
+                class="col-auto p-1 mx-1" :class="{'mx-auto' : this.windowWidth < 400}" >
                     <router-link :to="{name:'book', params:{id: b.id}}" 
                     class="router-links d-flex flex-column m-1 p-2 align-items-center text-center">
                         <img :src="b.image" style="height: 150px; max-width:100px" alt="">
                         <p class="mt-2 book-title"> {{ b.name }}</p>
                     </router-link>
                 </div>
-                <div v-if="host.has_more_want_to_read" class="col-auto" style="margin-right: 1000px;">
-                    <router-link :to="{name: 'profileBooks', params: {id: host.id, status: 1 }}">
-                        <button class="text-dark link-underline link-underline-opacity-0">
+                <!-- <div v-if="host.has_more_want_to_read" class="col-auto" style="margin-right: 1000px;">
+                    <router-link :to="{name: 'profileBooks', params: {id: host.id, status: 1 }}"
+                    class="router-links text-center">
                             <i class="fa-solid fa-circle-chevron-left fa-2x"></i>
                             <p>+{{ host.already_read_more_count }}</p>
-                        </button>
                     </router-link> 
-                </div>
+                </div> -->
             </div>
         </div>
         <div v-if="host" class="friends-shelves">
@@ -353,7 +355,7 @@
                     </div>
                     <div v-if="host.has_more_shelves" class="col-auto me-auto">
                         <router-link :to="{name: 'shelfList', params: {id: host.id}}"
-                        class="text-dark text-center" style="text-decoration:none" href="#">
+                        class="router-links text-center" href="#">
                             <i class="fa-solid fa-circle-chevron-left fa-2x"></i>
                             <p>+{{ shelves_more_count }}</p>
                         </router-link>
@@ -375,8 +377,13 @@ export default {
     },
     data() {
         return {
+            // window size
+            windowWidth: window.innerWidth,
+            // user info
             host: null,
-
+            currentlyReading: [],
+            wantToRead: [],
+            alreadyRead: [],
             // create shelf
             shelfName: null,
             shelfDescription: null,
@@ -410,7 +417,6 @@ export default {
         } 
     },
     beforeMount() {
-
         let loadUser = new Promise((resolve, reject) => {
              if (this.user) {
                 console.log('User is already loaded')
@@ -455,7 +461,20 @@ export default {
             this.username = this.host.username
             this.fname = this.host.fname
             this.lname = this.host.lname
+            this.currentlyReading = this.host.reading
+            this.wantToRead = this.host.want_to_read
+            this.alreadyRead = this.host.already_read
         })
+    },
+    created() {
+        
+    },
+  
+    mounted() {
+        window.addEventListener('resize', this.responsiveList);
+    },
+    unmounted() {
+        window.removeEventListener('resize', this.responsiveList);
     },
     computed: {
         // ...mapGetters(["user"]),
@@ -466,6 +485,23 @@ export default {
         // ...mapActions(['initState'])
     },
     methods: {
+        responsiveList(list) {
+            this.windowWidth = window.innerWidth;
+            console.log(this.windowWidth);
+            if (this.windowWidth <= 480) {
+                return list.slice(0,2);
+            }
+            else if (480 < this.windowWidth && this.windowWidth <= 768) {
+                return list.slice(0,3);
+            }
+            else if (768 < this.windowWidth && this.windowWidth < 1024) {
+                return list.slice(0,5);
+            }
+            else if (this.windowWidth >= 1024) {
+                return list;
+            };
+        },
+
         async logout () {
             await this.$store.dispatch("user/logout");
             this.$router.push('/login')
@@ -656,10 +692,11 @@ max-height: 120px;
 }
 .book-title {
     direction: rtl;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
     max-width: 120px;
+    max-height: 50px;
 }
 .book-img {
 width: 110px;
@@ -697,5 +734,6 @@ font-family: hamishe;
     color: black;
     text-decoration: none;
 }
+
 
 </style>
