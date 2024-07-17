@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\BookPrivateResource;
+use App\Http\Resources\PublisherAdministrationResource;
 use App\Http\Resources\UserRoleResource;
 use App\Models\Book;
 use App\Models\GenreBook;
@@ -294,6 +295,11 @@ class AdminController extends Controller
         $publisher = Publisher::find($publisher_id);
         return UserRoleResource::collection($publisher->getAdmins());
 
+    }
+
+    public function publishers() {
+
+        return PublisherAdministrationResource::collection(Publisher::all());
     }
     
 }

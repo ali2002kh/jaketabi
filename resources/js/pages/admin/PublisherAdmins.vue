@@ -11,7 +11,7 @@
                     <div class="modal-content">
                         <div class="modal-header ">
                             <h1 class="modal-title fs-5 text-center w-100" id="newAdminLabel">جستجو کاربران</h1>
-                            <button id="friend_close" type="button" class="btn-close  me-0" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button id="newAdminClose" type="button" class="btn-close  me-0" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div>
@@ -60,17 +60,17 @@
                         {{ u.username }}
                     </div>
                 </div>
-                <div v-if="u.role_id == 3 && u.publisher_id == user.publisher.id" class="col-auto float-start">
+                <div v-if="u.role_id == 3" class="col-auto float-start">
                     <button  class="btn btn-dark m-1 p-1 px-2" 
                     @click.prevent="demoteToNormal(u)"
                     >حذف ادمین</button>
                 </div>
-                <div v-if="u.role_id == 3 && u.publisher_id == user.publisher.id" class="col-auto float-start">
+                <div v-if="u.role_id == 3" class="col-auto float-start">
                     <button  class="btn btn-dark m-1 p-1 px-2" 
                     @click.prevent="promoteToSuperAdmin(u)"
                     >ارتقا به سوپر ادمین</button>
                 </div>
-                <div v-if="u.role_id == 4 && u.publisher_id == user.publisher.id" class="col-auto float-start">
+                <div v-if="u.role_id == 4" class="col-auto float-start">
                     <p>سوپر ادمین</p>
                 </div>
             </div>
