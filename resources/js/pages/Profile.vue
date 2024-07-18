@@ -2,7 +2,7 @@
     <PageHeader></PageHeader>
     <div class="body-class container-fluid mb-4">
         <div v-if="host" class="profile-header row flex-row-reverse align-items-center mt-5">
-            <div class="col-9 mt-5 ">
+            <div class="col-md-8 col-sm-8 col-6 mt-5 ">
                 <div class="pe-3 d-flex flex-row-reverse">
                     <div>
                         <img :src="host.image" class="user-profile" alt="">
@@ -21,7 +21,7 @@
                     </div>
                 </div> 
             </div>
-            <div v-if="host.is_private" class="col mt-5">
+            <div v-if="host.is_private" class="col-md-2 col-sm-auto col-3 mt-5">
                 <div class="text-start">
                     <a href="#" class="text-dark link-underline link-underline-opacity-0">
                         <button class="btn btn-dark px-3" data-bs-toggle="modal" data-bs-target="#friends">دوستان</button>
@@ -108,7 +108,7 @@
                 </div>
             </div>
             
-            <div v-if="host.is_private" class="col mt-5">
+            <div v-if="host.is_private" class="col-md-2 col-sm-auto col-3 mt-5">
                 <div class="text-center">
                     <a  href="#" class="text-dark link-underline link-underline-opacity-0">
                         <button class="btn btn-dark px-3" data-bs-toggle="modal" data-bs-target="#editProfile">ویرایش</button>
@@ -238,10 +238,22 @@
 
         </div>
         <div v-if="host" class="book-lists">
-            <p class="title mt-5"><span> دارم می خوانم </span></p>
+            <!-- currently-reading list  -->
+            <div class="d-flex flex-row-reverse align-items-center text-center mt-5 mx-2">
+                <div class="col-auto title">
+                     دارم میخوانم
+                </div>
+                <hr class="col opacity-100 border-muted border mx-3">
+                <div v-if="host.has_more_reading" class="col-auto">
+                    <router-link :to="{name: 'profileBooks', params: {id: host.id, status: 1 }}"
+                    class="link-dark text-center" style="text-decoration:none;">
+                        مشاهده همه
+                    </router-link> 
+                </div>
+            </div>
             <div class="lists-body currently-reading row flex-row-reverse align-items-center mx-1 p-1 rounded-1">
-                <div v-for="b in responsiveList(this.currentlyReading)" :key="b.id"
-                class="col-auto p-1 mx-2 " :class="{'mx-auto' : this.windowWidth < 400}">
+                <div v-for="b in responsiveBookList(this.currentlyReading)" :key="b.id"
+                class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-auto p-1" :class="{'mx-auto' : this.host.has_more_reading}">
                     <router-link :to="{name:'book', params:{id: b.id}}"  
                     class="router-links d-flex flex-column m-1 p-2 align-items-center text-center">
                         <img :src="b.image" class="book-img" alt="">
@@ -257,10 +269,23 @@
                     </router-link> 
                 </div> -->
             </div>
-            <p class="title mt-5"><span>  خوانده ام  </span></p>
+
+            <!-- already-read list  -->
+            <div class="d-flex flex-row-reverse align-items-center text-center mt-5 mx-2">
+                <div class="col-auto title ">
+                    خوانده ام
+                </div>
+                <hr class="col opacity-100 border-muted border mx-3">
+                <div v-if="host.has_more_already_read" class="col-auto">
+                    <router-link :to="{name: 'profileBooks', params: {id: host.id, status: 1 }}"
+                    class="link-dark text-center" style="text-decoration:none;">
+                        مشاهده همه
+                    </router-link> 
+                </div>
+            </div>
             <div class="lists-body already-read row flex-row-reverse align-items-center mx-1 p-1 rounded-1">
-                <div v-for="b in responsiveList(this.alreadyRead)" :key="b.id" 
-                class="col-auto p-1 mx-2 " :class="{'mx-auto' : this.windowWidth < 400}" >
+                <div v-for="b in responsiveBookList(this.alreadyRead)" :key="b.id" 
+                class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-auto p-1" :class="{'mx-auto' : this.host.has_more_already_read}">
                     <router-link :to="{name:'book', params:{id: b.id}}" 
                     class="router-links d-flex flex-column m-1 p-2 align-items-center text-center">
                         <img :src="b.image" class="book-img" alt="">
@@ -276,10 +301,23 @@
                     </router-link> 
                 </div> -->
             </div>
-            <p class="title mt-5"><span>  می خواهم بخوانم  </span></p>
+
+            <!-- want-to-read list  -->
+            <div class="d-flex flex-row-reverse align-items-center text-center mt-5 mx-2">
+                <div class="col-auto title">
+                    میخواهم بخوانم 
+                </div>
+                <hr class="col opacity-100 border-muted border mx-3">
+                <div v-if="host.has_more_want_to_read" class="col-auto">
+                    <router-link :to="{name: 'profileBooks', params: {id: host.id, status: 1 }}"
+                    class="link-dark text-center" style="text-decoration:none;">
+                        مشاهده همه
+                    </router-link> 
+                </div>
+            </div>
             <div class="lists-body want-to-read row flex-row-reverse align-items-center mx-1 p-1 rounded-1">
-                <div v-for="b in responsiveList(this.wantToRead)" :key="b.id"
-                class="col-auto p-1 mx-1" :class="{'mx-auto' : this.windowWidth < 400}" >
+                <div v-for="b in responsiveBookList(this.wantToRead)" :key="b.id"
+                class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-auto p-1" :class="{'mx-auto' : this.host.has_more_want_to_read}">
                     <router-link :to="{name:'book', params:{id: b.id}}" 
                     class="router-links d-flex flex-column m-1 p-2 align-items-center text-center">
                         <img :src="b.image" style="height: 150px; max-width:100px" alt="">
@@ -295,11 +333,25 @@
                 </div> -->
             </div>
         </div>
+
+        <!-- shelves list  -->
         <div v-if="host" class="friends-shelves">
-            <p v-if="host.is_private" class="mt-5 mb-0 w-25" data-bs-toggle="modal" data-bs-target="#createShelf">
-                <a href="#" class="link-dark text-center" style="text-decoration:none;">ایجاد قفسه جدید</a> 
-            </p>
-            <p :class="{'mt-5' : !host.is_private}" class="title"><span> قفسه های من</span></p>
+            <div class="d-flex flex-row-reverse align-items-center text-center mt-5 mx-2">
+                <div class="col-1 title">
+                   قفسه های من
+                </div>
+                <hr class="col opacity-100 border-muted border mx-3">
+                <div class="col-auto">
+                    <!-- <p v-if="host.is_private" class="" data-bs-toggle="modal" data-bs-target="#createShelf">
+                        <a href="#" class="link-dark text-center" style="text-decoration:none;">ایجاد قفسه جدید</a> 
+                    </p> -->
+                    <router-link v-if="host.has_more_shelves"
+                    :to="{name: 'profileBooks', params: {id: host.id, status: 1 }}"
+                    class="link-dark text-center" style="text-decoration:none;">
+                        مشاهده همه
+                    </router-link> 
+                </div>
+            </div>
             <div class="modal fade" id="createShelf" tabindex="-1" aria-labelledby="createShelfLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -336,8 +388,7 @@
                 </div>
             </div>
             <div v-if="host" class="lists-body row flex-row-reverse align-items-center mx-1 p-1 rounded-1">
-                <div class="col-11 g-0 d-flex flex-row-reverse p-1">
-                        <div v-for="s in host.shelves" :key="s.id" class="col-4 me-3">
+                        <div v-for="s in responsiveShelfList(host.shelves)" :key="s.id" class="shelf">
                             <div class="shelf-title row m-1 bg-dark rounded-top text-white bg-gradient">
                                 <p class="text-center  mx-auto fw-bold m-1"> {{ s.name }} </p>
                             </div>
@@ -345,21 +396,20 @@
                              p-1 border-start border-end border-bottom rounded-bottom"
                             style="min-height:130px;" >
                                 <div v-for="b in s.books" :key="b.id" class="col-auto p-2">
-                                    <img :src="b.image" class="shelf-book-img mx-1" alt="">
+                                    <img :src="b.image" class="shelf-book-img mx-auto" alt="">
                                 </div>
                                 <router-link :to="{name:'shelf', params:{id: s.id}}" class="col-auto me-auto p-2">
                                     <i class="fa-solid fa-angle-left fa-xl text-dark"></i>
                                 </router-link>
                             </div>
                         </div>   
-                    </div>
-                    <div v-if="host.has_more_shelves" class="col-auto me-auto">
+                    <!-- <div v-if="host.has_more_shelves" class="col-auto me-auto">
                         <router-link :to="{name: 'shelfList', params: {id: host.id}}"
                         class="router-links text-center" href="#">
                             <i class="fa-solid fa-circle-chevron-left fa-2x"></i>
                             <p>+{{ shelves_more_count }}</p>
                         </router-link>
-                    </div>
+                    </div> -->
             </div>
         </div>
     </div>
@@ -471,10 +521,10 @@ export default {
     },
   
     mounted() {
-        window.addEventListener('resize', this.responsiveList);
+        window.addEventListener('resize', this.responsiveBookList);
     },
     unmounted() {
-        window.removeEventListener('resize', this.responsiveList);
+        window.removeEventListener('resize', this.responsiveBookList);
     },
     computed: {
         // ...mapGetters(["user"]),
@@ -485,19 +535,37 @@ export default {
         // ...mapActions(['initState'])
     },
     methods: {
-        responsiveList(list) {
+        responsiveBookList(list) {
             this.windowWidth = window.innerWidth;
-            console.log(this.windowWidth);
-            if (this.windowWidth <= 480) {
+            if (this.windowWidth <= 576) {
                 return list.slice(0,2);
             }
-            else if (480 < this.windowWidth && this.windowWidth <= 768) {
+            else if (576 < this.windowWidth && this.windowWidth <= 768) {
                 return list.slice(0,3);
             }
-            else if (768 < this.windowWidth && this.windowWidth < 1024) {
+            else if (768 < this.windowWidth && this.windowWidth <= 992) {
+                return list.slice(0,4);
+            }
+            else if (992 < this.windowWidth && this.windowWidth <= 1200) {
                 return list.slice(0,5);
             }
-            else if (this.windowWidth >= 1024) {
+            else if (this.windowWidth > 1200) {
+                return list;
+            };
+        },
+
+        responsiveShelfList(list) {
+            this.windowWidth = window.innerWidth;
+            if (this.windowWidth < 576) {
+                return list.slice(0,1);
+            }
+            else if (576 <= this.windowWidth && this.windowWidth < 768) {
+                return list.slice(0,1);
+            }
+            else if (768 <= this.windowWidth && this.windowWidth < 1200) {
+                return list.slice(0,2);
+            }
+            else if (this.windowWidth >= 1200) {
                 return list;
             };
         },
@@ -703,29 +771,11 @@ width: 110px;
 height: 160px;
 }
 .title {
-
-direction: rtl;
-border-bottom: 1.5px solid rgb(232, 232, 232); 
-line-height: 0.1em;
 font-family: hamishe;
-} 
-.title span { 
-    background:#fff; 
-    padding-left: 20px;
-    padding-right: 20px;
-    margin-right: 30px;
-    font-weight:bold;
-    font-size: large;
+font-weight:bold;
+font-size: large;
 }
-.title-span {
-    background:#0e0e0e;
-    padding-left: 20px;
-    padding-right: 20px;
-    margin-right: 30px;
 
-    font-size: medium !important;
-    font-weight: normal !important;
-}
 .lists-body {
     background: #f4f4f4;
     height: 250px;
@@ -734,6 +784,8 @@ font-family: hamishe;
     color: black;
     text-decoration: none;
 }
-
+.shelf {
+    width:362px !important;
+}
 
 </style>
