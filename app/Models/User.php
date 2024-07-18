@@ -178,6 +178,7 @@ class User extends Authenticatable
         }
 
         $ru->role_id = 2;
+        $ru->save();
         abort(200);
     }
 

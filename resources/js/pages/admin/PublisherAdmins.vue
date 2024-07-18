@@ -131,7 +131,10 @@ export default {
         async promoteToAdmin(user) {
             await axios.get(`/api/promote-normal-user-to-publisher-admin/${user.id}/${this.user.publisher.id}`)
             .then(() => { 
+                // list
                 this.admins.push(user)
+
+                // search
                 this.item = this.searchedUsers.find(item => item.id === user.id);
                 this.item.role_id = 3
                 this.item.publisher_id = this.user.publisher.id
@@ -141,17 +144,29 @@ export default {
         async demoteToNormal(user) {
             await axios.get(`/api/demote-publisher-admin-to-normal-user/${user.id}/${this.user.publisher.id}`)
             .then(() => {
+                // list
                 this.admins = this.admins.filter(item => item.id !== user.id)
+
+                // search
                 this.item = this.searchedUsers.find(item => item.id === user.id);
-                this.item.role_id = 0
+                if (this.item) {
+                    this.item.role_id = 0
+                }
             })
         },
 
         async promoteToSuperAdmin(user) {
             await axios.get(`/api/promote-publisher-admin-to-publisher-super-admin/${user.id}/${this.user.publisher.id}`)
             .then(() => { 
+                // list
+                this.admin = this.admins.find(item => item.id == user.id)
+                this.admin.role_id = 4
+
+                // search
                 this.item = this.searchedUsers.find(item => item.id === user.id);
-                this.item.role_id = 4
+                if (this.item) {
+                    this.item.role_id = 4
+                }
             })
         },
     }

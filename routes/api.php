@@ -124,3 +124,11 @@ Route::get('admin/publishers', [AdminController::class, 'publishers']);
 
 Route::get('demote-publisher-super-admin-to-normal-user/{user_id}', [AdminController::class, 'demotePublisherSuperAdminToNormalUser']);
 
+Route::get('promote-normal-user-to-admin/{user_id}', [AdminController::class, 'promoteNormalUserToAdmin']);
+
+Route::get('demote-admin-to-normal-user/{user_id}', [AdminController::class, 'demoteAdminToNormalUser']);
+
+Route::get('promote-admin-to-super-admin/{user_id}', [AdminController::class, 'promoteAdminToSuperAdmin']);
+
+Route::get('admins', [AdminController::class, 'admins']);
+
