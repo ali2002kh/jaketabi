@@ -121,3 +121,6 @@ Route::get('promote-publisher-admin-to-publisher-super-admin/{user_id}/{publishe
 Route::get('publisher-admins/{publisher_id}', [AdminController::class, 'publisherAdmins']);
 
 Route::get('admin/publishers', [AdminController::class, 'publishers']);
+
+Route::get('demote-publisher-super-admin-to-normal-user/{user_id}', [AdminController::class, 'demotePublisherSuperAdminToNormalUser']);
+

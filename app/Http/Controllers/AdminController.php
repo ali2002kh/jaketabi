@@ -186,6 +186,7 @@ class AdminController extends Controller
 
         /** @var User $user */ 
         $user = auth()->user();
+        
         if (
             !$user->getPermissions()->contains('id', 4) ||
             (
@@ -236,7 +237,7 @@ class AdminController extends Controller
 
     }
 
-    public function demotePublisherSuperAdminToNormalUser($user_id, $publisher_id) {
+    public function demotePublisherSuperAdminToNormalUser($user_id) {
 
         /** @var User $user */ 
         $user = auth()->user();
