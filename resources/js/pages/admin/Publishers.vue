@@ -28,7 +28,7 @@
                                             <div class="col d-flex flex-row-reverse">
                                                 <img class="item-img" style="width: 45px; height: 45px; border-radius: 100%;" :src="u.image" alt="">
                                                 <div class="align-self-center me-2">
-                                                    {{ u.role_id }}
+                                                    {{ u.username }}
                                                 </div>
                                             </div>
                                             <div v-if="u.role_id == 0" class="col-auto float-start">
@@ -37,6 +37,9 @@
                                                 >ارتقا به ادمین</button>
                                             </div>
                                             <div v-if="u.role_id == 3 && u.publisher_id == p.id" class="col-auto float-start">
+                                                <p>ادمین</p>
+                                            </div>
+                                            <div v-if="(u.role_id == 3 || u.role_id == 4) && u.publisher_id == p.id" class="col-auto float-start">
                                                 <button  class="btn btn-dark m-1 p-1 px-2" 
                                                 @click.prevent="demoteToNormal(u)"
                                                 >حذف ادمین</button>
@@ -65,10 +68,13 @@
                             {{ u.username }}
                         </div>
                     </div>
-                    <div v-if="u.role_id == 3" class="col-auto float-start">
+                    <div v-if="u.role_id == 3 || u.role_id == 4" class="col-auto float-start">
                         <button  class="btn btn-dark m-1 p-1 px-2" 
                         @click.prevent="demoteToNormal(u)"
                         >حذف ادمین</button>
+                    </div>
+                    <div v-if="u.role_id == 3" class="col-auto float-start">
+                        <p>ادمین</p>
                     </div>
                     <div v-if="u.role_id == 3" class="col-auto float-start">
                         <button  class="btn btn-dark m-1 p-1 px-2" 
@@ -152,18 +158,34 @@ export default {
         },
 
         async demoteToNormal(user) {
-            await axios.get(`/api/demote-publisher-admin-to-normal-user/${user.id}/${user.publisher_id}`)
-            .then(() => {
-                // list
-                this.publisher = this.publishers.find(item => item.id === user.publisher_id);
-                this.publisher.admins = this.publisher.admins.filter(item => item.id !== user.id)
 
-                // search
-                this.admin = this.searchedUsers.find(item => item.id === user.id);
-                if (this.admin) {
-                    this.admin.role_id = 0
-                }
-            })
+            if (user.role_id == 3) {
+                await axios.get(`/api/demote-publisher-admin-to-normal-user/${user.id}/${user.publisher_id}`)
+                .then(() => {
+                    // list
+                    this.publisher = this.publishers.find(item => item.id === user.publisher_id);
+                    this.publisher.admins = this.publisher.admins.filter(item => item.id !== user.id)
+
+                    // search
+                    this.admin = this.searchedUsers.find(item => item.id === user.id);
+                    if (this.admin) {
+                        this.admin.role_id = 0
+                    }
+                })
+            } else if (user.role_id == 4) {
+                await axios.get(`/api/demote-publisher-super-admin-to-normal-user/${user.id}`)
+                .then(() => {
+                    // list
+                    this.publisher = this.publishers.find(item => item.id === user.publisher_id);
+                    this.publisher.admins = this.publisher.admins.filter(item => item.id !== user.id)
+
+                    // search
+                    this.admin = this.searchedUsers.find(item => item.id === user.id);
+                    if (this.admin) {
+                        this.admin.role_id = 0
+                    }
+                })
+            }
         },
 
         async promoteToSuperAdmin(user) {

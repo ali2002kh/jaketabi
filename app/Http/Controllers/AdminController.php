@@ -8,6 +8,7 @@ use App\Http\Resources\UserRoleResource;
 use App\Models\Book;
 use App\Models\GenreBook;
 use App\Models\Publisher;
+use App\Models\RoleUser;
 use Illuminate\Http\Request;
 // use Illuminate\Validation\Rule;
 
@@ -186,6 +187,7 @@ class AdminController extends Controller
 
         /** @var User $user */ 
         $user = auth()->user();
+        
         if (
             !$user->getPermissions()->contains('id', 4) ||
             (
@@ -236,7 +238,7 @@ class AdminController extends Controller
 
     }
 
-    public function demotePublisherSuperAdminToNormalUser($user_id, $publisher_id) {
+    public function demotePublisherSuperAdminToNormalUser($user_id) {
 
         /** @var User $user */ 
         $user = auth()->user();
@@ -272,7 +274,7 @@ class AdminController extends Controller
 
     }
 
-    public function promoteNormalUserToSuperAdmin($user_id) {
+    public function promoteAdminToSuperAdmin($user_id) {
 
         /** @var User $user */ 
         $user = auth()->user();
@@ -300,6 +302,26 @@ class AdminController extends Controller
     public function publishers() {
 
         return PublisherAdministrationResource::collection(Publisher::all());
+    }
+
+    public function admins() {
+
+        /** @var User $user */
+        $user = auth()->user();
+        if (!$user->getPermissions()->contains('id', 10)) {
+            return abort(403);
+        }
+
+        $admins = collect();
+        $roleUsers = RoleUser::where('role_id', 1)
+        ->orWhere('role_id', 2)
+        ->get();
+
+        foreach ($roleUsers as $ru) {
+            $admins->add($ru->getUser());
+        }
+
+        return UserRoleResource::collection($admins);
     }
     
 }
