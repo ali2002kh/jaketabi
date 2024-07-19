@@ -1,38 +1,70 @@
 <template>
     <page-header></page-header>
-
-    <!-- sidebar -->
-    <div class="mt-5 m-2 d-flex flex-row-reverse">
-        <div class="sidebar flex-item d-flex flex-column align-items-end">
-            <div v-if="isOwner" class="sidebar-item d-block w-100 mt-2" data-bs-toggle="modal" data-bs-target="#editShelf">
-                <a href="#" class="sidebar-link link-dark link-underline link-underline-opacity-0 fs-6 fw-bold p-2 d-block text-end"
-                style="text-decoration:none">
-                    ویرایش قفسه
-                    <i class="fa-solid fa-pen fa-md p-2"></i>
-                </a>
-            </div>
-            <div v-if="isOwner" class="sidebar-item d-block w-100" data-bs-toggle="modal" data-bs-target="#deleteShelf">
-                <a href="#" class="sidebar-link link-dark link-underline link-underline-opacity-0 fs-6 fw-bold p-2 d-block text-end"
-                style="text-decoration:none">
-                    حذف قفسه
-                    <i class="fa-solid fa-trash fa-md p-2"></i>
-                </a>
-            </div>
-            <hr v-if="isOwner" class="border border-secondary w-75 mx-auto p-0 m-1">
-            <div class="sidebar-item w-100">
-                <div class="d-block w-100 h-100 mb-5">
+    <div class="container-fluid mt-5 row flex-row-reverse ">
+        <!-- sidebar -->
+        <div class="col-lg-3 col-sm-4 mt-4 sidebar float-end bg-light row"
+        :class="{'sticky-top' : this.windowWidth > 575}">
+            <!-- <div class=" d-flex flex-column align-items-end mt-4 w-100"> -->
+                <div v-if="isOwner" class="col-sm-12 col-6 sidebar-item mt-2" data-bs-toggle="modal" data-bs-target="#editShelf">
+                    <a href="#" class="sidebar-link link-dark link-underline link-underline-opacity-0 fs-6 fw-bold p-2 d-block text-end"
+                    :class="{'text-center mt-2' : this.windowWidth < 576}" style="text-decoration:none">
+                        ویرایش قفسه
+                        <i class="fa-solid fa-pen fa-md p-2"></i>
+                    </a>
+                </div>
+                <div v-if="isOwner" class="col-sm-12 col-6 sidebar-item mt-2" data-bs-toggle="modal" data-bs-target="#deleteShelf">
+                    <a href="#" class="sidebar-link link-dark link-underline link-underline-opacity-0 fs-6 fw-bold p-2 d-block text-end"
+                    :class="{'text-center mt-2' : this.windowWidth < 576}" style="text-decoration:none">
+                        حذف قفسه
+                        <i class="fa-solid fa-trash fa-md p-2"></i>
+                    </a>
+                </div>
+                <div class="v-else mt-4 row align-items-center" 
+                @click.prevent="showProfile(this.shelf.user.id)">
+                    <div class="col-auto">
+                        <img :src="this.shelf.user.image" class="user-profile" alt="">
+                    </div>
+                    <div class="col-auto">
+                        <p class="fs-6 fw-bold">{{this.shelf.user.username}}</p>
+                    </div>
+                </div>
+                <!-- <hr v-if="isOwner" class="border border-secondary w-75 mx-auto p-0 m-1"> -->
+                <div class="sidebar-item w-100 mt-2 h-100 mb-5">
                     <div class="fw-bold fs-6 text-end d-flex flex-row-reverse align-items-center w-100 p-2">
                         <i class="fa-solid fa-quote-right fa-md p-2"></i>
                         توضیحات
                     </div>
-                    <div class="d-block w-100 p-2" style="right:0;">
-                        <p class="text-end fs-6" style="word-wrap: break-word;">
+                    <div class="w-100 p-2" id="showHideBtn" @click.prevent="showHide">
+                        <p class="text-end fs-6 " style="word-wrap: break-word; direction:rtl;" id="description"
+                        :class="{'hide-lines' : this.windowWidth < 576}">
                             {{shelf.description}}
                         </p>
                     </div>
                 </div>
+            <!-- </div> -->
+        </div>
+
+        <div class="content col-lg-9 col-sm-8" :class="{'me-3 ' : this.windowWidth > 575}">
+            <div class="mt-5 shelf-header row flex-row-reverse align-items-center mx-2">
+                <div class="shelf-title text-end col ">
+                        <p class="text-dark fw-bold fs-5" style="white-space: nowrap;"> {{shelf.name}} </p>
+                </div>
+                <div class="col-auto text-start ">
+                    <p class=" fs-6 fw-bold">تعداد کتاب ها : {{shelf.book_count}} </p>
+                </div>
+            </div>
+            <hr class="row opacity-100 border-muted border mx-2" >
+            <div class="row flex-row-reverse mx-1">
+                <router-link v-for="b in shelf.books" :key="b.id" :to="{name: 'book', params: {id: b.id}}"
+                class="router-links col-xl-2 col-md-3 col-sm-4 col-6">
+                    <div class="">
+                        <img :src="b.image" class="book-img d-block mx-auto" alt="">
+                        <p class="text-center p-1"> {{b.name}} </p>
+                    </div> 
+                </router-link>
             </div>
         </div>
+
         <!-- Delete Shelf Modal -->
         <div class="modal fade" id="deleteShelf" tabindex="-1" aria-labelledby="deleteShelfLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -86,29 +118,6 @@
                 </div>
             </div>
         </div>
-        <div class="mt-5 shelf-header flex-item w-75 d-flex flex-row-reverse justify-content-between align-items-center" 
-            style=" height: 100%; margin-right:250px;">
-            <div class="shelf-title">
-                <div class="justify-content-center">
-                    <h4 class="text-dark fw-bold" style="white-space: nowrap;"> {{shelf.name}} </h4>
-                </div>
-            
-            </div>
-            <div class="">
-                <p class=" fs-6 fw-bold">تعداد کتاب ها : {{shelf.book_count}} </p>
-            </div>
-        </div>
-    </div>
-    <hr class="opacity-100 border-muted border w-75 mx-auto" style="margin-right:250px !important;">
-    <div class="container w-75 rounded-1" style="margin-right: 250px; " >
-        <div class="row row-cols-6 flex-row-reverse">
-            <router-link v-for="b in shelf.books" :key="b.id" :to="{name: 'book', params: {id: b.id}}"  class="router-links col p-2">
-                <div>
-                    <img :src="b.image" class="book-cover d-block mx-auto" alt="">
-                    <p class="text-center p-1"> {{b.name}} </p>
-                </div> 
-            </router-link>
-        </div>
     </div>
 </template>
 
@@ -133,6 +142,7 @@ export default {
             errors: [],
             success: false,
             message: null,
+            windowWidth: window.innerWidth,
         }
     },
     created() {
@@ -168,6 +178,9 @@ export default {
                 this.isOwner = true
             }
         })
+        window.onresize = () => {
+                this.windowWidth = window.innerWidth
+        }
     },
     computed: {
         // ...mapGetters(["user"]),
@@ -207,37 +220,92 @@ export default {
                         this.errors = error.response.data.errors
                 }
             })
-        }
+        },
+
+        showHide() {
+            var description = document.getElementById('description');
+            if (description.classList.contains('hide-lines')) {
+                description.classList.remove('hide-lines');
+            }
+            else {
+                description.classList.add('hide-lines');
+            }
+        },
+
+        async showProfile (id) {
+            this.$router.replace({ name: 'profile', params: { id: id }});
+        },
     }
 }
 </script>
 
 <style scoped>
-        .sidebar {
-            position: fixed;
-            overflow-y: scroll;
-            overflow-x:hidden;
-            right:0;
-            top: 0;
-            bottom: 0;
-            width: 220px;
-            margin-top: 75px;
-            background-color:#f4f4f4;
+.container-fluid {
+    padding-right:0;
+    padding-left:0;
+    margin-right:auto;
+    margin-left:auto;
+    overflow: hidden;
+ }
 
-        }
-        .sidebar-link {
-            transition: all 0.2s;
-        }
-        .sidebar-link:hover {
-            color: white !important;
-            background-color: rgb(33, 37, 41);
-        }
-        .book-cover {
-            width: 100px;
-            max-height: 180px;
-        }
-        .router-links {
-            color: black;
-            text-decoration: none;
-        }
+.sidebar::-webkit-scrollbar {
+        display: none;
+}
+.sidebar-link {
+    transition: all 0.2s;
+}
+.sidebar-link:hover {
+    color: white !important;
+    background-color: rgb(33, 37, 41);
+}
+.book-img {
+width: 110px;
+height: 160px;
+}
+.router-links {
+    color: black;
+    text-decoration: none;
+}
+.user-profile {
+width: 60px;
+height: 60px;
+border-radius: 50%;
+}
+
+@media screen and (min-width:576px) {
+.sidebar {
+    height: 100vh;
+    overflow-y: scroll !important;
+    overflow-x:hidden !important;
+    right: 0 !important;
+
+}
+.content {
+    max-height: 100vh;
+    overflow-y: scroll;
+}
+.content::-webkit-scrollbar {
+    display: none;
+}
+}
+
+
+@media screen and (max-width:575px) {
+.sidebar {
+    height: auto;
+
+}
+.content {
+    position: relative;
+}
+
+.hide-lines {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+    
+}
 </style>
