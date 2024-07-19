@@ -31,7 +31,6 @@ class BookPublicResource extends JsonResource
             'want_to_read_count' => $this->getWantToReadCount(),
             'reading_count' => $this->getReadingCount(),
             'already_read_count' => $this->getAlreadyReadCount(),
-            'related_books' => BookPreviewResource::collection($this->getRelatedBooks()->take(5)),
         ];
 
         return $result;

@@ -132,3 +132,10 @@ Route::get('promote-admin-to-super-admin/{user_id}', [AdminController::class, 'p
 
 Route::get('admins', [AdminController::class, 'admins']);
 
+// test ----------------------------------------------------------------
+
+Route::get('relevance/{id1}/{id2}', [BookController::class, 'relevance']);
+
+Route::get('refresh-relevance', [BookController::class, 'refreshRelevance']);
+
+

@@ -59,7 +59,7 @@ class BookController extends Controller {
     public function category($id, $page) {
 
         $bookCategory = BookCategory::find($id);
-        $pageSize = 2;
+        $pageSize = 8;
 
         if ($page == 0) {
             return response()->json([
@@ -87,7 +87,7 @@ class BookController extends Controller {
     public function genre($id, $page) {
 
         $genre = Genre::find($id);
-        $pageSize = 2;
+        $pageSize = 8;
 
         if ($page == 0) {
             return response()->json([
@@ -104,7 +104,7 @@ class BookController extends Controller {
     public function publisher($id, $page) {
 
         $publisher = Publisher::find($id);
-        $pageSize = 2;
+        $pageSize = 8;
 
         if ($page == 0) {
             return response()->json([
@@ -148,5 +148,17 @@ class BookController extends Controller {
         $book = Book::find($book_id);
 
         return BookCommentResource::collection($book->getComments());
+    }
+
+    public function relevance($book_id1, $book_id2) {
+
+        $book = Book::find($book_id1);
+        dd ($book->relevantTo($book_id2));
+    }
+
+    public function refreshRelevance() {
+        foreach(Book::all() as $b) {
+            $b->setRelatedBooks();
+        }
     }
 }
