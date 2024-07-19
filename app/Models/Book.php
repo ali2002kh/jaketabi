@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Concerns\HasEvents;
 
 class Book extends Model
 {
-    use HasFactory;
+    use HasFactory, HasEvents;
 
     protected $fillable = [
         'ISBN',
@@ -69,88 +70,28 @@ class Book extends Model
         return GenreBook::where('book_id', $this->id)->get();
     }
 
-    // public function getRelatedBooks() {
-
-    //     $books = collect();
-    //     $index = [];
-    
-    //     $genres = $this->getGenres();
-    //     $category = $this->getCategory();
-    //     $sibling_categories = $category->getSiblings();
-    //     $publisher = $this->getPublisher();
-    
-    //     foreach ($genres as $g) {
-    
-    //         foreach ($g->getBooks() as $b) {
-
-    //             if ($b->id != $this->id) {
-    //                 $books->add($b);
-    //                 $index[$b->id] = isset($index[$b->id]) ? $index[$b->id] + 2 : 2;
-    //             }
-    //         }
-    //     }
-    
-    //     foreach ($category->getBooks() as $b) {
-    
-    //         if ($b->id != $this->id) {
-    //             $books->add($b);
-    //             $index[$b->id] = isset($index[$b->id]) ? $index[$b->id] + 3 : 3;
-    //         }
-    //     }
-
-    //     foreach ($sibling_categories as $category) {
-    
-    //         foreach ($category->getBooks() as $b) {
-    
-    //             if ($b->id != $this->id) {
-    //                 $books->add($b);
-    //                 $index[$b->id] = isset($index[$b->id]) ? $index[$b->id] + 1 : 1;
-    //             }
-    //         }
-    //     }
-
-    //     foreach ($publisher->getBooks() as $b) {
-    
-    //         if ($b->id != $this->id) {
-    //             $books->add($b);
-    //             $index[$b->id] = isset($index[$b->id]) ? $index[$b->id] + 1 : 1;
-    //         }
-    //     }
-    
-    //     $groupedBooks = $books->groupBy('id');
-    //     $sortedBooks = $groupedBooks->map(function (Collection $books, $key) use ($index) {
-    //         return ['count' => $index[$key], 'book' => $books->first()];
-    //     })->sortByDesc('count');
-    
-    
-    //     $books = collect();
-    //     foreach ($sortedBooks as $sb) {
-    //         $books->add($sb['book']);
-    //     }
-
-    //     return $books;
-    // }
-
-    public function getRelatedBooks() {
-
+    public function relevantTo($book_id) {
         $genres = $this->getGenres()->pluck('id')->all();
         $category = $this->getCategory();
         $sibling_categories = $category->getSiblings()->pluck('id')->all();
         $publisher = $this->getPublisher()->id;
 
-        $genreQuery = Book::select('books.id', 'books.name', 'books.image')
+        // dd($sibling_categories);
+
+        $genreQuery = Book::select('books.id')
             ->join('genre_books', 'books.id', '=', 'genre_books.book_id')
-            ->whereNotIn('books.id', [$this->id])
+            ->whereIn('books.id', [$book_id])
             ->whereIn('genre_books.genre_id', $genres)
             ->selectRaw('
                 (COUNT(DISTINCT genre_books.genre_id) * 2) as genre_relevance')
-            ->groupBy('books.id', 'books.name', 'books.image')
+            ->groupBy('books.id')
             ->orderBy('genre_relevance', 'desc')
             ->get()
             ;
 
-        $categoryPublisherQuery = Book::select('books.id', 'books.name', 'books.image')
-            ->whereNotIn('books.id', [$this->id])
+        if ($sibling_categories) {
+            $categoryPublisherQuery = Book::select('books.id')
+            ->whereIn('books.id', [$book_id])
             ->where(function ($query) use ($category, $sibling_categories, $publisher) {
                 $query->where('books.category_id', $category->id)
                     ->orWhereIn('books.category_id', $sibling_categories)
@@ -165,14 +106,123 @@ class Book extends Model
             ->orderBy('category_publisher_relevance', 'desc')
             ->get()
             ;
+        } else {
+            $categoryPublisherQuery = Book::select('books.id')
+            ->whereIn('books.id', [$book_id])
+            ->where(function ($query) use ($category, $publisher) {
+                $query->where('books.category_id', $category->id)
+                    ->orWhere('books.publisher_id', $publisher);
+            })
+            ->selectRaw('
+                (CASE 
+                    WHEN books.category_id = '. $category->id. ' THEN 3  
+                    WHEN books.publisher_id = '. $publisher. ' THEN 1 
+                END) as category_publisher_relevance')
+            ->orderBy('category_publisher_relevance', 'desc')
+            ->get()
+            ;
+        }
+        
+
+        // dd($genreQuery);
+        // dd($categoryPublisherQuery);
 
         $results = $genreQuery->merge($categoryPublisherQuery);
-        $results->transform(function($book) {
-            $book->relevance = $book->genre_relevance + $book->category_publisher_relevance;
+        $results->transform(function($book) use ($genreQuery, $categoryPublisherQuery) {
+            $genreBook = $genreQuery->firstWhere('id', $book->id);
+            $categoryPublisherBook = $categoryPublisherQuery->firstWhere('id', $book->id);
+            $genreRelevance = $genreBook ? $genreBook->genre_relevance : 0;
+            $categoryPublisherRelevance = $categoryPublisherBook ? $categoryPublisherBook->category_publisher_relevance : 0;
+            $book->relevance = $genreRelevance + $categoryPublisherRelevance;
+            return $book;
+        });
+    
+        return $results->first()->relevance;
+    }
+
+    public function setRelatedBooks() {
+
+        $genres = $this->getGenres()->pluck('id')->all();
+        $category = $this->getCategory();
+        $sibling_categories = $category->getSiblings()->pluck('id')->all();
+        $publisher = $this->getPublisher()->id;
+
+        $genreQuery = Book::select('books.id')
+            ->join('genre_books', 'books.id', '=', 'genre_books.book_id')
+            ->whereNotIn('books.id', [$this->id])
+            ->whereIn('genre_books.genre_id', $genres)
+            ->selectRaw('
+                (COUNT(DISTINCT genre_books.genre_id) * 2) as genre_relevance')
+            ->groupBy('books.id')
+            ->orderBy('genre_relevance', 'desc')
+            ->get()
+            ;
+
+            if ($sibling_categories) {
+                $categoryPublisherQuery = Book::select('books.id')
+                ->whereNotIn('books.id', [$this->id])
+                ->where(function ($query) use ($category, $sibling_categories, $publisher) {
+                    $query->where('books.category_id', $category->id)
+                        ->orWhereIn('books.category_id', $sibling_categories)
+                        ->orWhere('books.publisher_id', $publisher);
+                })
+                ->selectRaw('
+                    (CASE 
+                        WHEN books.category_id = '. $category->id. ' THEN 3 
+                        WHEN books.category_id IN ('. implode(',', $sibling_categories). ') THEN 1 
+                        WHEN books.publisher_id = '. $publisher. ' THEN 1 
+                    END) as category_publisher_relevance')
+                ->orderBy('category_publisher_relevance', 'desc')
+                ->get()
+                ;
+            } else {
+                $categoryPublisherQuery = Book::select('books.id')
+                ->whereNotIn('books.id', [$this->id])
+                ->where(function ($query) use ($category, $publisher) {
+                    $query->where('books.category_id', $category->id)
+                        ->orWhere('books.publisher_id', $publisher);
+                })
+                ->selectRaw('
+                    (CASE 
+                        WHEN books.category_id = '. $category->id. ' THEN 3  
+                        WHEN books.publisher_id = '. $publisher. ' THEN 1 
+                    END) as category_publisher_relevance')
+                ->orderBy('category_publisher_relevance', 'desc')
+                ->get()
+                ;
+            }
+
+        $results = $genreQuery->merge($categoryPublisherQuery);
+        $results->transform(function($book) use ($genreQuery, $categoryPublisherQuery) {
+            $genreBook = $genreQuery->firstWhere('id', $book->id);
+            $categoryPublisherBook = $categoryPublisherQuery->firstWhere('id', $book->id);
+            $genreRelevance = $genreBook ? $genreBook->genre_relevance : 0;
+            $categoryPublisherRelevance = $categoryPublisherBook ? $categoryPublisherBook->category_publisher_relevance : 0;
+            $book->relevance = $genreRelevance + $categoryPublisherRelevance;
             return $book;
         });
 
-        return $results->sortByDesc('relevance')->take(20);
+        $results = $results->sortByDesc('relevance')->take(20);
+        $related_books_id = "";
+        foreach($results as $b) {
+            $related_books_id.=$b->id.",";
+        }
+        $related_books_id = substr($related_books_id, 0, -1);
+
+        $relationRecord = BookRelation::where('book_id', $this->id)->first();
+        if (!$relationRecord) {
+            $relationRecord = new BookRelation();
+            $relationRecord->book_id = $this->id;
+        }
+        $relationRecord->related_books_id = $related_books_id;
+        $relationRecord->save();
+
+    }
+
+    public function getRelatedBooks() {
+
+        $relationRecord = BookRelation::where('book_id', $this->id)->first();
+        return $relationRecord->geRelatedBooks();
     }
 
     public function getLog() {

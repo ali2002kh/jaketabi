@@ -21,12 +21,16 @@ class BookCategory extends Model
 
     public function getSiblings() {
 
-        $categories = BookCategory::
-        where('parent_id', $this->parent_id)
-        ->where('id', '!=', $this->id)
-        ->get();
+        if ($this->parent_id) {
+            $categories = BookCategory::
+            where('parent_id', $this->parent_id)
+            ->where('id', '!=', $this->id)
+            ->get();
 
-        return $categories;
+            return $categories;
+        } else {
+            return collect();
+        }
     }
 
     public function getChildren() {
