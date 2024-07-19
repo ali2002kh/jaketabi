@@ -19,15 +19,14 @@
                         <i class="fa-solid fa-trash fa-md p-2"></i>
                     </a>
                 </div>
-                <div class="v-else mt-4 row align-items-center" 
-                @click.prevent="showProfile(this.shelf.user.id)">
+                <router-link :to="{ name: 'profile', params: { id: shelf.user.id }}" class="v-else mt-4 row align-items-center router-links">
                     <div class="col-auto">
                         <img :src="this.shelf.user.image" class="user-profile" alt="">
                     </div>
                     <div class="col-auto">
                         <p class="fs-6 fw-bold">{{this.shelf.user.username}}</p>
                     </div>
-                </div>
+                </router-link>
                 <!-- <hr v-if="isOwner" class="border border-secondary w-75 mx-auto p-0 m-1"> -->
                 <div class="sidebar-item w-100 mt-2 h-100 mb-5">
                     <div class="fw-bold fs-6 text-end d-flex flex-row-reverse align-items-center w-100 p-2">
@@ -230,10 +229,6 @@ export default {
             else {
                 description.classList.add('hide-lines');
             }
-        },
-
-        async showProfile (id) {
-            this.$router.replace({ name: 'profile', params: { id: id }});
         },
     }
 }
