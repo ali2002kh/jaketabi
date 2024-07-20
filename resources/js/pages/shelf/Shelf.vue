@@ -19,12 +19,12 @@
                         <i class="fa-solid fa-trash fa-md p-2"></i>
                     </a>
                 </div>
-                <router-link :to="{ name: 'profile', params: { id: shelf.user.id }}" class="v-else mt-4 row align-items-center router-links">
+                <router-link v-else :to="{ name: 'profile', params: { id: shelf.user.id }}" class="v-else mt-4 row align-items-center router-links">
                     <div class="col-auto">
-                        <img :src="this.shelf.user.image" class="user-profile" alt="">
+                        <img :src="shelf.user.image" class="user-profile" alt="">
                     </div>
                     <div class="col-auto">
-                        <p class="fs-6 fw-bold">{{this.shelf.user.username}}</p>
+                        <p class="fs-6 fw-bold">{{shelf.user.username}}</p>
                     </div>
                 </router-link>
                 <!-- <hr v-if="isOwner" class="border border-secondary w-75 mx-auto p-0 m-1"> -->
