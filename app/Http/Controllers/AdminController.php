@@ -34,6 +34,7 @@ class AdminController extends Controller
             'name' => 'required',
             'author' => 'required',
             'category_id' => 'required',
+            'genres' => 'required',
         ]);
 
         if ($user->getPermissions()->contains('id', 11)) {
@@ -59,8 +60,8 @@ class AdminController extends Controller
             $image = null;
         }
 
-        $book_id = $user->createBook(
-            isbn : $request->get('isbn'), 
+        $book = $user->createBook(
+            isbn : 'initial', 
             name : $request->get('name'),
             image : $image,
             author : $request->get('author'),
@@ -78,10 +79,13 @@ class AdminController extends Controller
         foreach (explode(",", $request->get('genres')) as $genre_id) {
             $gb = new GenreBook();
             $gb->genre_id = $genre_id;
-            $gb->book_id = $book_id;
+            $gb->book_id = $book->id;
             $gb->save();
         }
 
+        $book->ISBN = $request->get('isbn');
+        $book->save();
+        
         return abort(200, 'کتاب با موفقیت ایجاد شد');
     }
 
@@ -131,6 +135,22 @@ class AdminController extends Controller
             $image = null;
         }
 
+        $prevGenres = $book->getGenreBooks();
+
+        foreach ($prevGenres as $g) {
+            $g->delete();
+        }
+
+        foreach (explode(",", $request->get('genres')) as $genre_id) {
+            $gb = new GenreBook();
+            $gb->genre_id = $genre_id;
+            $gb->book_id = $book_id;
+            $gb->save();
+        }
+
+        $book->ISBN = 'initial';
+        $book->save();
+
         $book->updateBook (
             isbn : $request->get('isbn'), 
             name : $request->get('name'),
@@ -146,19 +166,6 @@ class AdminController extends Controller
             ddc : $request->get('ddc'),
             isbn_period : $request->get('isbn_period'),
         );
-
-        $prevGenres = $book->getGenreBooks();
-
-        foreach ($prevGenres as $g) {
-            $g->delete();
-        }
-
-        foreach (explode(",", $request->get('genres')) as $genre_id) {
-            $gb = new GenreBook();
-            $gb->genre_id = $genre_id;
-            $gb->book_id = $book_id;
-            $gb->save();
-        }
 
        return abort(200, 'با موفقیت بروزرسانی شد');
     }

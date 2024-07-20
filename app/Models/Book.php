@@ -26,6 +26,7 @@ class Book extends Model
         'LCC',
         'DDC',
         'ISBN_period',
+        'updated_at',
     ];
 
     public function getCategory() {
@@ -202,27 +203,37 @@ class Book extends Model
             return $book;
         });
 
-        $results = $results->sortByDesc('relevance')->take(20);
-        $related_books_id = "";
-        foreach($results as $b) {
-            $related_books_id.=$b->id.",";
+        $all = $results->sortByDesc('relevance');
+
+        $relatedBooks = [];
+        foreach ($all->take(20) as $book) {
+            $relatedBooks[$book->id] = $book->relevance;
         }
-        $related_books_id = substr($related_books_id, 0, -1);
 
         $relationRecord = BookRelation::where('book_id', $this->id)->first();
         if (!$relationRecord) {
             $relationRecord = new BookRelation();
             $relationRecord->book_id = $this->id;
         }
-        $relationRecord->related_books_id = $related_books_id;
+        $relationRecord->related_books = json_encode($relatedBooks);
         $relationRecord->save();
 
+        return $all;
     }
 
     public function getRelatedBooks() {
 
         $relationRecord = BookRelation::where('book_id', $this->id)->first();
-        return $relationRecord->geRelatedBooks();
+        return $relationRecord->getRelatedBooks();
+    }
+
+    public function getRelatedBookIdsWithRelevance() {
+        return BookRelation::where('book_id', $this->id)->first()->related_books;
+    }
+
+    public function getBookRelation() {
+
+        return BookRelation::where('book_id', $this->id)->first();
     }
 
     public function getLog() {

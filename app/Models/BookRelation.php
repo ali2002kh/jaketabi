@@ -11,17 +11,22 @@ class BookRelation extends Model
 
     protected $fillable = [
         'book_id',
-        'related_books_id',
+        'related_books',
     ];
 
     public function getBook() {
         return Book::find($this->book_id);
     }
 
-    public function geRelatedBooks() {
+    public function getRelatedBooks() {
+        $relatedBooksJson = $this->related_books;
+        $relatedBooks = json_decode($relatedBooksJson, true);
         $books = collect();
-        foreach (explode(',', $this->related_books_id) as $book_id) {
-            $books->add(Book::find($book_id));
+        foreach ($relatedBooks as $bookId => $relevance) {
+            $book = Book::find($bookId);
+            if ($book) {
+                $books->add($book);
+            }
         }
         return $books;
     }
