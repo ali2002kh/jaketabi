@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('book_relations', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('book_id')->unsigned()->index();
-            $table->text('related_books_id')->nullable();
+            $table->json('related_books')->nullable();
             $table->timestamps();
 
             $table->foreign('book_id')->references('id')

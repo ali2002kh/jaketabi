@@ -104,7 +104,7 @@ class User extends Authenticatable
         $bookLog = new BookLog(['book_id' => $book->id]);
         $bookLog->save();
 
-        return $book->id;
+        return $book;
     }
 
     public function promoteNormalUserToPublisherAdmin($user_id, $publisher_id) {
