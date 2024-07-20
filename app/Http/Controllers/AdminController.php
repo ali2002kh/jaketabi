@@ -61,7 +61,7 @@ class AdminController extends Controller
         }
 
         $book = $user->createBook(
-            isbn : 'initial', 
+            isbn : $request->get('isbn'), 
             name : $request->get('name'),
             image : $image,
             author : $request->get('author'),
@@ -83,8 +83,7 @@ class AdminController extends Controller
             $gb->save();
         }
 
-        $book->ISBN = $request->get('isbn');
-        $book->save();
+        $book->updateBookRelations();
         
         return abort(200, 'کتاب با موفقیت ایجاد شد');
     }
@@ -148,9 +147,6 @@ class AdminController extends Controller
             $gb->save();
         }
 
-        $book->ISBN = 'initial';
-        $book->save();
-
         $book->updateBook (
             isbn : $request->get('isbn'), 
             name : $request->get('name'),
@@ -166,6 +162,8 @@ class AdminController extends Controller
             ddc : $request->get('ddc'),
             isbn_period : $request->get('isbn_period'),
         );
+
+        $book->updateBookRelations();
 
        return abort(200, 'با موفقیت بروزرسانی شد');
     }

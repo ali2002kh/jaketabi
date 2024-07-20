@@ -236,6 +236,33 @@ class Book extends Model
         return BookRelation::where('book_id', $this->id)->first();
     }
 
+    public function updateBookRelations() {
+
+        $allRelatedBooks = $this->setRelatedBooks();
+    
+        if ($allRelatedBooks->count() > 100) {
+            $allRelatedBooks = $allRelatedBooks->take(100);
+        }
+        
+        foreach ($allRelatedBooks as $item) {
+            $book = Book::find($item->id);
+            $relatedBooks = json_decode($book->getRelatedBookIdsWithRelevance(), true);
+    
+            $relatedBooks[$this->id] = $item->relevance;
+    
+            uasort($relatedBooks, function($a, $b) {
+                return $b <=> $a;
+            });
+    
+            $relatedBooks = array_slice($relatedBooks, 0, 20, true);
+            $relatedBooks = array_combine(array_keys($relatedBooks), array_values($relatedBooks));
+    
+            $relation = $book->getBookRelation();
+            $relation->related_books = json_encode($relatedBooks);
+            $relation->save();
+        }
+    }
+
     public function getLog() {
 
         return BookLog::where('book_id', $this->id)->get()->first();

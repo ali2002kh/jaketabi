@@ -36764,7 +36764,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.body-class[data-v-18b362d8] {\n    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n}\n.book-img[data-v-18b362d8] {\n        max-width: 120px;\n        max-height: 200px;\n}\n.shelf-book-img[data-v-18b362d8] {\n    max-width: 80px;\n    max-height: 120px;\n}\n.title[data-v-18b362d8] {\n    width: 100%; \n    direction: rtl;\n    border-bottom: 1.5px solid rgb(232, 232, 232); \n    line-height: 0.1em;\n    font-family: hamishe;\n}\n.title span[data-v-18b362d8] { \n        background:#fff; \n        padding-left: 20px;\n        padding-right: 20px;\n        margin-right: 30px;\n        font-weight:bold;\n        font-size: large;\n}\n.user-profile[data-v-18b362d8] {\n    width: 40px;\n    height: 40px;\n    border-radius: 50%;\n}\n.book-cover[data-v-18b362d8] {\n    width: 100px;\n    max-height: 180px;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.body-class[data-v-18b362d8] {\r\n    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n}\n.book-img[data-v-18b362d8] {\r\n        max-width: 120px;\r\n        max-height: 200px;\n}\n.shelf-book-img[data-v-18b362d8] {\r\n    max-width: 80px;\r\n    max-height: 120px;\n}\n.title[data-v-18b362d8] {\r\n    width: 100%; \r\n    direction: rtl;\r\n    border-bottom: 1.5px solid rgb(232, 232, 232); \r\n    line-height: 0.1em;\r\n    font-family: hamishe;\n}\n.title span[data-v-18b362d8] { \r\n        background:#fff; \r\n        padding-left: 20px;\r\n        padding-right: 20px;\r\n        margin-right: 30px;\r\n        font-weight:bold;\r\n        font-size: large;\n}\n.user-profile[data-v-18b362d8] {\r\n    width: 40px;\r\n    height: 40px;\r\n    border-radius: 50%;\n}\n.book-cover[data-v-18b362d8] {\r\n    width: 100px;\r\n    max-height: 180px;\n}\r\n\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -36788,7 +36788,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.user-profile[data-v-6a713ae1] {\n    width: 60px;\n    height: 60px;\n    border-radius: 50%;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.user-profile[data-v-6a713ae1] {\r\n    width: 60px;\r\n    height: 60px;\r\n    border-radius: 50%;\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

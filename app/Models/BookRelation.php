@@ -24,7 +24,7 @@ class BookRelation extends Model
         $books = collect();
         foreach ($relatedBooks as $bookId => $relevance) {
             $book = Book::find($bookId);
-            if ($book) {
+            if ($book->status == 1) {
                 $books->add($book);
             }
         }
