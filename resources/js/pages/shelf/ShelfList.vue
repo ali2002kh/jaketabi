@@ -160,7 +160,7 @@ export default {
             this.success = false
             this.message = null
             await axios.post('/api/store-shelf', {
-                name: this.shelfName,
+                shelfName: this.shelfName,
                 description: this.shelfDescription
             }).then((response) => {
                 this.success = true;

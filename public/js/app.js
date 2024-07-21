@@ -22384,7 +22384,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
               _this3.message = null;
               _context2.next = 6;
               return axios.post('/api/store-shelf', {
-                name: _this3.shelfName,
+                shelfName: _this3.shelfName,
                 description: _this3.shelfDescription
               }).then(function (response) {
                 _this3.success = true;
@@ -23078,7 +23078,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       // fields
       isbn: null,
-      name: null,
+      book_name: null,
       file: '',
       author: null,
       category_id: null,
@@ -23137,7 +23137,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     create: function create() {
       var _this4 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-        var _this4$isbn, _this4$name, _this4$author, _this4$category_id, _this4$publisher_id, _this4$description, _this4$translator, _this4$page_count, _this4$lcc, _this4$ddc, _this4$isbn_period, _this4$selectedGenres;
+        var _this4$isbn, _this4$book_name, _this4$author, _this4$category_id, _this4$publisher_id, _this4$description, _this4$translator, _this4$page_count, _this4$lcc, _this4$ddc, _this4$isbn_period, _this4$selectedGenres;
         var fd;
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) switch (_context2.prev = _context2.next) {
@@ -23145,7 +23145,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               fd = new FormData();
               console.log(_this4.selectedGenres);
               fd.append('isbn', (_this4$isbn = _this4.isbn) !== null && _this4$isbn !== void 0 ? _this4$isbn : '');
-              fd.append('name', (_this4$name = _this4.name) !== null && _this4$name !== void 0 ? _this4$name : '');
+              fd.append('book_name', (_this4$book_name = _this4.book_name) !== null && _this4$book_name !== void 0 ? _this4$book_name : '');
               fd.append('file', _this4.file);
               fd.append('author', (_this4$author = _this4.author) !== null && _this4$author !== void 0 ? _this4$author : '');
               fd.append('category_id', (_this4$category_id = _this4.category_id) !== null && _this4$category_id !== void 0 ? _this4$category_id : '');
@@ -23227,7 +23227,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       // fields
       isbn: null,
-      name: null,
+      book_name: null,
       file: '',
       author: null,
       category_id: null,
@@ -23255,7 +23255,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       console.log(response.data.data);
       _this.book = response.data.data;
       _this.isbn = _this.book.isbn;
-      _this.name = _this.book.name;
+      _this.book_name = _this.book.name;
       _this.author = _this.book.author;
       _this.category_id = _this.book.category_id;
       // this.release_date = this.book.release_date
@@ -23303,7 +23303,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     create: function create() {
       var _this4 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-        var _this4$isbn, _this4$name, _this4$author, _this4$category_id, _this4$publisher_id, _this4$description, _this4$translator, _this4$page_count, _this4$lcc, _this4$ddc, _this4$isbn_period, _this4$selectedGenres;
+        var _this4$isbn, _this4$book_name, _this4$author, _this4$category_id, _this4$publisher_id, _this4$description, _this4$translator, _this4$page_count, _this4$lcc, _this4$ddc, _this4$isbn_period, _this4$selectedGenres;
         var fd;
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) switch (_context2.prev = _context2.next) {
@@ -23311,7 +23311,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               fd = new FormData();
               console.log(_this4.genres);
               fd.append('isbn', (_this4$isbn = _this4.isbn) !== null && _this4$isbn !== void 0 ? _this4$isbn : '');
-              fd.append('name', (_this4$name = _this4.name) !== null && _this4$name !== void 0 ? _this4$name : '');
+              fd.append('book_name', (_this4$book_name = _this4.book_name) !== null && _this4$book_name !== void 0 ? _this4$book_name : '');
               fd.append('file', _this4.file);
               fd.append('author', (_this4$author = _this4.author) !== null && _this4$author !== void 0 ? _this4$author : '');
               fd.append('category_id', (_this4$category_id = _this4.category_id) !== null && _this4$category_id !== void 0 ? _this4$category_id : '');
@@ -24851,7 +24851,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
               _this3.message = null;
               _context.next = 6;
               return axios.post('/api/store-shelf', {
-                name: _this3.shelfName,
+                shelfName: _this3.shelfName,
                 description: _this3.shelfDescription
               }).then(function (response) {
                 _this3.success = true;
@@ -26196,19 +26196,35 @@ var _hoisted_108 = {
   "class": "col-auto"
 };
 var _hoisted_109 = {
+  key: 0,
+  "class": "",
+  "data-bs-toggle": "modal",
+  "data-bs-target": "#createShelf"
+};
+var _hoisted_110 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    href: "#",
+    "class": "link-dark text-center",
+    style: {
+      "text-decoration": "none"
+    }
+  }, "ایجاد قفسه جدید", -1 /* HOISTED */);
+});
+var _hoisted_111 = [_hoisted_110];
+var _hoisted_112 = {
   "class": "modal fade",
   id: "createShelf",
   tabindex: "-1",
   "aria-labelledby": "createShelfLabel",
   "aria-hidden": "true"
 };
-var _hoisted_110 = {
+var _hoisted_113 = {
   "class": "modal-dialog"
 };
-var _hoisted_111 = {
+var _hoisted_114 = {
   "class": "modal-content"
 };
-var _hoisted_112 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_115 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "modal-header"
   }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", {
@@ -26222,62 +26238,62 @@ var _hoisted_112 = /*#__PURE__*/_withScopeId(function () {
     "aria-label": "Close"
   })], -1 /* HOISTED */);
 });
-var _hoisted_113 = {
+var _hoisted_116 = {
   "class": "modal-body text-end"
 };
-var _hoisted_114 = {
+var _hoisted_117 = {
   key: 0,
   "class": "alert alert-danger text-start py-1",
   style: {
     "font-size": "14px"
   }
 };
-var _hoisted_115 = {
+var _hoisted_118 = {
   key: 1,
   "class": "alert alert-success py-1",
   style: {
     "font-size": "14px"
   }
 };
-var _hoisted_116 = {
+var _hoisted_119 = {
   "class": "m-1"
 };
-var _hoisted_117 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_120 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": "shelfName",
     "class": "form-label"
   }, "نام قفسه", -1 /* HOISTED */);
 });
-var _hoisted_118 = {
+var _hoisted_121 = {
   "class": "m-1"
 };
-var _hoisted_119 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_122 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
     "for": "shelfDescription",
     "class": "form-label"
   }, "توضیحات", -1 /* HOISTED */);
 });
-var _hoisted_120 = {
+var _hoisted_123 = {
   "class": "m-1 text-start"
 };
-var _hoisted_121 = {
+var _hoisted_124 = {
   key: 0,
   "class": "lists-body row flex-row-reverse align-items-center mx-1 p-1 rounded-1"
 };
-var _hoisted_122 = {
+var _hoisted_125 = {
   "class": "shelf-title row m-1 bg-dark rounded-top text-white bg-gradient"
 };
-var _hoisted_123 = {
+var _hoisted_126 = {
   "class": "text-center mx-auto fw-bold m-1"
 };
-var _hoisted_124 = {
+var _hoisted_127 = {
   "class": "shelf-books row flex-row-reverse justify-content-start align-items-center bg-light mx-1 p-1 border-start border-end border-bottom rounded-bottom",
   style: {
     "min-height": "130px"
   }
 };
-var _hoisted_125 = ["src"];
-var _hoisted_126 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_128 = ["src"];
+var _hoisted_129 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
     "class": "fa-solid fa-angle-left fa-xl text-dark"
   }, null, -1 /* HOISTED */);
@@ -26614,8 +26630,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }),
       _: 2 /* DYNAMIC */
     }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["to"])], 2 /* CLASS */);
-  }), 128 /* KEYED_FRAGMENT */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div v-if=\"host.has_more_want_to_read\" class=\"col-auto\" style=\"margin-right: 1000px;\">\n                    <router-link :to=\"{name: 'profileBooks', params: {id: host.id, status: 1 }}\"\n                    class=\"router-links text-center\">\n                            <i class=\"fa-solid fa-circle-chevron-left fa-2x\"></i>\n                            <p>+{{ host.already_read_more_count }}</p>\n                    </router-link> \n                </div> ")])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" shelves list  "), $data.host ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_104, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_105, [_hoisted_106, _hoisted_107, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_108, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <p v-if=\"host.is_private\" class=\"\" data-bs-toggle=\"modal\" data-bs-target=\"#createShelf\">\n                        <a href=\"#\" class=\"link-dark text-center\" style=\"text-decoration:none;\">ایجاد قفسه جدید</a> \n                    </p> "), $data.host.has_more_shelves ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_router_link, {
-    key: 0,
+  }), 128 /* KEYED_FRAGMENT */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div v-if=\"host.has_more_want_to_read\" class=\"col-auto\" style=\"margin-right: 1000px;\">\n                    <router-link :to=\"{name: 'profileBooks', params: {id: host.id, status: 1 }}\"\n                    class=\"router-links text-center\">\n                            <i class=\"fa-solid fa-circle-chevron-left fa-2x\"></i>\n                            <p>+{{ host.already_read_more_count }}</p>\n                    </router-link> \n                </div> ")])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" shelves list  "), $data.host ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_104, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_105, [_hoisted_106, _hoisted_107, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_108, [$data.host.is_private ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_109, [].concat(_hoisted_111))) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.host.has_more_shelves ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_router_link, {
+    key: 1,
     to: {
       name: 'profileBooks',
       params: {
@@ -26632,11 +26648,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" مشاهده همه ")];
     }),
     _: 1 /* STABLE */
-  }, 8 /* PROPS */, ["to"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_109, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_110, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_111, [_hoisted_112, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_113, [$data.hasError ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_114, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.errors, function (e) {
+  }, 8 /* PROPS */, ["to"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_112, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_113, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_114, [_hoisted_115, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_116, [$data.hasError ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_117, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.errors, function (e) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       key: e
     }, "- " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(e[0]), 1 /* TEXT */);
-  }), 128 /* KEYED_FRAGMENT */))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.success ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_115, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.message), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_116, [_hoisted_117, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }), 128 /* KEYED_FRAGMENT */))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.success ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_118, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.message), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_119, [_hoisted_120, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "text",
     "class": "form-control text-end",
     id: "shelfName",
@@ -26644,24 +26660,24 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "onUpdate:modelValue": _cache[16] || (_cache[16] = function ($event) {
       return $data.shelfName = $event;
     })
-  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.shelfName]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_118, [_hoisted_119, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.shelfName]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_121, [_hoisted_122, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
     id: "shelfDescription",
     "class": "form-control text-end",
     name: "shelfDescription",
     "onUpdate:modelValue": _cache[17] || (_cache[17] = function ($event) {
       return $data.shelfDescription = $event;
     })
-  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.shelfDescription]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_120, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.shelfDescription]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_123, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "submit",
     "class": "btn btn-dark m-3 ms-0 px-3",
     onClick: _cache[18] || (_cache[18] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $options.storeShelf && $options.storeShelf.apply($options, arguments);
     }, ["prevent"]))
-  }, "تایید")])])])])])]), $data.host ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_121, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.responsiveShelfList($data.host.shelves), function (s) {
+  }, "تایید")])])])])])]), $data.host ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_124, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.responsiveShelfList($data.host.shelves), function (s) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       key: s.id,
       "class": "shelf"
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_122, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_123, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(s.name), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_124, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(s.books, function (b) {
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_125, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_126, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(s.name), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_127, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(s.books, function (b) {
       return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
         key: b.id,
         "class": "col-auto p-2"
@@ -26669,7 +26685,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         src: b.image,
         "class": "shelf-book-img mx-auto",
         alt: ""
-      }, null, 8 /* PROPS */, _hoisted_125)]);
+      }, null, 8 /* PROPS */, _hoisted_128)]);
     }), 128 /* KEYED_FRAGMENT */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
       to: {
         name: 'shelf',
@@ -26680,7 +26696,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       "class": "col-auto me-auto p-2"
     }, {
       "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-        return [_hoisted_126];
+        return [_hoisted_129];
       }),
       _: 2 /* DYNAMIC */
     }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["to"])])]);
@@ -27249,7 +27265,7 @@ var _hoisted_19 = {
   "class": "m-1"
 };
 var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "name",
+  "for": "book_name",
   "class": "form-label"
 }, "نام کتاب *", -1 /* HOISTED */);
 var _hoisted_21 = {
@@ -27311,7 +27327,7 @@ var _hoisted_36 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   style: {
     "text-decoration": "none"
   }
-}, "ژانرها")], -1 /* HOISTED */);
+}, "ژانرها *")], -1 /* HOISTED */);
 var _hoisted_37 = {
   "class": "modal fade",
   id: "selectGenre",
@@ -27410,12 +27426,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "text",
     "class": "form-control",
     required: "",
-    id: "name",
-    name: "name",
+    id: "book_name",
+    name: "book_name",
     "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
-      return $data.name = $event;
+      return $data.book_name = $event;
     })
-  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.name]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [_hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.book_name]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [_hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
     id: "description",
     "class": "form-control",
     name: "description",
@@ -27581,7 +27597,7 @@ var _hoisted_19 = {
   "class": "m-1"
 };
 var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "name",
+  "for": "book_name",
   "class": "form-label"
 }, "نام کتاب *", -1 /* HOISTED */);
 var _hoisted_21 = {
@@ -27643,7 +27659,7 @@ var _hoisted_36 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   style: {
     "text-decoration": "none"
   }
-}, "ژانرها")], -1 /* HOISTED */);
+}, "ژانرها *")], -1 /* HOISTED */);
 var _hoisted_37 = {
   "class": "modal fade",
   id: "selectGenre",
@@ -27742,12 +27758,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "text",
     "class": "form-control",
     required: "",
-    id: "name",
-    name: "name",
+    id: "book_name",
+    name: "book_name",
     "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
-      return $data.name = $event;
+      return $data.book_name = $event;
     })
-  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.name]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [_hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.book_name]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [_hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
     id: "description",
     "class": "form-control",
     name: "description",

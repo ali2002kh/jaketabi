@@ -10,6 +10,8 @@ use App\Models\GenreBook;
 use App\Models\Publisher;
 use App\Models\RoleUser;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+
 // use Illuminate\Validation\Rule;
 
 class AdminController extends Controller
@@ -30,8 +32,8 @@ class AdminController extends Controller
         }
 
         $request->validate([
-            'isbn' => 'required',
-            'name' => 'required',
+            'isbn' => 'required|unique:books',
+            'book_name' => 'required',
             'author' => 'required',
             'category_id' => 'required',
             'genres' => 'required',
@@ -62,7 +64,7 @@ class AdminController extends Controller
 
         $book = $user->createBook(
             isbn : $request->get('isbn'), 
-            name : $request->get('name'),
+            name : $request->get('book_name'),
             image : $image,
             author : $request->get('author'),
             category_id : $request->get('category_id'),
@@ -105,10 +107,11 @@ class AdminController extends Controller
         }
 
         $request->validate([
-            'isbn' => 'required',
-            'name' => 'required',
+            'isbn' => [Rule::unique('books')->ignore($book_id), 'required'],
+            'book_name' => 'required',
             'author' => 'required',
             'category_id' => 'required',
+            'genres' => 'required',
         ]);
 
         if ($user->getPermissions()->contains('id', 11)) {
@@ -149,7 +152,7 @@ class AdminController extends Controller
 
         $book->updateBook (
             isbn : $request->get('isbn'), 
-            name : $request->get('name'),
+            name : $request->get('book_name'),
             image : $image,
             author : $request->get('author'),
             category_id : $request->get('category_id'),

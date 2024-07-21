@@ -39,7 +39,7 @@ class ProfileController extends Controller {
         if ($request->hasFile('file')) {
 
             $request->validate([
-                'image' => 'mimes:jpeg,bmp,png'
+                'file' => 'mimes:jpeg,bmp,png'
             ]);
 
             $request->file->store('user', 'public');

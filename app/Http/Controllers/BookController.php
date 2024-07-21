@@ -75,9 +75,17 @@ class BookController extends Controller {
 
     public function categoriesAndGenres() {
 
+        $allCategories = BookCategory::all();
+        $categories = collect();
+        foreach ($allCategories as $c) {
+            if ($c->isLeaf()) {
+                $categories->add($c);
+            }
+        }
+
         return response()->json([
             'data' => [
-                'categories' => BookCategoryPreviewResource::collection(BookCategory::all()),
+                'categories' => BookCategoryPreviewResource::collection($categories),
                 'genres' => GenreResource::collection(Genre::all()),
             ]
         ]);

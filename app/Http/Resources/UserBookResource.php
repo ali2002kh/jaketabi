@@ -49,7 +49,9 @@ class UserBookResource extends JsonResource
                 $result['status'] = "دارم می‌خوانم";
                 $result['started_at'] = $this->started_at;
                 $result['last_read_at'] = $this->last_read_at;
-                $result['progression'] = $this->getProgression();
+                if ($book->page_count) {
+                    $result['progression'] = $this->getProgression();
+                }
               break;
             case 3:
                 $result['status_code'] = 3; 

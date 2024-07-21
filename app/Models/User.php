@@ -660,7 +660,7 @@ class User extends Authenticatable
 
         $now = Carbon::now()->format('Y-m-d');
         $book = Book::find($book_id);
-        if ($book->page_count < $page) {
+        if ($book->page_count && $book->page_count < $page) {
             return 'error'; 
         }
         $record = $this->getBookRecord($book_id);

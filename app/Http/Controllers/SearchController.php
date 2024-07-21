@@ -31,11 +31,28 @@ class SearchController extends Controller
         $publishers = [];
 
         if($input != '') {
-            $books = Book::where('name','LIKE',"%".$input."%")->where('status', 1)->get();
-            $shelves = Shelf::where('name','LIKE',"%".$input."%")->get();
-            $genres = Genre::where('name','LIKE',"%".$input."%")->get();
-            $categories = BookCategory::where('name','LIKE',"%".$input."%")->get();
-            $publishers = Publisher::where('name','LIKE',"%".$input."%")->get();
+            $books = Book::where('name', 'LIKE', "%".$input."%")
+                ->orWhere('description', 'LIKE', "%".$input."%")
+                ->orWhere('author', 'LIKE', "%".$input."%")
+                ->orWhere('translator', 'LIKE', "%".$input."%")
+                ->orWhere('LCC', 'LIKE', "%".$input."%")
+                ->orWhere('DDC', 'LIKE', "%".$input."%")
+                ->orWhere('ISBN_period', 'LIKE', "%".$input."%")
+                ->where('status', 1)
+                ->get();
+
+            $shelves = Shelf::where('name', 'LIKE', "%".$input."%")
+                ->orWhere('description',  'LIKE', "%".$input."%")
+                ->get();
+        
+            $genres = Genre::where('name', 'LIKE', "%".$input."%")
+                ->get();
+
+            $categories = BookCategory::where('name', 'LIKE', "%".$input."%")
+                ->get();
+
+            $publishers = Publisher::where('name', 'LIKE', "%".$input."%")
+                ->get();
         }
         return response()->json([
             'data' => [
@@ -55,7 +72,10 @@ class SearchController extends Controller
         $users = [];
 
         if($input != '') {
-            $users = User::where('username','LIKE',"%".$input."%")->get();
+            $users = User::where('username','LIKE',"%".$input."%")
+            ->orWhere('email', $input)
+            ->orWhere('number', $input)
+            ->get();
         }
         return UserFriendResource::collection($users);
     }
@@ -88,7 +108,15 @@ class SearchController extends Controller
         $books = [];
 
         if($input != '') {
-            $books = Book::where('name','LIKE',"%".$input."%")->where('status', 1)->get();
+            $books = Book::where('name', 'LIKE', "%".$input."%")
+                ->orWhere('description', 'LIKE', "%".$input."%")
+                ->orWhere('author', 'LIKE', "%".$input."%")
+                ->orWhere('translator', 'LIKE', "%".$input."%")
+                ->orWhere('LCC', 'LIKE', "%".$input."%")
+                ->orWhere('DDC', 'LIKE', "%".$input."%")
+                ->orWhere('ISBN_period', 'LIKE', "%".$input."%")
+                ->where('status', 1)
+                ->get();
         }
 
         $filtered = collect();

@@ -26,7 +26,6 @@ class Book extends Model
         'LCC',
         'DDC',
         'ISBN_period',
-        'updated_at',
     ];
 
     public function getCategory() {

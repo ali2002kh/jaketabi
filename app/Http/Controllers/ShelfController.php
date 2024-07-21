@@ -23,10 +23,10 @@ class ShelfController extends Controller {
         $user = auth()->user();
 
         $request->validate([
-            'name' =>  'required',
+            'shelfName' =>  'required',
         ]);
 
-        $shelf = $user->createShelf(name: $request->get('name'), description: $request->get('description'));
+        $shelf = $user->createShelf(name: $request->get('shelfName'), description: $request->get('description'));
         
         return response()->json([
             'data' => [

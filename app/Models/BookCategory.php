@@ -63,4 +63,8 @@ class BookCategory extends Model
         return $books;
     }
 
+    public function isLeaf() {
+        return $this->getChildren()->count() == 0;
+    }
+
 }

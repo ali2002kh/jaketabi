@@ -48,9 +48,9 @@
                     >
                 </div>
                 <div class="m-1">
-                    <label for="name" class="form-label">نام کتاب *</label>
+                    <label for="book_name" class="form-label">نام کتاب *</label>
                     <input type="text" class="form-control" required
-                    id="name" name="name" v-model="name"
+                    id="book_name" name="book_name" v-model="book_name"
                     >
                 </div>
                 <div class="m-1">
@@ -92,7 +92,7 @@
             </div>
             <div>
                 <p class="mt-5 mb-0 w-25" data-bs-toggle="modal" data-bs-target="#selectGenre">
-                    <a href="#" class="link-dark text-center" style="text-decoration:none;">ژانرها</a>
+                    <a href="#" class="link-dark text-center" style="text-decoration:none;">ژانرها *</a>
                 </p>
 
                 <div class="modal fade" id="selectGenre" tabindex="-1" aria-labelledby="selectGenreLabel" aria-hidden="true">
@@ -135,7 +135,7 @@ export default {
         return {
             // fields
             isbn: null,
-            name: null,
+            book_name: null,
             file: '',
             author: null,
             category_id: null,
@@ -164,7 +164,7 @@ export default {
             console.log(response.data.data)
             this.book = response.data.data
             this.isbn = this.book.isbn
-            this.name = this.book.name
+            this.book_name = this.book.name
             this.author = this.book.author
             this.category_id = this.book.category_id
             // this.release_date = this.book.release_date
@@ -210,7 +210,7 @@ export default {
             console.log(this.genres)
             
             fd.append('isbn', this.isbn ?? '')
-            fd.append('name', this.name ?? '')
+            fd.append('book_name', this.book_name ?? '')
             fd.append('file', this.file)
             fd.append('author', this.author ?? '')
             fd.append('category_id', this.category_id ?? '')
