@@ -201,6 +201,6 @@ return [
         'file' => 'عکس',
         'shelfName' => 'نام قفسه',
         'commentMessage' => 'متن نظر',
-
+        'otp' => 'کد تایید',
     ],
 ];

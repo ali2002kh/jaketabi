@@ -163,6 +163,8 @@ class MeliPayamakService
             $GetCreditResult = $client->GetCredit(array("username" => $this->username, "password" => $this->password))->GetCreditResult;
             $sendSmsResult = $client->SendSms($parameters)->SendSmsResult;
 
+            // dd($sendSmsResult);
+
             if($GetCreditResult == 0 && $sendSmsResult == 1){
                 return true;
             }
@@ -170,6 +172,7 @@ class MeliPayamakService
                 return false;
             }
 
+            
         } catch (\SoapFault $ex) {
             echo $ex->faultstring;
         }

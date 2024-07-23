@@ -138,4 +138,6 @@ Route::get('relevance/{id1}/{id2}', [BookController::class, 'relevance']);
 
 Route::get('refresh-relevance', [BookController::class, 'refreshRelevance']);
 
+Route::post('generate-otp', [AuthController::class, 'generateOtp']);
 
+Route::post('register/{token}', [AuthController::class, 'register']);

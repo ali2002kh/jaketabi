@@ -21,6 +21,7 @@ import EditBook from "./pages/admin/EditBook";
 import PublisherAdmins from "./pages/admin/PublisherAdmins";
 import Publishers from "./pages/admin/Publishers";
 import Admins from "./pages/admin/Admins";
+import Register from "./pages/auth/Register";
 
 
 const routes = [
@@ -118,6 +119,11 @@ const routes = [
         path: "/signup",
         component: Signup,
         name:"signup",
+    },
+    {
+        path: "/register",
+        component: Register,
+        name:"register",
     },
 ];
 

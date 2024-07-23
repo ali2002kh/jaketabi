@@ -17,4 +17,8 @@ class Otp extends Model
         'used',
         'status',
     ];
+
+    public function getUser() {
+        return User::find($this->user_id);
+    }
 }
