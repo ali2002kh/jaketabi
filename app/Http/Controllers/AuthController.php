@@ -78,11 +78,6 @@ class AuthController extends Controller {
 
         $number = $request->get('number');
 
-        // all mobile numbers are in on format 9** *** ***
-        $number = ltrim($number, '0');
-        $number = substr($number, 0, 2) === '98' ? substr($number, 2) : $number;
-        $number = str_replace('+98', '', $number);
-
         $user = User::where('number', $number)->first();
 
         if (!$user) {
@@ -93,6 +88,15 @@ class AuthController extends Controller {
                 'password' => Str::random(10),
             ]);
             $user->save();
+        } else {
+            $otp = Otp::where('user_id', $user->id)
+            ->where('used', 0)
+            ->where('created_at', '>=', Carbon::now()->subMinute(2)->toDateTimeString())
+            ->first();
+    
+            if ($otp) {
+                return abort(403, 'too soon');
+            }
         }
 
         //create otp code
@@ -106,10 +110,9 @@ class AuthController extends Controller {
         $otp->number = $number;
         $otp->save();
 
-
         $smsService = new SmsService();
         $smsService->setFrom(Config::get('sms.otp_from'));
-        $smsService->setTo(['0' . $user->number]);
+        $smsService->setTo([$user->number]);
         $smsService->setText("جاکتابی  \nکد تایید : $otpCode");
         $smsService->setIsFlash(true);
 
@@ -133,7 +136,7 @@ class AuthController extends Controller {
 
         $otp = Otp::where('token', $token)
         ->where('used', 0)
-        ->where('created_at', '>=', Carbon::now()->subMinute(5)->toDateTimeString())
+        ->where('created_at', '>=', Carbon::now()->subMinute(2)->toDateTimeString())
         ->first();
 
         $user = $otp->getUser();
