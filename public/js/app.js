@@ -23913,7 +23913,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this2.timer--;
                   if (_this2.timer <= 0) {
                     _this2.sent = false;
-                    _this2.timer = 60;
+                    _this2.timer = 120;
                     clearInterval(_this2.interval);
                   }
                 }, 1000);

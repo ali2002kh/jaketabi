@@ -73,7 +73,7 @@ class AuthController extends Controller {
         // phpinfo();
 
         $request->validate([
-            'number' => 'required|regex:/(09)[0-9]{9}/|unique:users',
+            'number' => 'required|regex:/(09)[0-9]{9}/',
         ]);
 
         $number = $request->get('number');
@@ -89,6 +89,13 @@ class AuthController extends Controller {
             ]);
             $user->save();
         } else {
+
+            if ($user->mobile_verified_at) {
+                $request->validate([
+                    'number' => 'unique:users',
+                ]);
+            }
+            
             $otp = Otp::where('user_id', $user->id)
             ->where('used', 0)
             ->where('created_at', '>=', Carbon::now()->subMinute(2)->toDateTimeString())
@@ -112,7 +119,7 @@ class AuthController extends Controller {
 
         $smsService = new SmsService();
         $smsService->setFrom(Config::get('sms.otp_from'));
-        $smsService->setTo([$user->number]);
+        $smsService->setTo([$number]);
         $smsService->setText("جاکتابی  \nکد تایید : $otpCode");
         $smsService->setIsFlash(true);
 

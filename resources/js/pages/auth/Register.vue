@@ -129,7 +129,7 @@ export default {
                     this.timer--;
                     if (this.timer <= 0) {
                         this.sent = false;
-                        this.timer = 60;
+                        this.timer = 120;
                         clearInterval(this.interval);
                     }
                 }, 1000);
