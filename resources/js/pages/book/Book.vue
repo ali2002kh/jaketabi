@@ -1,220 +1,231 @@
 <template>
-<PageHeader v-if="fixed"></PageHeader>
-<div class="body-class container-fluid mt-5 pt-5 row flex-row-reverse" v-if="book">
-    <!-- <div class="container-fluid mt-5 pt-5 w-100"> -->
-    <div class="col-md-7 me-4 " >
-        <div class="book-details row flex-row-reverse rounded-2 p-2" style="background-color: #f4f4f4;">
-            <div class="book col-2  p-4 d-flex flex-row-reverse ">
-                <img class="book-cover" :src="book.image" style="width:150px; max-height:200px;" alt="">
-            </div>
-            <div class="col-auto my-auto me-5 p-4 text-end lh-sm">
-                <div class="fw-bold p-1" style="font-size: 120%;">عنوان: {{ book.name }}</div>
-                <div class="p-1">نویسنده: {{ book.author }}</div>
-                <div class="p-1">ناشر: {{ book.publisher.name }}</div>
-                <div class="p-1" v-if="book.translator">مترجم: {{ book.translator }}</div>
-                <div class="p-1">دسته بندی: 
-                    <router-link class="router-links" :to="{ name: 'bookList', params: { title:'bookCategory', id: book.category_id }}">
-                        {{ book.category }}
-                    </router-link>
+    <PageHeader v-if="fixed"></PageHeader>
+    <div class="body-class container-fluid mt-5 pt-5 row flex-row-reverse" v-if="book" id="body">
+        <div class="col-sm-7 col-12 mx-auto p-2" >
+            <div class="book-details row flex-row-reverse rounded-2 p-2" style="background-color: #f4f4f4;">
+                <div class="book col-lg-4 col-md-5 col-sm-6 col-12 p-3">
+                    <img class="book-cover d-block mx-auto" :src="book.image" style="width:150px; max-height:200px;" alt="">
                 </div>
-                <div class="p-1" v-if="book.genres">
-                    ژانرها: 
-                    <div v-for="g in book.genres" :key="g.id">
-                        <router-link class="router-links" :to="{ name: 'bookList', params: { title:'genre', id: g.id }}">
-                            {{ g.name }}
+                <div class="col-lg-8 col-md-7 col-sm-6 col-12 my-auto p-3 text-end lh-sm" 
+                :class="{'text-center' : windowWidth < 576}">
+                    <div class="fw-bold p-1" style="font-size: 120%;">عنوان: {{ book.name }}</div>
+                    <div class="p-1">نویسنده: {{ book.author }}</div>
+                    <div class="p-1">ناشر: {{ book.publisher.name }}</div>
+                    <div class="p-1" v-if="book.translator">مترجم: {{ book.translator }}</div>
+                    <div class="p-1">دسته بندی: 
+                        <router-link class="router-links" :to="{ name: 'bookList', params: { title:'bookCategory', id: book.category_id }}">
+                            {{ book.category }}
                         </router-link>
                     </div>
-                </div>
-                <div class="p-1" v-if="book.page_count">تعداد صفحه: {{ book.page_count }}</div>
-            </div>
-        </div>
-        <div v-if="book.description" class="book-desctiption row text-end mt-3 p-2 rounded-2 p-2" 
-        style="direction: rtl;background-color: #f4f4f4;">
-            <div class="fw-bold p-1 fs-5 me-3">توضیحات:</div>
-            <hr class="border-muted mt-1">
-            <p class="m-2 me-0  rounded-3 fs-6">
-                {{ book.description }}
-            </p>
-        </div>
-        <div class="publisher-books row flex-row-reverse rounded-2 p-2 mt-3" style="background-color: #f4f4f4;">
-            <div class="row flex-row-reverse align-items-center justify-content-between mx-auto">
-                <div class="col-auto fw-bold p-1 fs-5 me-2 text-end">از همین نشر </div>
-                <router-link class="col-auto router-links" 
-                :to="{name: 'bookList', params: { title:'publisher', id: book.publisher.id }}">
-                    مشاهده همه
-                </router-link>
-            </div>
-            <hr  class="border-muted mt-1">
-            <div class="row flex-row-reverse align-items-center">
-                <div v-for="b in book.publisher.preview_books" :key="b.id" class="col-auto mx-auto p-1 g-0">
-                    <router-link :to="{name: 'book', params: {id: b.id}}" class="router-links">
-                        <img class="book-img d-block mx-auto" :src="b.image" alt="">
-                        <p class="text-center mx-auto p-1 book-title">{{ b.name }}</p>
-                    </router-link> 
+                    <div class="p-1" v-if="book.genres[0]">
+                        ژانرها: 
+                        <div v-for="g in book.genres" :key="g.id">
+                            <router-link class="router-links" :to="{ name: 'bookList', params: { title:'genre', id: g.id }}">
+                                {{ g.name }}
+                            </router-link>
+                        </div>
+                    </div>
+                    <div class="p-1" v-if="book.page_count">تعداد صفحه: {{ book.page_count }}</div>
                 </div>
             </div>
-        </div>
+            <div v-if="book.description" class="book-desctiption row text-end mt-3 p-2 rounded-2 p-2" 
+            style="direction: rtl;background-color: #f4f4f4;">
+                <div class="fw-bold p-1 fs-5 me-3">توضیحات</div>
+                <hr class="border-muted mt-1">
+                <p class="m-2 me-0  rounded-3 fs-6">
+                    {{ book.description }}
+                </p>
+            </div>
+            <div class="publisher-books row flex-row-reverse rounded-2 p-2 mt-3" style="background-color: #f4f4f4;">
+                <div class="row flex-row-reverse align-items-center justify-content-between mx-auto">
+                    <div class="col-auto fw-bold p-1 fs-5 me-2 text-end">از همین نشر </div>
+                    <router-link class="col-auto router-links" 
+                    :to="{name: 'bookList', params: { title:'publisher', id: book.publisher.id }}">
+                        مشاهده همه
+                    </router-link>
+                </div>
+                <hr  class="border-muted mt-1">
+                <swiper class="swiper row flex-row-reverse align-items-center swiper-list"
+                dir="rtl"
+                :modules="modules"
+                :space-between="0"
+                navigation
+                :breakpoints="{
+                    '320': {
+                        slidesPerView: 'auto',
+                        centeredSlides: true,
+                    },
+                    '576': {
+                        slidesPerView: 2,
+                    },
+                    '768': {
+                        slidesPerView: 3,  
+                        slidesOffsetBefore: -10,            
+                    },
+                    '1200': {
+                        slidesPerView: 5,
+                        slidesOffsetBefore: -10,
+                    },
+                }"
+                @swiper="onSwiper"
+                @slideChange="onSlideChange"
+                >
+                    <swiper-slide v-for="b in book.publisher.preview_books" :key="b.id"  class="border swiper-slide">
+                        <router-link :to="{name: 'book', params: {id: b.id}}" class="router-links">
+                            <img class="book-img d-block mx-auto" :src="b.image" alt="">
+                            <p class="text-center mx-auto p-1 book-title">{{ b.name }}</p>
+                        </router-link>  
+                    </swiper-slide>  
+                </swiper>  
+            </div>
 
-        <div class="related-books row flex-row-reverse rounded-2 p-2 mt-3  mb-4" style="background-color: #f4f4f4;">
-            <div class="text-end me-2 fs-5 fw-bold"> کتاب های مشابه </div>
-            <hr class="border-muted mt-1">
-            <swiper v-if="user" class="swiper row flex-row-reverse align-items-center swiper-list border"
-            dir="rtl"
-            :modules="modules"
-            :space-between="0"
-            navigation
-            :breakpoints="{
-                '320': {
-                    slidesPerView: 'auto',
-                    centeredSlides: true,
-                },
-
-                '800': {
-                    slidesPerView: 3,
-                    slidesOffsetBefore: -10,                },
-                '1200': {
-                    slidesPerView: 5,
-                    slidesOffsetBefore: -10,
-                },
-            }"
-            @swiper="onSwiper"
-            @slideChange="onSlideChange"
-            >
-                <swiper-slide v-for="b in related" :key="b.id" class="border swiper-slide">
-                    <router-link :to="{name: 'book', params: {id: b.id}}" class="router-links">
-                        <img class="book-img d-block mx-auto" :src="b.image" alt="">
-                    <p class="text-center mx-auto p-1">{{ b.name }}</p>
-                    </router-link> 
-                </swiper-slide>  
-            </swiper>         
-            <!-- <nav aria-label="Page navigation example">
-                <ul class="pagination ms-3">
-                    <li class="page-item"><button v-if="hasPrev" @click.prevent="prev" class="page-link">Previous</button></li>
-                    <li class="page-item"><button v-if="hasNext" @click.prevent="next" class="page-link">Next</button></li>
-                </ul>
-            </nav>
-            <div class="col p-5 me-0">
-                <button class="btn">
-                    <i class="fa-solid fa-angle-left fa-3x"></i>
-                </button>
-            </div> -->
+            <div class="related-books row flex-row-reverse rounded-2 p-2 mt-3  mb-4" style="background-color: #f4f4f4;">
+                <div class="text-end me-2 fs-5 fw-bold"> کتاب های مشابه </div>
+                <hr class="border-muted mt-1">
+                <swiper v-if="user" class="swiper2 row flex-row-reverse align-items-center swiper-list border"
+                dir="rtl"
+                :modules="modules"
+                :space-between="0"
+                navigation
+                :breakpoints="{
+                    '320': {
+                        slidesPerView: 'auto',
+                        centeredSlides: true,
+                    },
+                    '576': {
+                        slidesPerView: 2,
+                    },
+                    '768': {
+                        slidesPerView: 3,
+                        slidesOffsetBefore: -10,                
+                    },
+                    '1200': {
+                        slidesPerView: 5,
+                        slidesOffsetBefore: -10,
+                    },
+                }"
+                @swiper="onSwiper"
+                @slideChange="onSlideChange"
+                >
+                    <swiper-slide v-for="b in related" :key="b.id" class="border swiper-slide">
+                        <router-link :to="{name: 'book', params: {id: b.id}}" class="router-links">
+                            <img class="book-img d-block mx-auto" :src="b.image" alt="">
+                        <p class="text-center mx-auto p-1">{{ b.name }}</p>
+                        </router-link> 
+                    </swiper-slide>  
+                </swiper>         
+            </div>
         </div>
-    </div>
-    <div class="user-col col-md-4  h-100  mx-4" >
-        <div v-if="user" class="book-user rounded-2 w-100 row" style="background-color: #f4f4f4;">
-            <div class="d-flex flex-row-reverse align-items-center justify-content-start mt-2">
-                <div class="add-button">
-                    <button v-if="isNotSelected" @click.prevent="addToWantToRead" class="btn" type="button">
-                        <i class="fa-solid fa-circle-plus fa-2xl"></i>
-                    </button>
-                    <button v-if="isWantToRead || isCurrentlyReading" @click.prevent="completed" class="btn" type="button">
-                        <i class="fa-regular fa-circle-check fa-2x"></i>
-                    </button>
+        <div class="user-col col-lg-4 col-sm-5 col-12 h-100 mx-auto" >
+            <div v-if="user" class="book-user rounded-2 w-100 row" style="background-color: #f4f4f4;">
+                <div class="row flex-row-reverse align-items-center mt-2 p-3 m-1 py-0">
+                    <div class="add-button col-lg-2 col-md-3  border g-0">
+                        <button v-if="isNotSelected" @click.prevent="addToWantToRead" class="btn" type="button">
+                            <i class="fa-solid fa-circle-plus fa-2xl"></i>
+                        </button>
+                        <button v-if="isWantToRead || isCurrentlyReading" @click.prevent="completed" class="btn" type="button">
+                            <i class="fa-regular fa-circle-check fa-2x"></i>
+                        </button>
+                    </div>
+                    <div class="col-lg-10 col-md-8 border col-md-8" :class="{'mx-auto' : isAlreadyRead}">
+                        <select v-model="selected_status" @change="update_status()" class="form-select" aria-label="Default select example">
+                            <option v-for="status in statuses" :key="status" :value="status" class="text-center p-2">
+                                {{ statuses_text[status] }}
+                            </option>
+                        </select>
+                    </div>
                 </div>
-                <select v-model="selected_status" @change="update_status()" class="form-select" aria-label="Default select example">
-                    <option v-for="status in statuses" :key="status" :value="status">{{ statuses_text[status] }}</option>
-                </select>
-                <div class="shelves-modal text-end p-2 me-1">
+                <div class="row shelves-modal text-center p-4 m-1 py-2">
                     <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#shelves-modal">
                         اضافه کردن به قفسه (ها)
                     </button>
-
-                    <!-- Modal -->
-                    <div class="modal fade" id="shelves-modal" tabindex="-1" aria-labelledby="shelves-modalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-sm modal-dialog-scrollable">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title w-100 text-center fs-5" id="shelves-modalLabel">قفسه ها</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div v-if="isCurrentlyReading" 
+                class="row flex-row-reverse page-number p-3 m-1 py-2 align-items-center justify-content-center">
+                        <span class="col-3 g-0 p-2">  شماره صفحه </span>
+                        <input v-model="current_page_input" class="bg-white rounded-1 border border-muted p-1 col-7"/>
+                        <a class="btn col-auto g-0" @click.prevent="update_current_page">
+                            <i class="fa-solid fa-pen fa-lg"></i>
+                        </a>
+                </div>
+                <div v-if="has_start_date" class="row flex-row-reverse p-4 m-1 py-0">
+                    <p class="col-3 p-1 mx-1 text-end">شروع </p>
+                    <p class="col-7 bg-white border border-muted rounded-1 p-1"> {{start_date}} </p>
+                </div>
+                <div v-if="has_last_read_date" class="row flex-row-reverse p-3 m-1 py-0">
+                    <span class="col-3 p-1 mx-1 text-end">آخرین مطالعه</span>
+                    <p class="col-7 bg-white border border-muted rounded-1 p-1 "> {{last_read_date}} </p>
+                </div>
+                <div v-if="has_finish_date" class="row flex-row-reverse p-3 m-1 py-0">
+                    <span class="col-3 p-1 mx-1 text-end"> پایان </span>
+                    <p class="col-7 bg-white border border-muted rounded-1 p-1"> {{finish_date}}</p>
+                </div>
+                <div v-if="has_progression" style="vertical-align:bottom">
+                    <div class="progress"  role="progressbar" aria-label="Success example" 
+                        aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar bg-dark" :class="{ already_read: isAlreadyRead}" 
+                        :style="{ width: record.progression * 100 + '%' }"></div>
+                    </div>
+                </div>
+                
+            </div>
+            <div v-else class="book-user rounded-2 p-1 me-2 h-100">
+                لاگین نکرده
+            </div>
+            <div class="user-friends row rounded-2 h-100 mt-3 w-100" style="background-color: #f4f4f4;">
+                <div v-if="user" class="d-flex flex-row-reverse align-items-center m-1 p-2">
+                    <p class="text-end fw-bold m-1"> دارند می خوانند / خوانده اند</p>
+                    <div v-for="f in friend_book.preview_friends" :key="f.id"
+                        class="d-flex flex-row-reverse align-items-center">
+                        <router-link :to="{name: 'profile', params: {id: f.id}}">
+                            <img class="rounded-5 me-3" :src="f.image" style="width: 40px; height:40px;" alt="">
+                        </router-link>
+                    </div>
+                </div>
+                <div v-else class="user-friends col me-2 rounded-1 h-100 mt-3">
+                    لاگین نکرده
+                </div>
+                <div class="m-1 p-3">
+                    <router-link :to="{name: 'bookComments', params: {id: book.id}}">
+                        <button class="btn btn-dark w-100 text-white">نظرات کاربران</button>
+                    </router-link>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="shelves-modal" tabindex="-1" aria-labelledby="shelves-modalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title w-100 text-center fs-5" id="shelves-modalLabel">قفسه ها</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div v-for="s in shelves" :key="s.id">
+                            <div class="row flex-row-reverse align-items-center">
+                                <div class="col fw-bold">
+                                    {{s.name}}
                                 </div>
-                                <div class="modal-body">
-                                    <div v-for="s in shelves" :key="s.id">
-                                        <div class="row flex-row-reverse align-items-center">
-                                            <div class="col fw-bold">
-                                                {{s.name}}
-                                            </div>
-                                            <div v-if="shelves_with_this_book.includes(s.id)" class="float-start col lh-lg">
-                                                <button class="btn btn-sm btn-danger" @click.prevent="removeFromShelf(s.id)">
-                                                    <i class="fa-solid fa-minus"></i>
-                                                </button>
-                                            </div>
-                                            <div v-else class="float-start col lh-lg">  
-                                                <button class="btn btn-sm btn-dark" @click.prevent="addToShelf(s.id)">
-                                                    <i class="fa-solid fa-plus"></i>
-                                                </button>  
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div v-if="shelves_with_this_book.includes(s.id)" class="float-start col lh-lg">
+                                    <button class="btn btn-sm btn-danger" @click.prevent="removeFromShelf(s.id)">
+                                        <i class="fa-solid fa-minus"></i>
+                                    </button>
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">بستن</button>
+                                <div v-else class="float-start col lh-lg">  
+                                    <button class="btn btn-sm btn-dark" @click.prevent="addToShelf(s.id)">
+                                        <i class="fa-solid fa-plus"></i>
+                                    </button>  
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">بستن</button>
+                    </div>
                 </div>
-            </div>
-            <div>
-                <div v-if="isCurrentlyReading" class="page-number d-flex flex-row-reverse mt-2 me-2">
-                    <span class="p-2 ">  شماره صفحه </span>
-                    <input v-model="current_page_input" class="bg-white border rounded-1 p-2 "/>
-                    <a class="btn" @click.prevent="update_current_page">
-                        <i class="fa-solid fa-pen fa-lg mt-3"></i>
-                    </a>
-                </div>
-            </div>
-            <div>
-                <div v-if="has_start_date" class="start-date d-flex flex-row-reverse me-2">
-                    <p class="p-2">شروع از </p>
-                    <p class="bg-white border rounded-1 p-2 "> {{start_date}} </p>
-                </div>
-            </div>
-            <div>
-                <div v-if="has_last_read_date" class="finish-date d-flex flex-row-reverse me-2">
-                    <span class="p-2 "> آخرین مطالعه در  </span>
-                    <p class="bg-white border rounded-1 p-2 "> {{last_read_date}} </p>
-                </div>
-            </div>
-            <div>
-                <div v-if="has_finish_date" class="finish-date d-flex flex-row-reverse me-2">
-                    <span class="p-2 "> پایان در </span>
-                    <p class="bg-white border rounded-1 p-2 "> {{finish_date}}</p>
-                </div>
-            </div>
-            <div v-if="has_progression" style="vertical-align:bottom">
-                <div class="progress"  role="progressbar" aria-label="Success example" 
-                    aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                    <div class="progress-bar bg-dark" :class="{ already_read: isAlreadyRead}" 
-                    :style="{ width: record.progression * 100 + '%' }"></div>
-                </div>
-            </div>
-            
-        </div>
-        <div v-else class="book-user rounded-2 p-1 me-2 h-100">
-            لاگین نکرده
-        </div>
-        <div class="user-friends row rounded-2 h-100 mt-3 w-100" style="background-color: #f4f4f4;">
-            <div v-if="user" class="d-flex flex-row-reverse align-items-center m-1 p-2">
-                <p class="text-end fw-bold m-1"> دارند می خوانند / خوانده اند</p>
-                <div v-for="f in friend_book.preview_friends" :key="f.id"
-                    class="d-flex flex-row-reverse align-items-center">
-                    <router-link :to="{name: 'profile', params: {id: f.id}}">
-                        <img class="rounded-5 me-3" :src="f.image" style="width: 40px; height:40px;" alt="">
-                    </router-link>
-                </div>
-            </div>
-            <div v-else class="user-friends col me-2 rounded-1 h-100 mt-3">
-                لاگین نکرده
-            </div>
-            <div class="m-1 p-3">
-                <router-link :to="{name: 'bookComments', params: {id: book.id}}">
-                    <button class="btn btn-dark w-100 text-white">نظرات کاربران</button>
-                </router-link>
             </div>
         </div>
     </div>
-    <!-- </div> -->
-</div>
 </template>
 
 <script>
@@ -274,7 +285,8 @@ export default {
             has_last_read_date: false,
             has_finish_date: false,
             fixed: false,
-
+            isFull: false,
+            windowWidth: window.innerWidth,
             // pagination for related books
             related: null,
             // page: 1,
@@ -297,7 +309,7 @@ export default {
     mounted() {
 
         console.log("mounted")
-
+        window.addEventListener('resize', this.responsiveBookList);
         let userLoaded = new Promise((resolve, reject) => {
              if (this.user) {
                 console.log('User is already loaded')
@@ -362,6 +374,9 @@ export default {
         userLoaded.finally(() => {
             this.fixed = true
         })
+    },
+    unmounted() {
+        window.removeEventListener('resize', this.responsiveBookList);
     },
     methods: {
         async update_status() {
@@ -512,6 +527,12 @@ export default {
             }
             return false
         },
+        isFull() {
+            if ((this.book.publisher.preview_books).length == 5) {
+                return true;
+            }
+            return false
+        },
 
     },
 }
@@ -523,6 +544,12 @@ export default {
 .body-class {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
+.container-fluid {
+    padding-right:0;
+    padding-left:0;
+    margin-right:0;
+    margin-left:0;
+ }
 .book-cover {
     width: 100px;
     max-height: 180px;
@@ -557,6 +584,10 @@ height: 160px;
 
     justify-content: center !important;
 
+}
+.form-select:focus {
+    border: 2px solid black;
+    box-shadow:none;
 }
 
 </style>
