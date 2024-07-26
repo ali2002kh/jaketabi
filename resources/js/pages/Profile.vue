@@ -342,9 +342,9 @@
                 </div>
                 <hr class="col opacity-100 border-muted border mx-3">
                 <div class="col-auto">
-                    <!-- <p v-if="host.is_private" class="" data-bs-toggle="modal" data-bs-target="#createShelf">
+                    <p v-if="host.is_private" class="" data-bs-toggle="modal" data-bs-target="#createShelf">
                         <a href="#" class="link-dark text-center" style="text-decoration:none;">ایجاد قفسه جدید</a> 
-                    </p> -->
+                    </p>
                     <router-link v-if="host.has_more_shelves"
                     :to="{name: 'profileBooks', params: {id: host.id, status: 1 }}"
                     class="link-dark text-center" style="text-decoration:none;">
@@ -581,7 +581,7 @@ export default {
             this.success = false
             this.message = null
             await axios.post('/api/store-shelf', {
-                name: this.shelfName,
+                shelfName: this.shelfName,
                 description: this.shelfDescription
             }).then((response) => {
                 this.success = true;
