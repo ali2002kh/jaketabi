@@ -12,12 +12,12 @@
         <div>{{ c.message }}</div>
     </div>
 
-    <div class="alert alert-danger" v-if="hasError">
-        <ul>
-            <li v-for="e in errors" :key="e">{{ e[0] }}</li>
+    <div class="alert alert-danger" v-if="hasError" dir="rtl">
+        <ul class="error-list">
+            <li v-for="e in errors" :key="e" class="error-item">{{ e[0] }}</li>
         </ul>
     </div>
-    <div class="alert alert-success" v-if="success">{{ message }}</div>
+    <div class="alert alert-success" v-if="success" dir="rtl">{{ message }}</div>
     <form>
         <div class="m-1 mt-3">
             <label for="commentMessage" class="form-label">متن نظر</label>

@@ -90,12 +90,12 @@
                         <button id="close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body text-end">
-                        <div class="alert alert-danger" v-if="hasError">
-                            <ul>
-                                <li v-for="e in errors" :key="e">{{ e[0] }}</li>
+                        <div class="alert alert-danger" v-if="hasError" dir="rtl">
+                            <ul class="error-list">
+                                <li v-for="e in errors" :key="e" class="error-item">{{ e[0] }}</li>
                             </ul>
                         </div>
-                        <div class="alert alert-success" v-if="success">{{ message }}</div>
+                        <div class="alert alert-success" v-if="success" dir="rtl">{{ message }}</div>
                         <form>
                             <div class="m-1">
                                 <label for="shelfName" class="form-label">نام قفسه</label>
@@ -203,7 +203,7 @@ export default {
             this.success = false
             this.message = null
             await axios.post(`/api/update-shelf/${this.$route.params.id}`, {
-                name: this.shelfName,
+                shelfName: this.shelfName,
                 description: this.shelfDescription
             }).then((response) => {
                 this.success = true;

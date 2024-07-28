@@ -3,8 +3,8 @@
         <div class="row">
             <div class="col-sm-6 mx-auto">
                 <div class="alert alert-danger" v-if="hasError" dir="rtl">
-                    <ul>
-                        <li v-for="e in errors" :key="e">{{ e[0] }}</li>
+                    <ul class="error-list">
+                        <li v-for="e in errors" :key="e" class="error-item">{{ e[0] }}</li>
                     </ul>
                 </div>
                 <form dir="rtl">

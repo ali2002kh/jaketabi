@@ -60,9 +60,9 @@ class ShelfController extends Controller {
 
         if ($shelf->getUser()->id == $user->id) {
             $this->validate($request, [
-                'name' => 'required',
+                'shelfName' => 'required',
             ]); 
-            $shelf->update(name:$request->get('name'), description:$request->get('description'));
+            $shelf->update(name:$request->get('shelfName'), description:$request->get('description'));
             return abort(200, 'موفقیت آمیز بود');
         }
 

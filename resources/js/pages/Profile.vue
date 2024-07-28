@@ -122,12 +122,12 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body text-end" style="font-size:14px">
-                                <div class="alert alert-danger py-1 text-start" v-if="hasError2">
-                                    <div class="py-0" v-for="e in errors2" :key="e">- {{ e[0] }}</div>
+                                <div class="alert alert-danger" v-if="hasError2" dir="rtl">
+                                    <ul class="error-list">
+                                        <li v-for="e in errors2" :key="e" class="error-item">{{ e[0] }}</li>
+                                    </ul>
                                 </div>
-                                <div class="alert alert-success py-1" v-if="success2" style="font-size:14px">
-                                    {{ message2 }}
-                                </div>
+                                <div class="alert alert-success" v-if="success2" dir="rtl">{{ message2 }}</div>
                                 <form style="font-size:14px">
                                     <div class="row">
                                         <div class="col">
@@ -346,7 +346,7 @@
                         <a href="#" class="link-dark text-center" style="text-decoration:none;">ایجاد قفسه جدید</a> 
                     </p>
                     <router-link v-if="host.has_more_shelves"
-                    :to="{name: 'profileBooks', params: {id: host.id, status: 1 }}"
+                    :to="{name: 'shelfList', params: {id: host.id }}"
                     class="link-dark text-center" style="text-decoration:none;">
                         مشاهده همه
                     </router-link> 
@@ -360,12 +360,12 @@
                             <button id="create_shelf_close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body text-end">
-                            <div class="alert alert-danger text-start py-1" style="font-size:14px"
-                             v-if="hasError">
-                                    <div v-for="e in errors" :key="e">- {{ e[0] }}</div>
+                            <div class="alert alert-danger" v-if="hasError" dir="rtl">
+                                <ul class="error-list">
+                                    <li v-for="e in errors" :key="e" class="error-item">{{ e[0] }}</li>
+                                </ul>
                             </div>
-                            <div class="alert alert-success py-1" style="font-size:14px"
-                             v-if="success">{{ message }}</div>
+                            <div class="alert alert-success" v-if="success" dir="rtl">{{ message }}</div>
                             <form>
                                 <div class="m-1">
                                     <label for="shelfName" class="form-label ">نام قفسه</label>

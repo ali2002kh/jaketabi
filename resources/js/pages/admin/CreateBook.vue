@@ -2,9 +2,10 @@
     <div class="container">
         <form class="row">
             <div class="col-sm-12">
-                <div class="alert alert-danger" v-if="hasError">
-                    <ul>
-                        <li v-for="e in errors" :key="e">{{ e[0] }}</li>
+                <div class="alert alert-danger" v-if="hasError" dir="rtl">
+                    <ul class="error-list">
+
+                        <li v-for="e in errors" :key="e" class="error-item">{{ e[0] }}</li>
                     </ul>
                 </div>
             </div>
