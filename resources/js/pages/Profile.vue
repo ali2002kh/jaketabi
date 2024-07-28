@@ -346,7 +346,7 @@
                         <a href="#" class="link-dark text-center" style="text-decoration:none;">ایجاد قفسه جدید</a> 
                     </p>
                     <router-link v-if="host.has_more_shelves"
-                    :to="{name: 'profileBooks', params: {id: host.id, status: 1 }}"
+                    :to="{name: 'shelfList', params: {id: host.id}}"
                     class="link-dark text-center" style="text-decoration:none;">
                         مشاهده همه
                     </router-link> 

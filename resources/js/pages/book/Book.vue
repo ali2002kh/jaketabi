@@ -1,7 +1,7 @@
 <template>
     <PageHeader v-if="fixed"></PageHeader>
-    <div class="body-class container-fluid mt-5 pt-5 row flex-row-reverse" v-if="book" id="body">
-        <div class="col-sm-7 col-12 mx-auto p-2" >
+    <div class="body-class container-fluid mt-5 pt-5 row flex-row-reverse" v-if="book">
+        <div class="col-lg-7 col-md-6 col-sm-7 col-12 mx-auto p-2" >
             <div class="book-details row flex-row-reverse rounded-2 p-2" style="background-color: #f4f4f4;">
                 <div class="book col-lg-4 col-md-5 col-sm-6 col-12 p-3">
                     <img class="book-cover d-block mx-auto" :src="book.image" style="width:150px; max-height:200px;" alt="">
@@ -70,7 +70,7 @@
                 @swiper="onSwiper"
                 @slideChange="onSlideChange"
                 >
-                    <swiper-slide v-for="b in book.publisher.preview_books" :key="b.id"  class="border swiper-slide">
+                    <swiper-slide v-for="b in book.publisher.preview_books" :key="b.id"  class="swiper-slide">
                         <router-link :to="{name: 'book', params: {id: b.id}}" class="router-links">
                             <img class="book-img d-block mx-auto" :src="b.image" alt="">
                             <p class="text-center mx-auto p-1 book-title">{{ b.name }}</p>
@@ -82,7 +82,7 @@
             <div class="related-books row flex-row-reverse rounded-2 p-2 mt-3  mb-4" style="background-color: #f4f4f4;">
                 <div class="text-end me-2 fs-5 fw-bold"> کتاب های مشابه </div>
                 <hr class="border-muted mt-1">
-                <swiper v-if="user" class="swiper2 row flex-row-reverse align-items-center swiper-list border"
+                <swiper v-if="user" class="swiper2 row flex-row-reverse align-items-center swiper-list"
                 dir="rtl"
                 :modules="modules"
                 :space-between="0"
@@ -107,7 +107,7 @@
                 @swiper="onSwiper"
                 @slideChange="onSlideChange"
                 >
-                    <swiper-slide v-for="b in related" :key="b.id" class="border swiper-slide">
+                    <swiper-slide v-for="b in related" :key="b.id" class="swiper-slide">
                         <router-link :to="{name: 'book', params: {id: b.id}}" class="router-links">
                             <img class="book-img d-block mx-auto" :src="b.image" alt="">
                         <p class="text-center mx-auto p-1">{{ b.name }}</p>
@@ -116,10 +116,10 @@
                 </swiper>         
             </div>
         </div>
-        <div class="user-col col-lg-4 col-sm-5 col-12 h-100 mx-auto" >
+        <div class="user-col col-lg-4 col-md-5 col-sm-5 col-12 h-100 mx-auto p-2" >
             <div v-if="user" class="book-user rounded-2 w-100 row" style="background-color: #f4f4f4;">
                 <div class="row flex-row-reverse align-items-center mt-2 p-3 m-1 py-0">
-                    <div class="add-button col-lg-2 col-md-3  border g-0">
+                    <div class="add-button col-md-2 col-sm-3 col-2 g-0">
                         <button v-if="isNotSelected" @click.prevent="addToWantToRead" class="btn" type="button">
                             <i class="fa-solid fa-circle-plus fa-2xl"></i>
                         </button>
@@ -127,7 +127,7 @@
                             <i class="fa-regular fa-circle-check fa-2x"></i>
                         </button>
                     </div>
-                    <div class="col-lg-10 col-md-8 border col-md-8" :class="{'mx-auto' : isAlreadyRead}">
+                    <div class="col-md-10 col-sm-8 col-10" :class="{'mx-auto' : isAlreadyRead}">
                         <select v-model="selected_status" @change="update_status()" class="form-select" aria-label="Default select example">
                             <option v-for="status in statuses" :key="status" :value="status" class="text-center p-2">
                                 {{ statuses_text[status] }}
@@ -142,9 +142,9 @@
                 </div>
                 <div v-if="isCurrentlyReading" 
                 class="row flex-row-reverse page-number p-3 m-1 py-2 align-items-center justify-content-center">
-                        <span class="col-3 g-0 p-2">  شماره صفحه </span>
+                        <span class="col-3 p-2 text-end">  شماره صفحه </span>
                         <input v-model="current_page_input" class="bg-white rounded-1 border border-muted p-1 col-7"/>
-                        <a class="btn col-auto g-0" @click.prevent="update_current_page">
+                        <a class="btn col-2" @click.prevent="update_current_page">
                             <i class="fa-solid fa-pen fa-lg"></i>
                         </a>
                 </div>
@@ -173,19 +173,20 @@
                 لاگین نکرده
             </div>
             <div class="user-friends row rounded-2 h-100 mt-3 w-100" style="background-color: #f4f4f4;">
-                <div v-if="user" class="d-flex flex-row-reverse align-items-center m-1 p-2">
-                    <p class="text-end fw-bold m-1"> دارند می خوانند / خوانده اند</p>
-                    <div v-for="f in friend_book.preview_friends" :key="f.id"
-                        class="d-flex flex-row-reverse align-items-center">
-                        <router-link :to="{name: 'profile', params: {id: f.id}}">
-                            <img class="rounded-5 me-3" :src="f.image" style="width: 40px; height:40px;" alt="">
-                        </router-link>
+                <div v-if="user" class="row flex-row-reverse align-items-center m-1 p-3">
+                    <p class="col-4 text-end fw-bold m-1">فعالیت دوستان</p>
+                    <div class="col-8 row flex-row-reverse mt-2">
+                        <div v-for="f in friend_book.preview_friends" :key="f.id" class="col-4">
+                            <router-link :to="{name: 'profile', params: {id: f.id}}">
+                                <img class="rounded-5" :src="f.image" style="width: 40px; height:40px;" alt="">
+                            </router-link>
+                        </div>
                     </div>
                 </div>
-                <div v-else class="user-friends col me-2 rounded-1 h-100 mt-3">
+                <div v-else class="row user-friends col me-2 rounded-1 h-100 mt-3">
                     لاگین نکرده
                 </div>
-                <div class="m-1 p-3">
+                <div class="row text-center p-2 m-1 py-2">
                     <router-link :to="{name: 'bookComments', params: {id: book.id}}">
                         <button class="btn btn-dark w-100 text-white">نظرات کاربران</button>
                     </router-link>

@@ -59,7 +59,7 @@ class BookController extends Controller {
     public function category($id, $page) {
 
         $bookCategory = BookCategory::find($id);
-        $pageSize = 8;
+        $pageSize = 7;
 
         if ($page == 0) {
             return response()->json([
