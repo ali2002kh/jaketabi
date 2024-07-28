@@ -345,8 +345,7 @@
                     <p v-if="host.is_private" class="" data-bs-toggle="modal" data-bs-target="#createShelf">
                         <a href="#" class="link-dark text-center" style="text-decoration:none;">ایجاد قفسه جدید</a> 
                     </p>
-                    <router-link v-if="host.has_more_shelves"
-                    :to="{name: 'shelfList', params: {id: host.id }}"
+                    <router-link v-if="host.has_more_shelves" :to="{name: 'shelfList', params: {id: host.id}}"
                     class="link-dark text-center" style="text-decoration:none;">
                         مشاهده همه
                     </router-link> 

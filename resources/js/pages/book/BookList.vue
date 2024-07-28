@@ -2,19 +2,15 @@
     <PageHeader></PageHeader>
     <div class="container-fluid body-class">
 
-        <p v-if="title == 'publisher'" class="title mx-1" style="margin-top: 110px;"><span>نشر</span></p>
-        <p v-if="title == 'genre'" class="title mx-1" style="margin-top: 110px;"><span>ژانر</span></p>
-        <p v-if="title == 'bookCategory'" class="title mx-1" style="margin-top: 110px;"><span>دسته‌بندی</span></p>
-
-        <p class="title mx-1" style="margin-top: 110px;"><span>
-            {{ name }}
-        </span></p>
+        <p v-if="title == 'publisher'" class="title mx-1" style="margin-top: 110px;"><span>نشر {{ name }}</span></p>
+        <p v-if="title == 'genre'" class="title mx-1" style="margin-top: 110px;"><span>ژانر {{ name }}</span></p>
+        <p v-if="title == 'bookCategory'" class="title mx-1" style="margin-top: 110px;"><span>دسته‌ بندی {{ name }}</span></p>
 
 
 
-        <div class="popular-books row flex-row-reverse mx-1 p-1 rounded-1" style="background-color: #f4f4f4;">
-            <div v-for="b in books" :key="b.id"  class="col-auto p-1 mx-3">
-                <router-link :to="{name: 'book', params: {id: b.id}}" class="link-underline-opacity-0 link-dark">
+        <div class="row flex-row-reverse mt-4" :class="{'justify-content-center mx-0' : windowWidth < 576}">
+            <div v-for="b in books" :key="b.id"  class="col-md-2 col-sm-3 col-6 p-1">
+                <router-link :to="{name: 'book', params: {id: b.id}}" class="router-links">
                     <img class="book-img d-block border mx-auto" :src="b.image" alt="">
                     <p class="text-center p-1">{{ b.name }}</p>
                 </router-link> 
@@ -22,31 +18,62 @@
         </div>
 
         <nav aria-label="Page navigation example" v-if="pagination">
-            <ul class="pagination ms-3">
-                <li class="page-item"><button v-if="hasPrev" @click.prevent="prev" class="page-link">Previous</button></li>
-                <li class="page-item"><button class="page-link">{{ page }}</button></li>
-                <li class="page-item"><button v-if="hasNext" @click.prevent="next" class="page-link">Next</button></li>
-            </ul>
+            <div class="pagination row flex-row-reverse justify-content-center align-items-center mt-4">
+                <div class="page-item col-auto">
+                    <button type="button" v-if="hasPrev" @click.prevent="prev"
+                    class="page-link btn btn-link" style="border:none">
+                        <i class="fa-solid fa-angle-right fa-xl text-dark"></i>
+                    </button>
+                    <button type="button" v-else class="page-link btn btn-link" disabled>
+                        <i class="fa-solid fa-angle-right fa-xl text-dark"></i>
+                    </button>
+                </div>
+                <div class="page-item col-auto">{{ page }}</div>
+                <div class="page-item col-auto">
+                    <button type="button" v-if="hasNext" @click.prevent="next"
+                    class="page-link btn btn-link" style="border:none">
+                        <i class="fa-solid fa-angle-left fa-xl text-dark"></i>
+                    </button>
+                    <button type="button" v-else class="page-link btn btn-link" disabled>
+                        <i class="fa-solid fa-angle-left fa-xl text-dark"></i>
+                    </button>
+                </div>
+            </div>
         </nav>
 
 
-        <div v-if="title == 'bookCategory' && page > 0 && siblings[page - 1]" class="publisher-books col-8 h-100">
-            <p class="text-end m-2 fs-5 fw-bold">{{ siblings[page - 1].name }}</p>
-            <hr class="opacity-100 border-muted border mx-auto">
-            <div class="row row-cols-6 flex-row-reverse align-items-center">
-                <div v-for="b in siblings[page - 1].preview_books" :key="b.id" class="col">
-                    <router-link :to="{name: 'book', params: {id: b.id}}" class="link-underline-opacity-0 link-dark">
+        <div v-if="title == 'bookCategory' && page > 0 && siblings[page - 1]" class="publisher-books h-100">
+            <div class="d-flex flex-row-reverse align-items-center text-center mt-5 mx-2">
+                <div class="col-auto title-sibling">
+                    {{ siblings[page - 1].name }}                
+                </div>
+                <hr class="col opacity-100 border-muted border mx-3">
+                <div class="col-auto">
+                    <router-link :to="{name: 'bookList', params: { title:'bookCategory', id: siblings[page - 1].id }}"
+                    class="link-dark text-center" style="text-decoration:none;">
+                        مشاهده همه
+                    </router-link> 
+                </div>
+            </div>
+            <!-- <p class="title mt-4 mx-1">
+                <span>  </span>
+            </p> -->
+            <!-- <p class="text-end m-2 fs-5 fw-bold"></p>
+            <hr class="opacity-100 border-muted border mx-auto"> -->
+            <div class="row flex-row-reverse align-items-center rounded-1 mx-1 p-1 mb-4" style="background-color: #f4f4f4;">
+                <div v-for="b in siblings[page - 1].preview_books" :key="b.id" class="col-md-2 col-sm-3 col-6 p-1">
+                    <router-link :to="{name: 'book', params: {id: b.id}}" class="router-links">
                         <img class="book-cover d-block mx-auto" :src="b.image" alt="">
                     <p class="text-center p-1">{{ b.name }}</p>
                     </router-link> 
                 </div>
-                <div class="col p-5">
+                <!-- <div class="col p-5">
                     <router-link :to="{name: 'bookList', params: { title:'bookCategory', id: siblings[page - 1].id }}">
                         <button class="btn">
                             <i class="fa-solid fa-angle-left fa-3x"></i>
                         </button>
                     </router-link>
-                </div>
+                </div> -->
             </div>
         </div>
         
@@ -71,7 +98,8 @@ export default {
             title: this.$route.params.title,
             name: null,
             siblings: null,
-
+            windowWidth: window.innerWidth,
+            columns: null,
             // pagination
             page: 0,
             numberOfBooks: 0,
@@ -135,6 +163,12 @@ export default {
             }
         })
     },
+    mounted() {
+        window.addEventListener('resize', this.responsiveBookList);
+    },
+    unmounted() {
+        window.removeEventListener('resize', this.responsiveBookList);
+    },
     computed: {
         ...mapState({
             user: state => state.user.data,
@@ -191,7 +225,23 @@ export default {
                     console.log(this.books.length)
                     this.hasNext = false
             }
-        } 
+        },
+        // Col() {
+        //     this.windowWidth = window.innerWidth;
+        //     if (this.windowWidth < 576) {
+        //         this.columns = 1
+        //         return this.columns;
+        //     }
+        //     else if (576 <= this.windowWidth && this.windowWidth < 768) {
+        //         return this.columns;
+        //     }
+        //     else if (768 <= this.windowWidth && this.windowWidth < 1200) {
+        //         return this.columns;
+        //     }
+        //     else if (this.windowWidth >= 1200) {
+        //         return list;
+        //     };
+        // },
     },
 }
 </script>
@@ -202,8 +252,8 @@ export default {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 } 
 .book-img {
-        max-width: 120px;
-        max-height: 200px;
+width: 110px;
+height: 160px;
 }
 
 .shelf-book-img {
@@ -227,6 +277,12 @@ export default {
         font-size: large;
 }
 
+.title-sibling {
+    font-family: hamishe;
+    font-weight:bold;
+    font-size: large;
+}
+
 .user-profile {
     width: 40px;
     height: 40px;
@@ -236,6 +292,11 @@ export default {
 .book-cover {
     width: 100px;
     max-height: 180px;
+}
+
+.router-links {
+    color: black;
+    text-decoration: none;
 }
 
 </style>
