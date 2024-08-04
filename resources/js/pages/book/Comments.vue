@@ -3,17 +3,18 @@
     <div class="body container mb-5" style="margin-top: 110px;">
         <p class="title"><span>نظرات کاربران</span></p>
         <div class="row flex-row-reverse rounded-2 bg-light shadow-sm p-3 mt-4 align-items-center mx-2">
-            <div class="col-md-1 p-2 text-center">
+            <div class="col-md-1 col-sm-2 col-12 p-2 text-end" 
+            :class="{'text-center' : windowWidth > 576}">
                 <i class="fa-solid fa-circle-user fa-3x text-dark"></i>
             </div>
-            <form class="col-md-11 row flex-row-reverse align-items-center p-2">
-                <div class="col-md-10 text-center">
+            <form class="col-md-11 col-sm-10 col-12 row flex-row-reverse align-items-center p-2">
+                <div class="col-md-10 col-sm-9 col-12">
                     <!-- <label for="commentMessage" class="form-label">متن نظر</label> -->
                     <textarea id="commentMessage" class="form-control text-end w-100" name="commentMessage" 
                     v-model="commentMessage" placeholder=".نظرت رو اینجا بنویس">
                     </textarea>
                 </div>
-                <div class="col-md-1 me-auto text-start ">
+                <div class="col-md-1 col-sm-2 col-auto me-auto text-start" :class="{'mt-2': windowWidth < 577}">
                     <button type="submit" class="btn btn-dark " 
                     @click.prevent="sendComment"
                     >ارسال</button>
@@ -34,13 +35,13 @@
         
         <div v-for="c in comments" :key="c.id" 
         class="row flex-row-reverse rounded-2 bg-light shadow-sm p-3 mt-4 align-items-center mx-2">
-            <img class="col-md-2 user-profile p-2" :src="c.user.image" alt="">
+            <img class="col-sm-2 col-3 user-profile p-2" :src="c.user.image" alt="">
             <router-link :to="{name: 'profile', params: {id: c.user.id}}" 
-            class="col-md-auto text-end p-2 router-links">
+            class="col-auto text-end p-2 router-links">
                 {{ c.user.username }}
             </router-link>
             
-            <div class="rowtext-end p-2" style="direction:rtl">
+            <div class="row mx-1 text-end p-2" style="direction:rtl">
                 {{ c.message }}
             </div>
         </div>
@@ -71,6 +72,7 @@ export default {
             success: false,
             message: null,
             fixed: false,
+            windowWidth: window.innerWidth,
         }
     },
     created() {
@@ -106,6 +108,9 @@ export default {
         userLoaded.finally(() => {
             this.fixed = true
         })
+        window.onresize = () => {
+                this.windowWidth = window.innerWidth
+        }
     },
     methods: {
         

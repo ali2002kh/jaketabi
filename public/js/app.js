@@ -24713,7 +24713,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       errors: [],
       success: false,
       message: null,
-      fixed: false
+      fixed: false,
+      windowWidth: window.innerWidth
     };
   },
   created: function created() {
@@ -24745,6 +24746,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     userLoaded["finally"](function () {
       _this2.fixed = true;
     });
+    window.onresize = function () {
+      _this2.windowWidth = window.innerWidth;
+    };
   },
   methods: {
     sendComment: function sendComment() {
@@ -29697,20 +29701,16 @@ var _hoisted_3 = {
   "class": "row flex-row-reverse rounded-2 bg-light shadow-sm p-3 mt-4 align-items-center mx-2"
 };
 var _hoisted_4 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    "class": "col-md-1 p-2 text-center"
-  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
     "class": "fa-solid fa-circle-user fa-3x text-dark"
-  })], -1 /* HOISTED */);
+  }, null, -1 /* HOISTED */);
 });
-var _hoisted_5 = {
-  "class": "col-md-11 row flex-row-reverse align-items-center p-2"
-};
+var _hoisted_5 = [_hoisted_4];
 var _hoisted_6 = {
-  "class": "col-md-10 text-center"
+  "class": "col-md-11 col-sm-10 col-12 row flex-row-reverse align-items-center p-2"
 };
 var _hoisted_7 = {
-  "class": "col-md-1 me-auto text-start"
+  "class": "col-md-10 col-sm-9 col-12"
 };
 var _hoisted_8 = {
   key: 0,
@@ -29738,7 +29738,7 @@ var _hoisted_12 = /*#__PURE__*/_withScopeId(function () {
 });
 var _hoisted_13 = ["src"];
 var _hoisted_14 = {
-  "class": "rowtext-end p-2",
+  "class": "row mx-1 text-end p-2",
   style: {
     "direction": "rtl"
   }
@@ -29748,7 +29748,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_router_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("router-link");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [$data.fixed ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_PageHeader, {
     key: 0
-  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <label for=\"commentMessage\" class=\"form-label\">متن نظر</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+  })) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["col-md-1 col-sm-2 col-12 p-2 text-end", {
+      'text-center': $data.windowWidth > 576
+    }])
+  }, [].concat(_hoisted_5), 2 /* CLASS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <label for=\"commentMessage\" class=\"form-label\">متن نظر</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
     id: "commentMessage",
     "class": "form-control text-end w-100",
     name: "commentMessage",
@@ -29756,13 +29760,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $data.commentMessage = $event;
     }),
     placeholder: ".نظرت رو اینجا بنویس"
-  }, "\n                    ", 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.commentMessage]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  }, "\n                    ", 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.commentMessage]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["col-md-1 col-sm-2 col-auto me-auto text-start", {
+      'mt-2': $data.windowWidth < 577
+    }])
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     type: "submit",
     "class": "btn btn-dark",
     onClick: _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $options.sendComment && $options.sendComment.apply($options, arguments);
     }, ["prevent"]))
-  }, "ارسال")])])]), $data.hasError ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_9, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.errors, function (e) {
+  }, "ارسال")], 2 /* CLASS */)])]), $data.hasError ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("ul", _hoisted_9, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.errors, function (e) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("li", {
       key: e,
       "class": "error-item"
@@ -29772,7 +29780,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       key: c.id,
       "class": "row flex-row-reverse rounded-2 bg-light shadow-sm p-3 mt-4 align-items-center mx-2"
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-      "class": "col-md-2 user-profile p-2",
+      "class": "col-sm-2 col-3 user-profile p-2",
       src: c.user.image,
       alt: ""
     }, null, 8 /* PROPS */, _hoisted_13), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
@@ -29782,7 +29790,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           id: c.user.id
         }
       },
-      "class": "col-md-auto text-end p-2 router-links"
+      "class": "col-auto text-end p-2 router-links"
     }, {
       "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
         return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(c.user.username), 1 /* TEXT */)];
