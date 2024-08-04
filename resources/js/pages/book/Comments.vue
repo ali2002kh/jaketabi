@@ -1,34 +1,51 @@
 <template>
     <PageHeader v-if="fixed"></PageHeader>
-    <br>
-    <hr>
-    <hr>
-    <div v-for="c in comments" :key="c.id">
-        <router-link :to="{name: 'profile', params: {id: c.user.id}}">
-            <div>{{ c.user.username }}</div>
-            <img :src="c.user.image" class="user-profile" alt="">
-        </router-link>
+    <div class="body container mb-5" style="margin-top: 110px;">
+        <p class="title"><span>نظرات کاربران</span></p>
+        <div class="row flex-row-reverse rounded-2 bg-light shadow-sm p-3 mt-4 align-items-center mx-2">
+            <div class="col-md-1 p-2 text-center">
+                <i class="fa-solid fa-circle-user fa-3x text-dark"></i>
+            </div>
+            <form class="col-md-11 row flex-row-reverse align-items-center p-2">
+                <div class="col-md-10 text-center">
+                    <!-- <label for="commentMessage" class="form-label">متن نظر</label> -->
+                    <textarea id="commentMessage" class="form-control text-end w-100" name="commentMessage" 
+                    v-model="commentMessage" placeholder=".نظرت رو اینجا بنویس">
+                    </textarea>
+                </div>
+                <div class="col-md-1 me-auto text-start ">
+                    <button type="submit" class="btn btn-dark " 
+                    @click.prevent="sendComment"
+                    >ارسال</button>
+                </div>
+            </form>
+        </div>
+        <div class="alert alert-danger mx-2 mt-3" v-if="hasError" dir="rtl">
+            <ul class="error-list">
+                <li v-for="e in errors" :key="e" class="error-item">{{ e[0] }}</li>
+            </ul>
+        </div>
+        <div class="alert alert-success mx-2 mt-3" v-if="success" dir="rtl">{{ message }}</div>
+
+        <div class="text-end fw-bold fs-6 mx-3 mt-4" style="direction:rtl">
+            {{comments.length}} نظر ثبت شده   
+        </div>
+        <hr class="opacity-100 border-muted border mx-2">
         
-        <div>{{ c.message }}</div>
+        <div v-for="c in comments" :key="c.id" 
+        class="row flex-row-reverse rounded-2 bg-light shadow-sm p-3 mt-4 align-items-center mx-2">
+            <img class="col-md-2 user-profile p-2" :src="c.user.image" alt="">
+            <router-link :to="{name: 'profile', params: {id: c.user.id}}" 
+            class="col-md-auto text-end p-2 router-links">
+                {{ c.user.username }}
+            </router-link>
+            
+            <div class="rowtext-end p-2" style="direction:rtl">
+                {{ c.message }}
+            </div>
+        </div>
     </div>
 
-    <div class="alert alert-danger" v-if="hasError" dir="rtl">
-        <ul class="error-list">
-            <li v-for="e in errors" :key="e" class="error-item">{{ e[0] }}</li>
-        </ul>
-    </div>
-    <div class="alert alert-success" v-if="success" dir="rtl">{{ message }}</div>
-    <form>
-        <div class="m-1 mt-3">
-            <label for="commentMessage" class="form-label">متن نظر</label>
-            <textarea id="commentMessage" class="form-control text-end" name="commentMessage" v-model="commentMessage"></textarea>
-        </div>
-        <div class="m-1 text-start">
-            <button type="submit" class="btn btn-dark m-1 mt-3" 
-            @click.prevent="sendComment"
-            >ارسال</button>
-        </div>
-    </form>
     
 </template>
 
@@ -125,9 +142,32 @@ export default {
 </script>
 
 <style scoped>
+.body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
 .user-profile {
     width: 60px;
     height: 60px;
     border-radius: 50%;
+}
+.title {
+    width: 100%; 
+    direction: rtl;
+    border-bottom: 1.5px solid rgb(232, 232, 232); 
+    line-height: 0.1em;
+    font-family: hamishe;
+} 
+    
+.title span { 
+        background:#fff; 
+        padding-left: 20px;
+        padding-right: 20px;
+        margin-right: 30px;
+        font-weight:bold;
+        font-size: large;
+}
+.router-links {
+    color: black;
+    text-decoration: none;
 }
 </style>

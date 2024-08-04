@@ -169,9 +169,9 @@
                 </div>
                 
             </div>
-            <div v-else class="book-user rounded-2 p-1 me-2 h-100">
+            <!-- <div v-else class="book-user rounded-2 p-1 me-2 h-100 text-center">
                 لاگین نکرده
-            </div>
+            </div> -->
             <div class="user-friends row rounded-2 h-100 mt-3 w-100" style="background-color: #f4f4f4;">
                 <div v-if="user" class="row flex-row-reverse align-items-center m-1 p-3">
                     <p class="col-4 text-end fw-bold m-1">فعالیت دوستان</p>
@@ -183,7 +183,7 @@
                         </div>
                     </div>
                 </div>
-                <div v-else class="row user-friends col me-2 rounded-1 h-100 mt-3">
+                <div v-else class="row user-friends justify-content-center me-2 rounded-1 h-100 mt-3">
                     لاگین نکرده
                 </div>
                 <div class="row text-center p-2 m-1 py-2">
@@ -204,7 +204,7 @@
                     <div class="modal-body">
                         <div v-for="s in shelves" :key="s.id">
                             <div class="row flex-row-reverse align-items-center">
-                                <div class="col fw-bold">
+                                <div class="col fw-bold text-end">
                                     {{s.name}}
                                 </div>
                                 <div v-if="shelves_with_this_book.includes(s.id)" class="float-start col lh-lg">
