@@ -55,7 +55,7 @@
         </div>
     </div>
     <!-- shelves list  -->
-    <div class="container rounded-1 mb-2 p-2 py-4 mx-auto" style="background: #f4f4f4; height:100vh">
+    <div class="container rounded-1 mb-2 p-2 py-4 mx-auto h-100" style="background: #f4f4f4; height:100vh">
         <div class="row flex-row-reverse align-items-center" 
             v-for="row in rows" :key="'row' + row">
             <div class="d-flex flex-row-reverse">

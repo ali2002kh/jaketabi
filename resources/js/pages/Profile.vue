@@ -245,7 +245,7 @@
                 </div>
                 <hr class="col opacity-100 border-muted border mx-3">
                 <div v-if="host.has_more_reading" class="col-auto">
-                    <router-link :to="{name: 'profileBooks', params: {id: host.id, status: 1 }}"
+                    <router-link :to="{name: 'profileBooks', params: {id: host.id, status: 2 }}"
                     class="link-dark text-center" style="text-decoration:none;">
                         مشاهده همه
                     </router-link> 
