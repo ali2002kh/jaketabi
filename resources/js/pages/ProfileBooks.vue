@@ -11,9 +11,9 @@
                 <p class="text-center mx-auto p-1 book-title">{{ r.book.name }}</p>
             </router-link>
             <hr class="mx-5 mb-0">
-            <p v-if="status == 2" class="progression text-center rounded-1  mx-5 p-1" 
+            <p v-if="status == 2" class="text-center mx-5 p-1" 
             style="direction:rtl; font-size: smaller;">
-              *  {{  Number(r.progression*100).toFixed() }}% خوندی *
+                {{  Number(r.progression*100).toFixed() }}% خوندی 
             </p>
         </div> 
     </div>

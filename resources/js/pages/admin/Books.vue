@@ -1,9 +1,11 @@
 <template>
-    <div class="container-fluid">
+    <div class="container mt-3">
     
-        <div class="col-auto">
-            <router-link :to="{name: 'create-book'}" class="link-dark text-center" 
-            >کتاب جدید</router-link>
+        <div class="col-auto row flex-row-reverse align-items-center justify-content-between mx-2">
+            <div class="col-6 fs-5">جستجو</div>
+            <router-link :to="{name: 'create-book'}" class="btn btn-dark col-auto text-start" 
+            >  کتاب جدید
+            </router-link>
         </div>
         <hr>
         <div class="container">
@@ -99,3 +101,9 @@ export default {
     
 }
 </script>
+<style scoped>
+.router-links {
+    color: black;
+    text-decoration: none;
+}
+</style>
