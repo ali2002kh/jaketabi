@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <form class="row">
+        <!-- <form class="row">
             <div class="col-sm-12">
                 <div class="alert alert-danger" v-if="hasError" dir="rtl">
                     <ul class="error-list">
@@ -120,6 +120,137 @@
             </div>
             <div class="m-1 d-grid">
                 <button type="submit" class="btn btn-dark m-3" 
+                @click.prevent="create"
+                >تایید</button>
+            </div>
+        </form> -->
+        <form class="row flex-row-reverse justify-content-around">
+            <div class="col-sm-12">
+                <div class="alert alert-danger" v-if="hasError" dir="rtl">
+                    <ul class="error-list">
+
+                        <li v-for="e in errors" :key="e" class="error-item">{{ e[0] }}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-5 m-1">
+                <label for="book_name" class="form-label">* نام کتاب </label>
+                <input type="text" class="form-control text-end" required
+                id="book_name" name="book_name" v-model="book_name"
+                >
+            </div>
+            <div class="col-5 m-1">
+                <label for="author" class="form-label">* نویسنده </label>
+                <input type="text" class="form-control text-end" required
+                id="author" name="author" v-model="author"
+                >
+            </div>
+
+
+             <div class="col-5 m-1" v-if="choosePublisher">
+                <label for="publisher_id" class="form-label">* نشر </label>
+                <select class="form-control" id="publisher_id" required
+                name="publisher_id" v-model="publisher_id">
+                    <option class="text-end" disabled value="">انتخاب کنید</option>
+                    <option class="text-end" v-for="p in publishers" :key="p.id" :value="p.id">{{ p.name }}</option>
+                </select>
+            </div>
+            <div class="col-5 m-1">
+                <label for="translator" class="form-label">مترجم</label>
+                <input type="text" class="form-control text-end" 
+                id="translator" name="translator" v-model="translator"
+                >
+            </div>
+
+
+            <div class="col-5 m-1">
+                <label for="isbn" class="form-label"> * شابک</label>
+                <input type="text" class="form-control" required
+                id="isbn" name="isbn" v-model="isbn"
+                >
+            </div>
+            <div class="col-5 m-1">
+                <label for="isbn_period" class="form-label"> شابک دوره</label>
+                <input type="text" class="form-control" 
+                id="isbn_period" name="isbn_period" v-model="isbn_period"
+                >
+            </div>
+
+
+            <div class="col-5 m-1">
+                <label for="lcc" class="form-label">رده‌بندی کنگره</label>
+                <input type="text" class="form-control" 
+                id="lcc" name="lcc" v-model="lcc"
+                >
+            </div>
+            <div class="col-5 m-1">
+                <label for="ddc" class="form-label">رده‌بندی دیویی</label>
+                <input type="text" class="form-control" 
+                id="ddc" name="ddc" v-model="ddc"
+                >
+            </div>
+            
+            
+            <div class="col-11 m-1">
+                <label for="description" class="form-label">توضیحات</label>
+                <textarea id="description" class="form-control text-end" name="description" v-model="description"></textarea>
+            </div>
+
+            <div class="col-5 m-1">
+                <label for="category_id" class="form-label"> * دسته‌بندی </label>
+                <select class="form-control text-end" id="category_id" required
+                name="category_id" v-model="category_id">
+                    <option disabled value="">انتخاب کنید</option>
+                    <option v-for="c in categories" :key="c.id" :value="c.id">{{ c.name }}</option>
+                </select>
+            </div>
+            <div class="col-5 m-1" >
+                <a href="#" class="link-dark" style="text-decoration:none;">* ژانرها </a>
+                <input  data-bs-toggle="modal" data-bs-target="#selectGenre" type="text" 
+                class="form-control text-end m-1" placeholder="انتخاب کنید">
+            </div>
+
+
+            <div class="col-5 m-1">
+                <label for="page_count" class="form-label">تعداد صفحه</label>
+                <input type="number" class="form-control" id="page_count" name="page_count"
+                v-model="page_count"
+                >
+            </div>
+            <div class="col-5 m-1">
+                <label for="image" class="form-label">عکس کتاب</label>
+                <input class="form-control" type="file" id="image" @change="onFileChange($event)">
+            </div>
+
+            <!-- Genres modal  -->
+            <div>
+                <div class="modal fade" id="selectGenre" tabindex="-1" aria-labelledby="selectGenreLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title w-100 fs-6 text-center">ژانرهای مورد نظر را انتخاب کنید</h5>
+                                <button id="genres_close" type="button" class="btn-close  me-0" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div v-for="g in genres" :key="g.id" class="col-12">
+                                     {{ g.name }}
+                                    <input type="checkbox" v-model="selectedGenres" :value="g.id">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="col-auto btn btn-sm btn-secondary px-3 mt-3"
+                                        data-bs-dismiss="modal" aria-label="Close">لغو</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-11 m-1 mt-3 text-start">
+                <button type="submit" class="btn btn-dark px-4" 
                 @click.prevent="create"
                 >تایید</button>
             </div>

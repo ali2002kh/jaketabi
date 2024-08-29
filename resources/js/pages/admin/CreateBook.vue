@@ -11,13 +11,13 @@
             </div>
             <div class="col-5 m-1">
                 <label for="book_name" class="form-label">* نام کتاب </label>
-                <input type="text" class="form-control" required
+                <input type="text" class="form-control text-end" required
                 id="book_name" name="book_name" v-model="book_name"
                 >
             </div>
             <div class="col-5 m-1">
                 <label for="author" class="form-label">* نویسنده </label>
-                <input type="text" class="form-control" required
+                <input type="text" class="form-control text-end" required
                 id="author" name="author" v-model="author"
                 >
             </div>
@@ -33,7 +33,7 @@
             </div>
             <div class="col-5 m-1">
                 <label for="translator" class="form-label">مترجم</label>
-                <input type="text" class="form-control" 
+                <input type="text" class="form-control text-end" 
                 id="translator" name="translator" v-model="translator"
                 >
             </div>
@@ -69,7 +69,7 @@
             
             <div class="col-11 m-1">
                 <label for="description" class="form-label">توضیحات</label>
-                <textarea id="description" class="form-control" name="description" v-model="description"></textarea>
+                <textarea id="description" class="form-control text-end" name="description" v-model="description"></textarea>
             </div>
 
             <div class="col-5 m-1">

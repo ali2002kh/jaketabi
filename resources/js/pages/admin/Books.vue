@@ -25,7 +25,7 @@
                         >ویرایش</router-link>
                     </div>
                     <div class="col-auto float-start">
-                        <button  class="btn btn-dark m-1 p-1 px-2" 
+                        <button  class="btn btn-outline-danger m-1 p-1 px-2" 
                         @click.prevent="removeBook(b.id)"
                         >حذف</button>
                     </div>
