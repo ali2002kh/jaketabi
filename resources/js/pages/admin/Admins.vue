@@ -1,11 +1,13 @@
 <template>
     <div class="container-fluid">
         <div class="col mt-5">
-            <div class="text-start">
-                <a href="#" class="text-dark link-underline link-underline-opacity-0">
-                    <button class="btn btn-dark px-3" data-bs-toggle="modal" data-bs-target="#newAdmin">اضافه کردن ادمین جدید</button>
+            <div class="row flex-row-reverse justify-content-between align-items-center">
+                <div class="col-6 fs-5">ادمین های سایت</div>
+                <a href="#" class="col-6 text-start text-dark link-underline link-underline-opacity-0">
+                    <button class="btn btn-outline-dark px-3" data-bs-toggle="modal" data-bs-target="#newAdmin">ادمین جدید</button>
                 </a>
             </div>
+            <hr>
             <div class="modal fade" id="newAdmin" tabindex="-1" aria-labelledby="newAdminLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -61,7 +63,7 @@
                     </div>
                 </div>
                 <div v-if="u.role_id == 1" class="col-auto float-start">
-                    <button  class="btn btn-dark m-1 p-1 px-2" 
+                    <button  class="btn btn-outline-danger m-1 p-1 px-2" 
                     @click.prevent="demoteToNormal(u)"
                     >حذف ادمین</button>
                 </div>

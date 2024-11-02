@@ -1,5 +1,55 @@
 <template>
-    <div class="container my-5">
+<div class="body bg-dark">
+  <div class="container">
+    <div class="row d-flex justify-content-center align-items-center">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card shadow-2-strong my-4 rounded-4">
+          <div class="card-body p-5">
+
+            <h3 class="mb-5 text-center">ورود</h3>
+
+            <div class="alert alert-danger" v-if="hasError" dir="rtl">
+                <ul class="error-list">
+                    <li v-for="e in errors" :key="e" class="error-item">{{ e[0] }}</li>
+                </ul>
+            </div>
+
+            <div data-mdb-input-init class="form-outline mb-4 text-end">              
+                <label for="emailOrNumberOrUsername" class="form-label">نام کاربری (ایمیل/ شماره موبایل)</label>
+                <input type="email" class="form-control form-control-lg" 
+                    id="emailOrNumberOrUsername"
+                    name="emailOrNumberOrUsername"
+                    v-model="emailOrNumberOrUsername"/>
+            </div>
+
+            <div data-mdb-input-init class="form-outline mb-4 text-end">
+                <label class="form-label" for="password">رمز عبور</label>
+                <input type="password" class="form-control form-control-lg" 
+                    id="password" 
+                    name="password"
+                    v-model="password" />
+            </div>
+
+            <!-- Checkbox -->
+            <!-- <div class="form-check d-flex justify-content-start mb-4">
+              <input class="form-check-input" type="checkbox" value="" id="form1Example3" />
+              <label class="form-check-label" for="form1Example3"> Remember password </label>
+            </div> -->
+
+            <button data-mdb-button-init data-mdb-ripple-init class="btn btn-dark p-4 py-2 text-center" type="submit"
+            @click.prevent="login">ورود</button>
+
+            <hr class="my-4">
+            <router-link class="nav-link text-end" :to="{name: 'register'}">ثبت نام</router-link>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <!-- <div class="container my-5">
         <div class="row">
             <div class="col-sm-6 m-10">
                 <div class="alert alert-danger" v-if="hasError" dir="rtl">
@@ -32,7 +82,7 @@
                 </form>
             </div>
         </div> 
-    </div>
+    </div> -->
 </template>
 
 <script>
@@ -79,3 +129,9 @@ export default {
     }, 
 }
 </script>
+<style scoped>
+    .body {
+        min-height: 100vh !important;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+</style>

@@ -2,7 +2,9 @@
     <div class="container-fluid">
         <div v-for="p in publishers" :key="p.id" class="">
             <div class="row flex-row-reverse justify-content-between align-items-center">
-                <div class="col-6 fs-5"> {{p.name}} </div>
+                <a class="col-6 fs-5 text-dark" :href="'#adminsList' + p.id" data-bs-toggle="collapse" style="text-decoration:none"> 
+                    {{p.name}} 
+                </a>
                 <div class="col-6 text-start">
                     <a href="#" class="text-dark link-underline link-underline-opacity-0">
                         <div class="btn btn-outline-dark px-3" data-bs-toggle="modal" :data-bs-target="'#newAdmin' + p.id">  ادمین جدید </div>
@@ -60,7 +62,7 @@
                 </div>
             </div>
 
-            <div class="mt-2 row flex-row-reverse  justify-content-between m-1  my-4">
+            <div class="collapse mt-2 row flex-row-reverse  justify-content-between m-1  my-4" :id="'adminsList' + p.id">
                 <div class="col-6">
                     <div class="text-center">سوپر ادمین ها</div>
                     <hr>
