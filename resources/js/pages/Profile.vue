@@ -19,7 +19,7 @@
                             {{ host.name }}
                         </p>
                     </div>
-                </div> 
+                </div>
             </div>
             <div v-if="host.is_private" class="col-md-2 col-sm-auto col-3 mt-5">
                 <div class="text-start">
@@ -41,7 +41,7 @@
                             </div>
                             <div class="modal-body">
                                 <div v-if="searchIsActive">
-                                    <input type="text" class="form-control" name="search" 
+                                    <input type="text" class="form-control" name="search"
                                     @keyup="search" v-model="searchInput">
                                     <br>
                                     <div class="mt-2">
@@ -53,39 +53,39 @@
                                                 </div>
                                             </div>
                                             <div v-if="u.status == 0" class="col-auto float-start">
-                                                <button  class="btn btn-dark m-1 p-1 px-2" 
+                                                <button  class="btn btn-dark m-1 p-1 px-2"
                                                 @click.prevent="sendFriendRequest(u.id)"
                                                 >درخواست دوستی</button>
                                             </div>
-                                            
+
                                             <div v-if="u.status == 1" class="col-auto float-start">
-                                                <button class="btn btn-dark m-1 p-1 px-2" 
+                                                <button class="btn btn-dark m-1 p-1 px-2"
                                                 @click.prevent="cancelFriendRequest(u.id)"
                                                 >لغو درخواست</button>
                                             </div>
 
                                             <div v-if="u.status == 2" class="col-auto float-start">
-                                                <button class="btn btn-outline-success  p-1 px-3" 
+                                                <button class="btn btn-outline-success  p-1 px-3"
                                                 @click.prevent="acceptFriendRequest(u.id)"
                                                 >قبول  </button>
                                             </div>
 
                                             <div v-if="u.status == 2" class="col-auto float-start">
-                                                <button class="btn btn-outline-danger p-1 px-4" 
+                                                <button class="btn btn-outline-danger p-1 px-4"
                                                 @click.prevent="rejectFriendRequest(u.id)"
                                                 >رد  </button>
                                             </div>
-                                            
+
                                             <div v-if="u.status == 3" class="col-auto float-start">
-                                                <button class="btn btn-dark m-1 p-1 px-2" 
+                                                <button class="btn btn-dark m-1 p-1 px-2"
                                                 @click.prevent="removeFriend(u.id)"
                                                 >حذف دوستی</button>
                                             </div>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
-    
+
                                 <div v-else class="">
                                     <div class="row flex-row-reverse align-items-center my-3" v-for="f in friends" :key="f.id">
                                         <div class="col d-flex flex-row-reverse" @click.prevent="showProfile(f.id)">
@@ -95,19 +95,19 @@
                                                 </div>
                                         </div>
                                         <div class="col-auto float-start">
-                                                <button class="btn btn-dark m-1 p-1 px-2" 
+                                                <button class="btn btn-dark m-1 p-1 px-2"
                                                 @click.prevent="removeFriend(f.id)"
                                                 >حذف دوستی</button>
                                         </div>
                                     </div>
                                 </div>
-    
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <div v-if="host.is_private" class="col-md-2 col-sm-auto col-3 mt-5">
                 <div class="text-center">
                     <a  href="#" class="text-dark link-underline link-underline-opacity-0">
@@ -136,7 +136,7 @@
                                             type="file" id="image" @change="onFileChange($event)">
                                         </div>
                                     </div>
-                                    
+
                                     <div class="row mt-3">
                                         <div class="col">
                                             <label for="email" class="form-label pe-2">ایمیل</label>
@@ -152,7 +152,7 @@
                                             >
                                         </div>
                                     </div>
-                                    
+
                                     <div class="row mt-3">
                                         <div class="col">
                                             <label for="lname" class="form-label pe-2">نام خانوادگی</label>
@@ -185,9 +185,9 @@
                                             >
                                         </div>
                                     </div>
-                                    
+
                                     <div class="row ms-1" >
-                                        <button type="submit" class="col-auto btn btn-sm btn-dark mt-3 px-3 me-2" 
+                                        <button type="submit" class="col-auto btn btn-sm btn-dark mt-3 px-3 me-2"
                                         @click.prevent="updateProfile"
                                         >بروزرسانی</button>
                                         <button type="button" class="col-auto btn btn-sm btn-secondary px-3 mt-3"
@@ -204,31 +204,31 @@
                 <div class="text-start">
 
                     <div v-if="friendship.status == 0" class="col-auto float-start">
-                        <button  class="btn btn-dark m-1 p-1 px-2" 
+                        <button  class="btn btn-dark m-1 p-1 px-2"
                         @click.prevent="sendFriendRequest(friendship.id)"
                         >درخواست دوستی</button>
                     </div>
-                    
+
                     <div v-if="friendship.status == 1" class="col-auto float-start">
-                        <button class="btn btn-dark m-1 p-1 px-2" 
+                        <button class="btn btn-dark m-1 p-1 px-2"
                         @click.prevent="cancelFriendRequest(friendship.id)"
                         >لغو درخواست</button>
                     </div>
 
                     <div v-if="friendship.status == 2" class="col-auto float-start">
-                        <button class="btn btn-outline-success  p-1 px-3" 
+                        <button class="btn btn-outline-success  p-1 px-3"
                         @click.prevent="acceptFriendRequest(friendship.id)"
                         >قبول  </button>
                     </div>
 
                     <div v-if="friendship.status == 2" class="col-auto float-start">
-                        <button class="btn btn-outline-danger p-1 px-4" 
+                        <button class="btn btn-outline-danger p-1 px-4"
                         @click.prevent="rejectFriendRequest(friendship.id)"
                         >رد  </button>
                     </div>
-                    
+
                     <div v-if="friendship.status == 3" class="col-auto float-start">
-                        <button class="btn btn-dark m-1 p-1 px-2" 
+                        <button class="btn btn-dark m-1 p-1 px-2"
                         @click.prevent="removeFriend(friendship.id)"
                         >حذف دوستی</button>
                     </div>
@@ -248,25 +248,25 @@
                     <router-link :to="{name: 'profileBooks', params: {id: host.id, status: 2 }}"
                     class="link-dark text-center" style="text-decoration:none;">
                         مشاهده همه
-                    </router-link> 
+                    </router-link>
                 </div>
             </div>
             <div class="lists-body currently-reading row flex-row-reverse align-items-center mx-1 p-1 rounded-1">
                 <div v-for="b in responsiveBookList(this.currentlyReading)" :key="b.id"
                 class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-auto p-1" :class="{'mx-auto' : this.host.has_more_reading}">
-                    <router-link :to="{name:'book', params:{id: b.id}}"  
+                    <router-link :to="{name:'book', params:{id: b.id}}"
                     class="router-links d-flex flex-column m-1 p-2 align-items-center text-center">
                         <img :src="b.image" class="book-img" alt="">
                         <p class="book-title"> {{ b.name }}</p>
                     </router-link>
                 </div>
-                
+
                 <!-- <div v-if="host.has_more_reading" class="col-auto" style="margin-right: 1000px;">
                     <router-link :to="{name: 'profileBooks', params: {id: host.id, status: 2 }}"
                     class="router-links text-center">
                             <i class="fa-solid fa-circle-chevron-left fa-2x"></i>
                             <p>+{{ host.already_read_more_count }}</p>
-                    </router-link> 
+                    </router-link>
                 </div> -->
             </div>
 
@@ -280,13 +280,13 @@
                     <router-link :to="{name: 'profileBooks', params: {id: host.id, status: 1 }}"
                     class="link-dark text-center" style="text-decoration:none;">
                         مشاهده همه
-                    </router-link> 
+                    </router-link>
                 </div>
             </div>
             <div class="lists-body already-read row flex-row-reverse align-items-center mx-1 p-1 rounded-1">
-                <div v-for="b in responsiveBookList(this.alreadyRead)" :key="b.id" 
+                <div v-for="b in responsiveBookList(this.alreadyRead)" :key="b.id"
                 class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-auto p-1" :class="{'mx-auto' : this.host.has_more_already_read}">
-                    <router-link :to="{name:'book', params:{id: b.id}}" 
+                    <router-link :to="{name:'book', params:{id: b.id}}"
                     class="router-links d-flex flex-column m-1 p-2 align-items-center text-center">
                         <img :src="b.image" class="book-img" alt="">
                         <p class="book-title"> {{ b.name }}</p>
@@ -298,27 +298,27 @@
                     >
                         <i class="fa-solid fa-circle-chevron-left fa-2x"></i>
                         <p>+{{ host.already_read_more_count }}</p>
-                    </router-link> 
+                    </router-link>
                 </div> -->
             </div>
 
             <!-- want-to-read list  -->
             <div class="d-flex flex-row-reverse align-items-center text-center mt-5 mx-2">
                 <div class="col-auto title">
-                    میخواهم بخوانم 
+                    میخواهم بخوانم
                 </div>
                 <hr class="col opacity-100 border-muted border mx-3">
                 <div v-if="host.has_more_want_to_read" class="col-auto">
                     <router-link :to="{name: 'profileBooks', params: {id: host.id, status: 1 }}"
                     class="link-dark text-center" style="text-decoration:none;">
                         مشاهده همه
-                    </router-link> 
+                    </router-link>
                 </div>
             </div>
             <div class="lists-body want-to-read row flex-row-reverse align-items-center mx-1 p-1 rounded-1">
                 <div v-for="b in responsiveBookList(this.wantToRead)" :key="b.id"
                 class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-auto p-1" :class="{'mx-auto' : this.host.has_more_want_to_read}">
-                    <router-link :to="{name:'book', params:{id: b.id}}" 
+                    <router-link :to="{name:'book', params:{id: b.id}}"
                     class="router-links d-flex flex-column m-1 p-2 align-items-center text-center">
                         <img :src="b.image" style="height: 150px; max-width:100px" alt="">
                         <p class="mt-2 book-title"> {{ b.name }}</p>
@@ -329,7 +329,7 @@
                     class="router-links text-center">
                             <i class="fa-solid fa-circle-chevron-left fa-2x"></i>
                             <p>+{{ host.already_read_more_count }}</p>
-                    </router-link> 
+                    </router-link>
                 </div> -->
             </div>
         </div>
@@ -343,12 +343,12 @@
                 <hr class="col opacity-100 border-muted border mx-3">
                 <div class="col-auto">
                     <p v-if="host.is_private" class="" data-bs-toggle="modal" data-bs-target="#createShelf">
-                        <a href="#" class="link-dark text-center" style="text-decoration:none;">ایجاد قفسه جدید</a> 
+                        <a href="#" class="link-dark text-center" style="text-decoration:none;">ایجاد قفسه جدید</a>
                     </p>
                     <router-link v-if="host.has_more_shelves" :to="{name: 'shelfList', params: {id: host.id}}"
                     class="link-dark text-center" style="text-decoration:none;">
                         مشاهده همه
-                    </router-link> 
+                    </router-link>
                 </div>
             </div>
             <div class="modal fade" id="createShelf" tabindex="-1" aria-labelledby="createShelfLabel" aria-hidden="true">
@@ -377,7 +377,7 @@
                                     <textarea id="shelfDescription" class="form-control text-end" name="shelfDescription" v-model="shelfDescription"></textarea>
                                 </div>
                                 <div class="m-1 text-start">
-                                    <button type="submit" class="btn btn-dark m-3 ms-0 px-3" 
+                                    <button type="submit" class="btn btn-dark m-3 ms-0 px-3"
                                     @click.prevent="storeShelf"
                                     >تایید</button>
                                 </div>
@@ -401,7 +401,7 @@
                                     <i class="fa-solid fa-angle-left fa-xl text-dark"></i>
                                 </router-link>
                             </div>
-                        </div>   
+                        </div>
                     <!-- <div v-if="host.has_more_shelves" class="col-auto me-auto">
                         <router-link :to="{name: 'shelfList', params: {id: host.id}}"
                         class="router-links text-center" href="#">
@@ -463,7 +463,7 @@ export default {
             errors2: [],
             success2: false,
             message2: null,
-        } 
+        }
     },
     beforeMount() {
         let loadUser = new Promise((resolve, reject) => {
@@ -488,11 +488,27 @@ export default {
                     this.host = this.user
                     this.friends = this.host.friends
                     console.log(this.host)
+
+                    this.email = this.host.email
+                    this.username = this.host.username
+                    this.fname = this.host.fname
+                    this.lname = this.host.lname
+                    this.currentlyReading = this.host.reading
+                    this.wantToRead = this.host.want_to_read
+                    this.alreadyRead = this.host.already_read
+
             } else {
                 axios.get(`/api/user/${this.$route.params.id}`)
                 .then((response) => {
                     console.log(response.data.data)
                     this.host = response.data.data
+
+                    this.username = this.host.username
+                    this.fname = this.host.fname
+                    this.lname = this.host.lname
+                    this.currentlyReading = this.host.reading
+                    this.wantToRead = this.host.want_to_read
+                    this.alreadyRead = this.host.already_read
                 })
 
                 axios.get(`/api/friendship/${this.$route.params.id}`)
@@ -506,19 +522,12 @@ export default {
                 this.shelves_more_count = this.host.shelves_more_count
             }
 
-            this.email = this.host.email
-            this.username = this.host.username
-            this.fname = this.host.fname
-            this.lname = this.host.lname
-            this.currentlyReading = this.host.reading
-            this.wantToRead = this.host.want_to_read
-            this.alreadyRead = this.host.already_read
         })
     },
     created() {
-        
+
     },
-  
+
     mounted() {
         window.addEventListener('resize', this.responsiveBookList);
     },
@@ -597,8 +606,8 @@ export default {
                 }
                 // console.log(this.user.shelves)
             }).catch ((error) => {
-                if (error.response && 
-                    error.response.status && 
+                if (error.response &&
+                    error.response.status &&
                     error.response.status == 422) {
                         this.hasError = true
                         console.log(error.response.data)
@@ -617,7 +626,7 @@ export default {
             this.success2 = false
             this.message2 = null
 
-            
+
             let fd = new FormData()
 
             fd.append('fname', this.fname ?? '')
@@ -634,20 +643,20 @@ export default {
                     headers: {
                     'Content-Type': `multipart/form-data; boundary=${fd._boundary}`
                     }
-                } 
+                }
             ).then(response => {
                 this.success2 = true;
                 this.message2 = response.data.message
             }).catch (error => {
-                if (error.response && 
-                    error.response.status && 
+                if (error.response &&
+                    error.response.status &&
                     error.response.status == 422) {
                         this.hasError2 = true
                         console.log(error.response.data)
                         this.errors2 = error.response.data.errors
                 }
             })
-            
+
         },
 
         async removeFriend(user_id) {
@@ -659,7 +668,7 @@ export default {
                     this.item.status = 0
                 } else {
                     this.friendship.status = 0
-                } 
+                }
             })
         },
 
@@ -671,7 +680,7 @@ export default {
                     this.item.status = 1
                 } else {
                     this.friendship.status = 1
-                }   
+                }
             })
         },
 
@@ -697,7 +706,7 @@ export default {
                 } else {
                     this.friendship.status = 3
                 }
-                
+
             })
         },
 
