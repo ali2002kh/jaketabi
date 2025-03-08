@@ -88,6 +88,8 @@
             <hr class="my-4">
             <router-link class="nav-link text-end" :to="{name: 'login'}">ورود</router-link>
 
+            <!-- for visiting -->
+            <router-link class="nav-link text-end text-danger" :to="{name: 'signup'}">ثبت نام بدون کد تایید (برای بازدید)</router-link>
 
           </div>
         </div>
