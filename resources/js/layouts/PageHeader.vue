@@ -70,14 +70,14 @@
                     <button id="close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-end">
-                    <input type="text" class="form-control text-end" name="search" 
+                    <input type="text" class="form-control text-end" name="search"
                     @keyup="search" v-model="input">
                     <br>
                     <div class="">
                         <p v-if="books[0]" class="text-center w-100 bg-light p-1 border rounded-1 mt-2">کتاب ها</p>
                         <a href="" v-for="b in books" :key="b.id" class="nav-link" @click.prevent="showBook(b.id)">
                             <div class="d-flex flex-row-reverse align-items-center">
-                                <p><img class="item-img" :src="b.image" alt=""></p> 
+                                <p><img class="item-img" :src="b.image" alt=""></p>
                                 <div class="me-2">
                                     <p class="">{{ b.name }}</p>
                                 </div>
@@ -138,13 +138,13 @@
                             </div>
                         </div>
                         <div class="col-auto float-start">
-                            <button class="btn btn-outline-success  p-1 px-3" 
+                            <button class="btn btn-outline-success  p-1 px-3"
                             @click.prevent="acceptFriendRequest(r.id)"
                             >قبول  </button>
                         </div>
 
                         <div class="col-auto float-start">
-                            <button class="btn btn-outline-danger p-1 px-4" 
+                            <button class="btn btn-outline-danger p-1 px-4"
                             @click.prevent="rejectFriendRequest(r.id)"
                             >رد  </button>
                         </div>
@@ -170,15 +170,15 @@ export default {
             publishers: [],
             timeoutId: null,
             friend_requests: [],
-        } 
+        }
     },
 
     mounted() {
 
         setTimeout(() => {
             this.friend_requests = this.user.friend_requests
-        }, 1000)
-        
+        }, 5000)
+
     },
     computed: {
         ...mapState({
