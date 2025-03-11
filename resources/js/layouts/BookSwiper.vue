@@ -7,23 +7,23 @@
         navigation
         :breakpoints="{
             '320': {
-                slidesPerView: 1,
+                slidesPerView: sizes[0],
                 spaceBetween: 20,
             },
             '480': {
-                slidesPerView: 3,
+                slidesPerView: sizes[1],
                 spaceBetween: 20,
             },
             '640': {
-                slidesPerView: 4,
+                slidesPerView: sizes[2],
                 spaceBetween: 20,
             },
             '768': {
-                slidesPerView: 5,
+                slidesPerView: sizes[3],
                 spaceBetween: 40,
             },
             '1024': {
-                slidesPerView: 7,
+                slidesPerView: sizes[4],
                 spaceBetween: 50,
             },
         }"
@@ -43,13 +43,17 @@ import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-
 export default {
 
     props: {
         books: {
             type: Array,
             required: true
+        },
+        sizes: {
+            type: Array,
+            required: false,
+            default: [1, 3, 4, 5, 7]
         }
     },
 

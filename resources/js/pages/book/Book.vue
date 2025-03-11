@@ -1,5 +1,5 @@
 <template>
-    <PageHeader v-if="fixed"></PageHeader>
+    <page-header :user="user"></page-header>
     <div class="body-class container-fluid mt-5 pt-5 row flex-row-reverse" v-if="book">
         <div class="col-lg-7 col-md-6 col-sm-7 col-12 mx-auto p-2" >
             <div class="book-details row flex-row-reverse rounded-2 p-2" style="background-color: #f4f4f4;">
@@ -37,83 +37,13 @@
                 </p>
             </div>
             <div class="publisher-books row flex-row-reverse rounded-2 p-2 mt-3" style="background-color: #f4f4f4;">
-                <div class="row flex-row-reverse align-items-center justify-content-between mx-auto">
-                    <div class="col-auto fw-bold p-1 fs-5 me-2 text-end">از همین نشر </div>
-                    <router-link class="col-auto router-links"
-                    :to="{name: 'bookList', params: { title:'publisher', id: book.publisher.id }}">
-                        مشاهده همه
-                    </router-link>
-                </div>
-                <hr  class="border-muted mt-1">
-                <swiper class="swiper row flex-row-reverse align-items-center swiper-list"
-                dir="rtl"
-                :modules="modules"
-                :space-between="0"
-                navigation
-                :breakpoints="{
-                    '320': {
-                        slidesPerView: 'auto',
-                        centeredSlides: true,
-                    },
-                    '576': {
-                        slidesPerView: 2,
-                    },
-                    '768': {
-                        slidesPerView: 3,
-                        slidesOffsetBefore: -10,
-                    },
-                    '1200': {
-                        slidesPerView: 5,
-                        slidesOffsetBefore: -10,
-                    },
-                }"
-                @swiper="onSwiper"
-                @slideChange="onSlideChange"
-                >
-                    <swiper-slide v-for="b in book.publisher.preview_books" :key="b.id"  class="swiper-slide">
-                        <router-link :to="{name: 'book', params: {id: b.id}}" class="router-links">
-                            <img class="book-img d-block mx-auto" :src="b.image" alt="">
-                            <p class="text-center mx-auto p-1 book-title">{{ b.name }}</p>
-                        </router-link>
-                    </swiper-slide>
-                </swiper>
+                <book-swiper :books="book.publisher.preview_books" :sizes="sizes"></book-swiper>
             </div>
 
             <div class="related-books row flex-row-reverse rounded-2 p-2 mt-3  mb-4" style="background-color: #f4f4f4;">
                 <div class="text-end me-2 fs-5 fw-bold"> کتاب های مشابه </div>
                 <hr class="border-muted mt-1">
-                <swiper class="swiper2 row flex-row-reverse align-items-center swiper-list"
-                dir="rtl"
-                :modules="modules"
-                :space-between="0"
-                navigation
-                :breakpoints="{
-                    '320': {
-                        slidesPerView: 'auto',
-                        centeredSlides: true,
-                    },
-                    '576': {
-                        slidesPerView: 2,
-                    },
-                    '768': {
-                        slidesPerView: 3,
-                        slidesOffsetBefore: -10,
-                    },
-                    '1200': {
-                        slidesPerView: 5,
-                        slidesOffsetBefore: -10,
-                    },
-                }"
-                @swiper="onSwiper"
-                @slideChange="onSlideChange"
-                >
-                    <swiper-slide v-for="b in related" :key="b.id" class="swiper-slide">
-                        <router-link :to="{name: 'book', params: {id: b.id}}" class="router-links">
-                            <img class="book-img d-block mx-auto" :src="b.image" alt="">
-                        <p class="text-center mx-auto p-1">{{ b.name }}</p>
-                        </router-link>
-                    </swiper-slide>
-                </swiper>
+                <book-swiper :books="related" :sizes="sizes"></book-swiper>
             </div>
         </div>
         <div class="user-col col-lg-4 col-md-5 col-sm-5 col-12 h-100 mx-auto p-2" >
@@ -234,35 +164,19 @@
 import { mapState } from 'vuex';
 import PageHeader from "../../layouts/PageHeader"
 import moment from "moment";
-import { Swiper, SwiperSlide } from 'swiper/vue';
-import { Navigation, Pagination } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+import BookSwiper from '../../layouts/BookSwiper';
 // import PageFooter from "../layouts/PageFooter"
 
 export default {
     components: {
         PageHeader,
-        Swiper,
-        SwiperSlide,
+        BookSwiper
         // PageFooter,
     },
-    setup() {
-      const onSwiper = (swiper) => {
-        console.log(swiper);
-      };
-      const onSlideChange = () => {
-        console.log('slide change');
-      };
-      return {
-        onSwiper,
-        onSlideChange,
-        modules: [Navigation, Pagination],
-      };
-    },
+
     data() {
         return {
+            sizes: [1, 2, 3, 4, 5],
             moment: moment,
             book: null,
             record: null,
@@ -285,17 +199,9 @@ export default {
             has_start_date: false,
             has_last_read_date: false,
             has_finish_date: false,
-            fixed: false,
             isFull: false,
             windowWidth: window.innerWidth,
-            // pagination for related books
             related: null,
-            // page: 1,
-            // pageSize: 5,
-            // hasNext: true,
-            // hasPrev: false,
-            // relatedAll: null,
-            // pageCount: 4
         }
     },
     created() {
@@ -304,7 +210,6 @@ export default {
             console.log(response.data.data)
             this.book = response.data.data
             this.related = this.book.related_books
-            this.paginate()
         });
     },
     mounted() {
@@ -372,9 +277,6 @@ export default {
             });
         })
 
-        userLoaded.finally(() => {
-            this.fixed = true
-        })
     },
     unmounted() {
         window.removeEventListener('resize', this.responsiveBookList);
@@ -468,31 +370,6 @@ export default {
             .then(() => {
                 this.shelves_with_this_book = this.shelves_with_this_book.filter(item => item!== shelf_id);
             })
-        },
-
-        async paginate () {
-            this.related = this.relatedAll.slice(
-                (this.page - 1) * this.pageSize,
-                (this.page - 1) * this.pageSize + this.pageSize
-            )
-        },
-
-        async next () {
-            this.page++
-            this.paginate()
-            this.hasPrev = true
-            if (this.pageCount <= this.page) {
-                this.hasNext = false
-            }
-        },
-
-        async prev () {
-            this.page--
-            this.paginate()
-            this.hasNext = true
-            if (1 >= this.page) {
-                this.hasPrev = false
-            }
         },
     },
     computed: {

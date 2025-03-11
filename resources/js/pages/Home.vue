@@ -1,5 +1,5 @@
 <template>
-    <page-header></page-header>
+    <page-header :user="user"></page-header>
     <div class="container-fluid body-class">
 
         <p class="title mx-1" style="margin-top: 110px;"><span>کتاب های محبوب</span></p>

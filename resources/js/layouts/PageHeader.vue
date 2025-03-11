@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container-fluid">
             <ul class="nav navbar-nav me-auto">
-                <li class="nav-item ps-4">
+                <li class="nav-item ps-4" v-if="user">
                     <button type="button" class="btn btn-link text-white" data-toggle="tooltip" data-placement="bottom" title="اعلان ها" data-bs-toggle="modal" data-bs-target="#notificationsModal">
                         <i class="fa-solid fa-bell fa-lg"></i>
                     </button>
@@ -20,12 +20,6 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav ms-auto align-items-center">
-
-                <!-- <li class="nav-item ps-4">
-                    <router-link class="nav-link" :to="{name: 'profile', params: {id: id}}">
-                        <i class="fa-solid fa-user fa-lg"></i>
-                    </router-link>
-                </li> -->
 
                 <li class="nav-item dropdown pe-2" v-if="user">
                         <a href="" data-bs-toggle="dropdown" aria-expanded="false"
@@ -91,7 +85,6 @@
                             </div>
                         </a>
 
-                        <!-- <hr v-if="genres[0] && shelves[0]"> -->
                         <p v-if="genres[0]" class="text-center w-100 bg-light p-1 border rounded-1 mt-2">ژانر ها</p>
                         <a href="" v-for="g in genres" :key="g.id" class="nav-link" @click.prevent="showGenre(g.id)">
                             <div class="text-end me-2">
@@ -99,7 +92,6 @@
                             </div>
                         </a>
 
-                        <!-- <hr v-if="categories[0] && genres[0]"> -->
                         <p v-if="categories[0]" class="text-center w-100 bg-light p-1 border rounded-1 mt-2">دسته بندی ها</p>
                         <a href="" v-for="c in categories" :key="c.id" class="nav-link" @click.prevent="showCategory(c.id)">
                         <div class="text-end me-2">
@@ -107,7 +99,6 @@
                             </div>
                         </a>
 
-                        <!-- <hr v-if="publishers[0] && categories[0]"> -->
                         <p v-if="publishers[0]" class="text-center w-100 bg-light p-1 border rounded-1 mt-2">ناشر ها</p>
                         <a href="" v-for="p in publishers" :key="p.id" class="nav-link" @click.prevent="showPublisher(p.id)">
                             <div class="text-end me-2">
@@ -156,9 +147,15 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 
 export default {
+
+    props: {
+        user: {
+            type: Object,
+            required: true
+        }
+    },
 
     data() {
         return {
@@ -175,17 +172,15 @@ export default {
 
     mounted() {
 
-        setTimeout(() => {
-            this.friend_requests = this.user.friend_requests
-        }, 5000)
+        while (typeof this.user === 'undefined') {
+            setTimeout(() => {
+                if (typeof this.user != 'undefined') {
+                    this.friend_requests = this.user.friend_requests
+                }
+            }, 100)
+        }
+    },
 
-    },
-    computed: {
-        ...mapState({
-            user: state => state.user.data,
-            loggedIn: state => state.user.loggedIn
-        }),
-    },
     methods: {
 
         async acceptFriendRequest(user_id) {

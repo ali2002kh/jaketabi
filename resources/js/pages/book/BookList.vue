@@ -1,5 +1,5 @@
 <template>
-    <PageHeader></PageHeader>
+    <page-header :user="user"></page-header>
     <div class="container-fluid body-class">
 
         <p v-if="title == 'publisher'" class="title mx-1" style="margin-top: 110px;"><span>نشر {{ name }}</span></p>

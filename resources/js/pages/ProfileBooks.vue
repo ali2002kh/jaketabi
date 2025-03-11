@@ -1,6 +1,6 @@
 <template>
-    <PageHeader></PageHeader>
-    <div class="container-fluid" style="margin-top: 110px;">    
+    <page-header :user="user"></page-header>
+    <div class="container-fluid" style="margin-top: 110px;">
         <p class="title text-end mx-4 fs-4 fw-bold"> {{ records[0].status }} </p>
         <hr class="opacity-100 border border-muted">
     </div>
@@ -11,11 +11,11 @@
                 <p class="text-center mx-auto p-1 book-title">{{ r.book.name }}</p>
             </router-link>
             <hr class="mx-5 mb-0">
-            <p v-if="status == 2" class="text-center mx-5 p-1" 
+            <p v-if="status == 2" class="text-center mx-5 p-1"
             style="direction:rtl; font-size: smaller;">
-                {{  Number(r.progression*100).toFixed() }}% خوندی 
+                {{  Number(r.progression*100).toFixed() }}% خوندی
             </p>
-        </div> 
+        </div>
     </div>
 </template>
 
@@ -33,7 +33,7 @@ export default {
         return {
             records: null,
             status: this.$route.params.status,
-        } 
+        }
     },
 
     created() {

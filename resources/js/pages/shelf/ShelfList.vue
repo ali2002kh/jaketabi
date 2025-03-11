@@ -1,10 +1,10 @@
 <template>
 <div class="body">
-    <PageHeader></PageHeader>
+    <page-header :user="user"></page-header>
     <div class="container header mx-auto mt-5 row flex-row-reverse align-items-center">
         <div class="col-8 title text-end fs-4 fw-bold">
             <p v-if="isOwner" class="title mt-5">قفسه های من</p>
-            <p v-else class="title mt-5"><span>  
+            <p v-else class="title mt-5"><span>
                 {{ shelves[0].user.username }} قفسه های
             </span></p>
         </div>
@@ -13,7 +13,7 @@
                 <a href="#" class="link-dark text-center d-flex align-items-center" style="text-decoration:none;">
                     ایجاد قفسه جدید
                     <i class="fa-solid fa-plus px-2"></i>
-                </a> 
+                </a>
             </p>
         </div>
         <hr class="opacity-100 border border-muted">
@@ -45,7 +45,7 @@
                             <textarea id="shelfDescription" class="form-control text-end" name="shelfDescription" v-model="shelfDescription"></textarea>
                         </div>
                         <div class="m-1 text-start">
-                            <button type="submit" class="btn btn-dark m-3 ms-0 px-3" 
+                            <button type="submit" class="btn btn-dark m-3 ms-0 px-3"
                             @click.prevent="storeShelf"
                             >تایید</button>
                         </div>
@@ -56,11 +56,11 @@
     </div>
     <!-- shelves list  -->
     <div class="container rounded-1 mb-2 p-2 py-4 mx-auto h-100" style="background: #f4f4f4; height:100vh">
-        <div class="row flex-row-reverse align-items-center" 
+        <div class="row flex-row-reverse align-items-center"
             v-for="row in rows" :key="'row' + row">
             <div class="d-flex flex-row-reverse">
                 <div class="col-4 mb-3" v-for="(s,column) in shelvesInRow(row)" :key="'row' + row + column">
-                    <div class="shelf-title row mx-2 bg-dark rounded-top text-white bg-gradient">
+                    <!-- <div class="row mx-2 bg-dark rounded-top text-white bg-gradient">
                         <p class="text-center mx-auto fw-bold m-1"> {{ s.name }} </p>
                     </div>
                     <div class="shelf-books row flex-row-reverse justify-content-start align-items-center bg-light mx-2
@@ -72,12 +72,13 @@
                         <router-link :to="{name:'shelf', params:{id: s.id}}" class="col-auto me-auto p-2">
                             <i class="fa-solid fa-angle-left fa-xl text-dark"></i>
                         </router-link>
-                    </div>
+                    </div> -->
+                    <single-shelf-item :shelf="s"></single-shelf-item>
                 </div>
             </div>
         </div>
     </div>
-    
+
 </div>
 </template>
 
@@ -85,10 +86,12 @@
 
 import { mapState } from 'vuex';
 import PageHeader from "../../layouts/PageHeader"
+import SingleShelfItem from '../../layouts/SingleShelfItem.vue';
 
 export default {
     components: {
         PageHeader,
+        SingleShelfItem
     },
 
     data() {
@@ -103,7 +106,7 @@ export default {
             success: false,
             message: null,
             columns: 3,
-        } 
+        }
     },
 
     created() {
@@ -133,7 +136,7 @@ export default {
             }
         })
 
-        
+
         loadUser.then(() => {
             if (this.user && this.user.id == this.$route.params.id) {
                 this.isOwner = true
@@ -167,8 +170,8 @@ export default {
                 this.message = response.data.message
                 this.shelves.push(response.data.data.shelf)
             }).catch ((error) => {
-                if (error.response && 
-                    error.response.status && 
+                if (error.response &&
+                    error.response.status &&
                     error.response.status == 422) {
                         this.hasError = true
                         console.log(error.response.data)
@@ -187,14 +190,7 @@ export default {
 .body {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
-.shelf-book-img {
-    max-width: 80px;
-    max-height: 120px;
-}
-.book-img {
-    max-width: 120px;
-    max-height: 200px;
-}
+
 .title {
     font-family: hamishe;
 }

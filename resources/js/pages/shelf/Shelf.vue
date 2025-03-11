@@ -1,5 +1,5 @@
 <template>
-    <page-header></page-header>
+    <page-header :user="user"></page-header>
     <div class="container-fluid mt-5 row flex-row-reverse ">
         <!-- sidebar -->
         <div class="col-lg-3 col-sm-4 mt-4 sidebar float-end bg-light row"
@@ -54,13 +54,10 @@
             </div>
             <hr class="row opacity-100 border-muted border mx-2" >
             <div class="row flex-row-reverse mx-1">
-                <router-link v-for="b in shelf.books" :key="b.id" :to="{name: 'book', params: {id: b.id}}"
-                class="router-links col-xl-2 col-md-3 col-sm-4 col-6">
-                    <div class="">
-                        <img :src="b.image" class="book-img d-block mx-auto" alt="">
-                        <p class="text-center p-1"> {{b.name}} </p>
-                    </div> 
-                </router-link>
+                <div v-for="b in shelf.books" :key="b.id" class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-auto p-1">
+                    <single-book-item :book="b"></single-book-item>
+                </div>
+
             </div>
         </div>
 
@@ -108,7 +105,7 @@
                                 <textarea id="shelfDescription" class="form-control text-end" name="shelfDescription" v-model="shelfDescription"></textarea>
                             </div>
                             <div class="m-1 text-start">
-                                <button type="submit" class="btn btn-dark m-1 mt-3" 
+                                <button type="submit" class="btn btn-dark m-1 mt-3"
                                 @click.prevent="updateShelf"
                                 >تایید</button>
                             </div>
@@ -124,11 +121,13 @@
 
 import { mapState } from 'vuex';
 import PageHeader from "../../layouts/PageHeader"
+import SingleBookItem from '../../layouts/SingleBookItem';
 // import PageFooter from "../layouts/PageFooter"
 
 export default {
     components: {
         PageHeader,
+        SingleBookItem
         // PageFooter,
     },
     data() {
@@ -152,7 +151,7 @@ export default {
             this.shelfName = this.shelf.name
             this.shelfDescription = this.shelf.description
         })
-    },  
+    },
     mounted() {
 
         let loadUser = new Promise((resolve, reject) => {
@@ -194,7 +193,7 @@ export default {
             .then(() => {
                 document.getElementById('closeAlert').click()
                 this.$router.push(`/profile/${this.user.id}`)
-            }) 
+            })
         },
 
         async updateShelf() {
@@ -211,8 +210,8 @@ export default {
                 this.shelf.name = this.shelfName
                 this.shelf.description = this.shelfDescription
             }).catch ((error) => {
-                if (error.response && 
-                    error.response.status && 
+                if (error.response &&
+                    error.response.status &&
                     error.response.status == 422) {
                         this.hasError = true
                         console.log(error.response.data)
@@ -301,6 +300,6 @@ border-radius: 50%;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
 }
-    
+
 }
 </style>

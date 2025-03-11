@@ -26,20 +26,7 @@
         @slideChange="onSlideChange"
     >
         <swiper-slide v-for="s in shelves" :key="s.id" class="p-1 shelf">
-            <div class="shelf-title row m-1 bg-dark rounded-top text-white bg-gradient">
-                <p class="text-center  mx-auto fw-bold m-1">{{s.name}}</p>
-            </div>
-            <div class="shelf-books row d-flex flex-row-reverse justify-content-start align-items-center
-                bg-light m-1 border-start border-end border-bottom rounded-bottom"
-                style="min-height:130px;" >
-                <router-link :to="{name:'shelf', params: {id: s.id}}"
-                class="col-auto me-auto p-2">
-                    <i class="fa-solid fa-angle-left fa-xl text-dark"></i>
-                </router-link>
-                <div v-for="b in s.books" :key="b.id" class="col-auto mx-0">
-                    <img  class="shelf-book-img" :src="b.image" :alt="b.name">
-                </div>
-            </div>
+            <single-shelf-item :shelf="s"></single-shelf-item>
             <div class="shelf-footer row float-start align-items-center py-2 g-0 my-2">
                 <div class="col-auto ps-2">
                     <router-link :to="{name: 'profile', params: {id: s.user.id}}" class="router-links">
@@ -60,6 +47,7 @@ import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import SingleShelfItem from './SingleShelfItem.vue';
 
 export default {
 
@@ -73,6 +61,7 @@ export default {
     components: {
         Swiper,
         SwiperSlide,
+        SingleShelfItem
     },
 
     setup() {
@@ -92,11 +81,6 @@ export default {
 </script>
 
 <style scoped>
-
-.shelf-book-img {
-    max-width: 80px;
-    max-height: 120px;
-}
 
 .router-links {
     color: black;

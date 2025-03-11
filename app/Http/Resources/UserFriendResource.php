@@ -14,15 +14,20 @@ class UserFriendResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        /** @var User $user */ 
+        /** @var User $user */
         $user = auth()->user();
+        if ($user) {
+            $status = $user->friendshipStatus($this->id);
+        } else {
+            $status = 0;
+        }
 
         $result = [
             'id' => $this->id,
             'username' => $this->username,
             'image' => '/storage/user/'.$this->getImage(),
             'name' => $this->name(),
-            'status' => $user->friendshipStatus($this->id),
+            'status' => $status,
         ];
 
         return $result;

@@ -1,5 +1,5 @@
 <template>
-    <PageHeader></PageHeader>
+   <page-header :user="user"></page-header>
     <div class="body-class container-fluid mb-4">
         <div v-if="host" class="profile-header row flex-row-reverse align-items-center mt-5">
             <div class="col-md-8 col-sm-8 col-6 mt-5 ">
@@ -254,11 +254,7 @@
             <div class="lists-body currently-reading row flex-row-reverse align-items-center mx-1 p-1 rounded-1">
                 <div v-for="b in responsiveBookList(this.currentlyReading)" :key="b.id"
                 class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-auto p-1" :class="{'mx-auto' : this.host.has_more_reading}">
-                    <router-link :to="{name:'book', params:{id: b.id}}"
-                    class="router-links d-flex flex-column m-1 p-2 align-items-center text-center">
-                        <img :src="b.image" class="book-img" alt="">
-                        <p class="book-title"> {{ b.name }}</p>
-                    </router-link>
+                    <single-book-item :book="b"></single-book-item>
                 </div>
 
                 <!-- <div v-if="host.has_more_reading" class="col-auto" style="margin-right: 1000px;">
@@ -286,11 +282,7 @@
             <div class="lists-body already-read row flex-row-reverse align-items-center mx-1 p-1 rounded-1">
                 <div v-for="b in responsiveBookList(this.alreadyRead)" :key="b.id"
                 class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-auto p-1" :class="{'mx-auto' : this.host.has_more_already_read}">
-                    <router-link :to="{name:'book', params:{id: b.id}}"
-                    class="router-links d-flex flex-column m-1 p-2 align-items-center text-center">
-                        <img :src="b.image" class="book-img" alt="">
-                        <p class="book-title"> {{ b.name }}</p>
-                    </router-link>
+                    <single-book-item :book="b"></single-book-item>
                 </div>
                 <!-- <div v-if="host.has_more_already_read" class="col-auto me-auto" >
                     <router-link :to="{name: 'profileBooks', params: {id: host.id, status: 3 }}"
@@ -318,11 +310,7 @@
             <div class="lists-body want-to-read row flex-row-reverse align-items-center mx-1 p-1 rounded-1">
                 <div v-for="b in responsiveBookList(this.wantToRead)" :key="b.id"
                 class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-auto p-1" :class="{'mx-auto' : this.host.has_more_want_to_read}">
-                    <router-link :to="{name:'book', params:{id: b.id}}"
-                    class="router-links d-flex flex-column m-1 p-2 align-items-center text-center">
-                        <img :src="b.image" style="height: 150px; max-width:100px" alt="">
-                        <p class="mt-2 book-title"> {{ b.name }}</p>
-                    </router-link>
+                    <single-book-item :book="b"></single-book-item>
                 </div>
                 <!-- <div v-if="host.has_more_want_to_read" class="col-auto" style="margin-right: 1000px;">
                     <router-link :to="{name: 'profileBooks', params: {id: host.id, status: 1 }}"
@@ -388,7 +376,7 @@
             </div>
             <div v-if="host" class="lists-body row flex-row-reverse align-items-center mx-1 p-1 rounded-1">
                         <div v-for="s in responsiveShelfList(host.shelves)" :key="s.id" class="shelf">
-                            <div class="shelf-title row m-1 bg-dark rounded-top text-white bg-gradient">
+                            <!-- <div class="shelf-title row m-1 bg-dark rounded-top text-white bg-gradient">
                                 <p class="text-center  mx-auto fw-bold m-1"> {{ s.name }} </p>
                             </div>
                             <div class="shelf-books row flex-row-reverse justify-content-start align-items-center bg-light mx-1
@@ -400,7 +388,8 @@
                                 <router-link :to="{name:'shelf', params:{id: s.id}}" class="col-auto me-auto p-2">
                                     <i class="fa-solid fa-angle-left fa-xl text-dark"></i>
                                 </router-link>
-                            </div>
+                            </div> -->
+                            <single-shelf-item :shelf="s"></single-shelf-item>
                         </div>
                     <!-- <div v-if="host.has_more_shelves" class="col-auto me-auto">
                         <router-link :to="{name: 'shelfList', params: {id: host.id}}"
@@ -418,11 +407,15 @@
 
 import { mapState } from 'vuex';
 import PageHeader from "../layouts/PageHeader"
+import SingleShelfItem from '../layouts/SingleShelfItem.vue';
+import SingleBookItem from '../layouts/SingleBookItem.vue';
 // import PageFooter from "../layouts/PageFooter"
 
 export default {
     components: {
         PageHeader,
+        SingleShelfItem,
+        SingleBookItem
     },
     data() {
         return {
@@ -502,7 +495,6 @@ export default {
                 .then((response) => {
                     console.log(response.data.data)
                     this.host = response.data.data
-
                     this.username = this.host.username
                     this.fname = this.host.fname
                     this.lname = this.host.lname
@@ -514,7 +506,10 @@ export default {
                 axios.get(`/api/friendship/${this.$route.params.id}`)
                 .then((response) => {
                     this.friendship = response.data.data
+                }).catch ((error) => {
+                    this.friendship = null
                 })
+
             }
 
             if (this.host.has_more_shelves) {
@@ -524,6 +519,7 @@ export default {
 
         })
     },
+
     created() {
 
     },
@@ -762,10 +758,7 @@ width: 60px;
 height: 60px;
 border-radius: 50%;
 }
-.shelf-book-img {
-max-width: 80px;
-max-height: 120px;
-}
+
 .book-title {
     direction: rtl;
     white-space:nowrap;
