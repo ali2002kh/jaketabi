@@ -6,14 +6,11 @@
     </div>
     <div class="body h-100 mb-5 row flex-row-reverse mx-2 p-1 rounded-1" style="background-color: #f4f4f4;">
         <div v-for="r in records" :key="r.id"   class="col-md-2 col-sm-3 col-6 p-1">
-            <router-link :to="{name: 'book', params: {id: r.book.id}}"  class="router-links">
-                <img class="book-img d-block mx-auto" :src="r.book.image" alt="">
-                <p class="text-center mx-auto p-1 book-title">{{ r.book.name }}</p>
-            </router-link>
+            <single-book-item :book="r.book"></single-book-item>
             <hr class="mx-5 mb-0">
             <p v-if="status == 2" class="text-center mx-5 p-1"
             style="direction:rtl; font-size: smaller;">
-                {{  Number(r.progression*100).toFixed() }}% خوندی
+                {{  Number(r.progression*100).toFixed() }}%  خوانده
             </p>
         </div>
     </div>
@@ -21,13 +18,15 @@
 
 <script>
 
-import { mapState } from 'vuex';
+import { mapState } from 'vuex'
 import PageHeader from "../layouts/PageHeader"
+import SingleBookItem from '../layouts/SingleBookItem'
 // import PageFooter from "../layouts/PageFooter"
 
 export default {
     components: {
         PageHeader,
+        SingleBookItem
     },
     data() {
         return {
@@ -74,31 +73,15 @@ export default {
     },
 }
 </script>
+
 <style scoped>
+
 .body {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
-.shelf-book-img {
-    max-width: 80px;
-    max-height: 120px;
-}
-.book-img {
-    width: 110px;
-    height: 160px;
-}
-.book-title {
-    direction: rtl;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    max-width: 120px;
-    max-height: 50px;
-}
+
 .title {
     font-family: hamishe;
 }
-.router-links {
-    color: black;
-    text-decoration: none;
-}
+
 </style>

@@ -256,14 +256,6 @@
                 class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-auto p-1" :class="{'mx-auto' : this.host.has_more_reading}">
                     <single-book-item :book="b"></single-book-item>
                 </div>
-
-                <!-- <div v-if="host.has_more_reading" class="col-auto" style="margin-right: 1000px;">
-                    <router-link :to="{name: 'profileBooks', params: {id: host.id, status: 2 }}"
-                    class="router-links text-center">
-                            <i class="fa-solid fa-circle-chevron-left fa-2x"></i>
-                            <p>+{{ host.already_read_more_count }}</p>
-                    </router-link>
-                </div> -->
             </div>
 
             <!-- already-read list  -->
@@ -284,14 +276,6 @@
                 class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-auto p-1" :class="{'mx-auto' : this.host.has_more_already_read}">
                     <single-book-item :book="b"></single-book-item>
                 </div>
-                <!-- <div v-if="host.has_more_already_read" class="col-auto me-auto" >
-                    <router-link :to="{name: 'profileBooks', params: {id: host.id, status: 3 }}"
-                    class="router-links text-center"
-                    >
-                        <i class="fa-solid fa-circle-chevron-left fa-2x"></i>
-                        <p>+{{ host.already_read_more_count }}</p>
-                    </router-link>
-                </div> -->
             </div>
 
             <!-- want-to-read list  -->
@@ -312,13 +296,6 @@
                 class="col-6 col-sm-4 col-md-3 col-lg-2 col-xl-auto p-1" :class="{'mx-auto' : this.host.has_more_want_to_read}">
                     <single-book-item :book="b"></single-book-item>
                 </div>
-                <!-- <div v-if="host.has_more_want_to_read" class="col-auto" style="margin-right: 1000px;">
-                    <router-link :to="{name: 'profileBooks', params: {id: host.id, status: 1 }}"
-                    class="router-links text-center">
-                            <i class="fa-solid fa-circle-chevron-left fa-2x"></i>
-                            <p>+{{ host.already_read_more_count }}</p>
-                    </router-link>
-                </div> -->
             </div>
         </div>
 
@@ -330,74 +307,17 @@
                 </div>
                 <hr class="col opacity-100 border-muted border mx-3">
                 <div class="col-auto">
-                    <p v-if="host.is_private" class="" data-bs-toggle="modal" data-bs-target="#createShelf">
-                        <a href="#" class="link-dark text-center" style="text-decoration:none;">ایجاد قفسه جدید</a>
-                    </p>
+                    <create-shelf @addShelf="addShelf" v-if="host.is_private"></create-shelf>
                     <router-link v-if="host.has_more_shelves" :to="{name: 'shelfList', params: {id: host.id}}"
                     class="link-dark text-center" style="text-decoration:none;">
                         مشاهده همه
                     </router-link>
                 </div>
             </div>
-            <div class="modal fade" id="createShelf" tabindex="-1" aria-labelledby="createShelfLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5 w-100 text-center" id="createShelfLabel">ایجاد قفسه جدید</h1>
-                            <button id="create_shelf_close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body text-end">
-                            <div class="alert alert-danger" v-if="hasError" dir="rtl">
-                                <ul class="error-list">
-                                    <li v-for="e in errors" :key="e" class="error-item">{{ e[0] }}</li>
-                                </ul>
-                            </div>
-                            <div class="alert alert-success" v-if="success" dir="rtl">{{ message }}</div>
-                            <form>
-                                <div class="m-1">
-                                    <label for="shelfName" class="form-label ">نام قفسه</label>
-                                    <input type="text" class="form-control text-end" id="shelfName" name="shelfName"
-                                    v-model="shelfName"
-                                    >
-                                </div>
-                                <div class="m-1">
-                                    <label for="shelfDescription" class="form-label ">توضیحات</label>
-                                    <textarea id="shelfDescription" class="form-control text-end" name="shelfDescription" v-model="shelfDescription"></textarea>
-                                </div>
-                                <div class="m-1 text-start">
-                                    <button type="submit" class="btn btn-dark m-3 ms-0 px-3"
-                                    @click.prevent="storeShelf"
-                                    >تایید</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div v-if="host" class="lists-body row flex-row-reverse align-items-center mx-1 p-1 rounded-1">
-                        <div v-for="s in responsiveShelfList(host.shelves)" :key="s.id" class="shelf">
-                            <!-- <div class="shelf-title row m-1 bg-dark rounded-top text-white bg-gradient">
-                                <p class="text-center  mx-auto fw-bold m-1"> {{ s.name }} </p>
-                            </div>
-                            <div class="shelf-books row flex-row-reverse justify-content-start align-items-center bg-light mx-1
-                             p-1 border-start border-end border-bottom rounded-bottom"
-                            style="min-height:130px;" >
-                                <div v-for="b in s.books" :key="b.id" class="col-auto p-2">
-                                    <img :src="b.image" class="shelf-book-img mx-auto" alt="">
-                                </div>
-                                <router-link :to="{name:'shelf', params:{id: s.id}}" class="col-auto me-auto p-2">
-                                    <i class="fa-solid fa-angle-left fa-xl text-dark"></i>
-                                </router-link>
-                            </div> -->
-                            <single-shelf-item :shelf="s"></single-shelf-item>
-                        </div>
-                    <!-- <div v-if="host.has_more_shelves" class="col-auto me-auto">
-                        <router-link :to="{name: 'shelfList', params: {id: host.id}}"
-                        class="router-links text-center" href="#">
-                            <i class="fa-solid fa-circle-chevron-left fa-2x"></i>
-                            <p>+{{ shelves_more_count }}</p>
-                        </router-link>
-                    </div> -->
+                <div v-for="s in responsiveShelfList(host.shelves)" :key="s.id" class="shelf">
+                    <single-shelf-item :shelf="s"></single-shelf-item>
+                </div>
             </div>
         </div>
     </div>
@@ -405,17 +325,19 @@
 
 <script>
 
-import { mapState } from 'vuex';
+import { mapState } from 'vuex'
 import PageHeader from "../layouts/PageHeader"
-import SingleShelfItem from '../layouts/SingleShelfItem.vue';
-import SingleBookItem from '../layouts/SingleBookItem.vue';
+import SingleShelfItem from '../layouts/SingleShelfItem.vue'
+import SingleBookItem from '../layouts/SingleBookItem.vue'
+import CreateShelf from '../layouts/CreateShelf'
 // import PageFooter from "../layouts/PageFooter"
 
 export default {
     components: {
         PageHeader,
         SingleShelfItem,
-        SingleBookItem
+        SingleBookItem,
+        CreateShelf,
     },
     data() {
         return {
@@ -426,13 +348,6 @@ export default {
             currentlyReading: [],
             wantToRead: [],
             alreadyRead: [],
-            // create shelf
-            shelfName: null,
-            shelfDescription: null,
-            hasError: false,
-            errors: [],
-            success: false,
-            message: null,
             shelves_more_count: null,
 
             // friendship options
@@ -520,10 +435,6 @@ export default {
         })
     },
 
-    created() {
-
-    },
-
     mounted() {
         window.addEventListener('resize', this.responsiveBookList);
     },
@@ -531,12 +442,10 @@ export default {
         window.removeEventListener('resize', this.responsiveBookList);
     },
     computed: {
-        // ...mapGetters(["user"]),
         ...mapState({
             user: state => state.user.data,
             loggedIn: state => state.user.loggedIn
         }),
-        // ...mapActions(['initState'])
     },
     methods: {
         responsiveBookList(list) {
@@ -579,37 +488,15 @@ export default {
             this.$router.push('/login')
         },
 
-        async storeShelf() {
-            this.hasError = false
-            this.errors = []
-            this.success = false
-            this.message = null
-            await axios.post('/api/store-shelf', {
-                shelfName: this.shelfName,
-                description: this.shelfDescription
-            }).then((response) => {
-                this.success = true;
-                this.message = response.data.message
-                // console.log(response.data.data.shelf)
-                if(this.host.has_more_shelves){
-                    this.shelves_more_count = this.shelves_more_count + 1
-                } else if (this.host.shelves.length == 3) {
-                    this.host.has_more_shelves = true
-                    this.shelves_more_count = 1
-                    console.log(this.shelves_more_count)
-                } else {
-                    this.host.shelves.push(response.data.data.shelf)
-                }
-                // console.log(this.user.shelves)
-            }).catch ((error) => {
-                if (error.response &&
-                    error.response.status &&
-                    error.response.status == 422) {
-                        this.hasError = true
-                        console.log(error.response.data)
-                        this.errors = error.response.data.errors
-                }
-            })
+        addShelf(shelf) {
+            if(this.host.has_more_shelves){
+                this.shelves_more_count = this.shelves_more_count + 1
+            } else if (this.host.shelves.length == 3) {
+                this.host.has_more_shelves = true
+                this.shelves_more_count = 1
+            } else {
+                this.host.shelves.push(shelf)
+            }
         },
 
         async onFileChange(event) {
@@ -759,18 +646,6 @@ height: 60px;
 border-radius: 50%;
 }
 
-.book-title {
-    direction: rtl;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    max-width: 120px;
-    max-height: 50px;
-}
-.book-img {
-width: 110px;
-height: 160px;
-}
 .title {
 font-family: hamishe;
 font-weight:bold;
