@@ -27,7 +27,7 @@
     >
         <swiper-slide v-for="s in shelves" :key="s.id" class="p-1 shelf">
             <single-shelf-item :shelf="s"></single-shelf-item>
-            <div class="shelf-footer row float-start align-items-center py-2 g-0 my-2">
+            <div class="shelf-footer row float-start align-items-center py-2 g-0 my-2" v-if="incluseUserProfile">
                 <div class="col-auto ps-2">
                     <router-link :to="{name: 'profile', params: {id: s.user.id}}" class="router-links">
                         {{ s.user.username }}
@@ -55,6 +55,11 @@ export default {
         shelves: {
             type: Array,
             required: true
+        },
+        incluseUserProfile: {
+            type: Boolean,
+            required: false,
+            default: false
         }
     },
 

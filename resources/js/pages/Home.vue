@@ -14,9 +14,9 @@
         </activities-swiper-and-modal>
 
         <p class="title"><span> قفسه های  دوستان</span></p>
-        <friends-shelves-swiper
-            v-if="user" :shelves="shelves">
-        </friends-shelves-swiper>
+        <shelves-swiper
+            v-if="user" :shelves="shelves" :incluseUserProfile=true>
+        </shelves-swiper>
 
     </div>
 </template>
@@ -27,8 +27,8 @@ import { mapState } from 'vuex';
 import PageHeader from "../layouts/PageHeader"
 import SingleBookItem from "../layouts/SingleBookItem"
 import BookSwiper from "../layouts/BookSwiper"
-import ActivitiesSwiperAndModal from '../layouts/ActivitiesSwiperAndModal.vue';
-import FriendsShelvesSwiper from '../layouts/FriendsShelvesSwiper.vue';
+import ActivitiesSwiperAndModal from '../layouts/ActivitiesSwiperAndModal';
+import ShelvesSwiper from '../layouts/ShelvesSwiper';
 // import PageFooter from "../layouts/PageFooter"
 
 export default {
@@ -37,7 +37,7 @@ export default {
         SingleBookItem,
         BookSwiper,
         ActivitiesSwiperAndModal,
-        FriendsShelvesSwiper
+        ShelvesSwiper
         // PageFooter,
     },
 

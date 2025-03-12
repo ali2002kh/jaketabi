@@ -9,10 +9,10 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class ProfileController extends Controller {
-    
+
     public function update(Request $request) {
 
-        /** @var User $user */ 
+        /** @var User $user */
         $user = auth()->user();
 
         $request->validate([
