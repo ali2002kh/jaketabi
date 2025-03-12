@@ -65,11 +65,11 @@
                         </select>
                     </div>
                 </div>
-                <div class="row shelves-modal text-center p-4 m-1 py-2">
-                    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#shelves-modal">
-                        اضافه کردن به قفسه (ها)
-                    </button>
-                </div>
+                <add-book-to-shelves v-if="user"
+                    :shelves="shelves"
+                    :shelves_with_this_book="shelves_with_this_book">
+                </add-book-to-shelves>
+
                 <div v-if="isCurrentlyReading"
                 class="row flex-row-reverse page-number p-3 m-1 py-2 align-items-center justify-content-center">
                         <span class="col-3 p-2 text-end">  شماره صفحه </span>
@@ -99,9 +99,6 @@
                 </div>
 
             </div>
-            <!-- <div v-else class="book-user rounded-2 p-1 me-2 h-100 text-center">
-                لاگین نکرده
-            </div> -->
             <div class="user-friends row rounded-2 h-100 mt-3 w-100" style="background-color: #f4f4f4;">
                 <div v-if="user" class="row flex-row-reverse align-items-center m-1 p-3">
                     <p class="col-4 text-end fw-bold m-1">فعالیت دوستان</p>
@@ -123,39 +120,6 @@
                 </div>
             </div>
         </div>
-        <!-- Modal -->
-        <div class="modal fade" id="shelves-modal" tabindex="-1" aria-labelledby="shelves-modalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-sm modal-dialog-scrollable">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title w-100 text-center fs-5" id="shelves-modalLabel">قفسه ها</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div v-for="s in shelves" :key="s.id">
-                            <div class="row flex-row-reverse align-items-center">
-                                <div class="col fw-bold text-end">
-                                    {{s.name}}
-                                </div>
-                                <div v-if="shelves_with_this_book.includes(s.id)" class="float-start col lh-lg">
-                                    <button class="btn btn-sm btn-danger" @click.prevent="removeFromShelf(s.id)">
-                                        <i class="fa-solid fa-minus"></i>
-                                    </button>
-                                </div>
-                                <div v-else class="float-start col lh-lg">
-                                    <button class="btn btn-sm btn-dark" @click.prevent="addToShelf(s.id)">
-                                        <i class="fa-solid fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">بستن</button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </template>
 
@@ -165,12 +129,14 @@ import { mapState } from 'vuex';
 import PageHeader from "../../layouts/PageHeader"
 import moment from "moment";
 import BookSwiper from '../../layouts/BookSwiper';
+import AddBookToShelves from '../../layouts/AddBookToShelves';
 // import PageFooter from "../layouts/PageFooter"
 
 export default {
     components: {
         PageHeader,
-        BookSwiper
+        BookSwiper,
+        AddBookToShelves,
         // PageFooter,
     },
 
@@ -179,6 +145,8 @@ export default {
             sizes: [1, 2, 3, 4, 5],
             moment: moment,
             book: null,
+
+            // relation with user
             record: null,
             selected_status: 0,
             statuses: [0, 1, 2, 3],
@@ -191,14 +159,16 @@ export default {
             current_page_input: null,
             has_progression: false,
             friend_book: null,
-            shelves: [],
-            shelves_with_this_book: [],
             start_date: null,
             last_read_date: null,
             finish_date: null,
             has_start_date: false,
             has_last_read_date: false,
             has_finish_date: false,
+
+            shelves: [],
+            shelves_with_this_book: [],
+
             isFull: false,
             windowWidth: window.innerWidth,
             related: null,
@@ -357,21 +327,8 @@ export default {
                 console.log(this.record.progression)
             })
         },
-
-        async addToShelf(shelf_id) {
-            await axios.get(`/api/add-book-to-shelf/${shelf_id}/${this.$route.params.id}`)
-            .then(() => {
-                this.shelves_with_this_book.push(shelf_id)
-            })
-        },
-
-        async removeFromShelf(shelf_id) {
-            await axios.get(`/api/remove-book-from-shelf/${shelf_id}/${this.$route.params.id}`)
-            .then(() => {
-                this.shelves_with_this_book = this.shelves_with_this_book.filter(item => item!== shelf_id);
-            })
-        },
     },
+
     computed: {
         ...mapState({
             user: state => state.user.data,
@@ -440,29 +397,12 @@ export default {
     position: sticky;
     top: 90px;
 }
-.book-img {
-width: 110px;
-height: 160px;
-}
+
 .router-links {
     color: black;
     text-decoration: none;
 }
-.book-title {
-    direction: rtl;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 120px;
-}
-.swiper-slide {
-    box-sizing: border-box !important;
-}
-.swiper-list {
 
-    justify-content: center !important;
-
-}
 .form-select:focus {
     border: 2px solid black;
     box-shadow:none;

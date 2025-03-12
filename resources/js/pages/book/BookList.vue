@@ -52,22 +52,10 @@
                     </router-link>
                 </div>
             </div>
-            <!-- <p class="title mt-4 mx-1">
-                <span>  </span>
-            </p> -->
-            <!-- <p class="text-end m-2 fs-5 fw-bold"></p>
-            <hr class="opacity-100 border-muted border mx-auto"> -->
             <div class="row flex-row-reverse align-items-center rounded-1 mx-1 p-1 mb-4" style="background-color: #f4f4f4;">
                 <div v-for="b in siblings[page - 1].preview_books" :key="b.id" class="col-md-2 col-sm-3 col-6 p-1">
                     <single-book-item :book="b"></single-book-item>
                 </div>
-                <!-- <div class="col p-5">
-                    <router-link :to="{name: 'bookList', params: { title:'bookCategory', id: siblings[page - 1].id }}">
-                        <button class="btn">
-                            <i class="fa-solid fa-angle-left fa-3x"></i>
-                        </button>
-                    </router-link>
-                </div> -->
             </div>
         </div>
 
