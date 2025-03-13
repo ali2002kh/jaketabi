@@ -65,10 +65,8 @@
                         </select>
                     </div>
                 </div>
-                <add-book-to-shelves v-if="user"
-                    :shelves="shelves"
-                    :shelves_with_this_book="shelves_with_this_book">
-                </add-book-to-shelves>
+
+                <add-book-to-shelves v-if="record" :record="record"></add-book-to-shelves>
 
                 <div v-if="isCurrentlyReading"
                 class="row flex-row-reverse page-number p-3 m-1 py-2 align-items-center justify-content-center">
@@ -102,7 +100,7 @@
             <div class="user-friends row rounded-2 h-100 mt-3 w-100" style="background-color: #f4f4f4;">
                 <div v-if="user" class="row flex-row-reverse align-items-center m-1 p-3">
                     <p class="col-4 text-end fw-bold m-1">فعالیت دوستان</p>
-                    <div class="col-8 row flex-row-reverse mt-2">
+                    <div class="col-8 row flex-row-reverse mt-2" v-if="friend_book">
                         <div v-for="f in friend_book.preview_friends" :key="f.id" class="col-4">
                             <router-link :to="{name: 'profile', params: {id: f.id}}">
                                 <img class="rounded-5" :src="f.image" style="width: 40px; height:40px;" alt="">
@@ -166,10 +164,6 @@ export default {
             has_last_read_date: false,
             has_finish_date: false,
 
-            shelves: [],
-            shelves_with_this_book: [],
-
-            isFull: false,
             windowWidth: window.innerWidth,
             related: null,
         }
@@ -228,10 +222,6 @@ export default {
                     this.has_finish_date = true
                 }
                 console.log("has progression: "+this.has_progression)
-                if (this.record.shelves_with_this_book) {
-                    this.shelves_with_this_book = this.record.shelves_with_this_book
-                }
-
             })
 
             axios.get(`/api/book-friend/${this.$route.params.id}`)
@@ -240,11 +230,6 @@ export default {
                 this.friend_book = response.data.data
             })
 
-            axios.get(`/api/shelves/${this.user.id}`)
-            .then(response => {
-                console.log(response.data.data)
-                this.shelves = response.data.data;
-            });
         })
 
     },
@@ -359,12 +344,6 @@ export default {
         isAlreadyRead() {
             if (this.record && this.record.status_code == 3) {
                 return true
-            }
-            return false
-        },
-        isFull() {
-            if ((this.book.publisher.preview_books).length == 5) {
-                return true;
             }
             return false
         },
