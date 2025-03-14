@@ -62,7 +62,11 @@ class AuthController extends Controller {
         return abort(200);
     }
 
-    public function logout() {
+    public function logout(Request $request) {
+
+        $request->user()->tokens()->delete(); // Delete tokens
+        $request->session()->invalidate(); // Invalidate session
+        $request->session()->regenerateToken(); // Regenerate CSRF token
 
         Auth::logout();
         return abort(200);
