@@ -17,12 +17,15 @@ class UserBookResource extends JsonResource
 
         // dd(is_null($this->resource));
 
+
+
         if (is_null($this->resource)) {
             $result['status_code'] = 0;
             $result['status'] = "انتخاب نشده";
+            $result['user'] = new UserPreviewResource(auth()->user());
             return $result;
         }
- 
+
         $user = $this->getUser();
         $book = $this->getBook();
         $status = $this->status;

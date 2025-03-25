@@ -64,6 +64,8 @@ export default {
     },
 
     created() {
+        console.log("helllllllo"+this.record)
+
         axios.get(`/api/shelves/${this.record.user.id}`)
         .then(response => {
             console.log(response.data.data)
