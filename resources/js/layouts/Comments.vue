@@ -1,5 +1,4 @@
 <template>
-    <page-header :user="user"></page-header>
     <div class="body container mb-5" style="margin-top: 110px;">
         <p class="title"><span>نظرات کاربران</span></p>
         <div v-if="user" class="row flex-row-reverse rounded-2 bg-light shadow-sm p-3 mt-4 align-items-center mx-2">
@@ -28,7 +27,7 @@
         </div>
         <div class="alert alert-success mx-2 mt-3" v-if="success" dir="rtl">{{ message }}</div>
 
-        <div class="text-end fw-bold fs-6 mx-3 mt-4" style="direction:rtl">
+        <div v-if="comments" class="text-end fw-bold fs-6 mx-3 mt-4" style="direction:rtl">
             {{comments.length}} نظر ثبت شده
         </div>
         <hr class="opacity-100 border-muted border mx-2">
@@ -53,18 +52,16 @@
 <script>
 
 import { mapState } from 'vuex';
-import PageHeader from "../../layouts/PageHeader"
-import moment from "moment";
-// import PageFooter from "../layouts/PageFooter"
 
 export default {
-    components: {
-        PageHeader,
-        // PageFooter,
+    props: {
+        user: {
+            type: Object,
+            required: false
+        }
     },
     data() {
         return {
-            moment: moment,
             comments: null,
             commentMessage: null,
             hasError: false,
@@ -82,28 +79,6 @@ export default {
         });
     },
     mounted() {
-
-        let userLoaded = new Promise((resolve, reject) => {
-                if (this.user) {
-                console.log('User is already loaded')
-                resolve()
-            } else {
-                this.$store.dispatch("user/loadUser").then(() => {
-                    console.log('resolved')
-                    resolve()
-                }).catch(() => {
-                    reject()
-                })
-                console.log('called')
-
-            }
-        })
-
-        userLoaded.then(() => {
-            console.log(this.user)
-
-        })
-
         window.onresize = () => {
                 this.windowWidth = window.innerWidth
         }

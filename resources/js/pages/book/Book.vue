@@ -111,12 +111,13 @@
                 <div v-else class="row user-friends justify-content-center me-2 rounded-1 h-100 mt-3">
                     لاگین نکرده
                 </div>
-                <div class="row text-center p-2 m-1 py-2">
+                <!-- <div class="row text-center p-2 m-1 py-2">
                     <router-link :to="{name: 'bookComments', params: {id: book.id}}">
                         <button class="btn btn-dark w-100 text-white">نظرات کاربران</button>
                     </router-link>
-                </div>
+                </div> -->
             </div>
+            <comments :user="user"></comments>
         </div>
     </div>
 </template>
@@ -128,6 +129,7 @@ import PageHeader from "../../layouts/PageHeader"
 import moment from "moment";
 import BookSwiper from '../../layouts/BookSwiper';
 import AddBookToShelves from '../../layouts/AddBookToShelves';
+import Comments from '../../layouts/Comments';
 // import PageFooter from "../layouts/PageFooter"
 
 export default {
@@ -135,6 +137,7 @@ export default {
         PageHeader,
         BookSwiper,
         AddBookToShelves,
+        Comments
         // PageFooter,
     },
 

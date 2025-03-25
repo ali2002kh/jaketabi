@@ -21,7 +21,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <friendship-management v-if="host" :host="host"></friendship-management>
 
             <edit-profile @profileReact="changeProfile" v-if="host && host.is_private" :host="host"></edit-profile>
@@ -123,7 +123,6 @@ export default {
             username: null,
             wantToRead: [],
             alreadyRead: [],
-            shelves_more_count: null,
         }
     },
     beforeMount() {
