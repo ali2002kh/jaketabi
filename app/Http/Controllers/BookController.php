@@ -19,7 +19,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 
 class BookController extends Controller {
-    
+
     public function show($id) {
 
         return new BookPublicResource(Book::find($id));
@@ -34,13 +34,13 @@ class BookController extends Controller {
     }
 
     public function friend($book_id) {
-        
+
         return new FriendBookResource(Book::find($book_id));
     }
 
     public function updateStatus($book_id, $status) {
 
-        /** @var User $user */ 
+        /** @var User $user */
         $user = auth()->user();
         $user->updateBookStatus($book_id, $status);
 
@@ -49,7 +49,7 @@ class BookController extends Controller {
 
     public function updateCurrentPage($book_id, $page) {
 
-        /** @var User $user */ 
+        /** @var User $user */
         $user = auth()->user();
         $user->updateCurrentPage($book_id, $page);
 
@@ -89,7 +89,7 @@ class BookController extends Controller {
                 'genres' => GenreResource::collection(Genre::all()),
             ]
         ]);
-        
+
     }
 
     public function genre($id, $page) {
@@ -134,12 +134,16 @@ class BookController extends Controller {
 
     public function addComment($book_id, Request $request) {
 
-        /** @var User $user */ 
+        if(!auth()->check()) {
+            return abort(401);
+        }
+
+        /** @var User $user */
         $user = auth()->user();
 
         $this->validate($request, [
             'commentMessage' => 'required',
-        ]); 
+        ]);
 
         $comment = $user->addComment($book_id, $request->get('commentMessage'));
 

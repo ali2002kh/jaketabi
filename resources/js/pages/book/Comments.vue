@@ -2,7 +2,7 @@
     <page-header :user="user"></page-header>
     <div class="body container mb-5" style="margin-top: 110px;">
         <p class="title"><span>نظرات کاربران</span></p>
-        <div class="row flex-row-reverse rounded-2 bg-light shadow-sm p-3 mt-4 align-items-center mx-2">
+        <div v-if="user" class="row flex-row-reverse rounded-2 bg-light shadow-sm p-3 mt-4 align-items-center mx-2">
             <div class="col-md-1 col-sm-2 col-12 p-2 text-end"
             :class="{'text-center' : windowWidth > 576}">
                 <i class="fa-solid fa-circle-user fa-3x text-dark"></i>
