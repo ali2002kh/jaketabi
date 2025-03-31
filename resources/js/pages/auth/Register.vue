@@ -86,7 +86,7 @@
             @click.prevent="signup" :disabled="loading || otpIsNotGiven">ثبت نام</button>
 
             <hr class="my-4">
-            <router-link class="nav-link text-end" :to="{name: 'register'}">ثبت نام</router-link>
+            <router-link class="nav-link text-end" :to="{name: 'login'}">ورود</router-link>
 
 
           </div>

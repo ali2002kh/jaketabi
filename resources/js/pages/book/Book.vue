@@ -573,9 +573,7 @@ height: 160px;
 }
 .book-title {
     direction: rtl;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    white-space: initial;
     max-width: 120px;
 }
 .swiper-slide {

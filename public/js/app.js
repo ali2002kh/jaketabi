@@ -26741,7 +26741,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       name: 'profileBooks',
       params: {
         id: $data.host.id,
-        status: 1
+        status: 3
       }
     },
     "class": "link-dark text-center",
@@ -26936,13 +26936,15 @@ var _hoisted_5 = ["src"];
 var _hoisted_6 = {
   "class": "text-center mx-auto p-1 book-title"
 };
-var _hoisted_7 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_7 = {
+  key: 0
+};
+var _hoisted_8 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("hr", {
     "class": "mx-5 mb-0"
   }, null, -1 /* HOISTED */);
 });
-var _hoisted_8 = {
-  key: 0,
+var _hoisted_9 = {
   "class": "text-center mx-5 p-1",
   style: {
     "direction": "rtl",
@@ -26973,7 +26975,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }, null, 8 /* PROPS */, _hoisted_5), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(r.book.name), 1 /* TEXT */)];
       }),
       _: 2 /* DYNAMIC */
-    }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["to"]), _hoisted_7, $data.status == 2 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(Number(r.progression * 100).toFixed()) + "% خوندی ", 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
+    }, 1032 /* PROPS, DYNAMIC_SLOTS */, ["to"]), $data.status == 2 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(Number(r.progression * 100).toFixed()) + "% خوندی ", 1 /* TEXT */)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
   }), 128 /* KEYED_FRAGMENT */))])], 64 /* STABLE_FRAGMENT */);
 }
 
@@ -28850,11 +28852,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, "ثبت نام", 8 /* PROPS */, _hoisted_29), _hoisted_30, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
     "class": "nav-link text-end",
     to: {
-      name: 'register'
+      name: 'login'
     }
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("ثبت نام")];
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("ورود")];
     }),
     _: 1 /* STABLE */
   })])])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"container my-5\" dir=\"rtl\">\n        <div class=\"row\">\n            <div class=\"col-sm-6 mx-auto\">\n                <div class=\"alert alert-danger\" v-if=\"hasError\" dir=\"rtl\">\n                    <ul class=\"error-list\">\n                        <li v-for=\"e in errors\" :key=\"e\" class=\"error-item\">{{ e[0] }}</li>\n                    </ul>\n                </div>\n                <form dir=\"rtl\">\n                    <div class=\"row\">\n                        <div class=\"col-md-6 col-sm-12\">\n                            <div class=\"form-group mb-3\">\n                                <label for=\"email\" class=\"form-label\">ایمیل</label>\n                                <input type=\"email\" class=\"form-control\" id=\"email\" placeholder=\"name@example.com\" name=\"email\" v-model=\"email\">\n                            </div>\n                            <div class=\"form-group mb-3\">\n                                <label for=\"username\" class=\"form-label\">نام کاربری</label>\n                                <input type=\"text\" class=\"form-control\" id=\"username\" name=\"username\" v-model=\"username\">\n                            </div>\n                            <div class=\"form-group mb-3\">\n                                <label for=\"password\" class=\"form-label\">رمز عبور</label>\n                                <input type=\"password\" class=\"form-control\" id=\"password\" name=\"password\" v-model=\"password\">\n                            </div>\n                            <div class=\"form-group mb-3\">\n                                <label for=\"confirmPassword\" class=\"form-label\">تایید رمز عبور</label>\n                                <input type=\"password\" class=\"form-control\" id=\"confirmPassword\" name=\"confirmPassword\" v-model=\"confirmPassword\">\n                            </div>\n                        </div>\n                        <div class=\"col-md-6 col-sm-12\">\n                            <div class=\"row\">\n                                <div class=\"form-group mb-3\">\n                                    <label for=\"number\" class=\"form-label\">شماره تلفن</label>\n                                    <input type=\"text\" class=\"form-control\" id=\"number\" placeholder=\"09xxxxxxxxx\" name=\"number\" v-model=\"number\">\n                                    <div class=\"m-3\" v-if=\"waitToSend\">\n                                        لطفا صبر کنید\n                                    </div>\n                                    <button v-else type=\"button\" class=\"btn btn-success m-3\" @click.prevent=\"sendOtp\" :disabled=\"sent\">\n                                        {{ sent ? `ارسال مجدد کد تایید در ${timer} ثانیه` : 'ارسال کد تایید' }}\n                                    </button>\n                                </div>\n                            </div>  \n                            <div class=\"form-group mb-3\" v-if=\"showOtpField\">\n                                <label for=\"otp\" class=\"form-label\">کد تایید</label>\n                                <input type=\"text\" class=\"form-control\" id=\"otp\" name=\"otp\" @keyup=\"checkOtp\" v-model=\"otp\">\n                            </div>\n                        </div>\n                    </div>\n                    <div class=\"d-grid gap-2\">\n                        <button type=\"submit\" class=\"btn btn-dark mb-3\" @click.prevent=\"signup\" :disabled=\"loading || otpIsNotGiven\">\n                            ثبت نام\n                        </button>\n                        <router-link class=\"nav-link text-center\" :to=\"{name: 'login'}\">ورود</router-link>\n                    </div>\n                </form>\n            </div>\n        </div>\n    </div> ")], 2112 /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */);
@@ -37404,7 +37406,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.body-class[data-v-b3c5cf30] {\n        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n}\n.book-img[data-v-b3c5cf30] {\n            width: 110px;\n            height: 160px;\n}\n.book-title[data-v-b3c5cf30] {\n        direction: rtl;\n        white-space: nowrap;\n        overflow: hidden;\n        text-overflow: ellipsis;\n        max-width: 120px;\n}\n.shelf-book-img[data-v-b3c5cf30] {\n        max-width: 80px;\n        max-height: 120px;\n}\n.title[data-v-b3c5cf30] {\n        width: 100%; \n        direction: rtl;\n        border-bottom: 1.5px solid rgb(232, 232, 232); \n        line-height: 0.1em;\n        font-family: hamishe;\n}\n.title span[data-v-b3c5cf30] { \n            background:#fff; \n            padding-left: 20px;\n            padding-right: 20px;\n            margin-right: 30px;\n            font-weight:bold;\n            font-size: large;\n}\n.user-profile[data-v-b3c5cf30] {\n        width: 40px;\n        height: 40px;\n        border-radius: 50%;\n}\n.router-links[data-v-b3c5cf30] {\n    color: black;\n    text-decoration: none;\n}\n.lists-body[data-v-b3c5cf30] {\n    background: #f4f4f4; \n    height: 250px;\n}\n.next-btn[data-v-b3c5cf30] {\n    transform: translate(100%, 0);\n}\n.swiper-slide[data-v-b3c5cf30] {\n    margin-left: 20px !important;\n    margin-right: 0 !important;\n}\n.shelf[data-v-b3c5cf30] {\n    width:362px !important;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.body-class[data-v-b3c5cf30] {\n        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n}\n.book-img[data-v-b3c5cf30] {\n            width: 110px;\n            height: 160px;\n}\n.book-title[data-v-b3c5cf30] {\n        direction: rtl;\n        white-space: initial;\n        max-width: 120px;\n}\n.shelf-book-img[data-v-b3c5cf30] {\n        max-width: 80px;\n        max-height: 120px;\n}\n.title[data-v-b3c5cf30] {\n        width: 100%; \n        direction: rtl;\n        border-bottom: 1.5px solid rgb(232, 232, 232); \n        line-height: 0.1em;\n        font-family: hamishe;\n}\n.title span[data-v-b3c5cf30] { \n            background:#fff; \n            padding-left: 20px;\n            padding-right: 20px;\n            margin-right: 30px;\n            font-weight:bold;\n            font-size: large;\n}\n.user-profile[data-v-b3c5cf30] {\n        width: 40px;\n        height: 40px;\n        border-radius: 50%;\n}\n.router-links[data-v-b3c5cf30] {\n    color: black;\n    text-decoration: none;\n}\n.lists-body[data-v-b3c5cf30] {\n    background: #f4f4f4; \n    height: 250px;\n}\n.next-btn[data-v-b3c5cf30] {\n    transform: translate(100%, 0);\n}\n.swiper-slide[data-v-b3c5cf30] {\n    margin-left: 20px !important;\n    margin-right: 0 !important;\n}\n.shelf[data-v-b3c5cf30] {\n    width:362px !important;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -37428,7 +37430,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.body-class[data-v-074da5b0] {\nfont-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n}\n.user-profile[data-v-074da5b0] {\nwidth: 60px;\nheight: 60px;\nborder-radius: 50%;\n}\n.shelf-book-img[data-v-074da5b0] {\nmax-width: 80px;\nmax-height: 120px;\n}\n.book-title[data-v-074da5b0] {\n    direction: rtl;\n    white-space:nowrap;\n    overflow:hidden;\n    text-overflow:ellipsis;\n    max-width: 120px;\n    max-height: 50px;\n}\n.book-img[data-v-074da5b0] {\nwidth: 110px;\nheight: 160px;\n}\n.title[data-v-074da5b0] {\nfont-family: hamishe;\nfont-weight:bold;\nfont-size: large;\n}\n.lists-body[data-v-074da5b0] {\n    background: #f4f4f4;\n    height: 250px;\n}\n.router-links[data-v-074da5b0] {\n    color: black;\n    text-decoration: none;\n}\n.shelf[data-v-074da5b0] {\n    width:362px !important;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.body-class[data-v-074da5b0] {\nfont-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n}\n.user-profile[data-v-074da5b0] {\nwidth: 60px;\nheight: 60px;\nborder-radius: 50%;\n}\n.shelf-book-img[data-v-074da5b0] {\nmax-width: 80px;\nmax-height: 120px;\n}\n.book-title[data-v-074da5b0] {\n    direction: rtl;\n    white-space:initial;\n    max-width: 120px;\n}\n.book-img[data-v-074da5b0] {\nwidth: 110px;\nheight: 160px;\n}\n.title[data-v-074da5b0] {\nfont-family: hamishe;\nfont-weight:bold;\nfont-size: large;\n}\n.lists-body[data-v-074da5b0] {\n    background: #f4f4f4;\n    height: 250px;\n}\n.router-links[data-v-074da5b0] {\n    color: black;\n    text-decoration: none;\n}\n.shelf[data-v-074da5b0] {\n    width:362px !important;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -37452,7 +37454,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.body[data-v-638c67ec] {\n    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n}\n.shelf-book-img[data-v-638c67ec] {\n    max-width: 80px;\n    max-height: 120px;\n}\n.book-img[data-v-638c67ec] {\n    width: 110px;\n    height: 160px;\n}\n.book-title[data-v-638c67ec] {\n    direction: rtl;\n    white-space:nowrap;\n    overflow:hidden;\n    text-overflow:ellipsis;\n    max-width: 120px;\n    max-height: 50px;\n}\n.title[data-v-638c67ec] {\n    font-family: hamishe;\n}\n.router-links[data-v-638c67ec] {\n    color: black;\n    text-decoration: none;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.body[data-v-638c67ec] {\n    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n}\n.shelf-book-img[data-v-638c67ec] {\n    max-width: 80px;\n    max-height: 120px;\n}\n.book-img[data-v-638c67ec] {\n    width: 110px;\n    height: 160px;\n}\n.book-title[data-v-638c67ec] {\n    direction: rtl;\n    white-space:initial;\n    max-width: 120px;\n    max-height: 50px;\n}\n.title[data-v-638c67ec] {\n    font-family: hamishe;\n}\n.router-links[data-v-638c67ec] {\n    color: black;\n    text-decoration: none;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -37572,7 +37574,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.body-class[data-v-8a70f054] {\n    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n}\n.container-fluid[data-v-8a70f054] {\n    padding-right:0;\n    padding-left:0;\n    margin-right:0;\n    margin-left:0;\n}\n.book-cover[data-v-8a70f054] {\n    width: 100px;\n    max-height: 180px;\n}\n.already_read[data-v-8a70f054] {\n    background-color:green !important;\n}\n.user-col[data-v-8a70f054] {\n    position: sticky;\n    top: 90px;\n}\n.book-img[data-v-8a70f054] {\nwidth: 110px;\nheight: 160px;\n}\n.router-links[data-v-8a70f054] {\n    color: black;\n    text-decoration: none;\n}\n.book-title[data-v-8a70f054] {\n    direction: rtl;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    max-width: 120px;\n}\n.swiper-slide[data-v-8a70f054] {\n    box-sizing: border-box !important;\n}\n.swiper-list[data-v-8a70f054] {\n\n    justify-content: center !important;\n}\n.form-select[data-v-8a70f054]:focus {\n    border: 2px solid black;\n    box-shadow:none;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.body-class[data-v-8a70f054] {\n    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;\n}\n.container-fluid[data-v-8a70f054] {\n    padding-right:0;\n    padding-left:0;\n    margin-right:0;\n    margin-left:0;\n}\n.book-cover[data-v-8a70f054] {\n    width: 100px;\n    max-height: 180px;\n}\n.already_read[data-v-8a70f054] {\n    background-color:green !important;\n}\n.user-col[data-v-8a70f054] {\n    position: sticky;\n    top: 90px;\n}\n.book-img[data-v-8a70f054] {\nwidth: 110px;\nheight: 160px;\n}\n.router-links[data-v-8a70f054] {\n    color: black;\n    text-decoration: none;\n}\n.book-title[data-v-8a70f054] {\n    direction: rtl;\n    white-space: initial;\n    max-width: 120px;\n}\n.swiper-slide[data-v-8a70f054] {\n    box-sizing: border-box !important;\n}\n.swiper-list[data-v-8a70f054] {\n\n    justify-content: center !important;\n}\n.form-select[data-v-8a70f054]:focus {\n    border: 2px solid black;\n    box-shadow:none;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

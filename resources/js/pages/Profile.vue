@@ -277,7 +277,7 @@
                 </div>
                 <hr class="col opacity-100 border-muted border mx-3">
                 <div v-if="host.has_more_already_read" class="col-auto">
-                    <router-link :to="{name: 'profileBooks', params: {id: host.id, status: 1 }}"
+                    <router-link :to="{name: 'profileBooks', params: {id: host.id, status: 3 }}"
                     class="link-dark text-center" style="text-decoration:none;">
                         مشاهده همه
                     </router-link> 
@@ -759,11 +759,8 @@ max-height: 120px;
 }
 .book-title {
     direction: rtl;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
+    white-space:initial;
     max-width: 120px;
-    max-height: 50px;
 }
 .book-img {
 width: 110px;

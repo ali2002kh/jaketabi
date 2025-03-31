@@ -10,11 +10,14 @@
                 <img class="book-img d-block mx-auto" :src="r.book.image" alt="">
                 <p class="text-center mx-auto p-1 book-title">{{ r.book.name }}</p>
             </router-link>
-            <hr class="mx-5 mb-0">
-            <p v-if="status == 2" class="text-center mx-5 p-1" 
-            style="direction:rtl; font-size: smaller;">
-                {{  Number(r.progression*100).toFixed() }}% خوندی 
-            </p>
+            <div v-if="status == 2">
+                <hr class="mx-5 mb-0">
+                <p  class="text-center mx-5 p-1" 
+                style="direction:rtl; font-size: smaller;">
+                    {{  Number(r.progression*100).toFixed() }}% خوندی 
+                </p>
+            </div>
+            
         </div> 
     </div>
 </template>
@@ -88,9 +91,7 @@ export default {
 }
 .book-title {
     direction: rtl;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
+    white-space:initial;
     max-width: 120px;
     max-height: 50px;
 }
