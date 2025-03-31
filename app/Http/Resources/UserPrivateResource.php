@@ -14,8 +14,8 @@ class UserPrivateResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $preview_book_number = 7;
-        $preview_shelf_number = 3;
+        $preview_book_number = 20;
+        $preview_shelf_number = 10;
         $friend_requests = $this->getFriendRequests();
         $friends = $this->getFriends();
 

@@ -65,7 +65,7 @@ Route::get('/remove-book-from-shelf/{shelf_id}/{book_id}', [ShelfController::cla
 Route::post('/update-shelf/{shelf_id}', [ShelfController::class, 'update']);
 
 Route::get('/remove-shelf/{shelf_id}', [ShelfController::class, 'delete']);
- 
+
 Route::get('/shelves/{user_id}', [ShelfController::class, 'index']);
 
 // Friends ----------------------------------------------------------------

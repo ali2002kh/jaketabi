@@ -1,5 +1,5 @@
 <template>
-    <PageHeader></PageHeader>
+    <page-header :user="user"></page-header>
     <div class="container-fluid body-class">
 
         <p v-if="title == 'publisher'" class="title mx-1" style="margin-top: 110px;"><span>نشر {{ name }}</span></p>
@@ -10,11 +10,8 @@
 
         <div class="row flex-row-reverse mt-4" :class="{'justify-content-center mx-0' : windowWidth < 576}">
             <div v-for="b in books" :key="b.id"  class="col-md-2 col-sm-3 col-6 p-1">
-                <router-link :to="{name: 'book', params: {id: b.id}}" class="router-links">
-                    <img class="book-img d-block border mx-auto" :src="b.image" alt="">
-                    <p class="text-center p-1">{{ b.name }}</p>
-                </router-link> 
-            </div> 
+                <single-book-item :book="b"></single-book-item>
+            </div>
         </div>
 
         <nav aria-label="Page navigation example" v-if="pagination">
@@ -45,38 +42,23 @@
         <div v-if="title == 'bookCategory' && page > 0 && siblings[page - 1]" class="publisher-books h-100">
             <div class="d-flex flex-row-reverse align-items-center text-center mt-5 mx-2">
                 <div class="col-auto title-sibling">
-                    {{ siblings[page - 1].name }}                
+                    {{ siblings[page - 1].name }}
                 </div>
                 <hr class="col opacity-100 border-muted border mx-3">
                 <div class="col-auto">
                     <router-link :to="{name: 'bookList', params: { title:'bookCategory', id: siblings[page - 1].id }}"
                     class="link-dark text-center" style="text-decoration:none;">
                         مشاهده همه
-                    </router-link> 
+                    </router-link>
                 </div>
             </div>
-            <!-- <p class="title mt-4 mx-1">
-                <span>  </span>
-            </p> -->
-            <!-- <p class="text-end m-2 fs-5 fw-bold"></p>
-            <hr class="opacity-100 border-muted border mx-auto"> -->
             <div class="row flex-row-reverse align-items-center rounded-1 mx-1 p-1 mb-4" style="background-color: #f4f4f4;">
                 <div v-for="b in siblings[page - 1].preview_books" :key="b.id" class="col-md-2 col-sm-3 col-6 p-1">
-                    <router-link :to="{name: 'book', params: {id: b.id}}" class="router-links">
-                        <img class="book-cover d-block mx-auto" :src="b.image" alt="">
-                    <p class="text-center p-1">{{ b.name }}</p>
-                    </router-link> 
+                    <single-book-item :book="b"></single-book-item>
                 </div>
-                <!-- <div class="col p-5">
-                    <router-link :to="{name: 'bookList', params: { title:'bookCategory', id: siblings[page - 1].id }}">
-                        <button class="btn">
-                            <i class="fa-solid fa-angle-left fa-3x"></i>
-                        </button>
-                    </router-link>
-                </div> -->
             </div>
         </div>
-        
+
 
     </div>
 </template>
@@ -85,11 +67,13 @@
 
 import { mapState } from 'vuex';
 import PageHeader from "../../layouts/PageHeader"
+import SingleBookItem from '../../layouts/SingleBookItem';
 // import PageFooter from "../layouts/PageFooter"
 
 export default {
     components: {
         PageHeader,
+        SingleBookItem,
         // PageFooter,
     },
     data() {
@@ -106,7 +90,7 @@ export default {
             pageSize: 0,
             hasNext: true,
             hasPrev: false,
-        } 
+        }
     },
     created() {
 
@@ -143,7 +127,7 @@ export default {
 
         this.page++
         this.getBooks()
-        
+
     },
     beforeMount() {
         let loadUser = new Promise((resolve, reject) => {
@@ -180,7 +164,7 @@ export default {
         },
     },
     methods: {
-        
+
         async getBooks() {
             if (this.title == 'publisher') {
                 axios.get(`/api/publisher/${this.$route.params.id}/${this.page}`)
@@ -220,7 +204,7 @@ export default {
         },
         async checkNext() {
             console.log(this.books)
-            if (this.books.length < this.pageSize || 
+            if (this.books.length < this.pageSize ||
                 ((this.page - 1) * this.pageSize) + this.books.length == this.numberOfBooks) {
                     console.log(this.books.length)
                     this.hasNext = false
@@ -250,7 +234,7 @@ export default {
 <style scoped>
 .body-class {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-} 
+}
 .book-img {
 width: 110px;
 height: 160px;
@@ -261,15 +245,15 @@ height: 160px;
     max-height: 120px;
 }
 .title {
-    width: 100%; 
+    width: 100%;
     direction: rtl;
-    border-bottom: 1.5px solid rgb(232, 232, 232); 
+    border-bottom: 1.5px solid rgb(232, 232, 232);
     line-height: 0.1em;
     font-family: hamishe;
-} 
-    
-.title span { 
-        background:#fff; 
+}
+
+.title span {
+        background:#fff;
         padding-left: 20px;
         padding-right: 20px;
         margin-right: 30px;
@@ -292,11 +276,6 @@ height: 160px;
 .book-cover {
     width: 100px;
     max-height: 180px;
-}
-
-.router-links {
-    color: black;
-    text-decoration: none;
 }
 
 </style>

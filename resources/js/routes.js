@@ -7,7 +7,6 @@ import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
 
 import BookList from "./pages/book/BookList";
-import BookComments from "./pages/book/Comments"
 import Book from "./pages/book/Book";
 
 import Shelf from "./pages/shelf/Shelf";
@@ -89,11 +88,6 @@ const routes = [
         path: "/book/:id",
         component: Book,
         name:"book",
-    },
-    {
-        path: "/book/comments/:id",
-        component: BookComments,
-        name:"bookComments",
     },
     {
         path: "/shelf/:id",

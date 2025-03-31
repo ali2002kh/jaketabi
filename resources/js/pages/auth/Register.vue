@@ -45,7 +45,7 @@
                                     {{ sent ? `ارسال مجدد کد تایید در ${timer} ثانیه` : 'ارسال کد تایید' }}
                                 </button>
                             </div>
-                        </div>  
+                        </div>
                         <div class="form-group mb-3" v-if="showOtpField">
                             <label for="otp" class="form-label">کد تایید</label>
                             <input type="text" class="form-control" id="otp" name="otp" @keyup="checkOtp" v-model="otp">
@@ -60,9 +60,9 @@
                 </div> -->
             </form>
 
-            <!-- <div data-mdb-input-init class="form-outline mb-4 text-end">              
+            <!-- <div data-mdb-input-init class="form-outline mb-4 text-end">
                 <label for="emailOrNumberOrUsername" class="form-label">نام کاربری (ایمیل/ شماره موبایل)</label>
-                <input type="email" class="form-control form-control-lg" 
+                <input type="email" class="form-control form-control-lg"
                     id="emailOrNumberOrUsername"
                     name="emailOrNumberOrUsername"
                     v-model="emailOrNumberOrUsername"/>
@@ -70,8 +70,8 @@
 
             <div data-mdb-input-init class="form-outline mb-4 text-end">
                 <label class="form-label" for="password">رمز عبور</label>
-                <input type="password" class="form-control form-control-lg" 
-                    id="password" 
+                <input type="password" class="form-control form-control-lg"
+                    id="password"
                     name="password"
                     v-model="password" />
             </div> -->
@@ -88,6 +88,8 @@
             <hr class="my-4">
             <router-link class="nav-link text-end" :to="{name: 'login'}">ورود</router-link>
 
+            <!-- for visiting -->
+            <router-link class="nav-link text-end text-danger" :to="{name: 'signup'}">ثبت نام بدون کد تایید (برای بازدید)</router-link>
 
           </div>
         </div>
@@ -135,7 +137,7 @@
                                         {{ sent ? `ارسال مجدد کد تایید در ${timer} ثانیه` : 'ارسال کد تایید' }}
                                     </button>
                                 </div>
-                            </div>  
+                            </div>
                             <div class="form-group mb-3" v-if="showOtpField">
                                 <label for="otp" class="form-label">کد تایید</label>
                                 <input type="text" class="form-control" id="otp" name="otp" @keyup="checkOtp" v-model="otp">
@@ -153,8 +155,8 @@
         </div>
     </div> -->
 </template>
-  
-  
+
+
 
 <script>
 export default {
@@ -192,11 +194,11 @@ export default {
                     confirmPassword: this.confirmPassword,
                     otp: this.otp,
                 }).then(response => {
-                    this.$router.push('/');
+                    this.$router.push('/login');
                 })
             } catch (error) {
-                if (error.response && 
-                    error.response.status && 
+                if (error.response &&
+                    error.response.status &&
                     error.response.status == 422) {
                         this.hasError = true
                         console.log(error.response.data)
@@ -231,17 +233,17 @@ export default {
                 }, 1000);
             }).catch (error => {
                 this.sent = false
-                if (error.response && 
-                    error.response.status && 
+                if (error.response &&
+                    error.response.status &&
                     error.response.status == 422) {
                         this.hasError = true
                         console.log(error.response.data)
                         this.errors = error.response.data.errors
-                }  
+                }
             }).finally (() => {
                 this.waitToSend = false
             })
-            
+
         },
 
         async checkOtp () {
@@ -252,7 +254,7 @@ export default {
                 this.otpIsNotGiven = true
             }
         },
-    }, 
+    },
 }
 </script>
 <style scoped>

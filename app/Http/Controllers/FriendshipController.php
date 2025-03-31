@@ -10,15 +10,18 @@ class FriendshipController extends Controller {
 
     public function acceptOrAdd($id) {
 
-        /** @var User $user */ 
-        $user = auth()->user();
-
-        $user->sendRequestTo($id);
+        /** @var User $user */
+        if (auth()->check()) {
+            $user = auth()->user();
+            $user->sendRequestTo($id);
+        } else {
+            return abort(401);
+        }
     }
 
     public function rejectOrRemove($id) {
 
-        /** @var User $user */ 
+        /** @var User $user */
         $user = auth()->user();
 
         $user->rejectOrRemoveFriend($id);

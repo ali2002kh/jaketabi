@@ -14,8 +14,8 @@ class UserPublicResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $preview_book_number = 5;
-        $preview_shelf_number = 3;
+        $preview_book_number = 20;
+        $preview_shelf_number = 10;
 
         $want_to_read = $this->getWantToReadBooks();
         $want_to_read_more_count = $want_to_read->count() - $preview_book_number;

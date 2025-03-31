@@ -49,7 +49,7 @@ class AuthController extends Controller {
             'password' => 'required|min:8',
             'confirmPassword' => 'required|same:password|min:8',
         ]);
-    
+
         $user = new User([
             'username' => $request->get('username'),
             'email' => $request->get('email'),
@@ -62,7 +62,11 @@ class AuthController extends Controller {
         return abort(200);
     }
 
-    public function logout() {
+    public function logout(Request $request) {
+
+        $request->user()->tokens()->delete(); // Delete tokens
+        $request->session()->invalidate(); // Invalidate session
+        $request->session()->regenerateToken(); // Regenerate CSRF token
 
         Auth::logout();
         return abort(200);
@@ -95,12 +99,12 @@ class AuthController extends Controller {
                     'number' => 'unique:users',
                 ]);
             }
-            
+
             $otp = Otp::where('user_id', $user->id)
             ->where('used', 0)
             ->where('created_at', '>=', Carbon::now()->subMinute(2)->toDateTimeString())
             ->first();
-    
+
             if ($otp) {
                 return abort(403, 'too soon');
             }
@@ -139,8 +143,6 @@ class AuthController extends Controller {
             'otp' => 'required|min:6|max:6',
         ]);
 
-        
-
         $otp = Otp::where('token', $token)
         ->where('used', 0)
         ->where('created_at', '>=', Carbon::now()->subMinute(2)->toDateTimeString())
@@ -165,7 +167,7 @@ class AuthController extends Controller {
         if (!$user->mobile_verified_at) {
             $user->mobile_verified_at = Carbon::now();
         }
-    
+
         $user->username = $request->get('username');
         $user->email = $request->get('email');
         $user->password = $request->get('password');
