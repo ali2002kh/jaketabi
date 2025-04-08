@@ -384,18 +384,6 @@ export default {
     color: black;
     text-decoration: none;
 }
-<<<<<<< HEAD
-.book-title {
-    direction: rtl;
-    white-space: initial;
-    max-width: 120px;
-}
-.swiper-slide {
-    box-sizing: border-box !important;
-}
-.swiper-list {
-=======
->>>>>>> cdfcd59b3d34a53368ef6485264ff5c115edf978
 
 .form-select:focus {
     border: 2px solid black;

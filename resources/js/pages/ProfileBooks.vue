@@ -6,21 +6,6 @@
     </div>
     <div class="body h-100 mb-5 row flex-row-reverse mx-2 p-1 rounded-1" style="background-color: #f4f4f4;">
         <div v-for="r in records" :key="r.id"   class="col-md-2 col-sm-3 col-6 p-1">
-<<<<<<< HEAD
-            <router-link :to="{name: 'book', params: {id: r.book.id}}"  class="router-links">
-                <img class="book-img d-block mx-auto" :src="r.book.image" alt="">
-                <p class="text-center mx-auto p-1 book-title">{{ r.book.name }}</p>
-            </router-link>
-            <div v-if="status == 2">
-                <hr class="mx-5 mb-0">
-                <p  class="text-center mx-5 p-1" 
-                style="direction:rtl; font-size: smaller;">
-                    {{  Number(r.progression*100).toFixed() }}% خوندی 
-                </p>
-            </div>
-            
-        </div> 
-=======
             <single-book-item :book="r.book"></single-book-item>
             <hr class="mx-5 mb-0">
             <p v-if="status == 2" class="text-center mx-5 p-1"
@@ -28,7 +13,6 @@
                 {{  Number(r.progression*100).toFixed() }}%  خوانده
             </p>
         </div>
->>>>>>> cdfcd59b3d34a53368ef6485264ff5c115edf978
     </div>
 </template>
 

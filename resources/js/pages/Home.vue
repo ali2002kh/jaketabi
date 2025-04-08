@@ -1,5 +1,6 @@
 <template>
     <page-header :user="user"></page-header>
+
     <div class="container-fluid body-class">
 
         <p class="title mx-1" style="margin-top: 110px;"><span>کتاب های محبوب</span></p>
@@ -19,17 +20,19 @@
         </shelves-swiper>
 
     </div>
+    <page-footer></page-footer>
+
 </template>
 
 <script>
 
 import { mapState } from 'vuex';
 import PageHeader from "../layouts/PageHeader"
+import PageFooter from "../layouts/PageFooter"
 import SingleBookItem from "../layouts/SingleBookItem"
 import BookSwiper from "../layouts/BookSwiper"
 import ActivitiesSwiperAndModal from '../layouts/ActivitiesSwiperAndModal';
 import ShelvesSwiper from '../layouts/ShelvesSwiper';
-// import PageFooter from "../layouts/PageFooter"
 
 export default {
     components: {
@@ -37,8 +40,8 @@ export default {
         SingleBookItem,
         BookSwiper,
         ActivitiesSwiperAndModal,
-        ShelvesSwiper
-        // PageFooter,
+        ShelvesSwiper,
+        PageFooter,
     },
 
     data() {
