@@ -50,7 +50,7 @@
                 </div>
                 <hr class="col opacity-100 border-muted border mx-3">
                 <div v-if="host.has_more_already_read" class="col-auto">
-                    <router-link :to="{name: 'profileBooks', params: {id: host.id, status: 1 }}"
+                    <router-link :to="{name: 'profileBooks', params: {id: host.id, status: 3 }}"
                     class="link-dark text-center" style="text-decoration:none;">
                         مشاهده همه
                     </router-link>
@@ -210,7 +210,23 @@ width: 60px;
 height: 60px;
 border-radius: 50%;
 }
+<<<<<<< HEAD
+.shelf-book-img {
+max-width: 80px;
+max-height: 120px;
+}
+.book-title {
+    direction: rtl;
+    white-space:initial;
+    max-width: 120px;
+}
+.book-img {
+width: 110px;
+height: 160px;
+}
+=======
 
+>>>>>>> cdfcd59b3d34a53368ef6485264ff5c115edf978
 .title {
 font-family: hamishe;
 font-weight:bold;

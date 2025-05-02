@@ -1,5 +1,6 @@
 <template>
     <page-header :user="user"></page-header>
+
     <div class="container-fluid body-class">
 
         <p class="title mx-1" style="margin-top: 110px;"><span>کتاب های محبوب</span></p>
@@ -19,17 +20,19 @@
         </shelves-swiper>
 
     </div>
+    <page-footer></page-footer>
+
 </template>
 
 <script>
 
 import { mapState } from 'vuex';
 import PageHeader from "../layouts/PageHeader"
+import PageFooter from "../layouts/PageFooter"
 import SingleBookItem from "../layouts/SingleBookItem"
 import BookSwiper from "../layouts/BookSwiper"
 import ActivitiesSwiperAndModal from '../layouts/ActivitiesSwiperAndModal';
 import ShelvesSwiper from '../layouts/ShelvesSwiper';
-// import PageFooter from "../layouts/PageFooter"
 
 export default {
     components: {
@@ -37,8 +40,8 @@ export default {
         SingleBookItem,
         BookSwiper,
         ActivitiesSwiperAndModal,
-        ShelvesSwiper
-        // PageFooter,
+        ShelvesSwiper,
+        PageFooter,
     },
 
     data() {
@@ -106,6 +109,34 @@ export default {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
+<<<<<<< HEAD
+    .book-title {
+        direction: rtl;
+        white-space: initial;
+        max-width: 120px;
+    }
+    
+    .shelf-book-img {
+        max-width: 80px;
+        max-height: 120px;
+    }
+    .title {
+        width: 100%; 
+        direction: rtl;
+        border-bottom: 1.5px solid rgb(232, 232, 232); 
+        line-height: 0.1em;
+        font-family: hamishe;
+    } 
+        
+    .title span { 
+            background:#fff; 
+            padding-left: 20px;
+            padding-right: 20px;
+            margin-right: 30px;
+            font-weight:bold;
+            font-size: large;
+    }
+=======
 .title {
     width: 100%;
     direction: rtl;
@@ -113,6 +144,7 @@ export default {
     line-height: 0.1em;
     font-family: hamishe;
 }
+>>>>>>> cdfcd59b3d34a53368ef6485264ff5c115edf978
 
 .title span {
     background:#fff;

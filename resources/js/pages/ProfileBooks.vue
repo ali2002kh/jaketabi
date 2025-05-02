@@ -79,7 +79,24 @@ export default {
 .body {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
+<<<<<<< HEAD
+.shelf-book-img {
+    max-width: 80px;
+    max-height: 120px;
+}
+.book-img {
+    width: 110px;
+    height: 160px;
+}
+.book-title {
+    direction: rtl;
+    white-space:initial;
+    max-width: 120px;
+    max-height: 50px;
+}
+=======
 
+>>>>>>> cdfcd59b3d34a53368ef6485264ff5c115edf978
 .title {
     font-family: hamishe;
 }
