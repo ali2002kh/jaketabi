@@ -12,6 +12,7 @@ use App\Models\Book;
 use App\Models\BookLog;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller {
 
@@ -26,7 +27,7 @@ class HomeController extends Controller {
 
     public function user($id) {
 
-        /** @var User $user */ 
+        /** @var User $user */
         $user = auth()->user();
 
         if ($user and $user->id == $id) {
@@ -35,43 +36,44 @@ class HomeController extends Controller {
             $user = User::find($id);
             return new UserPublicResource($user);
         }
-        
+
     }
 
     public function trendingAndPopular() {
+        $cacheKey = 'trending_and_popular';
 
-        $trending_logs = BookLog::orderBy('reading', 'DESC')->take(20)->get();
-        $trendings = collect();
+        // Cache::forget('trending_and_popular');
 
-        foreach ($trending_logs as $log) {
-            $trendings->add($log->getBook());
-        }
+        $responseData = Cache::remember($cacheKey, now()->addMinutes(30), function () {
 
-        $popular_logs = BookLog::orderBy('already_read', 'DESC')->take(20)->get();
-        $populars = collect();
+            $trendings = BookLog::orderBy('reading', 'DESC')->take(20)->get()
+                ->map(fn($log) => $log->getBook());
 
-        foreach ($popular_logs as $log) {
-            $populars->add($log->getBook());
-        }
+            $populars = BookLog::orderBy('already_read', 'DESC')->take(20)->get()
+                ->map(fn($log) => $log->getBook());
 
-        return response()->json([
-            'data' => [
-                'popular' => BookPreviewResource::collection($populars),
-                'trending' => BookPreviewResource::collection($trendings),
-            ]
-        ]);
+            return [
+                'data' => [
+                    'popular' => BookPreviewResource::collection($populars),
+                    'trending' => BookPreviewResource::collection($trendings),
+                ]
+            ];
+        });
+
+        return response()->json($responseData);
     }
+
 
     public function friendsActivities() {
 
-        /** @var User $user */ 
+        /** @var User $user */
         $user = auth()->user();
         return FriendBookResource::collection($user->getFriendsBooks());
     }
 
     public function friendsShelves() {
 
-        /** @var User $user */ 
+        /** @var User $user */
         $user = auth()->user();
         return ShelfPreviewResource::collection($user->getFriendsShelves());
     }
